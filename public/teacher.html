@@ -146,7 +146,13 @@
         }
 
         templateBase64 = base64;
-        const src = `data:image/jpeg;base64,${base64}`;
+
+        // Detect actual MIME type from file, fall back to jpeg
+        const mimeType = file.type && file.type.startsWith('image/') ? file.type : 'image/jpeg';
+        const src = `data:${mimeType};base64,${base64}`;
+
+        // Show the editor card BEFORE loading image so canvas parent has a width
+        document.getElementById('editorCard').classList.remove('hidden');
 
         // Init editor
         const canvas = document.getElementById('roiCanvas');
@@ -163,7 +169,6 @@
         });
 
         await editor.loadImage(src);
-        document.getElementById('editorCard').classList.remove('hidden');
         showToast('Image loaded! Draw rectangles on answer areas.');
       } catch (err) {
         showToast('Failed to load image: ' + err.message, 'error');

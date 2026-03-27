@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const { Pool } = require('pg');
 const sharp = require('sharp');
+const heicConvert = require('heic-convert');
 const path = require('path');
 
 const app = express();
@@ -340,12 +341,21 @@ app.post('/api/convert-heic', async (req, res) => {
     const { image } = req.body;
     if (!image) return res.status(400).json({ error: 'Missing image' });
 
-    const buffer = Buffer.from(image, 'base64');
-    const jpeg = await sharp(buffer).rotate().jpeg({ quality: 90 }).toBuffer();
-    res.json({ image: jpeg.toString('base64') });
+    const inputBuffer = Buffer.from(image, 'base64');
+
+    // Use heic-convert (pure JS, no system deps) to decode HEIC
+    const jpegBuffer = await heicConvert({
+      buffer: inputBuffer,
+      format: 'JPEG',
+      quality: 0.9
+    });
+
+    // Auto-rotate via Sharp (handles EXIF orientation), Sharp can read JPEG fine
+    const rotated = await sharp(Buffer.from(jpegBuffer)).rotate().jpeg({ quality: 90 }).toBuffer();
+    res.json({ image: rotated.toString('base64') });
   } catch (err) {
     console.error('HEIC conversion error:', err);
-    res.status(500).json({ error: 'Failed to convert image' });
+    res.status(500).json({ error: 'Failed to convert HEIC: ' + err.message });
   }
 });
 

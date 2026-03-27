@@ -1,0 +1,32 @@
+#!/bin/sh
+#
+# Pre-commit hook to verify version consistency
+#
+# Installation:
+#   cp scripts/pre-commit.hook .git/hooks/pre-commit
+#   chmod +x .git/hooks/pre-commit
+#
+# Or add to package.json with husky:
+#   npm install --save-dev husky
+#   npx husky install
+#   npx husky add .git/hooks/pre-commit "npm run version:check"
+
+echo "🔍 Checking version consistency..."
+
+# Run version check
+npm run version:check
+
+# Capture exit code
+VERSION_CHECK_RESULT=$?
+
+if [ $VERSION_CHECK_RESULT -ne 0 ]; then
+  echo ""
+  echo "❌ Version consistency check failed!"
+  echo "   Run 'npm run version:update' to fix version inconsistencies"
+  echo "   Or bypass this check with: git commit --no-verify"
+  echo ""
+  exit 1
+fi
+
+echo "✅ Version check passed!"
+exit 0

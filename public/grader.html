@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grade Homework - Homework Grader</title>
+  <link rel="stylesheet" href="css/common.css">
+  <style>
+    .grading-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: start; }
+    @media (max-width: 900px) { .grading-layout { grid-template-columns: 1fr; } }
+    .result-image-container { position: relative; display: inline-block; }
+    .result-image-container canvas { max-width: 100%; border-radius: 8px; border: 1px solid #ddd; }
+    .answer-row { display: flex; align-items: center; gap: 0.5rem; padding: 0.4rem 0; border-bottom: 1px solid #f0f0f0; }
+    .answer-row .q-num { font-weight: 700; min-width: 2rem; color: #555; }
+    .answer-row .detected { flex: 1; font-family: monospace; font-size: 0.9rem; }
+    .answer-row .expected { flex: 1; color: #888; font-size: 0.85rem; }
+    .mark-correct { color: #28a745; font-weight: 700; font-size: 1.1rem; }
+    .mark-incorrect { color: #dc3545; font-weight: 700; font-size: 1.1rem; }
+    .progress-bar { width: 100%; height: 6px; background: #eee; border-radius: 3px; overflow: hidden; margin: 0.5rem 0; }
+    .progress-bar-fill { height: 100%; background: #1a73e8; transition: width 0.3s; }
+    .batch-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem; border-bottom: 1px solid #eee; }
+    .batch-item img { width: 48px; height: 48px; object-fit: cover; border-radius: 4px; }
+    .batch-item .name { flex: 1; }
+    .batch-item .score { font-weight: 700; }
+    .result-section { margin-top: 1rem; }
+  </style>
+</head>
+<body>
+  <header class="app-header">
+    <h1>English Homework Grader</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="teacher.html">Answer Keys</a>
+      <a href="grader.html" class="active">Grade</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <!-- Step 1: Select Answer Key -->
+    <div class="card" id="selectKeyCard">
+      <h2>1. Select Answer Key</h2>
+      <select id="keySelect" style="font-size: 1rem;">
+        <option value="">Loading answer keys...</option>
+      </select>
+      <div id="keyInfo" class="mt-1 hidden">
+        <span id="keyInfoText" style="color: #666; font-size: 0.9rem;"></span>
+      </div>
+    </div>
+
+    <!-- Step 2: Upload Student Homework -->
+    <div class="card hidden" id="uploadCard">
+      <h2>2. Upload Student Homework</h2>
+      <div class="upload-zone" id="uploadZone">
+        <p>Click or drag student homework photos here</p>
+        <p style="font-size: 0.8rem; color: #aaa; margin-top: 0.5rem;">Supports JPG, PNG, HEIC. Multiple files for batch grading.</p>
+        <input type="file" id="fileInput" accept="image/*,.heic" multiple>
+      </div>
+
+      <!-- Batch queue -->
+      <div id="batchQueue" class="hidden mt-2">
+        <div class="flex-between mb-1">
+          <strong id="queueCount">0 images ready</strong>
+          <div>
+            <button class="btn btn-sm btn-outline" onclick="clearQueue()">Clear</button>
+            <button class="btn btn-sm btn-success" onclick="startGrading()" id="gradeBtn">Grade All</button>
+          </div>
+        </div>
+        <div id="queueList"></div>
+      </div>
+    </div>
+
+    <!-- Step 3: Grading Progress -->
+    <div class="card hidden" id="progressCard">
+      <h2>Grading...</h2>
+      <div class="progress-bar"><div class="progress-bar-fill" id="progressFill"></div></div>
+      <p id="progressText" style="font-size: 0.9rem; color: #666;">Processing...</p>
+    </div>
+
+    <!-- Step 4: Results -->
+    <div class="card hidden" id="resultsCard">
+      <div class="flex-between">
+        <h2>Results</h2>
+        <button class="btn btn-sm btn-outline" onclick="gradeMore()">Grade More</button>
+      </div>
+
+      <!-- Single result detail -->
+      <div id="singleResult" class="hidden">
+        <div class="score-display">
+          <span id="scoreNum"></span> / <span id="scoreTotal"></span>
+          <span class="percentage" id="scorePct"></span>
+        </div>
+        <div class="grading-layout">
+          <div>
+            <h3 style="font-size: 0.95rem; margin-bottom: 0.5rem;">Annotated Image</h3>
+            <div class="result-image-container">
+              <canvas id="resultCanvas"></canvas>
+            </div>
+          </div>
+          <div>
+            <h3 style="font-size: 0.95rem; margin-bottom: 0.5rem;">Answer Details</h3>
+            <div id="answerDetails"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Batch results summary -->
+      <div id="batchResults" class="hidden">
+        <div class="score-display">
+          Average: <span class="percentage" id="batchAvg"></span>
+        </div>
+        <div id="batchList"></div>
+      </div>
+    </div>
+
+    <!-- Past Results -->
+    <div class="card" id="pastResultsCard">
+      <h2>Past Results</h2>
+      <div id="pastResults"><p style="color: #aaa;">Select an answer key to view past results.</p></div>
+    </div>
+  </div>
+
+  <script src="js/common.js"></script>
+  <script>
+    // --- State ---
+    let selectedKeyId = null;
+    let selectedKey = null;
+    let uploadQueue = []; // { file, base64, name, thumbnail }
+    let gradingResults = [];
+
+    // --- Init ---
+    const keySelect = document.getElementById('keySelect');
+    const urlParams = new URLSearchParams(window.location.search);
+    const preselectedKey = urlParams.get('key');
+
+    async function loadKeys() {
+      try {
+        const teacherName = getTeacherName();
+        const keys = await apiCall(`/api/answer-keys?teacher_name=${encodeURIComponent(teacherName)}`);
+
+        keySelect.innerHTML = '<option value="">-- Select an answer key --</option>';
+        keys.forEach(k => {
+          const opt = document.createElement('option');
+          opt.value = k.id;
+          opt.textContent = `${k.name} (${k.total_points} pts)`;
+          keySelect.appendChild(opt);
+        });
+
+        if (preselectedKey) {
+          keySelect.value = preselectedKey;
+          keySelect.dispatchEvent(new Event('change'));
+        }
+      } catch (err) {
+        keySelect.innerHTML = '<option value="">Failed to load answer keys</option>';
+      }
+    }
+
+    keySelect.addEventListener('change', async () => {
+      selectedKeyId = keySelect.value;
+      const uploadCard = document.getElementById('uploadCard');
+      const keyInfo = document.getElementById('keyInfo');
+
+      if (!selectedKeyId) {
+        uploadCard.classList.add('hidden');
+        keyInfo.classList.add('hidden');
+        selectedKey = null;
+        return;
+      }
+
+      try {
+        selectedKey = await apiCall(`/api/answer-keys/${selectedKeyId}`);
+        const qCount = selectedKey.questions.length;
+        document.getElementById('keyInfoText').textContent =
+          `${qCount} questions | ${selectedKey.total_points} total points | ${selectedKey.settings.case_sensitive ? 'Case sensitive' : 'Case insensitive'}`;
+        keyInfo.classList.remove('hidden');
+        uploadCard.classList.remove('hidden');
+        loadPastResults();
+      } catch (err) {
+        showToast('Failed to load answer key: ' + err.message, 'error');
+      }
+    });
+
+    // --- Upload Queue ---
+    const uploadZone = document.getElementById('uploadZone');
+    const fileInput = document.getElementById('fileInput');
+
+    setupUploadZone(uploadZone, fileInput, async (files) => {
+      for (const file of files) {
+        try {
+          let base64 = await fileToBase64(file);
+
+          // Convert HEIC
+          if (file.name.toLowerCase().endsWith('.heic') || file.type === 'image/heic') {
+            const result = await apiCall('/api/convert-heic', { method: 'POST', body: { image: base64 } });
+            base64 = result.image;
+          }
+
+          // Create thumbnail
+          const thumbnail = await createThumbnail(base64);
+
+          // Extract name from filename
+          const name = file.name.replace(/\.[^.]+$/, '').replace(/[_-]/g, ' ');
+
+          uploadQueue.push({ file, base64, name, thumbnail });
+        } catch (err) {
+          showToast(`Failed to load ${file.name}: ${err.message}`, 'error');
+        }
+      }
+
+      renderQueue();
+      fileInput.value = '';
+    });
+
+    function createThumbnail(base64) {
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          canvas.width = 48;
+          canvas.height = 48;
+          const ctx = canvas.getContext('2d');
+          const size = Math.min(img.width, img.height);
+          ctx.drawImage(img, (img.width - size) / 2, (img.height - size) / 2, size, size, 0, 0, 48, 48);
+          resolve(canvas.toDataURL('image/jpeg', 0.6));
+        };
+        img.src = `data:image/jpeg;base64,${base64}`;
+      });
+    }
+
+    function renderQueue() {
+      const batchQueue = document.getElementById('batchQueue');
+      const queueList = document.getElementById('queueList');
+      const queueCount = document.getElementById('queueCount');
+
+      if (uploadQueue.length === 0) {
+        batchQueue.classList.add('hidden');
+        return;
+      }
+
+      batchQueue.classList.remove('hidden');
+      queueCount.textContent = `${uploadQueue.length} image${uploadQueue.length > 1 ? 's' : ''} ready`;
+
+      queueList.innerHTML = uploadQueue.map((item, i) => `
+        <div class="batch-item">
+          <img src="${item.thumbnail}" alt="">
+          <input type="text" class="name" value="${escapeHtml(item.name)}" placeholder="Student name"
+            onchange="uploadQueue[${i}].name = this.value" style="margin-bottom: 0;">
+          <button class="btn btn-sm btn-danger" onclick="removeFromQueue(${i})">X</button>
+        </div>
+      `).join('');
+    }
+
+    function removeFromQueue(index) {
+      uploadQueue.splice(index, 1);
+      renderQueue();
+    }
+
+    function clearQueue() {
+      uploadQueue = [];
+      renderQueue();
+    }
+
+    function escapeHtml(str) {
+      const div = document.createElement('div');
+      div.textContent = str || '';
+      return div.innerHTML;
+    }
+
+    // --- Grading ---
+    async function startGrading() {
+      if (!selectedKeyId || uploadQueue.length === 0) return;
+
+      const progressCard = document.getElementById('progressCard');
+      const progressFill = document.getElementById('progressFill');
+      const progressText = document.getElementById('progressText');
+      const gradeBtn = document.getElementById('gradeBtn');
+
+      progressCard.classList.remove('hidden');
+      gradeBtn.disabled = true;
+      gradingResults = [];
+
+      const total = uploadQueue.length;
+
+      for (let i = 0; i < total; i++) {
+        const item = uploadQueue[i];
+        progressText.textContent = `Grading ${i + 1} of ${total}: ${item.name || 'unnamed'}...`;
+        progressFill.style.width = `${((i + 0.5) / total) * 100}%`;
+
+        try {
+          const result = await apiCall('/api/grade', {
+            method: 'POST',
+            body: {
+              answer_key_id: parseInt(selectedKeyId),
+              student_image: item.base64,
+              student_name: item.name
+            }
+          });
+          result.image_base64 = item.base64;
+          result.student_name = item.name;
+          gradingResults.push(result);
+        } catch (err) {
+          gradingResults.push({
+            student_name: item.name,
+            error: err.message,
+            image_base64: item.base64
+          });
+        }
+
+        progressFill.style.width = `${((i + 1) / total) * 100}%`;
+      }
+
+      progressCard.classList.add('hidden');
+      gradeBtn.disabled = false;
+      uploadQueue = [];
+      renderQueue();
+      showResults();
+    }
+
+    // --- Results Display ---
+    function showResults() {
+      const resultsCard = document.getElementById('resultsCard');
+      resultsCard.classList.remove('hidden');
+
+      if (gradingResults.length === 1) {
+        showSingleResult(gradingResults[0]);
+      } else {
+        showBatchResults();
+      }
+
+      loadPastResults();
+    }
+
+    function showSingleResult(result) {
+      document.getElementById('singleResult').classList.remove('hidden');
+      document.getElementById('batchResults').classList.add('hidden');
+
+      if (result.error) {
+        document.getElementById('scoreNum').textContent = 'Error';
+        document.getElementById('scoreTotal').textContent = '';
+        document.getElementById('scorePct').textContent = result.error;
+        document.getElementById('answerDetails').innerHTML = '';
+        return;
+      }
+
+      document.getElementById('scoreNum').textContent = result.total_score;
+      document.getElementById('scoreTotal').textContent = result.total_possible;
+      document.getElementById('scorePct').textContent = `(${result.percentage}%)`;
+
+      // Draw annotated image
+      drawAnnotatedImage(result);
+
+      // Answer details
+      const details = document.getElementById('answerDetails');
+      details.innerHTML = result.answers.map((a, i) => {
+        const q = selectedKey.questions[i];
+        return `
+          <div class="answer-row">
+            <span class="q-num">#${a.question_number || i + 1}</span>
+            <span class="${a.correct ? 'mark-correct' : 'mark-incorrect'}">${a.correct ? 'O' : 'X'}</span>
+            <span class="detected" title="OCR detected">${escapeHtml(a.detected_text)}</span>
+            <span class="expected" title="Expected">${escapeHtml(q?.correct_answer || '')}</span>
+            <span class="badge ${a.correct ? 'badge-correct' : 'badge-incorrect'}">
+              ${a.correct ? `+${a.score}` : '0'}
+            </span>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function drawAnnotatedImage(result) {
+      const canvas = document.getElementById('resultCanvas');
+      const ctx = canvas.getContext('2d');
+      const img = new Image();
+
+      img.onload = () => {
+        // Scale to fit
+        const maxW = 600;
+        const scale = Math.min(1, maxW / img.width);
+        canvas.width = img.width * scale;
+        canvas.height = img.height * scale;
+
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+        // Draw O/X marks on each region
+        result.answers.forEach((a, i) => {
+          const q = selectedKey.questions[i];
+          if (!q) return;
+
+          const r = q.region;
+          const x = r.x * scale;
+          const y = r.y * scale;
+          const w = r.width * scale;
+          const h = r.height * scale;
+
+          if (a.correct) {
+            // Green circle (O)
+            ctx.strokeStyle = '#28a745';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.arc(x + w + 15, y + h / 2, 12, 0, Math.PI * 2);
+            ctx.stroke();
+          } else {
+            // Red X
+            ctx.strokeStyle = '#dc3545';
+            ctx.lineWidth = 3;
+            const cx = x + w + 15;
+            const cy = y + h / 2;
+            ctx.beginPath();
+            ctx.moveTo(cx - 8, cy - 8);
+            ctx.lineTo(cx + 8, cy + 8);
+            ctx.moveTo(cx + 8, cy - 8);
+            ctx.lineTo(cx - 8, cy + 8);
+            ctx.stroke();
+          }
+        });
+
+        // Score at top-right
+        const scoreText = `${result.total_score}/${result.total_possible}`;
+        ctx.font = 'bold 28px sans-serif';
+        ctx.fillStyle = 'rgba(255,255,255,0.85)';
+        const textW = ctx.measureText(scoreText).width;
+        ctx.fillRect(canvas.width - textW - 24, 8, textW + 16, 36);
+        ctx.fillStyle = result.percentage >= 60 ? '#28a745' : '#dc3545';
+        ctx.fillText(scoreText, canvas.width - textW - 16, 35);
+      };
+
+      img.src = `data:image/jpeg;base64,${result.image_base64}`;
+    }
+
+    function showBatchResults() {
+      document.getElementById('singleResult').classList.add('hidden');
+      document.getElementById('batchResults').classList.remove('hidden');
+
+      const validResults = gradingResults.filter(r => !r.error);
+      const avgPct = validResults.length > 0
+        ? Math.round(validResults.reduce((s, r) => s + r.percentage, 0) / validResults.length)
+        : 0;
+
+      document.getElementById('batchAvg').textContent = `${avgPct}%`;
+
+      document.getElementById('batchList').innerHTML = gradingResults.map((r, i) => {
+        if (r.error) {
+          return `<div class="batch-item">
+            <span class="name">${escapeHtml(r.student_name)}</span>
+            <span style="color: #dc3545;">Error: ${r.error}</span>
+          </div>`;
+        }
+        return `<div class="batch-item" style="cursor: pointer;" onclick="viewSingleFromBatch(${i})">
+          <span class="q-num">${i + 1}</span>
+          <span class="name">${escapeHtml(r.student_name)}</span>
+          <span class="score" style="color: ${r.percentage >= 60 ? '#28a745' : '#dc3545'}">
+            ${r.total_score}/${r.total_possible} (${r.percentage}%)
+          </span>
+        </div>`;
+      }).join('');
+    }
+
+    function viewSingleFromBatch(index) {
+      showSingleResult(gradingResults[index]);
+      document.getElementById('singleResult').classList.remove('hidden');
+      document.getElementById('batchResults').classList.add('hidden');
+    }
+
+    function gradeMore() {
+      document.getElementById('resultsCard').classList.add('hidden');
+      document.getElementById('singleResult').classList.add('hidden');
+      document.getElementById('batchResults').classList.add('hidden');
+      gradingResults = [];
+    }
+
+    // --- Past Results ---
+    async function loadPastResults() {
+      const container = document.getElementById('pastResults');
+      if (!selectedKeyId) {
+        container.innerHTML = '<p style="color: #aaa;">Select an answer key to view past results.</p>';
+        return;
+      }
+
+      try {
+        const results = await apiCall(`/api/results/${selectedKeyId}`);
+        if (results.length === 0) {
+          container.innerHTML = '<p style="color: #aaa;">No past results for this answer key.</p>';
+          return;
+        }
+
+        container.innerHTML = `
+          <table>
+            <thead><tr><th>Student</th><th>Score</th><th>%</th><th>Date</th></tr></thead>
+            <tbody>
+              ${results.map(r => {
+                const pct = Math.round((r.total_score / r.total_possible) * 100);
+                return `<tr>
+                  <td>${escapeHtml(r.student_name || 'Unknown')}</td>
+                  <td>${r.total_score}/${r.total_possible}</td>
+                  <td style="color: ${pct >= 60 ? '#28a745' : '#dc3545'}; font-weight: 600;">${pct}%</td>
+                  <td>${new Date(r.graded_at).toLocaleString('zh-TW')}</td>
+                </tr>`;
+              }).join('')}
+            </tbody>
+          </table>
+        `;
+      } catch (err) {
+        container.innerHTML = `<p style="color: #dc3545;">Failed to load: ${err.message}</p>`;
+      }
+    }
+
+    // --- Init ---
+    loadKeys();
+  </script>
+</body>
+</html>

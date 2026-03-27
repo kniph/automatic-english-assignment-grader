@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Answer Key Setup - Homework Grader</title>
+  <link rel="stylesheet" href="css/common.css">
+  <style>
+    .editor-layout { display: grid; grid-template-columns: 1fr 360px; gap: 1rem; align-items: start; }
+    @media (max-width: 900px) { .editor-layout { grid-template-columns: 1fr; } }
+    .canvas-container { position: relative; background: #e9ecef; border-radius: 8px; overflow: hidden; min-height: 300px; }
+    .canvas-container canvas { display: block; max-width: 100%; cursor: crosshair; }
+    .question-list { max-height: 60vh; overflow-y: auto; }
+    .question-item {
+      padding: 0.75rem;
+      border: 1px solid #eee;
+      border-radius: 6px;
+      margin-bottom: 0.5rem;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+    .question-item:hover { border-color: #1a73e8; }
+    .question-item.selected { border-color: #ff4444; background: #fff5f5; }
+    .question-item .q-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem; }
+    .question-item .q-number { font-weight: 700; color: #1a73e8; }
+    .question-item.selected .q-number { color: #ff4444; }
+    .question-item .q-type { font-size: 0.75rem; color: #888; }
+    .question-item input, .question-item select { margin-bottom: 0.35rem; }
+    .inline-row { display: flex; gap: 0.5rem; }
+    .inline-row > * { flex: 1; }
+    .saved-keys-list { margin-top: 1rem; }
+    .saved-key-item { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem; border-bottom: 1px solid #eee; }
+    .instructions { font-size: 0.85rem; color: #666; line-height: 1.5; }
+    .settings-row { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+    .settings-row label { display: flex; align-items: center; gap: 0.35rem; margin-bottom: 0; font-weight: 400; }
+    .settings-row input[type="checkbox"] { width: auto; margin: 0; }
+  </style>
+</head>
+<body>
+  <header class="app-header">
+    <h1>English Homework Grader</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="teacher.html" class="active">Answer Keys</a>
+      <a href="grader.html">Grade</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <!-- Step 1: Name & Upload -->
+    <div class="card" id="setupCard">
+      <h2>1. Create New Answer Key</h2>
+      <div class="grid-2">
+        <div>
+          <label>Answer Key Name</label>
+          <input type="text" id="keyName" placeholder="e.g. Unit 3 Quiz">
+        </div>
+        <div>
+          <label>Teacher Name</label>
+          <input type="text" id="teacherNameInput" placeholder="Your name">
+        </div>
+      </div>
+      <label>Upload Template Image (blank worksheet or answer key photo)</label>
+      <div class="upload-zone" id="uploadZone">
+        <p>Click or drag image here (JPG, PNG, HEIC)</p>
+        <input type="file" id="fileInput" accept="image/*,.heic">
+      </div>
+    </div>
+
+    <!-- Step 2: ROI Editor -->
+    <div class="card hidden" id="editorCard">
+      <div class="flex-between mb-1">
+        <h2>2. Draw Answer Regions</h2>
+        <div>
+          <button class="btn btn-sm btn-outline" onclick="undoLastRegion()">Undo Last</button>
+          <button class="btn btn-sm btn-danger" onclick="clearAllRegions()">Clear All</button>
+        </div>
+      </div>
+      <p class="instructions mb-2">Draw rectangles on the image where each answer should appear. Fill in the correct answer for each region.</p>
+
+      <div class="editor-layout">
+        <!-- Canvas -->
+        <div class="canvas-container">
+          <canvas id="roiCanvas"></canvas>
+        </div>
+
+        <!-- Question List Panel -->
+        <div>
+          <div class="card" style="padding: 0.75rem;">
+            <h2 style="font-size: 0.95rem;">Grading Settings</h2>
+            <div class="settings-row">
+              <label><input type="checkbox" id="ignoreCaseCheck" checked> Ignore Case</label>
+              <label><input type="checkbox" id="ignorePuncCheck" checked> Ignore Punctuation</label>
+            </div>
+          </div>
+
+          <div class="question-list" id="questionList">
+            <p class="text-center" style="color: #aaa; padding: 2rem;">Draw on the image to add questions</p>
+          </div>
+
+          <button class="btn btn-success mt-1" style="width: 100%;" onclick="saveAnswerKey()" id="saveBtn" disabled>
+            Save Answer Key
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Saved Answer Keys -->
+    <div class="card" id="savedKeysCard">
+      <h2>Saved Answer Keys</h2>
+      <div id="savedKeysList"><p style="color: #aaa;">Loading...</p></div>
+    </div>
+  </div>
+
+  <script src="js/common.js"></script>
+  <script src="js/roi-editor.js"></script>
+  <script>
+    // --- State ---
+    let editor = null;
+    let templateBase64 = null;
+
+    // --- Init ---
+    const teacherNameInput = document.getElementById('teacherNameInput');
+    teacherNameInput.value = getTeacherName();
+    teacherNameInput.addEventListener('change', () => setTeacherName(teacherNameInput.value.trim()));
+
+    // --- Upload ---
+    const uploadZone = document.getElementById('uploadZone');
+    const fileInput = document.getElementById('fileInput');
+
+    setupUploadZone(uploadZone, fileInput, async (files) => {
+      const file = files[0];
+      if (!file) return;
+
+      try {
+        let base64 = await fileToBase64(file);
+
+        // Convert HEIC if needed
+        if (file.name.toLowerCase().endsWith('.heic') || file.type === 'image/heic') {
+          showToast('Converting HEIC image...');
+          const result = await apiCall('/api/convert-heic', {
+            method: 'POST',
+            body: { image: base64 }
+          });
+          base64 = result.image;
+        }
+
+        templateBase64 = base64;
+        const src = `data:image/jpeg;base64,${base64}`;
+
+        // Init editor
+        const canvas = document.getElementById('roiCanvas');
+        editor = new ROIEditor(canvas, {
+          onRegionAdded: (index, region) => {
+            renderQuestionList();
+            document.getElementById('saveBtn').disabled = false;
+          },
+          onRegionSelected: (index) => {
+            renderQuestionList();
+            scrollToQuestion(index);
+          },
+          onRegionMoved: () => renderQuestionList()
+        });
+
+        await editor.loadImage(src);
+        document.getElementById('editorCard').classList.remove('hidden');
+        showToast('Image loaded! Draw rectangles on answer areas.');
+      } catch (err) {
+        showToast('Failed to load image: ' + err.message, 'error');
+      }
+    });
+
+    // --- Question List ---
+    function renderQuestionList() {
+      const list = document.getElementById('questionList');
+      const regions = editor.getRegions();
+
+      if (regions.length === 0) {
+        list.innerHTML = '<p class="text-center" style="color: #aaa; padding: 2rem;">Draw on the image to add questions</p>';
+        return;
+      }
+
+      list.innerHTML = regions.map((q, i) => `
+        <div class="question-item ${i === editor.selectedIndex ? 'selected' : ''}" data-index="${i}" onclick="selectQuestion(${i})">
+          <div class="q-header">
+            <span class="q-number">#${q.number}</span>
+            <button class="btn btn-sm btn-danger" onclick="event.stopPropagation(); deleteQuestion(${i})">Delete</button>
+          </div>
+          <div class="inline-row">
+            <div>
+              <select onchange="updateQuestion(${i}, 'type', this.value)" onclick="event.stopPropagation()">
+                <option value="true_false" ${q.type === 'true_false' ? 'selected' : ''}>T/F</option>
+                <option value="fill_blank" ${q.type === 'fill_blank' ? 'selected' : ''}>Fill-in-blank</option>
+                <option value="short_answer" ${q.type === 'short_answer' ? 'selected' : ''}>Short Answer</option>
+              </select>
+            </div>
+            <div>
+              <input type="number" value="${q.points}" min="1" max="100" placeholder="Pts"
+                onclick="event.stopPropagation()"
+                onchange="updateQuestion(${i}, 'points', parseInt(this.value) || 1)">
+            </div>
+          </div>
+          <input type="text" value="${escapeHtml(q.correct_answer)}" placeholder="Correct answer"
+            onclick="event.stopPropagation()"
+            onchange="updateQuestion(${i}, 'correct_answer', this.value)">
+          <input type="text" value="${(q.alt_answers || []).join(', ')}" placeholder="Alt answers (comma-separated)"
+            onclick="event.stopPropagation()"
+            onchange="updateQuestion(${i}, 'alt_answers', this.value.split(',').map(s => s.trim()).filter(Boolean))">
+        </div>
+      `).join('');
+    }
+
+    function selectQuestion(index) {
+      editor.selectRegion(index);
+      renderQuestionList();
+    }
+
+    function scrollToQuestion(index) {
+      const items = document.querySelectorAll('.question-item');
+      if (items[index]) items[index].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function updateQuestion(index, field, value) {
+      const regions = editor.getRegions();
+      if (regions[index]) {
+        regions[index][field] = value;
+      }
+    }
+
+    function deleteQuestion(index) {
+      editor.deleteRegion(index);
+      renderQuestionList();
+      if (editor.getRegions().length === 0) {
+        document.getElementById('saveBtn').disabled = true;
+      }
+    }
+
+    function undoLastRegion() {
+      const regions = editor.getRegions();
+      if (regions.length > 0) {
+        editor.deleteRegion(regions.length - 1);
+        renderQuestionList();
+      }
+      if (editor.getRegions().length === 0) {
+        document.getElementById('saveBtn').disabled = true;
+      }
+    }
+
+    function clearAllRegions() {
+      if (editor.getRegions().length > 0 && confirm('Clear all regions?')) {
+        editor.clear();
+        renderQuestionList();
+        document.getElementById('saveBtn').disabled = true;
+      }
+    }
+
+    function escapeHtml(str) {
+      const div = document.createElement('div');
+      div.textContent = str || '';
+      return div.innerHTML;
+    }
+
+    // --- Save ---
+    async function saveAnswerKey() {
+      const name = document.getElementById('keyName').value.trim();
+      const teacherName = teacherNameInput.value.trim();
+
+      if (!teacherName) { showToast('Please enter your name', 'error'); return; }
+      if (!name) { showToast('Please enter an answer key name', 'error'); return; }
+
+      const regions = editor.getRegions();
+      const incomplete = regions.find(r => !r.correct_answer);
+      if (incomplete) {
+        showToast(`Question #${incomplete.number} is missing the correct answer`, 'error');
+        selectQuestion(regions.indexOf(incomplete));
+        return;
+      }
+
+      const saveBtn = document.getElementById('saveBtn');
+      saveBtn.disabled = true;
+      saveBtn.textContent = 'Saving...';
+
+      try {
+        const body = {
+          teacher_name: teacherName,
+          name,
+          template_image: templateBase64,
+          image_width: editor.imageWidth,
+          image_height: editor.imageHeight,
+          questions: regions,
+          settings: {
+            case_sensitive: !document.getElementById('ignoreCaseCheck').checked,
+            ignore_punctuation: document.getElementById('ignorePuncCheck').checked,
+            fuzzy_default_threshold: 0
+          }
+        };
+
+        await apiCall('/api/answer-keys', { method: 'POST', body });
+        showToast('Answer key saved!');
+        setTeacherName(teacherName);
+        loadSavedKeys();
+
+        // Reset editor
+        editor.clear();
+        renderQuestionList();
+        document.getElementById('editorCard').classList.add('hidden');
+        document.getElementById('keyName').value = '';
+        templateBase64 = null;
+      } catch (err) {
+        showToast('Save failed: ' + err.message, 'error');
+      } finally {
+        saveBtn.disabled = false;
+        saveBtn.textContent = 'Save Answer Key';
+      }
+    }
+
+    // --- Load Saved Keys ---
+    async function loadSavedKeys() {
+      const container = document.getElementById('savedKeysList');
+      try {
+        const teacherName = getTeacherName();
+        const keys = await apiCall(`/api/answer-keys?teacher_name=${encodeURIComponent(teacherName)}`);
+
+        if (keys.length === 0) {
+          container.innerHTML = '<p style="color: #aaa;">No saved answer keys yet.</p>';
+          return;
+        }
+
+        container.innerHTML = keys.map(k => `
+          <div class="saved-key-item">
+            <div>
+              <strong>${escapeHtml(k.name)}</strong>
+              <span class="q-type" style="margin-left: 0.5rem;">
+                ${k.total_points} pts | ${new Date(k.created_at).toLocaleDateString('zh-TW')}
+              </span>
+            </div>
+            <div>
+              <button class="btn btn-sm btn-primary" onclick="window.location.href='grader.html?key=${k.id}'">Grade</button>
+              <button class="btn btn-sm btn-danger" onclick="deleteKey(${k.id})">Delete</button>
+            </div>
+          </div>
+        `).join('');
+      } catch (err) {
+        container.innerHTML = `<p style="color: #dc3545;">Failed to load: ${err.message}</p>`;
+      }
+    }
+
+    async function deleteKey(id) {
+      if (!confirm('Delete this answer key and all its results?')) return;
+      try {
+        await apiCall(`/api/answer-keys/${id}`, { method: 'DELETE' });
+        showToast('Deleted');
+        loadSavedKeys();
+      } catch (err) {
+        showToast('Delete failed: ' + err.message, 'error');
+      }
+    }
+
+    // --- Init ---
+    loadSavedKeys();
+  </script>
+</body>
+</html>

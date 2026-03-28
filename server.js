@@ -984,45 +984,58 @@ async function gradeHandwriting(answerKeyBase64, studentBase64, assignmentLabel)
           type: 'text',
           text: `You are a precise grader for a children's English workbook: "${assignmentLabel}".
 
-Image 1 = ANSWER KEY (shows the correct answers — pre-filled or marked by teacher)
-Image 2 = STUDENT'S HANDWRITTEN WORK
+Image 1 = ANSWER KEY (correct answers marked by teacher — may show colored lines, circled words, written numbers, tick marks)
+Image 2 = STUDENT'S HANDWRITTEN WORK (student's pencil/pen responses)
 
 ════════════════════════════════════════
 STEP 1 — IDENTIFY ALL SECTIONS
-Look at both images carefully. List every section (A, B, C, D …) and its question type before grading.
+Scan both images. List every section label (A, B, C, D, E, F …) and its question type.
 
 STEP 2 — GRADE EVERY ITEM
-Grade ALL answerable items across ALL sections. Do NOT skip any section.
+Grade ALL items in ALL sections. Do NOT skip any section.
 
+════════════════════════════════════════
 QUESTION TYPE RULES:
-──────────────────────────────────────────
-【Matching — lines connecting items】
-- Compare the student's drawn lines to the answer key's lines.
-- For each character/word on the left: check which item on the right it connects to.
-- correct_answer = "LeftItem→RightItem" (use the printed label or describe the image clearly, e.g. "Lucy→roller coaster")
-- student_answer = what the student actually connected (e.g. "Lucy→merry-go-round")
-- A line from the wrong item = incorrect.
 
-【Circling words (Read and circle)】
-- Each sentence has TWO blanks to circle (one word from each pair).
-- CRITICAL: If the student circled EXACTLY ONE word per blank = grade that word.
-- If the student circled BOTH words in a single blank (e.g. both "his" AND "he") = WRONG for that blank, student_answer="(both circled)".
-- If the student circled NOTHING for a blank = WRONG, student_answer="(blank)".
-- Compare each circled word to the answer key. Case-insensitive.
-- Each sentence counts as ONE item; it is correct only if BOTH blanks are correctly circled.
+【Matching — lines connecting dots/items】
+HOW TO READ THE ANSWER KEY:
+- The answer key contains hand-drawn lines (often RED or colored) connecting a dot under each character/word to a dot under the correct target item.
+- Carefully trace each line from its starting dot to its ending dot to determine the correct pair.
+- Do NOT be confused by decorative image lines or borders — only count lines that connect the labeled dots below the images.
 
-【Fill-in blanks】
-- Compare written text to the correct answer. Accept 1-character typos.
+HOW TO READ THE STUDENT WORK:
+- The student drew lines (pencil/blue ink) connecting dots in the same matching area.
+- Trace each student line from start dot to end dot.
+
+GRADING:
+- Compare: does the student's line connect the same pair of dots as the answer key?
+- correct_answer = "CharacterName→TargetName" (use printed text labels visible in the image)
+- student_answer = what the student actually connected
+- If lines are too unclear to read = correct:false, student_answer:"(unclear)"
+
+【Circling words (Read and circle / Look and circle)】
+- Each item typically has TWO choices to circle (one from each pair, e.g. "she / her").
+- EXACTLY ONE word circled per blank = grade that word.
+- BOTH words circled in one blank = WRONG → student_answer="(both circled)"
+- NO circle for a blank = WRONG → student_answer="(blank)"
+- Compare each circled word to the answer key word. Case-insensitive.
+- The item is correct ONLY IF every blank in that sentence is correctly circled.
+
+【Fill-in blanks (write the answer)】
+- The student writes a word or phrase in a blank space.
+- SINGLE WORD answers: accept 1-character typo (e.g. "hsi" → "his" ✓).
+- PHRASE answers (2+ words): ALL key words must be present and correct.
+  A partial answer is WRONG (e.g. student wrote "Nic" but correct answer is "Nice to see you." → WRONG).
 - Blank or illegible = incorrect, student_answer="(blank)".
 
 【Checkboxes / tick marks】
-- Each row = 1 item. Check if the student's tick/check is on the correct row.
+- Each row = 1 item. Check if the student's tick/check mark is on the correct row(s).
 
 【Numbering / ordering boxes】
-- Each box = 1 item. The written number must match the answer key.
+- Each box = 1 item. The number written must exactly match the answer key.
 
 【True / False, Yes / No】
-- Accept T/F, True/False, O/X, Yes/No equivalents.
+- Accept T/F, True/False, O/X, Yes/No as equivalents.
 - Blank = incorrect.
 
 ════════════════════════════════════════
@@ -1031,8 +1044,8 @@ Return ONLY valid JSON — no markdown, no explanation, no extra text:
 
 JSON field rules:
 - "number": sequential integer starting at 1 across ALL sections
-- "section": section letter (A, B, C …)
-- "correct_answer": the expected correct answer
+- "section": the section letter this item belongs to (A, B, C …)
+- "correct_answer": the correct answer from the answer key
 - "student_answer": exactly what the student wrote/circled/drew
 - "correct": true or false`
         },

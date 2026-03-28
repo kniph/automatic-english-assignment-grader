@@ -39,6 +39,7 @@ Essential project configuration, constants, and quick reference information.
 | `assignment_image` | TEXT | Base64 JPEG of blank workbook page (may be multi-page stitched vertically) |
 | `answer_key_image` | TEXT | Base64 JPEG of answer key (never sent to student) |
 | `audio_files` | JSONB | `[{name, label, data (base64 mp3)}]` |
+| `supplemental_notes` | TEXT | Optional teacher-entered grading notes for hard question types (`matching`, `skip`, `written_only`, etc.) |
 | `created_at` | TIMESTAMP | |
 
 **Unique constraint**: `(howdy_level, unit, book_type)` — UPSERT on duplicate
@@ -94,9 +95,9 @@ Essential project configuration, constants, and quick reference information.
 
 ### Student Workflow (v2)
 - `GET  /api/assignments/available` — list all (howdy, unit, book) combinations that have been uploaded
-- `GET  /api/assignments?howdy=&unit=&book=` — filter assignments (no images/audio, metadata only)
+- `GET  /api/assignments?howdy=&unit=&book=` — filter assignments (no images/audio, metadata only; includes `has_supplemental_notes`)
 - `GET  /api/assignments/:id` — get assignment with workbook image + audio (NO answer key)
-- `POST /api/assignments` — create/upsert assignment (teacher only)
+- `POST /api/assignments` — create/upsert assignment (teacher only; accepts optional `supplemental_notes`)
 - `DELETE /api/assignments/:id`
 - `POST /api/submissions` — student submits merged drawing → Claude grades → returns results
 - `GET  /api/submissions?assignment_id=X` — list submissions for teacher view
@@ -162,6 +163,17 @@ Essential project configuration, constants, and quick reference information.
 
 To change model: edit `gradeWithClaude()` and `gradeHandwriting()` in `server.js`.
 
+### Supplemental Grading Notes
+
+Teachers can add plain-text notes in `public/teacher.html` for question types that are unreliable from images alone.
+
+Typical patterns:
+- Section-specific matching pairs, e.g. `[C] matching` followed by `1. Lucy -> toy shop`
+- `skip` for sections that should be excluded from scoring
+- `written_only` when the model should ignore a circling/matching subtask and grade only the written answer
+
+These notes are stored in `assignments.supplemental_notes` and are treated as higher priority than the answer-key image for the sections they mention.
+
 ---
 
 ## Image Storage Notes
@@ -209,10 +221,10 @@ Analysed by reviewing NH1 WB A (U1–U8, Review 1) and NH1 WB B (U1–U8, Review
 
 | Question Type | Problem | Recommended Approach |
 |---|---|---|
-| **Look / Listen and match (line connecting)** | AI cannot reliably trace hand-drawn lines through crossing paths, especially red lines on complex backgrounds | **Teacher inputs correct pairs as text when uploading** (see ADR-008) |
-| **Listen, circle AND match (combined)** | Two high-risk operations compounded (U5 WB A Part C) | Treat as match — teacher provides answer text |
-| **Complete the crossword** | Grid spatial reasoning extremely unreliable | **Skip / exclude from grading** |
-| **Circle hidden word in letter jumble** | Find and circle a word hidden in random letters (U7 WB A Part F) | Skip circling; grade only the written answer below |
+| **Look / Listen and match (line connecting)** | AI cannot reliably trace hand-drawn lines through crossing paths, especially red lines on complex backgrounds | **Use supplemental notes with teacher-entered matching pairs** (see ADR-008) |
+| **Listen, circle AND match (combined)** | Two high-risk operations compounded (U5 WB A Part C) | Treat as match and provide the correct pairs in supplemental notes |
+| **Complete the crossword** | Grid spatial reasoning extremely unreliable | **Mark the section `skip` in supplemental notes** |
+| **Circle hidden word in letter jumble** | Find and circle a word hidden in random letters (U7 WB A Part F) | Use `written_only` in supplemental notes; grade only the written answer below |
 
 ### ⚫ Not Gradable (Skip)
 

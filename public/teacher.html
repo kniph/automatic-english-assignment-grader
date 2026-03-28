@@ -41,6 +41,23 @@
     .audio-item input[type="text"] { width: 120px; margin: 0; font-size: 0.82rem; padding: 0.25rem 0.5rem; }
     .audio-item .del-a { background: none; border: none; color: #dc3545; font-size: 1rem; cursor: pointer; padding: 0 0.2rem; }
 
+    /* Supplemental grading notes */
+    .note-box {
+      width: 100%; min-height: 180px; resize: vertical; margin-top: 0.35rem;
+      font-family: "SFMono-Regular", Menlo, Consolas, monospace;
+      font-size: 0.82rem; line-height: 1.5;
+    }
+    .note-help {
+      margin-top: 0.55rem; padding: 0.75rem 0.85rem;
+      border-radius: 10px; background: #f8f9fa; border: 1px solid #e9ecef;
+      font-size: 0.8rem; color: #555;
+    }
+    .note-help pre {
+      margin: 0.45rem 0 0; white-space: pre-wrap;
+      font-family: "SFMono-Regular", Menlo, Consolas, monospace;
+      font-size: 0.78rem; color: #333;
+    }
+
     /* Assignment table */
     .asg-table { width: 100%; border-collapse: collapse; }
     .asg-table th, .asg-table td { padding: 0.45rem 0.6rem; border-bottom: 1px solid #eee; font-size: 0.88rem; text-align: left; }
@@ -52,6 +69,10 @@
     }
     .audio-badge {
       display: inline-block; background: #fff3cd; color: #856404; border-radius: 4px;
+      padding: 0.1rem 0.4rem; font-size: 0.75rem;
+    }
+    .note-badge {
+      display: inline-block; background: #e6f4ea; color: #137333; border-radius: 4px;
       padding: 0.1rem 0.4rem; font-size: 0.75rem;
     }
 
@@ -155,6 +176,26 @@
             <input type="file" id="fileAudio" accept="audio/mp3,audio/mpeg,.mp3" multiple>
           </div>
           <div class="audio-list" id="audioList"></div>
+        </div>
+
+        <!-- Step D: Supplemental notes -->
+        <div style="margin-top:1rem;">
+          <label for="supplementalNotes" style="font-weight:700; margin-bottom:0.4rem; display:block;">🧠 補充判題規則（選填）</label>
+          <textarea id="supplementalNotes" class="note-box" placeholder="適合 AI 不擅長的題型，例如配對、crossword、隱藏字、只批寫字不批圈選。"></textarea>
+          <div class="note-help">
+            這裡的內容會直接送進判題模型，而且優先權高於答案卷圖片。建議只寫 AI 容易誤判的 section。
+            <pre>[C] matching
+1. Lucy -> toy shop
+2. Peter -> carousel
+
+[E] skip
+crossword
+
+[F] written_only
+Ignore the circled hidden word. Grade only the written answers.
+1. yellow
+2. red</pre>
+          </div>
         </div>
 
         <!-- Save -->
@@ -344,7 +385,8 @@
             howdy_level: howdy, unit, book_type: book,
             assignment_image: assignBase64,
             answer_key_image: answerBase64,
-            audio_files: audioFiles
+            audio_files: audioFiles,
+            supplemental_notes: document.getElementById('supplementalNotes').value.trim()
           }
         });
         showToast(`✅ Howdy ${howdy} Unit ${unit} ${book}本 已儲存！`);
@@ -362,6 +404,7 @@
         document.getElementById('selHowdy').value = '';
         document.getElementById('selUnit').value = '';
         document.getElementById('selBook').value = '';
+        document.getElementById('supplementalNotes').value = '';
       } catch(err) {
         showToast('儲存失敗：' + err.message, 'error');
       } finally {
@@ -381,7 +424,7 @@
         wrap.innerHTML = `
           <table class="asg-table">
             <thead>
-              <tr><th>Howdy</th><th>Unit</th><th>習作本</th><th>音檔</th><th>上傳時間</th><th></th></tr>
+              <tr><th>Howdy</th><th>Unit</th><th>習作本</th><th>音檔</th><th>補充規則</th><th>上傳時間</th><th></th></tr>
             </thead>
             <tbody>
               ${list.map(a => `
@@ -391,6 +434,9 @@
                   <td><span class="book-badge">${a.book_type} 本</span></td>
                   <td>${parseInt(a.audio_count) > 0
                         ? `<span class="audio-badge">🎵 ${a.audio_count} 個</span>`
+                        : '<span style="color:#ccc;">—</span>'}</td>
+                  <td>${a.has_supplemental_notes
+                        ? '<span class="note-badge">🧠 已設定</span>'
                         : '<span style="color:#ccc;">—</span>'}</td>
                   <td>${new Date(a.created_at).toLocaleDateString('zh-TW')}</td>
                   <td>

@@ -193,9 +193,12 @@ Gemini suggested OpenCV + HSV filtering + A* path tracing, but this requires:
 **Decision**:
 For matching exercises, **teachers enter the correct pairs as text** when uploading an assignment (e.g., `Lucy→toy shop, Peter→carousel`). Claude only needs to read the student's drawn lines and compare them to the text answer key — not read the answer key image for this question type.
 
-**Implementation**: Planned — requires teacher.html UI addition for text answer input per question type, and updated `gradeHandwriting()` prompt to accept supplementary text answers.
+**Implementation**:
+- `assignments.supplemental_notes` stores teacher-entered grading notes
+- `public/teacher.html` provides a textarea for section-specific notes such as matching pairs, `skip`, or `written_only`
+- `gradeHandwriting()` injects those notes into the Claude prompt and treats them as higher priority than the answer-key image for the sections they mention
 
-**Current Status**: Not yet implemented. For now, matching is graded from the answer key image alone (unreliable). Teacher should verify matching question scores manually.
+**Current Status**: Implemented on 2026-03-29. Matching and other high-risk sections can now be guided by teacher text notes instead of pure image inference.
 
 **Rationale**:
 - Eliminates the hardest visual task entirely

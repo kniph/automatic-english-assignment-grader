@@ -219,10 +219,33 @@ Reviewed all pages of NH1 WB A (U1–U8 + Review 1) and NH1 WB B (U1–U8, first
 
 ---
 
+## 2026-03-29 - Supplemental Grading Notes for Hard Question Types
+
+**Work Done**:
+- Added `assignments.supplemental_notes` column and migration in `server.js`
+- Updated `POST /api/assignments` UPSERT to save optional teacher-entered grading notes
+- Updated assignment list metadata to expose `has_supplemental_notes`
+- Added `public/teacher.html` textarea for section-specific guidance such as `matching`, `skip`, and `written_only`
+- Updated `gradeHandwriting()` so Claude treats supplemental notes as higher priority than the answer-key image for listed sections
+
+**Result**:
+- Matching exercises no longer need to rely on pure image inference for the correct pairs
+- Teachers can explicitly exclude crossword-like sections from scoring
+- Mixed tasks can be constrained to grade only the written part when circling/matching is unreliable
+
+**Files Modified**:
+- `server.js`
+- `public/teacher.html`
+- `docs/project_notes/decisions.md`
+- `docs/project_notes/key_facts.md`
+- `docs/project_notes/issues.md`
+
+---
+
 ## Pending / Future Work
 
-- [ ] **Matching text answer key**: teacher.html UI to input correct pairs as text (e.g., `Lucy→toy shop`) for matching exercises; `gradeHandwriting()` to accept and use this alongside image
-- [ ] **Crossword / jumble-circle skip**: mechanism for teacher to mark certain question types as "skip" so they're excluded from scoring
+- [ ] Supplemental notes preview/edit when reopening an existing assignment from the teacher list
+- [ ] Stronger structured syntax validation for supplemental notes so malformed teacher input is caught before upload
 - [ ] Student results history page (view past submissions by name)
 - [ ] Teacher: per-assignment class analytics (which questions students miss most)
 - [ ] Teacher: student management (class list, progress over time)

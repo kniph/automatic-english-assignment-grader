@@ -66,6 +66,7 @@ async function initDB() {
         assignment_image TEXT NOT NULL,
         answer_key_image TEXT NOT NULL,
         audio_files JSONB DEFAULT '[]',
+        supplemental_notes TEXT DEFAULT '',
         created_at TIMESTAMP DEFAULT NOW(),
         UNIQUE(howdy_level, unit, book_type)
       );
@@ -75,6 +76,8 @@ async function initDB() {
       ALTER TABLE assignments DROP CONSTRAINT IF EXISTS assignments_unit_check;
       ALTER TABLE assignments ADD CONSTRAINT assignments_unit_check CHECK (unit BETWEEN 1 AND 10);
     `).catch(() => {/* ignore if already updated */});
+    await client.query(`ALTER TABLE assignments ADD COLUMN IF NOT EXISTS supplemental_notes TEXT DEFAULT ''`).catch(() => {});
+    await client.query(`UPDATE assignments SET supplemental_notes = '' WHERE supplemental_notes IS NULL`).catch(() => {});
     await client.query(`
       CREATE TABLE IF NOT EXISTS student_submissions (
         id SERIAL PRIMARY KEY,
@@ -784,7 +787,9 @@ app.get('/api/assignments', async (req, res) => {
   try {
     const { howdy, unit, book } = req.query;
     let query = `SELECT id, howdy_level, unit, book_type,
-                   jsonb_array_length(audio_files) AS audio_count, created_at
+                   jsonb_array_length(audio_files) AS audio_count,
+                   (COALESCE(BTRIM(supplemental_notes), '') <> '') AS has_supplemental_notes,
+                   created_at
                  FROM assignments`;
     const params = [];
     const conds = [];
@@ -837,7 +842,15 @@ app.get('/api/assignments/:id', async (req, res) => {
 // UPSERT on (howdy_level, unit, book_type)
 app.post('/api/assignments', async (req, res) => {
   try {
-    const { howdy_level, unit, book_type, assignment_image, answer_key_image, audio_files = [] } = req.body;
+    const {
+      howdy_level,
+      unit,
+      book_type,
+      assignment_image,
+      answer_key_image,
+      audio_files = [],
+      supplemental_notes = ''
+    } = req.body;
     if (!howdy_level || !unit || !book_type || !assignment_image || !answer_key_image) {
       return res.status(400).json({ error: 'Missing required fields' });
     }
@@ -855,17 +868,27 @@ app.post('/api/assignments', async (req, res) => {
       compressImg(assignment_image),
       compressImg(answer_key_image)
     ]);
+    const cleanedSupplementalNotes = String(supplemental_notes || '').trim();
 
     const result = await pool.query(`
-      INSERT INTO assignments (howdy_level, unit, book_type, assignment_image, answer_key_image, audio_files)
-      VALUES ($1, $2, $3, $4, $5, $6)
+      INSERT INTO assignments (howdy_level, unit, book_type, assignment_image, answer_key_image, audio_files, supplemental_notes)
+      VALUES ($1, $2, $3, $4, $5, $6, $7)
       ON CONFLICT (howdy_level, unit, book_type) DO UPDATE SET
         assignment_image = EXCLUDED.assignment_image,
         answer_key_image = EXCLUDED.answer_key_image,
         audio_files = EXCLUDED.audio_files,
+        supplemental_notes = EXCLUDED.supplemental_notes,
         created_at = NOW()
       RETURNING id, howdy_level, unit, book_type, created_at`,
-      [parseInt(howdy_level), parseInt(unit), book_type.toUpperCase(), storedAssign, storedAnswer, JSON.stringify(audio_files)]
+      [
+        parseInt(howdy_level),
+        parseInt(unit),
+        book_type.toUpperCase(),
+        storedAssign,
+        storedAnswer,
+        JSON.stringify(audio_files),
+        cleanedSupplementalNotes
+      ]
     );
     res.status(201).json(result.rows[0]);
   } catch (err) {
@@ -908,7 +931,12 @@ app.post('/api/submissions', async (req, res) => {
 
     // Grade with Claude
     const assignmentLabel = `Howdy ${asg.howdy_level} Unit ${asg.unit} 習作${asg.book_type}本`;
-    const claudeResult = await gradeHandwriting(asg.answer_key_image, submJpeg, assignmentLabel);
+    const claudeResult = await gradeHandwriting(
+      asg.answer_key_image,
+      submJpeg,
+      assignmentLabel,
+      asg.supplemental_notes || ''
+    );
 
     const answers = claudeResult.questions.map(q => ({
       question_number: q.number,
@@ -921,7 +949,7 @@ app.post('/api/submissions', async (req, res) => {
     }));
     const totalScore = answers.filter(a => a.correct).length;
     const totalPossible = claudeResult.total_possible;
-    const percentage = Math.round((totalScore / totalPossible) * 100);
+    const percentage = totalPossible > 0 ? Math.round((totalScore / totalPossible) * 100) : 0;
 
     const saveResult = await pool.query(`
       INSERT INTO student_submissions
@@ -977,7 +1005,25 @@ app.get('/api/submissions/:id', async (req, res) => {
 // Claude grading for handwritten workbook pages
 // ============================================================
 
-async function gradeHandwriting(answerKeyBase64, studentBase64, assignmentLabel) {
+function buildSupplementalNotesBlock(supplementalNotes) {
+  const notes = String(supplementalNotes || '').trim();
+  if (!notes) {
+    return `SUPPLEMENTAL TEACHER NOTES:
+- None. Grade only from the images.`;
+  }
+
+  return `SUPPLEMENTAL TEACHER NOTES (highest priority for any section they mention):
+${notes}
+
+How to apply these notes:
+- Teacher notes override the answer-key image whenever they conflict.
+- If teacher notes provide matching pairs in text, use those text pairs as the authoritative correct answers.
+- If teacher notes say "skip" for a section or question type, omit those items from the JSON and from total_possible.
+- If teacher notes say to ignore one visual subtask and grade only the writing, follow that exactly.
+- Do not invent answers for any skipped item.`;
+}
+
+async function gradeHandwriting(answerKeyBase64, studentBase64, assignmentLabel, supplementalNotes = '') {
   const client = getAnthropicClient();
   const response = await client.messages.create({
     model: 'claude-sonnet-4-6',
@@ -997,7 +1043,7 @@ STEP 1 — IDENTIFY ALL SECTIONS
 Scan both images. List every section label (A, B, C, D, E, F …) and its question type.
 
 STEP 2 — GRADE EVERY ITEM
-Grade ALL items in ALL sections. Do NOT skip any section.
+Grade ALL items in ALL sections unless the supplemental teacher notes explicitly say to skip a section.
 
 ════════════════════════════════════════
 QUESTION TYPE RULES:
@@ -1044,6 +1090,9 @@ GRADING:
 - Blank = incorrect.
 
 ════════════════════════════════════════
+${buildSupplementalNotesBlock(supplementalNotes)}
+
+════════════════════════════════════════
 Return ONLY valid JSON — no markdown, no explanation, no extra text:
 {"questions":[{"number":1,"section":"A","correct_answer":"...","student_answer":"...","correct":true}],"total_possible":N}
 
@@ -1052,7 +1101,8 @@ JSON field rules:
 - "section": the section letter this item belongs to (A, B, C …)
 - "correct_answer": the correct answer from the answer key
 - "student_answer": exactly what the student wrote/circled/drew
-- "correct": true or false`
+- "correct": true or false
+- Omit any item or section that the teacher explicitly marked as skipped`
         },
         { type: 'image', source: { type: 'base64', media_type: 'image/jpeg', data: answerKeyBase64 } },
         { type: 'image', source: { type: 'base64', media_type: 'image/jpeg', data: studentBase64 } }

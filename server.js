@@ -5,7 +5,6 @@ const { Pool } = require('pg');
 const sharp = require('sharp');
 const heicConvert = require('heic-convert');
 const path = require('path');
-const pdfParse = require('pdf-parse');
 const mammoth = require('mammoth');
 
 const app = express();
@@ -389,8 +388,24 @@ app.post('/api/parse-document', async (req, res) => {
     let text = '';
 
     if (type === 'pdf') {
-      const parsed = await pdfParse(buffer, { max: 0 });
-      text = parsed.text;
+      // Use Google Vision API directly — it accepts PDF bytes natively
+      const apiKey = process.env.GOOGLE_VISION_API_KEY;
+      if (!apiKey || apiKey === 'YOUR_KEY_HERE') return res.status(500).json({ error: 'Google Vision API key not configured' });
+      const visionRes = await fetch(`https://vision.googleapis.com/v1/images:annotate?key=${apiKey}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          requests: [{
+            image: { content: data },
+            features: [{ type: 'DOCUMENT_TEXT_DETECTION' }],
+            imageContext: { languageHints: ['en', 'zh'] }
+          }]
+        })
+      });
+      const visionData = await visionRes.json();
+      const annotation = visionData.responses?.[0];
+      if (annotation?.error) return res.status(500).json({ error: 'Vision API: ' + annotation.error.message });
+      text = annotation?.fullTextAnnotation?.text || '';
     } else if (type === 'docx') {
       const result = await mammoth.extractRawText({ buffer });
       text = result.value;

@@ -125,6 +125,7 @@ npm run dev
 
 ## Documentation
 
+- [docs/TEACHER_UPLOAD_MANUAL_zh-TW.md](docs/TEACHER_UPLOAD_MANUAL_zh-TW.md) — 教師上傳教材使用手冊（空白作業、答案卷、音檔、補充判題規則）
 - [CLAUDE.md](CLAUDE.md) — AI assistant context and project memory
 - [CHANGELOG.md](CHANGELOG.md) — Version history
 - [docs/project_notes/](docs/project_notes/) — Bug logs, decisions, and work history

@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const { Pool } = require('pg');
+const fs = require('fs/promises');
 const sharp = require('sharp');
 const heicConvert = require('heic-convert');
 const path = require('path');
@@ -10,6 +11,7 @@ const Anthropic = require('@anthropic-ai/sdk');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const GRADING_REFERENCE_DIR = path.join(__dirname, 'data', 'grading_references');
 
 // --- Middleware ---
 app.use(cors());
@@ -935,6 +937,11 @@ app.post('/api/submissions', async (req, res) => {
       asg.answer_key_image,
       submJpeg,
       assignmentLabel,
+      {
+        howdyLevel: asg.howdy_level,
+        unit: asg.unit,
+        bookType: asg.book_type
+      },
       asg.supplemental_notes || ''
     );
 
@@ -1023,8 +1030,53 @@ How to apply these notes:
 - Do not invent answers for any skipped item.`;
 }
 
-async function gradeHandwriting(answerKeyBase64, studentBase64, assignmentLabel, supplementalNotes = '') {
+async function loadGradingReferenceSections(assignmentMeta) {
+  const { howdyLevel, unit, bookType } = assignmentMeta || {};
+  const fileNames = [
+    'global.md',
+    howdyLevel ? `howdy-${howdyLevel}.md` : null,
+    (howdyLevel && unit) ? `howdy-${howdyLevel}-unit-${unit}.md` : null,
+    (howdyLevel && unit && bookType) ? `howdy-${howdyLevel}-unit-${unit}-book-${String(bookType).toLowerCase()}.md` : null
+  ].filter(Boolean);
+
+  const sections = [];
+  for (const fileName of fileNames) {
+    const filePath = path.join(GRADING_REFERENCE_DIR, fileName);
+    try {
+      const content = (await fs.readFile(filePath, 'utf8')).trim();
+      if (content) {
+        sections.push({ fileName, content });
+      }
+    } catch (err) {
+      if (err.code !== 'ENOENT') {
+        console.error(`Failed to read grading reference file ${fileName}:`, err.message);
+      }
+    }
+  }
+  return sections;
+}
+
+function buildGradingReferenceBlock(referenceSections) {
+  if (!referenceSections?.length) {
+    return `REFERENCE KNOWLEDGE:
+- None. Use only the images and any supplemental teacher notes.`;
+  }
+
+  return `REFERENCE KNOWLEDGE:
+Use this background knowledge to identify recurring characters, places, and workbook-specific patterns when the image alone is ambiguous.
+
+How to apply reference knowledge:
+- Supplemental teacher notes have the highest priority.
+- Use the reference files mainly to disambiguate WHO or WHAT is shown in the image.
+- Do not invent answers for unseen items just because they appear in a reference file.
+- If the answer-key image clearly shows the exact answer and does not conflict with teacher notes, follow the answer-key image.
+
+${referenceSections.map(section => `[${section.fileName}]\n${section.content}`).join('\n\n')}`;
+}
+
+async function gradeHandwriting(answerKeyBase64, studentBase64, assignmentLabel, assignmentMeta = {}, supplementalNotes = '') {
   const client = getAnthropicClient();
+  const referenceSections = await loadGradingReferenceSections(assignmentMeta);
   const response = await client.messages.create({
     model: 'claude-sonnet-4-6',
     max_tokens: 4096,
@@ -1088,6 +1140,9 @@ GRADING:
 【True / False, Yes / No】
 - Accept T/F, True/False, O/X, Yes/No as equivalents.
 - Blank = incorrect.
+
+════════════════════════════════════════
+${buildGradingReferenceBlock(referenceSections)}
 
 ════════════════════════════════════════
 ${buildSupplementalNotesBlock(supplementalNotes)}

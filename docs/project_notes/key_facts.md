@@ -163,6 +163,24 @@ Essential project configuration, constants, and quick reference information.
 
 To change model: edit `gradeWithClaude()` and `gradeHandwriting()` in `server.js`.
 
+### Shared Grading References
+
+Reusable grading context is stored in:
+
+- `data/grading_references/global.md`
+- `data/grading_references/howdy-<level>.md`
+- `data/grading_references/howdy-<level>-unit-<unit>.md`
+- `data/grading_references/howdy-<level>-unit-<unit>-book-<book>.md`
+
+These files are automatically injected into `gradeHandwriting()` before grading.
+
+Best use cases:
+- recurring main characters across a whole Howdy level
+- recurring named places or pets
+- workbook-specific visual conventions that repeat across units
+
+Do not use these files for one-off answer keys. One-off section rules still belong in `assignments.supplemental_notes`.
+
 ### Supplemental Grading Notes
 
 Teachers can add plain-text notes in `public/teacher.html` for question types that are unreliable from images alone.

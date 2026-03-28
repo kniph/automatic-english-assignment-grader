@@ -242,6 +242,51 @@ Reviewed all pages of NH1 WB A (U1–U8 + Review 1) and NH1 WB B (U1–U8, first
 
 ---
 
+## 2026-03-29 - Teacher Upload Manual (zh-TW)
+
+**Work Done**:
+- Wrote a detailed teacher-facing upload manual covering:
+  - how to prepare blank workbook pages and answer keys
+  - how to upload images, PDFs, HEIC, and MP3 audio
+  - how overwrite/update works for the same Howdy/Unit/Book combination
+  - how to use supplemental grading notes for matching, skip, and written-only cases
+  - common mistakes and troubleshooting steps
+
+**File Added**:
+- `docs/TEACHER_UPLOAD_MANUAL_zh-TW.md`
+
+**Purpose**:
+- Future uploads may be handled by different teachers or staff members
+- The upload process now has enough nuance that an explicit handoff document is needed
+
+---
+
+## 2026-03-29 - Shared Grading Reference Files
+
+**Work Done**:
+- Added automatic loading of reusable prompt context from `data/grading_references/`
+- Implemented layered file lookup:
+  - `global.md`
+  - `howdy-<level>.md`
+  - `howdy-<level>-unit-<unit>.md`
+  - `howdy-<level>-unit-<unit>-book-<book>.md`
+- Added starter reference files for Howdy 1 recurring main characters and Howdy 1 Unit 1 Workbook A
+
+**Purpose**:
+- Avoid retyping recurring character descriptions into `supplemental_notes` for every assignment
+- Keep cross-unit / cross-book knowledge in one maintainable place
+- Let assignment-specific teacher notes focus only on one-off answers such as matching pairs or skip rules
+
+**Files Modified**:
+- `server.js`
+- `data/grading_references/README.md`
+- `data/grading_references/howdy-1.md`
+- `data/grading_references/howdy-1-unit-1-book-a.md`
+- `docs/project_notes/key_facts.md`
+- `docs/project_notes/issues.md`
+
+---
+
 ## Pending / Future Work
 
 - [ ] Supplemental notes preview/edit when reopening an existing assignment from the teacher list

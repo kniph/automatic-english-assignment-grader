@@ -310,7 +310,7 @@ async function gradeWithClaude(answerKeyBase64, studentBase64, assignmentName) {
   const client = getAnthropicClient();
 
   const response = await client.messages.create({
-    model: 'claude-sonnet-4-5-20251022',
+    model: 'claude-3-5-sonnet-20241022',
     max_tokens: 4096,
     messages: [{
       role: 'user',
@@ -975,7 +975,7 @@ app.get('/api/submissions/:id', async (req, res) => {
 async function gradeHandwriting(answerKeyBase64, studentBase64, assignmentLabel) {
   const client = getAnthropicClient();
   const response = await client.messages.create({
-    model: 'claude-sonnet-4-5-20251022',
+    model: 'claude-3-5-sonnet-20241022',
     max_tokens: 4096,
     messages: [{
       role: 'user',

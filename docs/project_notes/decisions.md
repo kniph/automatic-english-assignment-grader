@@ -34,28 +34,35 @@ Send both the answer key image and the student's work image directly to Claude V
 
 ---
 
-## ADR-002: Haiku Model for Grading
+## ADR-002: Model Selection for Grading (Haiku → Sonnet 4.6)
 
-**Date**: 2026-03-28
+**Date**: 2026-03-28 (initial), updated 2026-03-29
 
 **Context**:
-Initial implementation used `claude-opus-4-6`. First real grading cost ~$0.03 per assignment page — ~1 NTD per page, which adds up for daily classroom use.
+Initial implementation used `claude-opus-4-6` (~$0.03/grading). Switched to Haiku for cost. After real classroom testing, Haiku proved insufficient for visual grading tasks.
+
+**Haiku failures observed**:
+- Accepted "Nic" as correct answer for "Nice to see you." (partial phrase treated as typo)
+- Did not detect when student circled BOTH words in a "circle one" question
+- Confused matching line connections in complex multi-line matching exercises
+- Named matching targets incorrectly (hallucinated building names from scene)
 
 **Decision**:
-Switch to `claude-haiku-4-5-20251001`.
+Switch to `claude-sonnet-4-6`.
 
 **Rationale**:
-- ~15× cheaper than Opus (~$0.002 vs ~$0.03 per grading)
-- Children's English workbook answers are simple (T/F, single words, short phrases)
-- Haiku's accuracy is sufficient for this task
-- If accuracy proves insufficient, can switch to Sonnet (~$0.006/grading)
+- Sonnet 4.6 has significantly better visual spatial reasoning
+- Cost ~$0.01–0.02/grading — still acceptable for classroom use (~3–6 NTD)
+- Children's workbooks contain visually complex question types (matching, circling, grid checkboxes) that require genuine vision capability
 
-**Model cost ladder**:
-| Model | Est. cost/grading |
-|---|---|
-| Haiku 4.5 | ~$0.002 |
-| Sonnet 4.6 | ~$0.006 |
-| Opus 4.6 | ~$0.03 |
+**Model cost ladder** (latest):
+| Model | API ID | Est. cost/grading |
+|---|---|---|
+| Haiku 4.5 | `claude-haiku-4-5-20251001` | ~$0.002 |
+| Sonnet 4.6 | `claude-sonnet-4-6` | ~$0.01–0.02 |
+| Opus 4.6 | `claude-opus-4-6` | ~$0.05+ |
+
+**Note on model IDs**: Date-versioned IDs (e.g., `claude-sonnet-4-5-20251022`) may not exist. Use the alias form (`claude-sonnet-4-6`) for reliability.
 
 ---
 
@@ -163,6 +170,58 @@ Teachers may re-upload a corrected version of the same assignment (same Howdy/Un
 **Consequences**:
 - Old assignment image is overwritten permanently on re-upload
 - All prior `student_submissions` for that assignment_id are preserved (FK to id, not to content)
+
+---
+
+## ADR-008: Matching Exercise Strategy — Teacher Provides Text Answer Key
+
+**Date**: 2026-03-29
+
+**Context**:
+"Look and match" / "Listen and match" exercises require drawing lines between two sets of items. These are common across all Howdy workbook units.
+
+AI vision models (including Sonnet) suffer from "Spatial Hallucination" when asked to trace hand-drawn lines through crossing paths on complex images. Problems include:
+- Red answer-key lines confused with decorative image lines
+- Multiple crossing lines — model cannot reliably determine which endpoint connects to which
+- Line thickness and image compression further degrade accuracy
+
+Gemini suggested OpenCV + HSV filtering + A* path tracing, but this requires:
+- Python environment on Railway (complex)
+- Consistent pen colour (not guaranteed from photos)
+- ~200+ lines of image processing code
+
+**Decision**:
+For matching exercises, **teachers enter the correct pairs as text** when uploading an assignment (e.g., `Lucy→toy shop, Peter→carousel`). Claude only needs to read the student's drawn lines and compare them to the text answer key — not read the answer key image for this question type.
+
+**Implementation**: Planned — requires teacher.html UI addition for text answer input per question type, and updated `gradeHandwriting()` prompt to accept supplementary text answers.
+
+**Current Status**: Not yet implemented. For now, matching is graded from the answer key image alone (unreliable). Teacher should verify matching question scores manually.
+
+**Rationale**:
+- Eliminates the hardest visual task entirely
+- Teacher spends ~30 seconds entering pairs per unit (one-time)
+- Claude's strength is language/reasoning; let image handle what AI handles well, text handle what it doesn't
+
+---
+
+## ADR-009: Review Units Use unit=9 and unit=10
+
+**Date**: 2026-03-29
+
+**Context**:
+WB A contains "Review 1" after Unit 8. WB B contains "Review 2". These are distinct assignment units that must be stored and selected separately.
+
+**Decision**:
+Use `unit = 9` for Review 1 and `unit = 10` for Review 2 in the database. The `book_type` column already distinguishes which book the assignment belongs to.
+
+**DB migration**: ALTER TABLE drops and recreates the CHECK constraint to allow `unit BETWEEN 1 AND 10`.
+
+**UI**: Dropdowns show "Review 1（A本）" and "Review 2（B本）" as selectable options. The UNIT_LABELS map in index.html and assignment.html translates 9→"Review 1" and 10→"Review 2" for display.
+
+**Alternatives Considered**:
+- Separate `review` boolean column — more explicit but requires schema change and API updates
+- `unit = 0` — Review has no natural zero meaning, confusing
+- varchar unit field — requires full schema migration
 
 ---
 

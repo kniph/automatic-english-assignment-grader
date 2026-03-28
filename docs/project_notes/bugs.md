@@ -103,6 +103,64 @@ If `jsonMatch` is null, throws `'Claude 未回傳有效的 JSON'` with the raw t
 
 ---
 
+## 2026-03-29 - BUG-010: Wrong Model ID Format — `claude-sonnet-4-5-20251022` Returns 404
+
+**Issue**: After switching from Haiku to Sonnet, all grading calls returned 500. Railway logs showed:
+```
+NotFoundError: 404 {"type":"error","error":{"type":"not_found_error","message":"model: claude-sonnet-4-5-20251022"}}
+```
+
+**Root Cause**:
+The model ID `claude-sonnet-4-5-20251022` was a guess. Unlike Haiku (`claude-haiku-4-5-20251001` which was previously working), this versioned Sonnet ID does not exist in Anthropic's API.
+
+**Solution**:
+Use the alias form `claude-sonnet-4-6` (no date suffix). Also tried `claude-3-5-sonnet-20241022` as fallback. The alias form is safer as it always resolves to the latest stable version.
+
+**Prevention**:
+Do not guess versioned model IDs. Use the canonical alias names from Anthropic's model comparison page:
+- `claude-haiku-4-5-20251001` (Haiku — this specific version is documented)
+- `claude-sonnet-4-6` (Sonnet alias — always works)
+- `claude-opus-4-6` (Opus alias — always works)
+
+---
+
+## 2026-03-29 - BUG-011: Partial Phrase Answers Accepted as Correct
+
+**Issue**: Student wrote "Nic" (3 characters). Correct answer was "Nice to see you." (5 words). Claude graded it as correct.
+
+**Root Cause**:
+Grading prompt said "Accept 1-character typo". Claude interpreted "Nic" vs "Nice" as a 1-character difference and marked it correct, ignoring that the full phrase was incomplete.
+
+**Solution**:
+Updated prompt to distinguish single-word and phrase answers:
+```
+- SINGLE WORD answers: accept 1-character typo
+- PHRASE answers (2+ words): ALL key words must be present; partial answers are WRONG
+```
+
+**Prevention**:
+Always specify typo tolerance separately for single words vs. phrases. Partial answers that are simply truncated (not typos) should always be wrong.
+
+---
+
+## 2026-03-29 - BUG-012: "Circle Both Words" Not Detected
+
+**Issue**: Student circled both "she" AND "her" in a "Read and circle" blank (should circle only one). Claude graded the blank as correct.
+
+**Root Cause**:
+The original prompt did not include a rule about what happens when multiple words are circled in a single blank. Claude assumed the student circled the correct one.
+
+**Solution**:
+Added explicit rule to grading prompt:
+```
+If the student circled BOTH words in a single blank → WRONG, student_answer="(both circled)"
+```
+
+**Prevention**:
+For "circle one of two" exercises, the prompt must always include an explicit "circle both = wrong" rule. This is non-obvious to an AI model without the rule.
+
+---
+
 ## 2026-03-28 - BUG-007: Analysis Endpoint Crashes for Claude Mode (Empty Questions)
 
 **Issue**: `GET /api/results/:answerKeyId/analysis` crashed when `questions` array was empty. Claude mode assignments start with `questions: []` until first grading.

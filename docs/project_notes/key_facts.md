@@ -34,14 +34,21 @@ Essential project configuration, constants, and quick reference information.
 |---|---|---|
 | `id` | SERIAL PK | |
 | `howdy_level` | INTEGER | 1–10 |
-| `unit` | INTEGER | 1–8 |
+| `unit` | INTEGER | 1–10 (see mapping below) |
 | `book_type` | VARCHAR(1) | 'A', 'B', or 'C' |
-| `assignment_image` | TEXT | Base64 JPEG of blank workbook page |
+| `assignment_image` | TEXT | Base64 JPEG of blank workbook page (may be multi-page stitched vertically) |
 | `answer_key_image` | TEXT | Base64 JPEG of answer key (never sent to student) |
 | `audio_files` | JSONB | `[{name, label, data (base64 mp3)}]` |
 | `created_at` | TIMESTAMP | |
 
 **Unique constraint**: `(howdy_level, unit, book_type)` — UPSERT on duplicate
+
+**Unit value mapping**:
+| Value | Label |
+|---|---|
+| 1–8 | Unit 1–8 |
+| 9 | Review 1 (in WB A) |
+| 10 | Review 2 (in WB B) |
 
 ### `student_submissions` (v2 — student workflow)
 | Column | Type | Notes |
@@ -142,9 +149,16 @@ Essential project configuration, constants, and quick reference information.
 
 ## AI Grading Model
 
-**Current model**: `claude-haiku-4-5-20251001`
-**Approx cost**: ~$0.002 per grading (two images in, JSON out)
-**Previous model**: `claude-opus-4-6` (~$0.03/grading, switched to Haiku for cost)
+**Current model**: `claude-sonnet-4-6`
+**Approx cost**: ~$0.01–0.02 per grading (two images in, JSON out)
+**Model history**:
+| Date | Model | Reason |
+|---|---|---|
+| 2026-03-28 | `claude-opus-4-6` | Initial |
+| 2026-03-28 | `claude-haiku-4-5-20251001` | Cost reduction (~15× cheaper) |
+| 2026-03-29 | `claude-sonnet-4-6` | Haiku too inaccurate for visual grading tasks |
+
+**Why Sonnet over Haiku**: Haiku failed to detect "both words circled" errors, couldn't reliably distinguish partial answers from complete ones, and misidentified matching line connections. Sonnet 4.6 significantly improves visual spatial reasoning.
 
 To change model: edit `gradeWithClaude()` and `gradeHandwriting()` in `server.js`.
 
@@ -159,11 +173,69 @@ All images stored as Base64 TEXT in PostgreSQL. Server-side compression via Shar
 - Audio files stored as base64 MP3 — 1 MB MP3 ≈ 1.35 MB base64
 
 **Railway PostgreSQL hobby plan**: 1 GB storage limit.
-~240 assignments (Howdy 1–10 × Unit 1–8 × A/B/C) × ~1 MB each ≈ ~240 MB for all assignments.
+~300 assignments (Howdy 1–10 × 10 units including Review × A/B/C) × ~1 MB each ≈ ~300 MB for all assignments.
+Note: Multi-page stitched images (3 pages per unit) are compressed server-side to max width 2000px before storage.
 
 ---
 
-## Development
+## Howdy 1 Workbook Question Types & AI Grading Reliability
+
+Analysed by reviewing NH1 WB A (U1–U8, Review 1) and NH1 WB B (U1–U8, Review 2) in full.
+
+### 🟢 Reliably Gradable
+
+| Question Type | Example | Notes |
+|---|---|---|
+| Fill-in blanks (word bank) | "Use the words in the box to fill in the blanks" | Write one word from a given list. High accuracy. |
+| Unscramble and write | "small / elephant / Is / this / ?" → "Is this elephant small?" | Rearrange words into a sentence. Text comparison. |
+| Fill missing letters | `b _ o _ h _ _ _` (brother) | Partial word completion. |
+| Read and circle (1 word/blank) | "He is my father / mother." | Circle one correct word per choice pair. |
+| Listen/Read and number | Number boxes in correct order | Write 1–6 in picture boxes based on audio/reading. |
+| Listen and write (dialogue) | Fill blanks in a conversation from word bank | Word-level fill-in from listening. |
+
+### 🟡 Gradable with Caveats
+
+| Question Type | Risk | Mitigation |
+|---|---|---|
+| Read and circle (2 blanks/sentence) | Student may circle BOTH words in one blank | Prompt rule: both circled = wrong. Still occasionally missed. |
+| Listen/Read and check (single column) | Must identify which checkbox is ticked | Prompt rule added. Works ~85% of time. |
+| Listen and check (image pairs) | Must identify which image in a pair has a tick | Visual position identification. Moderate accuracy. |
+| Listen and check (grid/table format) | Tick is in a specific row/column cell | Grid spatial reasoning; Sonnet handles better than Haiku. |
+| Read and circle correct picture | Circle one of two images | Identifying which image is circled. |
+| Look at picture, count and write | Count objects in scene, write number | Depends on image clarity and zoom level. |
+| Decode and match | Number-to-letter code → decode sentence → match | Decoding part reliable; matching line part uncertain. |
+
+### 🔴 High-Risk / Unreliable
+
+| Question Type | Problem | Recommended Approach |
+|---|---|---|
+| **Look / Listen and match (line connecting)** | AI cannot reliably trace hand-drawn lines through crossing paths, especially red lines on complex backgrounds | **Teacher inputs correct pairs as text when uploading** (see ADR-008) |
+| **Listen, circle AND match (combined)** | Two high-risk operations compounded (U5 WB A Part C) | Treat as match — teacher provides answer text |
+| **Complete the crossword** | Grid spatial reasoning extremely unreliable | **Skip / exclude from grading** |
+| **Circle hidden word in letter jumble** | Find and circle a word hidden in random letters (U7 WB A Part F) | Skip circling; grade only the written answer below |
+
+### ⚫ Not Gradable (Skip)
+
+| Question Type | Reason |
+|---|---|
+| Draw yourself / Draw your best friend | Creative free drawing |
+| Read and color / Write and color | Coloring activity |
+| Connect the dots, then color and write | Dot-to-dot drawing |
+| Maze (help zoo keeper find animals) | Navigate a maze |
+| Read and guess, then draw | Guess riddle and draw the answer |
+
+### Combined Types (grade text part, skip visual part)
+
+| Question Type | Gradable Part | Skip Part |
+|---|---|---|
+| Write and find the words (word search) | Write character name under picture | Circle word in grid |
+| Match and unscramble | Written unscrambled word | Matching line |
+| Circle and write, then color | Written word | Circle in jumble + coloring |
+| Complete the words and draw | Missing letters filled in | Drawing the shape |
+
+---
+
+
 
 ```bash
 npm run dev    # nodemon auto-reload

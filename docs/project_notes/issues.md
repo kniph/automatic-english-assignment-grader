@@ -128,12 +128,105 @@ Filled all four project_notes docs with real project content (previously all tem
 
 ---
 
+## 2026-03-28~29 - Bug Fixes: Audio Bar, Section Labels, Grading Coverage
+
+**Work Done**:
+1. **Audio bar same-row layout** — wrapped each button+progress in `.audio-track` flex div; audio bar set to `flex-wrap: nowrap; overflow-x: auto`
+2. **Results section labels** — grading results now show "A-1", "B-3" format instead of "#1"
+3. **Multi-section grading** — prompt updated to explicitly list all question types (matching, checkboxes, numbering, circling, fill-in); Claude was previously only grading Part B
+4. **Submission image compression** — fixed Sharp resize to width-only (removed height:2800 limit that cut multi-page images)
+5. **section field in answers** — server.js answers mapping now includes `section` field from Claude JSON
+
+**Files Modified**: `server.js`, `public/assignment.html`
+**Commits**: `554bf52`
+
+---
+
+## 2026-03-29 - Teacher Upload: Multi-Page Support (1–3 Images)
+
+**Work Done**:
+- Both "blank workbook" and "answer key" file inputs now accept `multiple` files
+- New `stitchImages()` function: loads each image into canvas, stitches vertically → single JPEG
+- New `handleMultiImageFiles()` replaces single-file handler
+- Teacher selects 3 page images at once (⌘+click) → auto-stitched before upload
+- Filename display shows all page names
+
+**Files Modified**: `public/teacher.html`
+**Commits**: `2e18a68`
+
+---
+
+## 2026-03-29 - Model Upgrade: Haiku → Sonnet 4.6
+
+**Work Done**:
+- Switched grading model from `claude-haiku-4-5-20251001` to `claude-sonnet-4-6`
+- Attempted `claude-sonnet-4-5-20251022` (404 error — model does not exist); fixed to alias
+- Updated both `gradeWithClaude()` (legacy) and `gradeHandwriting()` (v2)
+
+**Reason**: Haiku failed on visual grading tasks — partial phrase accepted as correct, double-circle not detected, matching lines hallucinated
+
+**Files Modified**: `server.js`
+**Commits**: `040b687`, `627d572`
+
+---
+
+## 2026-03-29 - Grading Prompt Overhaul
+
+**Work Done**:
+Major rewrite of `gradeHandwriting()` prompt in `server.js`:
+- Added two-step process: (1) identify all sections, (2) grade every item
+- **Matching**: explicit instructions to trace lines from dot to dot; red lines are teacher's answer key lines, not decorative
+- **Circling**: exactly one circle per blank; two circles = `(both circled)` = wrong
+- **Fill-in phrases**: 2+ word answers must be complete; single-word answers allow 1-character typo
+- **Checkboxes, numbering, T/F**: refined per-type rules
+
+**Files Modified**: `server.js`
+**Commits**: `0f71318`
+
+---
+
+## 2026-03-29 - Review 1 / Review 2 Unit Support
+
+**Work Done**:
+- DB constraint relaxed: `unit BETWEEN 1 AND 10` (was 1–8)
+- `ALTER TABLE` migration in `initDB()` to update existing Railway DB
+- `teacher.html`: Unit dropdown adds "Review 1（A本）" (value=9) and "Review 2（B本）" (value=10)
+- `index.html`: Unit grid adds Review 1/2 buttons; `UNIT_LABELS` map for display
+- `assignment.html`: topbar displays "Review 1"/"Review 2" instead of "Unit 9"/"Unit 10"
+
+**Background**: WB A has Review 1 after Unit 8; WB B has Review 2 after Unit 8
+
+**Files Modified**: `server.js`, `public/teacher.html`, `public/index.html`, `public/assignment.html`
+**Commits**: `f47f554`
+
+---
+
+## 2026-03-29 - Howdy 1 Workbook Question Type Analysis
+
+**Work Done**:
+Reviewed all pages of NH1 WB A (U1–U8 + Review 1) and NH1 WB B (U1–U8, first half) to catalogue all question types and assess AI grading reliability.
+
+**Key findings**:
+- 6 question types are reliably gradable (fill-in, unscramble, circle-one-word, numbering, etc.)
+- 7 types are gradable with caveats (grid checkbox, image checkbox, double-blank circle, etc.)
+- 4 types are high-risk / unreliable (matching lines, crossword, jumble-circle, combined circle+match)
+- 5 types are completely non-gradable (draw, color, maze, dot-to-dot, guess-and-draw)
+
+**Decision**: Matching exercises will require teacher to provide text answer key (not yet implemented). Crossword and jumble-circle recommended to be skipped or excluded.
+
+**Documentation**: Full table recorded in `docs/project_notes/key_facts.md` under "Howdy 1 Workbook Question Types"
+**ADRs Added**: ADR-008 (matching strategy), ADR-009 (Review unit numbering)
+
+---
+
 ## Pending / Future Work
 
+- [ ] **Matching text answer key**: teacher.html UI to input correct pairs as text (e.g., `Lucy→toy shop`) for matching exercises; `gradeHandwriting()` to accept and use this alongside image
+- [ ] **Crossword / jumble-circle skip**: mechanism for teacher to mark certain question types as "skip" so they're excluded from scoring
 - [ ] Student results history page (view past submissions by name)
 - [ ] Teacher: per-assignment class analytics (which questions students miss most)
 - [ ] Teacher: student management (class list, progress over time)
 - [ ] Offline support / PWA manifest for iPad home screen installation
-- [ ] Multi-page workbook support (assignment spans more than one page)
 - [ ] Rate limiting on `/api/submissions` to prevent accidental repeated grading
 - [ ] Authentication layer if deployed publicly (currently assumes trusted LAN)
+- [ ] WB C question type analysis (not yet reviewed)

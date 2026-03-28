@@ -56,6 +56,34 @@ async function initDB() {
       );
     `);
 
+    // ---- New tables for student workflow ----
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS assignments (
+        id SERIAL PRIMARY KEY,
+        howdy_level INTEGER NOT NULL CHECK (howdy_level BETWEEN 1 AND 10),
+        unit INTEGER NOT NULL CHECK (unit BETWEEN 1 AND 8),
+        book_type VARCHAR(1) NOT NULL CHECK (book_type IN ('A','B','C')),
+        assignment_image TEXT NOT NULL,
+        answer_key_image TEXT NOT NULL,
+        audio_files JSONB DEFAULT '[]',
+        created_at TIMESTAMP DEFAULT NOW(),
+        UNIQUE(howdy_level, unit, book_type)
+      );
+    `);
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS student_submissions (
+        id SERIAL PRIMARY KEY,
+        assignment_id INTEGER REFERENCES assignments(id) ON DELETE CASCADE,
+        student_name VARCHAR(100),
+        submission_image TEXT NOT NULL,
+        answers JSONB,
+        total_score INTEGER,
+        total_possible INTEGER,
+        percentage INTEGER,
+        graded_at TIMESTAMP DEFAULT NOW()
+      );
+    `);
+
     // Migrations (idempotent)
     await client.query(`ALTER TABLE answer_keys ALTER COLUMN image_width SET DEFAULT 0`).catch(() => {});
     await client.query(`ALTER TABLE answer_keys ALTER COLUMN image_height SET DEFAULT 0`).catch(() => {});
@@ -741,6 +769,243 @@ app.get('/api/results/:answerKeyId/export', async (req, res) => {
     res.status(500).json({ error: 'Export failed' });
   }
 });
+
+// ============================================================
+// Assignments API (student workflow)
+// ============================================================
+
+// List available assignments (no images/audio, just metadata)
+app.get('/api/assignments', async (req, res) => {
+  try {
+    const { howdy, unit, book } = req.query;
+    let query = `SELECT id, howdy_level, unit, book_type,
+                   jsonb_array_length(audio_files) AS audio_count, created_at
+                 FROM assignments`;
+    const params = [];
+    const conds = [];
+    if (howdy) { conds.push(`howdy_level = $${params.length+1}`); params.push(parseInt(howdy)); }
+    if (unit)  { conds.push(`unit = $${params.length+1}`);         params.push(parseInt(unit)); }
+    if (book)  { conds.push(`book_type = $${params.length+1}`);    params.push(book.toUpperCase()); }
+    if (conds.length) query += ' WHERE ' + conds.join(' AND ');
+    query += ' ORDER BY howdy_level, unit, book_type';
+    const result = await pool.query(query, params);
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to list assignments' });
+  }
+});
+
+// Get which (howdy, unit, book) combinations exist — for UI cascade dropdowns
+app.get('/api/assignments/available', async (req, res) => {
+  try {
+    const result = await pool.query(
+      'SELECT howdy_level, unit, book_type FROM assignments ORDER BY howdy_level, unit, book_type'
+    );
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to get available assignments' });
+  }
+});
+
+// Get single assignment WITH images and audio (used when student opens workbook)
+app.get('/api/assignments/:id', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM assignments WHERE id = $1', [req.params.id]);
+    if (result.rows.length === 0) return res.status(404).json({ error: 'Assignment not found' });
+    const row = result.rows[0];
+    // Return assignment_image and audio, but NOT answer_key_image (don't expose to student)
+    res.json({
+      id: row.id,
+      howdy_level: row.howdy_level,
+      unit: row.unit,
+      book_type: row.book_type,
+      assignment_image: row.assignment_image,
+      audio_files: row.audio_files,
+      created_at: row.created_at
+    });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to get assignment' });
+  }
+});
+
+// Create or update assignment (teacher upload)
+// UPSERT on (howdy_level, unit, book_type)
+app.post('/api/assignments', async (req, res) => {
+  try {
+    const { howdy_level, unit, book_type, assignment_image, answer_key_image, audio_files = [] } = req.body;
+    if (!howdy_level || !unit || !book_type || !assignment_image || !answer_key_image) {
+      return res.status(400).json({ error: 'Missing required fields' });
+    }
+
+    // Compress images server-side for storage efficiency
+    const compressImg = async (b64) => {
+      const buf = Buffer.from(b64, 'base64');
+      return (await sharp(buf).rotate()
+        .resize({ width: 2000, height: 2800, fit: 'inside', withoutEnlargement: true })
+        .jpeg({ quality: 85 }).toBuffer()).toString('base64');
+    };
+
+    const [storedAssign, storedAnswer] = await Promise.all([
+      compressImg(assignment_image),
+      compressImg(answer_key_image)
+    ]);
+
+    const result = await pool.query(`
+      INSERT INTO assignments (howdy_level, unit, book_type, assignment_image, answer_key_image, audio_files)
+      VALUES ($1, $2, $3, $4, $5, $6)
+      ON CONFLICT (howdy_level, unit, book_type) DO UPDATE SET
+        assignment_image = EXCLUDED.assignment_image,
+        answer_key_image = EXCLUDED.answer_key_image,
+        audio_files = EXCLUDED.audio_files,
+        created_at = NOW()
+      RETURNING id, howdy_level, unit, book_type, created_at`,
+      [parseInt(howdy_level), parseInt(unit), book_type.toUpperCase(), storedAssign, storedAnswer, JSON.stringify(audio_files)]
+    );
+    res.status(201).json(result.rows[0]);
+  } catch (err) {
+    console.error('Create assignment error:', err);
+    res.status(500).json({ error: 'Failed to save assignment: ' + err.message });
+  }
+});
+
+app.delete('/api/assignments/:id', async (req, res) => {
+  try {
+    const result = await pool.query('DELETE FROM assignments WHERE id=$1 RETURNING id', [req.params.id]);
+    if (result.rows.length === 0) return res.status(404).json({ error: 'Assignment not found' });
+    res.json({ deleted: true, id: result.rows[0].id });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to delete assignment' });
+  }
+});
+
+// ============================================================
+// Student Submissions — submit handwritten work, grade with Claude
+// ============================================================
+
+app.post('/api/submissions', async (req, res) => {
+  try {
+    const { assignment_id, student_name, submission_image } = req.body;
+    if (!assignment_id || !submission_image) {
+      return res.status(400).json({ error: 'Missing assignment_id or submission_image' });
+    }
+
+    // Fetch assignment (need answer key image)
+    const asgResult = await pool.query('SELECT * FROM assignments WHERE id=$1', [assignment_id]);
+    if (asgResult.rows.length === 0) return res.status(404).json({ error: 'Assignment not found' });
+    const asg = asgResult.rows[0];
+
+    // Compress submission image
+    const submBuf = Buffer.from(submission_image, 'base64');
+    const submJpeg = (await sharp(submBuf).rotate()
+      .resize({ width: 2000, height: 2800, fit: 'inside', withoutEnlargement: true })
+      .jpeg({ quality: 88 }).toBuffer()).toString('base64');
+
+    // Grade with Claude
+    const assignmentLabel = `Howdy ${asg.howdy_level} Unit ${asg.unit} 習作${asg.book_type}本`;
+    const claudeResult = await gradeHandwriting(asg.answer_key_image, submJpeg, assignmentLabel);
+
+    const answers = claudeResult.questions.map(q => ({
+      question_number: q.number,
+      correct: q.correct,
+      score: q.correct ? 1 : 0,
+      detected_text: q.student_answer,
+      correct_answer: q.correct_answer,
+      match_type: 'claude'
+    }));
+    const totalScore = answers.filter(a => a.correct).length;
+    const totalPossible = claudeResult.total_possible;
+    const percentage = Math.round((totalScore / totalPossible) * 100);
+
+    const saveResult = await pool.query(`
+      INSERT INTO student_submissions
+        (assignment_id, student_name, submission_image, answers, total_score, total_possible, percentage)
+      VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id, graded_at`,
+      [assignment_id, student_name || null, submJpeg, JSON.stringify(answers),
+       totalScore, totalPossible, percentage]
+    );
+
+    res.json({
+      id: saveResult.rows[0].id,
+      graded_at: saveResult.rows[0].graded_at,
+      student_name: student_name || null,
+      answers,
+      total_score: totalScore,
+      total_possible: totalPossible,
+      percentage
+    });
+  } catch (err) {
+    console.error('Submission error:', err);
+    res.status(500).json({ error: '批改失敗：' + err.message });
+  }
+});
+
+// List submissions for an assignment (teacher view)
+app.get('/api/submissions', async (req, res) => {
+  try {
+    const { assignment_id } = req.query;
+    if (!assignment_id) return res.status(400).json({ error: 'Missing assignment_id' });
+    const result = await pool.query(`
+      SELECT id, student_name, total_score, total_possible, percentage, graded_at
+      FROM student_submissions WHERE assignment_id=$1 ORDER BY graded_at DESC`,
+      [assignment_id]
+    );
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to list submissions' });
+  }
+});
+
+// Get single submission with answers (for results display)
+app.get('/api/submissions/:id', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM student_submissions WHERE id=$1', [req.params.id]);
+    if (result.rows.length === 0) return res.status(404).json({ error: 'Submission not found' });
+    res.json(result.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to get submission' });
+  }
+});
+
+// ============================================================
+// Claude grading for handwritten workbook pages
+// ============================================================
+
+async function gradeHandwriting(answerKeyBase64, studentBase64, assignmentLabel) {
+  const client = getAnthropicClient();
+  const response = await client.messages.create({
+    model: 'claude-haiku-4-5-20251001',
+    max_tokens: 2048,
+    messages: [{
+      role: 'user',
+      content: [
+        {
+          type: 'text',
+          text: `Grade this children's English workbook: "${assignmentLabel}".
+
+Image 1 = ANSWER KEY (correct answers)
+Image 2 = STUDENT'S HANDWRITTEN WORK
+
+The student wrote by hand on the workbook page. Find every numbered question and compare.
+Return ONLY valid JSON (no markdown, no explanation):
+{"questions":[{"number":1,"correct_answer":"...","student_answer":"...","correct":true}],"total_possible":N}
+
+Rules:
+- Accept 1-character typos as correct
+- T / F / True / False / O / X all accepted for true-false questions
+- Blank or unreadable → correct:false, student_answer:"(blank)"
+- Ignore trailing punctuation and capitalization differences
+- Number questions from 1`
+        },
+        { type: 'image', source: { type: 'base64', media_type: 'image/jpeg', data: answerKeyBase64 } },
+        { type: 'image', source: { type: 'base64', media_type: 'image/jpeg', data: studentBase64 } }
+      ]
+    }]
+  });
+  const raw = response.content[0].text.trim();
+  const jsonMatch = raw.match(/\{[\s\S]*\}/);
+  if (!jsonMatch) throw new Error('Claude 未回傳有效的 JSON');
+  return JSON.parse(jsonMatch[0]);
+}
 
 // --- Start Server ---
 async function start() {

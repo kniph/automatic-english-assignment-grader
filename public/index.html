@@ -2,53 +2,313 @@
 <html lang="zh-TW">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>English Homework Grader</title>
-  <link rel="stylesheet" href="css/common.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Howdy English — 英語習作</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 18px; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+      background: linear-gradient(155deg, #1a73e8 0%, #0d47a1 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1rem 4rem;
+    }
+    /* Header */
+    .app-title { color: white; font-size: 2rem; font-weight: 800; margin-bottom: 0.2rem; text-align: center; }
+    .app-subtitle { color: rgba(255,255,255,0.7); font-size: 0.88rem; margin-bottom: 1.5rem; text-align: center; }
+    /* Teacher link */
+    .teacher-link {
+      position: absolute; top: 1rem; right: 1rem;
+      color: rgba(255,255,255,0.5); font-size: 0.78rem; text-decoration: none;
+      padding: 0.3rem 0.6rem; border-radius: 6px;
+    }
+    .teacher-link:hover { color: white; background: rgba(255,255,255,0.1); }
+    /* Summary bar */
+    .summary-bar {
+      background: rgba(255,255,255,0.15);
+      color: white; border-radius: 12px;
+      padding: 0.55rem 1.2rem; font-size: 0.88rem;
+      margin-bottom: 1rem; max-width: 580px; width: 100%;
+      text-align: center; min-height: 2.2rem;
+      backdrop-filter: blur(4px);
+    }
+    /* Step card */
+    .step-card {
+      background: white; border-radius: 20px;
+      padding: 1.5rem 1.5rem; width: 100%; max-width: 580px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.18); margin-bottom: 0.85rem;
+    }
+    .step-card.hidden { display: none; }
+    .step-label {
+      font-size: 0.72rem; font-weight: 800; color: #1a73e8;
+      letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.3rem;
+    }
+    .step-title { font-size: 1.2rem; font-weight: 700; color: #111; margin-bottom: 1.1rem; }
+    /* Name input */
+    .name-input {
+      width: 100%; font-size: 1.5rem; font-weight: 600;
+      padding: 0.7rem 1rem; border: 2px solid #e0e0e0;
+      border-radius: 12px; color: #111; outline: none;
+      transition: border-color 0.2s; text-align: center;
+    }
+    .name-input:focus { border-color: #1a73e8; }
+    .name-input::placeholder { color: #ccc; font-weight: 400; }
+    /* Selection grids */
+    .sel-grid { display: grid; gap: 0.6rem; }
+    .cols-5 { grid-template-columns: repeat(5, 1fr); }
+    .cols-4 { grid-template-columns: repeat(4, 1fr); }
+    .cols-3 { grid-template-columns: repeat(3, 1fr); }
+    @media (max-width: 420px) {
+      .cols-5 { grid-template-columns: repeat(4, 1fr); }
+      .cols-4 { grid-template-columns: repeat(4, 1fr); }
+    }
+    .sel-btn {
+      background: #f0f4ff; border: 2px solid transparent;
+      border-radius: 10px; padding: 0.8rem 0.4rem;
+      font-size: 0.95rem; font-weight: 700; color: #1a73e8;
+      cursor: pointer; transition: all 0.15s; text-align: center;
+      user-select: none; -webkit-tap-highlight-color: transparent;
+    }
+    .sel-btn:active { transform: scale(0.95); }
+    .sel-btn.selected { background: #1a73e8; color: white; border-color: #1a73e8; box-shadow: 0 2px 8px rgba(26,115,232,0.4); }
+    .sel-btn.unavail { background: #f7f7f7; color: #ccc; cursor: default; }
+    /* Book grid */
+    .book-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
+    .book-btn {
+      background: #f0f4ff; border: 2px solid transparent;
+      border-radius: 14px; padding: 1.1rem 0.5rem;
+      font-size: 1.6rem; font-weight: 900; color: #1a73e8;
+      cursor: pointer; transition: all 0.15s; text-align: center;
+      user-select: none; -webkit-tap-highlight-color: transparent;
+    }
+    .book-btn .sub { display: block; font-size: 0.7rem; font-weight: 500; color: #888; margin-top: 0.2rem; }
+    .book-btn:active { transform: scale(0.95); }
+    .book-btn.selected { background: #1a73e8; color: white; border-color: #1a73e8; box-shadow: 0 3px 12px rgba(26,115,232,0.4); }
+    .book-btn.selected .sub { color: rgba(255,255,255,0.8); }
+    .book-btn.unavail { background: #f7f7f7; color: #ccc; cursor: default; }
+    .book-btn.unavail .sub { color: #ddd; }
+    /* Go button */
+    .go-btn {
+      display: block; width: 100%; max-width: 580px;
+      padding: 1.1rem; background: #34a853; color: white;
+      font-size: 1.2rem; font-weight: 700; border: none; border-radius: 16px;
+      cursor: pointer; box-shadow: 0 4px 16px rgba(52,168,83,0.4);
+      transition: background 0.2s, transform 0.1s; margin-top: 0.5rem;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .go-btn:active { transform: scale(0.98); background: #2d9144; }
+    .go-btn:disabled { background: #aaa; box-shadow: none; cursor: not-allowed; }
+    .go-btn.hidden { display: none; }
+    /* Error */
+    .err { color: #dc3545; font-size: 0.8rem; margin-top: 0.4rem; text-align: center; }
+    .err.hidden { display: none; }
+    /* Loading overlay */
+    .loading-overlay {
+      position: fixed; inset: 0; background: rgba(10,40,100,0.85);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      color: white; font-size: 1.05rem; font-weight: 600; z-index: 100; gap: 1rem;
+    }
+    .loading-overlay.hidden { display: none; }
+    .spinner { width: 40px; height: 40px; border: 4px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 0.8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
 </head>
 <body>
-  <header class="app-header">
-    <h1>English Homework Grader</h1>
-    <nav>
-      <a href="teacher.html">Answer Keys</a>
-      <a href="grader.html">Grade</a>
-    </nav>
-  </header>
 
-  <div class="container" style="margin-top: 2rem;">
-    <div class="card text-center" style="max-width: 500px; margin: 0 auto;">
-      <h2>Welcome / Enter Your Name</h2>
-      <p style="color: #666; margin-bottom: 1rem; font-size: 0.9rem;">Your name is used to save and load your answer keys.</p>
-      <input type="text" id="teacherName" placeholder="Enter your name" style="text-align: center; font-size: 1.1rem;">
-      <div class="flex-center gap-1 mt-2">
-        <button class="btn btn-primary" onclick="goToTeacher()">Create Answer Key</button>
-        <button class="btn btn-outline" onclick="goToGrader()">Start Grading</button>
-      </div>
+  <a href="teacher.html" class="teacher-link">教師管理 ⚙️</a>
+
+  <div class="loading-overlay hidden" id="loadingOverlay">
+    <div class="spinner"></div>
+    <div id="loadingText">載入中…</div>
+  </div>
+
+  <div class="app-title">📚 Howdy English</div>
+  <div class="app-subtitle">英語習作批改系統</div>
+  <div class="summary-bar" id="summaryBar">請輸入姓名開始</div>
+
+  <!-- Step 1: Name -->
+  <div class="step-card" id="stepName">
+    <div class="step-label">Step 1</div>
+    <div class="step-title">你的名字是？</div>
+    <input class="name-input" id="studentName" type="text"
+           placeholder="請輸入姓名"
+           autocomplete="off" autocorrect="off" spellcheck="false" maxlength="30">
+    <div class="err hidden" id="nameErr">請輸入姓名再繼續</div>
+  </div>
+
+  <!-- Step 2: Howdy Level -->
+  <div class="step-card hidden" id="stepHowdy">
+    <div class="step-label">Step 2</div>
+    <div class="step-title">選擇 Howdy 幾冊？</div>
+    <div class="sel-grid cols-5" id="howdyGrid"></div>
+  </div>
+
+  <!-- Step 3: Unit -->
+  <div class="step-card hidden" id="stepUnit">
+    <div class="step-label">Step 3</div>
+    <div class="step-title">選擇 Unit 幾？</div>
+    <div class="sel-grid cols-4" id="unitGrid"></div>
+  </div>
+
+  <!-- Step 4: Book Type -->
+  <div class="step-card hidden" id="stepBook">
+    <div class="step-label">Step 4</div>
+    <div class="step-title">選擇習作本</div>
+    <div class="book-grid">
+      <button class="book-btn" data-book="A">A<span class="sub">A 本</span></button>
+      <button class="book-btn" data-book="B">B<span class="sub">B 本</span></button>
+      <button class="book-btn" data-book="C">C<span class="sub">C 本</span></button>
     </div>
   </div>
 
-  <script src="js/common.js"></script>
-  <script>
-    const nameInput = document.getElementById('teacherName');
-    nameInput.value = getTeacherName();
+  <!-- Start button -->
+  <button class="go-btn hidden" id="goBtn" onclick="startAssignment()">開始寫作業 ✏️</button>
 
-    function saveName() {
-      const name = nameInput.value.trim();
-      if (!name) {
-        showToast('Please enter your name', 'error');
-        nameInput.focus();
-        return false;
+  <script>
+    const API = window.location.origin;
+    let selectedHowdy = null, selectedUnit = null, selectedBook = null;
+    let available = [];
+
+    async function init() {
+      try {
+        available = await (await fetch(`${API}/api/assignments/available`)).json();
+      } catch(e) { available = []; }
+      buildHowdyGrid();
+      const saved = sessionStorage.getItem('student_name') || '';
+      if (saved) {
+        document.getElementById('studentName').value = saved;
+        showStep('stepHowdy');
       }
-      setTeacherName(name);
-      return true;
+      updateSummary();
     }
 
-    function goToTeacher() { if (saveName()) window.location.href = 'teacher.html'; }
-    function goToGrader() { if (saveName()) window.location.href = 'grader.html'; }
-
-    nameInput.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') goToTeacher();
+    // Name
+    const nameInput = document.getElementById('studentName');
+    nameInput.addEventListener('keydown', e => { if (e.key === 'Enter') { nameInput.blur(); } });
+    nameInput.addEventListener('blur', () => {
+      const v = nameInput.value.trim();
+      if (!v) return;
+      sessionStorage.setItem('student_name', v);
+      showStep('stepHowdy');
+      updateSummary();
     });
+    nameInput.addEventListener('input', () => document.getElementById('nameErr').classList.add('hidden'));
+
+    // Show/hide steps
+    function showStep(id) {
+      document.getElementById(id).classList.remove('hidden');
+      setTimeout(() => document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 80);
+    }
+
+    // Howdy
+    function buildHowdyGrid() {
+      const grid = document.getElementById('howdyGrid');
+      grid.innerHTML = '';
+      for (let i = 1; i <= 10; i++) {
+        const has = available.some(a => a.howdy_level === i);
+        const btn = document.createElement('button');
+        btn.className = 'sel-btn' + (has ? '' : ' unavail');
+        btn.textContent = i;
+        if (has) btn.onclick = () => selectHowdy(i);
+        grid.appendChild(btn);
+      }
+    }
+
+    function selectHowdy(h) {
+      selectedHowdy = h; selectedUnit = null; selectedBook = null;
+      document.querySelectorAll('#howdyGrid .sel-btn').forEach((b, i) =>
+        b.classList.toggle('selected', i + 1 === h));
+      buildUnitGrid(h);
+      showStep('stepUnit');
+      document.getElementById('stepBook').classList.add('hidden');
+      document.getElementById('goBtn').classList.add('hidden');
+      updateSummary();
+    }
+
+    // Unit
+    function buildUnitGrid(h) {
+      const grid = document.getElementById('unitGrid');
+      grid.innerHTML = '';
+      for (let u = 1; u <= 8; u++) {
+        const has = available.some(a => a.howdy_level === h && a.unit === u);
+        const btn = document.createElement('button');
+        btn.className = 'sel-btn' + (has ? '' : ' unavail');
+        btn.textContent = `Unit ${u}`;
+        if (has) btn.onclick = () => selectUnit(u);
+        grid.appendChild(btn);
+      }
+    }
+
+    function selectUnit(u) {
+      selectedUnit = u; selectedBook = null;
+      document.querySelectorAll('#unitGrid .sel-btn').forEach((b, i) =>
+        b.classList.toggle('selected', i + 1 === u));
+      updateBookGrid(selectedHowdy, u);
+      showStep('stepBook');
+      document.getElementById('goBtn').classList.add('hidden');
+      updateSummary();
+    }
+
+    // Book
+    function updateBookGrid(h, u) {
+      document.querySelectorAll('.book-btn').forEach(btn => {
+        const bk = btn.dataset.book;
+        const has = available.some(a => a.howdy_level === h && a.unit === u && a.book_type === bk);
+        btn.className = 'book-btn' + (has ? '' : ' unavail');
+        btn.onclick = has ? () => selectBook(bk) : null;
+      });
+    }
+
+    function selectBook(bk) {
+      selectedBook = bk;
+      document.querySelectorAll('.book-btn').forEach(b =>
+        b.classList.toggle('selected', b.dataset.book === bk));
+      document.getElementById('goBtn').classList.remove('hidden');
+      updateSummary();
+      setTimeout(() => document.getElementById('goBtn').scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 80);
+    }
+
+    // Summary
+    function updateSummary() {
+      const name = nameInput.value.trim();
+      const bar = document.getElementById('summaryBar');
+      if (!name) { bar.textContent = '請輸入姓名開始'; return; }
+      let t = `👤 ${name}`;
+      if (selectedHowdy) t += `　📖 Howdy ${selectedHowdy}`;
+      if (selectedUnit)  t += `  Unit ${selectedUnit}`;
+      if (selectedBook)  t += `  ${selectedBook} 本`;
+      bar.textContent = t;
+    }
+
+    // Start
+    async function startAssignment() {
+      const name = nameInput.value.trim();
+      if (!name) { document.getElementById('nameErr').classList.remove('hidden'); return; }
+      if (!selectedHowdy || !selectedUnit || !selectedBook) return;
+
+      document.getElementById('loadingText').textContent = '尋找習作中…';
+      document.getElementById('loadingOverlay').classList.remove('hidden');
+      try {
+        const list = await (await fetch(
+          `${API}/api/assignments?howdy=${selectedHowdy}&unit=${selectedUnit}&book=${selectedBook}`
+        )).json();
+        if (!list || list.length === 0) {
+          document.getElementById('loadingOverlay').classList.add('hidden');
+          alert('找不到這份習作，請通知老師上傳教材。');
+          return;
+        }
+        sessionStorage.setItem('student_name', name);
+        window.location.href = `assignment.html?id=${list[0].id}&name=${encodeURIComponent(name)}`;
+      } catch(err) {
+        document.getElementById('loadingOverlay').classList.add('hidden');
+        alert('連線失敗：' + err.message);
+      }
+    }
+
+    init();
   </script>
 </body>
 </html>

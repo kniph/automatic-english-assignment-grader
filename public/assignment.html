@@ -101,8 +101,7 @@
     }
     #drawCanvas {
       position: absolute; top: 0; left: 0;
-      /* pan-y + pinch-zoom: 單指捲動、雙指縮放由瀏覽器處理；Apple Pencil 由 JS 攔截 */
-      touch-action: pan-y pinch-zoom;
+      touch-action: none; /* 完全由 JS 控制，避免 iPadOS 誤判 Pencil 為手指捲動 */
       cursor: crosshair;
     }
 
@@ -327,8 +326,7 @@
         bgImage = new Image();
         bgImage.onload = () => {
           // Scale to fit wrapper width (iPad screen width) while keeping aspect ratio
-          const wrapper = document.getElementById('canvasWrapper');
-          const maxW = wrapper.clientWidth || window.innerWidth;
+          const maxW = canvasWrapper.clientWidth || window.innerWidth;
           const scale = Math.min(1, maxW / bgImage.width);
           const W = Math.round(bgImage.width * scale);
           const H = Math.round(bgImage.height * scale);
@@ -426,52 +424,139 @@
         b.classList.toggle('active', parseInt(b.dataset.size) === s));
     }
 
-    // Pointer events
-    // Apple Pencil → pointerType === 'pen'  → 書寫
-    // 手指         → pointerType === 'touch' → 捲動（交由瀏覽器 pan-y 處理）
-    // 滑鼠         → pointerType === 'mouse' → 電腦測試用，也可書寫
+    // ── Pointer 事件策略 ──────────────────────────────────────────
+    // touch-action: none → 瀏覽器完全不介入，由 JS 負責一切
+    //
+    // Apple Pencil / 滑鼠 (pointerType === 'pen' | 'mouse') → 書寫
+    // 手指 (pointerType === 'touch')
+    //   單指 → 手動計算 scrollTop（捲動）
+    //   雙指 → 手動 pinch zoom（縮放）
+    //
+    // activePointers: 追蹤所有按下的指標，以 id 為 key
 
-    function isPenOrMouse(e) {
-      return e.pointerType === 'pen' || e.pointerType === 'mouse';
+    const activePointers = new Map(); // id → { type, clientX, clientY }
+    let touchScroll = null;  // { id, startY, startScrollTop }
+    let pinchState  = null;  // { id1, id2, startDist, startScale, startScrollTop, startScrollLeft }
+    let viewScale   = 1;     // 目前縮放倍率（pinch zoom 用）
+    const canvasWrapper = document.getElementById('canvasWrapper');
+
+    function isPen(e) { return e.pointerType === 'pen' || e.pointerType === 'mouse'; }
+
+    function getTouches() {
+      return [...activePointers.values()].filter(p => p.type === 'touch');
     }
 
+    function pointerXY(id) { return activePointers.get(id); }
+
+    function pinchDist(a, b) {
+      return Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
+    }
+
+    // ─ pointerdown ─
     drawCanvas.addEventListener('pointerdown', (e) => {
-      if (!isPenOrMouse(e)) return;   // 手指 → 讓瀏覽器捲動
-      e.preventDefault();
-      isDrawing = true;
-      const pos = getPos(e);
-      lastX = pos.x; lastY = pos.y;
-      drawCtx.beginPath();
-      drawCtx.moveTo(lastX, lastY);
-    });
+      activePointers.set(e.pointerId, { type: e.pointerType, clientX: e.clientX, clientY: e.clientY });
 
-    drawCanvas.addEventListener('pointermove', (e) => {
-      if (!isDrawing || !isPenOrMouse(e)) return;
-      e.preventDefault();
-      const pos = getPos(e);
-      const pressure = (e.pressure > 0 && e.pointerType === 'pen') ? e.pressure : 0.5;
-
-      drawCtx.lineJoin = 'round';
-      drawCtx.lineCap = 'round';
-
-      if (tool === 'eraser') {
-        const eraserSize = strokeSize * 8;
-        drawCtx.clearRect(pos.x - eraserSize/2, pos.y - eraserSize/2, eraserSize, eraserSize);
-      } else {
-        drawCtx.globalCompositeOperation = 'source-over';
-        drawCtx.strokeStyle = color;
-        drawCtx.lineWidth = Math.max(0.5, strokeSize * pressure * 1.5);
-        drawCtx.beginPath();
-        drawCtx.moveTo(lastX, lastY);
-        drawCtx.lineTo(pos.x, pos.y);
-        drawCtx.stroke();
+      if (isPen(e)) {
+        // 筆 → 書寫
+        e.preventDefault();
+        isDrawing = true;
+        const pos = getPos(e);
+        lastX = pos.x; lastY = pos.y;
+        touchScroll = null; // 筆下時取消手指捲動
+      } else if (e.pointerType === 'touch') {
+        const touches = getTouches();
+        if (touches.length === 1) {
+          // 單指捲動
+          touchScroll = { id: e.pointerId, startY: e.clientY, startScrollTop: canvasWrapper.scrollTop };
+          pinchState = null;
+        } else if (touches.length === 2) {
+          // 雙指縮放：初始化 pinch
+          touchScroll = null;
+          const [a, b] = touches;
+          const pA = activePointers.get(touches[0].id) || touches[0];
+          const pB = activePointers.get(touches[1].id) || touches[1];
+          // 用 Map 裡已記錄的兩個 touch 指標
+          const ids = [...activePointers.entries()]
+            .filter(([, v]) => v.type === 'touch').map(([k]) => k);
+          if (ids.length === 2) {
+            const p1 = activePointers.get(ids[0]);
+            const p2 = activePointers.get(ids[1]);
+            pinchState = {
+              id1: ids[0], id2: ids[1],
+              startDist: pinchDist(p1, p2),
+              startScale: viewScale,
+              startScrollTop: canvasWrapper.scrollTop
+            };
+          }
+        }
       }
-      lastX = pos.x; lastY = pos.y;
     });
 
-    drawCanvas.addEventListener('pointerup',     (e) => { if(isDrawing && isPenOrMouse(e)){ isDrawing=false; saveHistory(); } });
-    drawCanvas.addEventListener('pointercancel', (e) => { if(isDrawing){ isDrawing=false; saveHistory(); } });
-    drawCanvas.addEventListener('pointerleave',  (e) => { if(isDrawing && isPenOrMouse(e)){ isDrawing=false; saveHistory(); } });
+    // ─ pointermove ─
+    drawCanvas.addEventListener('pointermove', (e) => {
+      // 更新位置記錄
+      const prev = activePointers.get(e.pointerId);
+      if (prev) activePointers.set(e.pointerId, { ...prev, clientX: e.clientX, clientY: e.clientY });
+
+      if (isPen(e)) {
+        if (!isDrawing) return;
+        e.preventDefault();
+        const pos = getPos(e);
+        const pressure = (e.pressure > 0 && e.pointerType === 'pen') ? e.pressure : 0.5;
+        drawCtx.lineJoin = 'round';
+        drawCtx.lineCap  = 'round';
+
+        if (tool === 'eraser') {
+          const sz = strokeSize * 8;
+          drawCtx.clearRect(pos.x - sz/2, pos.y - sz/2, sz, sz);
+        } else {
+          drawCtx.globalCompositeOperation = 'source-over';
+          drawCtx.strokeStyle = color;
+          drawCtx.lineWidth = Math.max(0.5, strokeSize * pressure * 1.5);
+          drawCtx.beginPath();
+          drawCtx.moveTo(lastX, lastY);
+          drawCtx.lineTo(pos.x, pos.y);
+          drawCtx.stroke();
+        }
+        lastX = pos.x; lastY = pos.y;
+
+      } else if (e.pointerType === 'touch') {
+        if (pinchState && (e.pointerId === pinchState.id1 || e.pointerId === pinchState.id2)) {
+          // 雙指縮放
+          const p1 = activePointers.get(pinchState.id1);
+          const p2 = activePointers.get(pinchState.id2);
+          if (p1 && p2) {
+            const dist = pinchDist(p1, p2);
+            const ratio = dist / pinchState.startDist;
+            const newScale = Math.min(4, Math.max(0.5, pinchState.startScale * ratio));
+            if (newScale !== viewScale) {
+              viewScale = newScale;
+              const container = document.getElementById('canvasContainer');
+              container.style.transform = `scale(${viewScale})`;
+              container.style.transformOrigin = 'top left';
+            }
+          }
+        } else if (touchScroll && e.pointerId === touchScroll.id) {
+          // 單指捲動
+          const dy = touchScroll.startY - e.clientY;
+          canvasWrapper.scrollTop = touchScroll.startScrollTop + dy;
+        }
+      }
+    });
+
+    // ─ pointerup / cancel / leave ─
+    function endPointer(e) {
+      activePointers.delete(e.pointerId);
+      if (isPen(e)) {
+        if (isDrawing) { isDrawing = false; saveHistory(); }
+      } else if (e.pointerType === 'touch') {
+        if (touchScroll && touchScroll.id === e.pointerId) touchScroll = null;
+        if (pinchState && (e.pointerId === pinchState.id1 || e.pointerId === pinchState.id2)) pinchState = null;
+      }
+    }
+    drawCanvas.addEventListener('pointerup',     endPointer);
+    drawCanvas.addEventListener('pointercancel', endPointer);
+    drawCanvas.addEventListener('pointerleave',  (e) => { if (isPen(e)) endPointer(e); });
 
     function getPos(e) {
       const rect = drawCanvas.getBoundingClientRect();

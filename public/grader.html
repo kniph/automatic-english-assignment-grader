@@ -196,8 +196,10 @@
       try {
         selectedKey = await apiCall(`/api/answer-keys/${selectedKeyId}`);
         const qCount = selectedKey.questions.length;
-        document.getElementById('keyInfoText').textContent =
-          `${qCount} questions | ${selectedKey.total_points} total points | ${selectedKey.settings.case_sensitive ? 'Case sensitive' : 'Case insensitive'}`;
+        const isClaude = selectedKey.mode === 'claude';
+        document.getElementById('keyInfoText').textContent = isClaude
+          ? `Claude AI 自動批改模式${selectedKey.total_points > 0 ? ` | ${selectedKey.total_points} 題` : ' | 上傳第一份作業後自動偵測題數'}`
+          : `${qCount} questions | ${selectedKey.total_points} total points | ${selectedKey.settings.case_sensitive ? 'Case sensitive' : 'Case insensitive'}`;
         keyInfo.classList.remove('hidden');
         uploadCard.classList.remove('hidden');
         loadPastResults();
@@ -380,13 +382,14 @@
       // Answer details
       const details = document.getElementById('answerDetails');
       details.innerHTML = result.answers.map((a, i) => {
-        const q = selectedKey.questions[i];
+        const q = selectedKey.questions.find(q => q.number === (a.question_number || i + 1));
+        const correctAnswer = a.correct_answer || q?.correct_answer || '';
         return `
           <div class="answer-row">
             <span class="q-num">#${a.question_number || i + 1}</span>
             <span class="${a.correct ? 'mark-correct' : 'mark-incorrect'}">${a.correct ? 'O' : 'X'}</span>
-            <span class="detected" title="OCR detected">${escapeHtml(a.detected_text)}</span>
-            <span class="expected" title="Expected">${escapeHtml(q?.correct_answer || '')}</span>
+            <span class="detected" title="Student answer">${escapeHtml(a.detected_text || '')}</span>
+            <span class="expected" title="Expected">${escapeHtml(correctAnswer)}</span>
             <span class="badge ${a.correct ? 'badge-correct' : 'badge-incorrect'}">
               ${a.correct ? `+${a.score}` : '0'}
             </span>
@@ -409,10 +412,10 @@
 
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-        // Draw O/X marks on each region
+        // Draw O/X marks on each region (skip for Claude mode — no regions)
         result.answers.forEach((a, i) => {
-          const q = selectedKey.questions[i];
-          if (!q) return;
+          const q = selectedKey.questions.find(q => q.number === (a.question_number || i + 1));
+          if (!q || !q.region) return;
 
           const r = q.region;
           const x = r.x * scale;

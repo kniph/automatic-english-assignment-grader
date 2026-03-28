@@ -6,6 +6,7 @@ const sharp = require('sharp');
 const heicConvert = require('heic-convert');
 const path = require('path');
 const mammoth = require('mammoth');
+const Anthropic = require('@anthropic-ai/sdk');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -268,6 +269,60 @@ function matchAnswer(detectedText, question, settings) {
 }
 
 // ============================================================
+// Claude Vision grading
+// ============================================================
+
+function getAnthropicClient() {
+  const key = process.env.ANTHROPIC_API_KEY;
+  if (!key) throw new Error('ANTHROPIC_API_KEY not configured');
+  return new Anthropic({ apiKey: key });
+}
+
+async function gradeWithClaude(answerKeyBase64, studentBase64, assignmentName) {
+  const client = getAnthropicClient();
+
+  const response = await client.messages.create({
+    model: 'claude-opus-4-6',
+    max_tokens: 2048,
+    messages: [{
+      role: 'user',
+      content: [
+        {
+          type: 'text',
+          text: `Grade children's English homework: "${assignmentName}".
+
+Image 1 = ANSWER KEY (correct answers shown)
+Image 2 = STUDENT'S WORK
+
+Compare every question. Return ONLY valid JSON (no markdown, no explanation):
+{"questions":[{"number":1,"correct_answer":"...","student_answer":"...","correct":true}],"total_possible":N}
+
+Rules:
+- Ignore case and trailing punctuation
+- T / F accepted as True / False in any form
+- 1-character typo still counts as correct
+- Blank or illegible → correct:false, student_answer:"(blank)"
+- Number questions from 1`
+        },
+        {
+          type: 'image',
+          source: { type: 'base64', media_type: 'image/jpeg', data: answerKeyBase64 }
+        },
+        {
+          type: 'image',
+          source: { type: 'base64', media_type: 'image/jpeg', data: studentBase64 }
+        }
+      ]
+    }]
+  });
+
+  const raw = response.content[0].text.trim();
+  const jsonMatch = raw.match(/\{[\s\S]*\}/);
+  if (!jsonMatch) throw new Error('Claude did not return valid JSON');
+  return JSON.parse(jsonMatch[0]);
+}
+
+// ============================================================
 // Core grading logic (shared by single + batch)
 // ============================================================
 
@@ -277,11 +332,32 @@ async function gradeStudent({ answerKey, studentImage, studentName }) {
   const mode = answerKey.mode || 'simple';
 
   const studentBuffer = Buffer.from(studentImage, 'base64');
-  const processedBuffer = await sharp(studentBuffer).rotate().png().toBuffer();
+  // Use JPEG for both Claude vision and full-page OCR (smaller, compatible)
+  const processedBuffer = await sharp(studentBuffer).rotate().jpeg({ quality: 88 }).toBuffer();
   const processedBase64 = processedBuffer.toString('base64');
 
   const answers = [];
   let totalScore = 0;
+  let claudeQuestions = null;
+
+  if (mode === 'claude') {
+    if (!answerKey.template_image) throw new Error('No answer key image saved for this assignment');
+    const claudeResult = await gradeWithClaude(answerKey.template_image, processedBase64, answerKey.name);
+    claudeQuestions = claudeResult.questions;
+    for (const q of claudeResult.questions) {
+      const score = q.correct ? 1 : 0;
+      answers.push({
+        question_number: q.number,
+        correct: q.correct,
+        score,
+        detected_text: q.student_answer,
+        correct_answer: q.correct_answer,
+        match_type: 'claude'
+      });
+      totalScore += score;
+    }
+    return { answers, totalScore, totalPossible: claudeResult.total_possible, claudeQuestions };
+  }
 
   if (mode === 'roi') {
     // Legacy ROI-based grading
@@ -330,10 +406,21 @@ app.post('/api/answer-keys', async (req, res) => {
       return res.status(400).json({ error: 'Missing required fields: teacher_name, name, questions' });
     }
     const total_points = questions.reduce((sum, q) => sum + (q.points || 1), 0);
+
+    // For Claude mode: normalise answer key image to JPEG for consistent Vision API calls
+    let storedImage = template_image || null;
+    if (mode === 'claude' && storedImage) {
+      try {
+        const buf = Buffer.from(storedImage, 'base64');
+        const jpegBuf = await sharp(buf).rotate().jpeg({ quality: 90 }).toBuffer();
+        storedImage = jpegBuf.toString('base64');
+      } catch (_) { /* keep original if conversion fails */ }
+    }
+
     const result = await pool.query(
       `INSERT INTO answer_keys (teacher_name, name, mode, template_image, image_width, image_height, questions, settings, total_points)
        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *`,
-      [teacher_name, name, mode, template_image || null, image_width, image_height, JSON.stringify(questions), JSON.stringify(settings || {}), total_points]
+      [teacher_name, name, mode, storedImage, image_width, image_height, JSON.stringify(questions), JSON.stringify(settings || {}), total_points]
     );
     res.status(201).json(result.rows[0]);
   } catch (err) {
@@ -460,7 +547,14 @@ app.post('/api/grade', async (req, res) => {
     if (keyResult.rows.length === 0) return res.status(404).json({ error: 'Answer key not found' });
     const answerKey = keyResult.rows[0];
 
-    const { answers, totalScore, totalPossible } = await gradeStudent({ answerKey, studentImage: student_image, studentName: student_name });
+    const { answers, totalScore, totalPossible, claudeQuestions } = await gradeStudent({ answerKey, studentImage: student_image, studentName: student_name });
+
+    // First Claude grading: write back questions + total_points to answer key
+    if (answerKey.mode === 'claude' && answerKey.total_points === 0 && claudeQuestions?.length) {
+      const qs = claudeQuestions.map(q => ({ number: q.number, correct_answer: q.correct_answer, type: 'fill_blank', points: 1, alt_answers: [] }));
+      await pool.query('UPDATE answer_keys SET total_points=$1, questions=$2 WHERE id=$3',
+        [totalPossible, JSON.stringify(qs), answer_key_id]).catch(() => {});
+    }
 
     const saveResult = await pool.query(
       `INSERT INTO grading_results (answer_key_id, student_name, original_image, answers, total_score, total_possible)
@@ -493,7 +587,13 @@ app.post('/api/grade/batch', async (req, res) => {
     const results = [];
     for (const student of students) {
       try {
-        const { answers, totalScore, totalPossible } = await gradeStudent({ answerKey, studentImage: student.image, studentName: student.name });
+        const { answers, totalScore, totalPossible, claudeQuestions } = await gradeStudent({ answerKey, studentImage: student.image, studentName: student.name });
+        if (answerKey.mode === 'claude' && answerKey.total_points === 0 && claudeQuestions?.length) {
+          const qs = claudeQuestions.map(q => ({ number: q.number, correct_answer: q.correct_answer, type: 'fill_blank', points: 1, alt_answers: [] }));
+          await pool.query('UPDATE answer_keys SET total_points=$1, questions=$2 WHERE id=$3',
+            [totalPossible, JSON.stringify(qs), answer_key_id]).catch(() => {});
+          answerKey.total_points = totalPossible;
+        }
         const saveResult = await pool.query(
           `INSERT INTO grading_results (answer_key_id, student_name, original_image, answers, total_score, total_possible)
            VALUES ($1, $2, $3, $4, $5, $6) RETURNING id`,
@@ -532,7 +632,7 @@ app.get('/api/results/:answerKeyId/analysis', async (req, res) => {
     const keyResult = await pool.query('SELECT * FROM answer_keys WHERE id = $1', [req.params.answerKeyId]);
     if (keyResult.rows.length === 0) return res.status(404).json({ error: 'Answer key not found' });
     const answerKey = keyResult.rows[0];
-    const questions = answerKey.questions;
+    let questions = answerKey.questions || [];
 
     const resultsData = await pool.query(
       'SELECT student_name, answers, total_score, total_possible FROM grading_results WHERE answer_key_id = $1 ORDER BY total_score DESC',
@@ -541,6 +641,17 @@ app.get('/api/results/:answerKeyId/analysis', async (req, res) => {
     const results = resultsData.rows;
 
     if (results.length === 0) return res.json({ question_stats: [], student_stats: [], total_students: 0, class_average: 0 });
+
+    // For Claude mode: questions array may be empty until first grading — rebuild from answers
+    if (questions.length === 0 && results.length > 0) {
+      const firstAnswers = results[0].answers || [];
+      questions = firstAnswers.map(a => ({
+        number: a.question_number,
+        correct_answer: a.correct_answer || '',
+        type: 'fill_blank',
+        points: 1
+      })).sort((a, b) => a.number - b.number);
+    }
 
     // Per-question stats
     const question_stats = questions.map(q => {

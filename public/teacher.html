@@ -6,38 +6,80 @@
   <title>Answer Key Setup - Homework Grader</title>
   <link rel="stylesheet" href="css/common.css">
   <style>
-    .parse-box { display: flex; gap: 0.5rem; align-items: flex-start; }
-    .parse-box textarea { flex: 1; min-height: 120px; font-family: monospace; font-size: 0.9rem; resize: vertical; }
-    .q-table { width: 100%; border-collapse: collapse; margin-top: 0.5rem; }
-    .q-table th { background: #f8f9fa; padding: 0.5rem 0.4rem; text-align: left; font-size: 0.8rem; color: #555; border-bottom: 2px solid #e9ecef; white-space: nowrap; }
-    .q-table td { padding: 0.3rem 0.4rem; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
-    .q-table tr:hover td { background: #fafafa; }
-    .q-table input[type="text"], .q-table input[type="number"], .q-table select {
-      width: 100%; margin: 0; padding: 0.3rem 0.4rem; font-size: 0.88rem; border: 1px solid #ddd; border-radius: 4px;
+    .upload-zone {
+      border: 2px dashed #ddd;
+      border-radius: 12px;
+      padding: 2rem;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      background: #fafafa;
     }
-    .q-table input[type="number"] { width: 3.5rem; }
-    .q-num-cell { font-weight: 700; color: #1a73e8; text-align: center; min-width: 2rem; }
-    .del-btn { background: none; border: none; color: #dc3545; font-size: 1.1rem; cursor: pointer; padding: 0 0.3rem; }
-    .del-btn:hover { color: #a71d2a; }
-    .add-row-btn { margin-top: 0.5rem; }
+    .upload-zone:hover, .upload-zone.drag-over {
+      border-color: #1a73e8;
+      background: #f0f6ff;
+    }
+    .upload-zone input[type="file"] { display: none; }
+    .upload-zone .upload-icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
+    .upload-zone .upload-hint { font-size: 0.82rem; color: #888; margin-top: 0.4rem; }
+    .preview-container {
+      margin-top: 1rem;
+      text-align: center;
+      display: none;
+    }
+    .preview-container img {
+      max-width: 100%;
+      max-height: 400px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .preview-label {
+      font-size: 0.8rem;
+      color: #888;
+      margin-top: 0.4rem;
+    }
+    .replace-btn {
+      margin-top: 0.75rem;
+    }
     .saved-key-item { display: flex; justify-content: space-between; align-items: center; padding: 0.6rem 0.4rem; border-bottom: 1px solid #eee; }
     .saved-key-item:last-child { border-bottom: none; }
     .key-name { font-weight: 600; }
     .key-meta { font-size: 0.8rem; color: #888; margin-top: 0.15rem; }
     .key-actions { display: flex; gap: 0.4rem; }
-    .or-divider { text-align: center; color: #aaa; font-size: 0.85rem; margin: 0.5rem 0; }
-    .upload-section { border: 2px dashed #ddd; border-radius: 8px; padding: 1rem; text-align: center; cursor: pointer; transition: border-color 0.2s; }
-    .upload-section:hover { border-color: #1a73e8; }
-    .upload-section input[type="file"] { display: none; }
-    .section-hint { font-size: 0.82rem; color: #888; margin-top: 0.25rem; }
-    .settings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
-    @media (max-width: 600px) { .settings-grid { grid-template-columns: 1fr; } }
-    .checkbox-row { display: flex; align-items: center; gap: 0.4rem; }
-    .checkbox-row input { width: auto; margin: 0; }
-    .checkbox-row label { margin: 0; font-weight: 400; }
-    .fuzzy-row { display: flex; align-items: center; gap: 0.5rem; }
-    .fuzzy-row input[type="range"] { flex: 1; }
-    .fuzzy-val { min-width: 3rem; font-weight: 600; color: #1a73e8; }
+    .mode-badge {
+      display: inline-block;
+      background: #e8f0fe;
+      color: #1a73e8;
+      border-radius: 4px;
+      padding: 0.1rem 0.5rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-left: 0.4rem;
+    }
+    .step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.6rem;
+      height: 1.6rem;
+      background: #1a73e8;
+      color: white;
+      border-radius: 50%;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-right: 0.5rem;
+      flex-shrink: 0;
+    }
+    .step-title {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+    .step-title h2 {
+      margin: 0;
+      font-size: 1.05rem;
+    }
   </style>
 </head>
 <body>
@@ -52,92 +94,47 @@
 
   <div class="container">
 
-    <!-- Step 1: Assignment Info -->
+    <!-- Step 1: Teacher Name -->
     <div class="card">
-      <h2>1. Assignment Info</h2>
-      <label for="teacherName">Teacher Name</label>
+      <div class="step-title"><span class="step-num">1</span><h2>Teacher Name</h2></div>
       <input id="teacherName" type="text" placeholder="Enter your name" style="max-width: 280px;">
-      <label for="assignmentName" class="mt-1">Assignment Name</label>
-      <input id="assignmentName" type="text" placeholder="e.g. Unit 3 Test / Lesson 5 Homework">
     </div>
 
-    <!-- Step 2: Load Answer Key -->
+    <!-- Step 2: Assignment Name -->
     <div class="card">
-      <h2>2. Load Answer Key</h2>
-
-      <!-- Upload PDF / Word -->
-      <label>Upload PDF or Word (.docx) answer key:</label>
-      <div class="upload-section" id="docUpload" onclick="document.getElementById('docFile').click()">
-        <div>📄 Click to upload PDF / Word</div>
-        <div class="section-hint">System will auto-extract numbered answers (e.g. "1. T", "2. apple")</div>
-        <input type="file" id="docFile" accept=".pdf,.docx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
-      </div>
-
-      <div class="or-divider">— OR —</div>
-
-      <!-- Paste text -->
-      <label>Paste answer text directly:</label>
-      <div class="parse-box">
-        <textarea id="pasteArea" placeholder="1. T&#10;2. apple&#10;3. F&#10;4. It is a cat.&#10;5. True"></textarea>
-        <button class="btn" onclick="parseTextAnswers()">Parse →</button>
-      </div>
-      <p class="section-hint">One answer per line. Supports formats: "1. T", "1) apple", "(1) False", "Q1: cat"</p>
+      <div class="step-title"><span class="step-num">2</span><h2>Assignment Name</h2></div>
+      <input id="assignmentName" type="text" placeholder="e.g. Unit 3 Quiz / Lesson 5 Homework">
     </div>
 
-    <!-- Step 3: Review & Edit Questions -->
-    <div class="card" id="questionsCard">
-      <div class="flex-between">
-        <h2>3. Review & Edit Answers</h2>
-        <span id="qCount" style="font-size: 0.9rem; color: #888;"></span>
-      </div>
-      <p style="font-size: 0.85rem; color: #666; margin-top: 0;">
-        Edit any answer, change the type, or adjust points. Each row is one question.
+    <!-- Step 3: Upload Answer Key Image -->
+    <div class="card">
+      <div class="step-title"><span class="step-num">3</span><h2>Upload Answer Key Image</h2></div>
+      <p style="font-size: 0.88rem; color: #666; margin-top: 0; margin-bottom: 0.75rem;">
+        Upload a photo or scan of the <strong>completed answer key</strong>. Claude AI will read it and compare with each student's work automatically.
       </p>
 
-      <div style="overflow-x: auto;">
-        <table class="q-table" id="qTable">
-          <thead>
-            <tr>
-              <th style="width:3rem;">#</th>
-              <th>Correct Answer</th>
-              <th style="width:9rem;">Type</th>
-              <th style="width:5rem;">Points</th>
-              <th>Alt Answers <span style="font-weight:400; color: #bbb;">(comma-sep)</span></th>
-              <th style="width:2.5rem;"></th>
-            </tr>
-          </thead>
-          <tbody id="qBody">
-            <tr><td colspan="6" style="text-align:center; color: #bbb; padding: 1.5rem 0;">Upload a file or paste answers above to populate this table.</td></tr>
-          </tbody>
-        </table>
+      <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
+        <div class="upload-icon">📷</div>
+        <div>Click to upload or drag here</div>
+        <div class="upload-hint">JPG · PNG · HEIC · PDF — Max 20 MB</div>
+        <input type="file" id="fileInput" accept="image/*,.heic,.pdf,application/pdf">
       </div>
-      <button class="btn btn-outline add-row-btn" onclick="addQuestionRow()">+ Add Row</button>
+
+      <div class="preview-container" id="previewContainer">
+        <img id="previewImg" src="" alt="Answer key preview">
+        <div class="preview-label" id="previewLabel"></div>
+        <br>
+        <button class="btn btn-sm btn-outline replace-btn" onclick="document.getElementById('fileInput').click()">Replace Image</button>
+      </div>
     </div>
 
-    <!-- Step 4: Settings + Save -->
+    <!-- Step 4: Save -->
     <div class="card">
-      <h2>4. Grading Settings</h2>
-      <div class="settings-grid">
-        <div class="checkbox-row">
-          <input type="checkbox" id="ignoreCase" checked>
-          <label for="ignoreCase">Ignore Case (apple = Apple)</label>
-        </div>
-        <div class="checkbox-row">
-          <input type="checkbox" id="ignorePunct" checked>
-          <label for="ignorePunct">Ignore Punctuation (kids often miss periods)</label>
-        </div>
-      </div>
-      <div class="mt-1">
-        <label>Fuzzy Match Threshold:</label>
-        <div class="fuzzy-row">
-          <input type="range" id="fuzzyThreshold" min="0" max="1" step="0.05" value="0.7" oninput="document.getElementById('fuzzyVal').textContent = (this.value*100|0)+'%'">
-          <span class="fuzzy-val" id="fuzzyVal">70%</span>
-          <span style="font-size:0.82rem; color:#888;">(0 = off, 70%+ recommended for typos)</span>
-        </div>
-      </div>
-      <div class="mt-2">
-        <button class="btn btn-success btn-lg" id="saveBtn" onclick="saveAnswerKey()">💾 Save Answer Key</button>
-      </div>
+      <div class="step-title"><span class="step-num">4</span><h2>Save</h2></div>
+      <p style="font-size: 0.85rem; color: #666; margin-top: 0;">
+        After saving, go to <a href="grader.html">Grade</a> to upload student homework. Claude will automatically grade each student's work.
+      </p>
+      <button class="btn btn-success btn-lg" id="saveBtn" onclick="saveAnswerKey()">💾 Save Answer Key</button>
     </div>
 
     <!-- Saved Answer Keys -->
@@ -148,10 +145,16 @@
 
   </div><!-- /container -->
 
+  <!-- PDF.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script>
+    if (typeof pdfjsLib !== 'undefined') {
+      pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    }
+  </script>
   <script src="js/common.js"></script>
   <script>
-    // ---- State ----
-    let questions = [];  // [{number, correct_answer, type, points, alt_answers}]
+    let answerKeyBase64 = null;  // JPEG base64 of the answer key image
 
     // ---- Init ----
     const teacherNameInput = document.getElementById('teacherName');
@@ -162,157 +165,141 @@
       loadSavedKeys();
     });
 
-    // ---- Document upload ----
-    document.getElementById('docFile').addEventListener('change', async (e) => {
-      const file = e.target.files[0];
-      if (!file) return;
-      const ext = file.name.split('.').pop().toLowerCase();
-      const type = ext === 'pdf' ? 'pdf' : ext === 'docx' ? 'docx' : null;
-      if (!type) { showToast('Only PDF and .docx files are supported', 'error'); return; }
+    // ---- Drag & drop ----
+    const uploadZone = document.getElementById('uploadZone');
+    uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('drag-over'); });
+    uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('drag-over'));
+    uploadZone.addEventListener('drop', e => {
+      e.preventDefault();
+      uploadZone.classList.remove('drag-over');
+      const file = e.dataTransfer.files[0];
+      if (file) handleFile(file);
+    });
 
-      showToast('Parsing document…');
-      try {
-        const base64 = await fileToBase64(file);
-        const result = await apiCall('/api/parse-document', { method: 'POST', body: { data: base64, type } });
-        if (!result.answers || result.answers.length === 0) {
-          showToast('No numbered answers found. Try pasting the text manually.', 'error');
-          return;
-        }
-        questions = result.answers;
-        renderTable();
-        showToast(`✅ Extracted ${questions.length} answers from ${file.name}`);
-      } catch (err) {
-        showToast('Parse failed: ' + err.message, 'error');
-      }
+    document.getElementById('fileInput').addEventListener('change', e => {
+      const file = e.target.files[0];
+      if (file) handleFile(file);
       e.target.value = '';
     });
 
-    // ---- Text paste parse ----
-    function parseTextAnswers() {
-      const text = document.getElementById('pasteArea').value.trim();
-      if (!text) { showToast('Paste some answer text first', 'error'); return; }
-      const lines = text.split('\n').map(l => l.trim()).filter(l => l);
-      const parsed = [];
-      const seen = new Set();
-      for (const line of lines) {
-        const m = line.match(/^(?:[Qq])?[\(（]?(\d{1,3})[\)）\.：:\s、]\s*(.{1,200})$/);
-        if (!m) continue;
-        const num = parseInt(m[1]);
-        const answer = m[2].trim().replace(/\s+/g, ' ');
-        if (num < 1 || num > 200 || seen.has(num)) continue;
-        seen.add(num);
-        parsed.push({ number: num, correct_answer: answer, type: detectType(answer), points: 1, alt_answers: [] });
+    // ---- File handling ----
+    async function handleFile(file) {
+      const ext = file.name.split('.').pop().toLowerCase();
+      showToast('Loading image…');
+
+      try {
+        let jpegBase64;
+
+        if (ext === 'pdf') {
+          jpegBase64 = await pdfPageToJpeg(file);
+          showToast('✅ PDF first page converted');
+        } else if (ext === 'heic' || file.type === 'image/heic') {
+          const raw = await fileToBase64(file);
+          const result = await apiCall('/api/convert-heic', { method: 'POST', body: { image: raw } });
+          jpegBase64 = result.image;
+          showToast('✅ HEIC converted');
+        } else {
+          // Regular image: convert to JPEG via canvas for consistent encoding
+          jpegBase64 = await imageToJpeg(file);
+          showToast('✅ Image loaded');
+        }
+
+        answerKeyBase64 = jpegBase64;
+        showPreview(jpegBase64, file.name);
+      } catch (err) {
+        showToast('Failed to load image: ' + err.message, 'error');
       }
-      if (parsed.length === 0) { showToast('No answers found. Check the format: "1. T", "2. apple"', 'error'); return; }
-      parsed.sort((a, b) => a.number - b.number);
-      questions = parsed;
-      renderTable();
-      showToast(`✅ Parsed ${parsed.length} answers`);
     }
 
-    function detectType(answer) {
-      const tf = new Set(['t', 'f', 'true', 'false', 'yes', 'no', 'o', 'x']);
-      if (tf.has(answer.toLowerCase().trim())) return 'true_false';
-      if (answer.trim().split(/\s+/).length === 1) return 'fill_blank';
-      return 'short_answer';
+    // Convert any image file to JPEG base64 via canvas
+    function imageToJpeg(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = e => {
+          const img = new Image();
+          img.onload = () => {
+            const maxDim = 3000;
+            let w = img.width, h = img.height;
+            if (w > maxDim || h > maxDim) {
+              const scale = maxDim / Math.max(w, h);
+              w = Math.round(w * scale);
+              h = Math.round(h * scale);
+            }
+            const canvas = document.createElement('canvas');
+            canvas.width = w;
+            canvas.height = h;
+            canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+            const dataUrl = canvas.toDataURL('image/jpeg', 0.9);
+            resolve(dataUrl.split(',')[1]);
+          };
+          img.onerror = reject;
+          img.src = e.target.result;
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
     }
 
-    // ---- Table rendering ----
-    const TYPE_OPTIONS = [
-      { value: 'true_false', label: 'True / False' },
-      { value: 'fill_blank', label: 'Fill-in-blank' },
-      { value: 'short_answer', label: 'Short Answer' }
-    ];
-
-    function renderTable() {
-      const tbody = document.getElementById('qBody');
-      if (questions.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:#bbb; padding:1.5rem 0;">No questions yet. Upload a file or parse text above.</td></tr>';
-        document.getElementById('qCount').textContent = '';
-        return;
-      }
-      document.getElementById('qCount').textContent = `${questions.length} questions / ${questions.reduce((s, q) => s + q.points, 0)} pts`;
-      tbody.innerHTML = questions.map((q, i) => {
-        const typeOpts = TYPE_OPTIONS.map(t => `<option value="${t.value}" ${q.type === t.value ? 'selected' : ''}>${t.label}</option>`).join('');
-        const alts = (q.alt_answers || []).join(', ');
-        return `<tr data-idx="${i}">
-          <td class="q-num-cell">${q.number}</td>
-          <td><input type="text" value="${escHtml(q.correct_answer)}" onchange="updateQ(${i},'correct_answer',this.value)"></td>
-          <td><select onchange="updateQ(${i},'type',this.value)">${typeOpts}</select></td>
-          <td><input type="number" value="${q.points}" min="1" max="20" onchange="updateQ(${i},'points',parseInt(this.value)||1)"></td>
-          <td><input type="text" value="${escHtml(alts)}" placeholder="e.g. ok, okay" onchange="updateQ(${i},'alt_answers_raw',this.value)"></td>
-          <td><button class="del-btn" title="Remove" onclick="removeQ(${i})">✕</button></td>
-        </tr>`;
-      }).join('');
+    // Render PDF page 1 to JPEG using PDF.js
+    async function pdfPageToJpeg(file) {
+      if (typeof pdfjsLib === 'undefined') throw new Error('PDF.js not loaded');
+      const arrayBuffer = await file.arrayBuffer();
+      const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+      const page = await pdf.getPage(1);
+      const viewport = page.getViewport({ scale: 2.0 });
+      const canvas = document.createElement('canvas');
+      canvas.width = viewport.width;
+      canvas.height = viewport.height;
+      await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+      const dataUrl = canvas.toDataURL('image/jpeg', 0.92);
+      return dataUrl.split(',')[1];
     }
 
-    function updateQ(i, field, value) {
-      if (field === 'alt_answers_raw') {
-        questions[i].alt_answers = value.split(',').map(s => s.trim()).filter(s => s.length > 0);
-      } else {
-        questions[i][field] = value;
-      }
-      // Update points count in header
-      document.getElementById('qCount').textContent = `${questions.length} questions / ${questions.reduce((s, q) => s + q.points, 0)} pts`;
-    }
-
-    function removeQ(i) {
-      questions.splice(i, 1);
-      renderTable();
-    }
-
-    function addQuestionRow() {
-      const nextNum = questions.length > 0 ? Math.max(...questions.map(q => q.number)) + 1 : 1;
-      questions.push({ number: nextNum, correct_answer: '', type: 'fill_blank', points: 1, alt_answers: [] });
-      renderTable();
-      // Focus the new answer input
-      const rows = document.getElementById('qBody').querySelectorAll('tr');
-      const lastRow = rows[rows.length - 1];
-      if (lastRow) lastRow.querySelector('input[type="text"]')?.focus();
-    }
-
-    function escHtml(str) {
-      const d = document.createElement('div');
-      d.textContent = str || '';
-      return d.innerHTML;
+    // ---- Preview ----
+    function showPreview(base64, filename) {
+      const container = document.getElementById('previewContainer');
+      const img = document.getElementById('previewImg');
+      const label = document.getElementById('previewLabel');
+      img.src = `data:image/jpeg;base64,${base64}`;
+      label.textContent = `📄 ${filename}`;
+      container.style.display = 'block';
     }
 
     // ---- Save ----
     async function saveAnswerKey() {
       const teacherName = teacherNameInput.value.trim();
       const assignmentName = document.getElementById('assignmentName').value.trim();
-      if (!teacherName) { showToast('Enter your teacher name first', 'error'); return; }
-      if (!assignmentName) { showToast('Enter an assignment name', 'error'); return; }
-      if (questions.length === 0) { showToast('Add at least one question', 'error'); return; }
-      const invalid = questions.find(q => !q.correct_answer.trim());
-      if (invalid) { showToast(`Question ${invalid.number} has no answer`, 'error'); return; }
+      if (!teacherName) { showToast('請輸入老師名稱', 'error'); return; }
+      if (!assignmentName) { showToast('請輸入作業名稱', 'error'); return; }
+      if (!answerKeyBase64) { showToast('請上傳答案卷圖片', 'error'); return; }
 
       localStorage.setItem('teacher_name', teacherName);
 
-      const settings = {
-        case_sensitive: !document.getElementById('ignoreCase').checked,
-        ignore_punctuation: document.getElementById('ignorePunct').checked,
-        fuzzy_default_threshold: parseFloat(document.getElementById('fuzzyThreshold').value)
-      };
-
       const btn = document.getElementById('saveBtn');
       btn.disabled = true;
-      btn.textContent = 'Saving…';
+      btn.textContent = '儲存中…';
 
       try {
         await apiCall('/api/answer-keys', {
           method: 'POST',
-          body: { teacher_name: teacherName, name: assignmentName, mode: 'simple', questions, settings }
+          body: {
+            teacher_name: teacherName,
+            name: assignmentName,
+            mode: 'claude',
+            template_image: answerKeyBase64,
+            questions: [],
+            settings: { case_sensitive: false, ignore_punctuation: true, fuzzy_default_threshold: 0 }
+          }
         });
-        showToast(`✅ "${assignmentName}" saved!`);
+        showToast(`✅ "${assignmentName}" 已儲存！`);
         // Reset
-        questions = [];
-        renderTable();
+        answerKeyBase64 = null;
         document.getElementById('assignmentName').value = '';
-        document.getElementById('pasteArea').value = '';
+        document.getElementById('previewContainer').style.display = 'none';
+        document.getElementById('previewImg').src = '';
         loadSavedKeys();
       } catch (err) {
-        showToast('Save failed: ' + err.message, 'error');
+        showToast('儲存失敗：' + err.message, 'error');
       } finally {
         btn.disabled = false;
         btn.textContent = '💾 Save Answer Key';
@@ -323,39 +310,48 @@
     async function loadSavedKeys() {
       const container = document.getElementById('savedKeysList');
       const name = teacherNameInput.value.trim();
-      if (!name) { container.innerHTML = '<p style="color:#aaa;">Enter your teacher name to see saved keys.</p>'; return; }
+      if (!name) { container.innerHTML = '<p style="color:#aaa;">請輸入老師名稱以查看已儲存的答案卷。</p>'; return; }
       try {
         const keys = await apiCall(`/api/answer-keys?teacher_name=${encodeURIComponent(name)}`);
         if (keys.length === 0) {
-          container.innerHTML = '<p style="color:#aaa;">No saved answer keys yet.</p>';
+          container.innerHTML = '<p style="color:#aaa;">尚未儲存任何答案卷。</p>';
           return;
         }
-        container.innerHTML = keys.map(k => `
+        container.innerHTML = keys.map(k => {
+          const modeBadge = k.mode === 'claude' ? '<span class="mode-badge">Claude AI</span>' : '';
+          const pts = k.total_points > 0 ? `${k.total_points} pts · ` : '';
+          return `
           <div class="saved-key-item">
             <div>
-              <div class="key-name">${escHtml(k.name)}</div>
-              <div class="key-meta">${k.total_points} pts · ${new Date(k.created_at).toLocaleDateString('zh-TW')}</div>
+              <div class="key-name">${escHtml(k.name)}${modeBadge}</div>
+              <div class="key-meta">${pts}${new Date(k.created_at).toLocaleDateString('zh-TW')}</div>
             </div>
             <div class="key-actions">
-              <a href="grader.html?key=${k.id}" class="btn btn-sm btn-outline">Grade →</a>
-              <button class="btn btn-sm btn-danger" onclick="deleteKey(${k.id},'${escHtml(k.name)}')">Delete</button>
+              <a href="grader.html?key=${k.id}" class="btn btn-sm btn-outline">批改 →</a>
+              <button class="btn btn-sm btn-danger" onclick="deleteKey(${k.id},'${escHtml(k.name)}')">刪除</button>
             </div>
-          </div>
-        `).join('');
+          </div>`;
+        }).join('');
       } catch (err) {
-        container.innerHTML = `<p style="color:#dc3545;">Failed to load: ${err.message}</p>`;
+        container.innerHTML = `<p style="color:#dc3545;">載入失敗：${err.message}</p>`;
       }
     }
 
     async function deleteKey(id, name) {
-      if (!confirm(`Delete "${name}"? This will also delete all grading results.`)) return;
+      if (!confirm(`確定刪除「${name}」？這也會刪除所有批改紀錄。`)) return;
       try {
         await apiCall(`/api/answer-keys/${id}`, { method: 'DELETE' });
-        showToast('Deleted');
+        showToast('已刪除');
         loadSavedKeys();
       } catch (err) {
-        showToast('Delete failed: ' + err.message, 'error');
+        showToast('刪除失敗：' + err.message, 'error');
       }
+    }
+
+    function escHtml(str) {
+      const d = document.createElement('div');
+      d.textContent = str || '';
+      return d.innerHTML;
     }
 
     // ---- Boot ----

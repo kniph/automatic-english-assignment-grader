@@ -229,23 +229,30 @@
     }
 
     // Unit
+    const UNIT_LABELS = {
+      1:'Unit 1', 2:'Unit 2', 3:'Unit 3', 4:'Unit 4',
+      5:'Unit 5', 6:'Unit 6', 7:'Unit 7', 8:'Unit 8',
+      9:'Review 1', 10:'Review 2'
+    };
     function buildUnitGrid(h) {
       const grid = document.getElementById('unitGrid');
       grid.innerHTML = '';
-      for (let u = 1; u <= 8; u++) {
+      const units = [1,2,3,4,5,6,7,8,9,10];
+      units.forEach(u => {
         const has = available.some(a => a.howdy_level === h && a.unit === u);
         const btn = document.createElement('button');
         btn.className = 'sel-btn' + (has ? '' : ' unavail');
-        btn.textContent = `Unit ${u}`;
+        btn.textContent = UNIT_LABELS[u];
         if (has) btn.onclick = () => selectUnit(u);
         grid.appendChild(btn);
-      }
+      });
     }
 
     function selectUnit(u) {
       selectedUnit = u; selectedBook = null;
+      const unitList = [1,2,3,4,5,6,7,8,9,10];
       document.querySelectorAll('#unitGrid .sel-btn').forEach((b, i) =>
-        b.classList.toggle('selected', i + 1 === u));
+        b.classList.toggle('selected', unitList[i] === u));
       updateBookGrid(selectedHowdy, u);
       showStep('stepBook');
       document.getElementById('goBtn').classList.add('hidden');
@@ -278,7 +285,7 @@
       if (!name) { bar.textContent = '請輸入姓名開始'; return; }
       let t = `👤 ${name}`;
       if (selectedHowdy) t += `　📖 Howdy ${selectedHowdy}`;
-      if (selectedUnit)  t += `  Unit ${selectedUnit}`;
+      if (selectedUnit)  t += `  ${UNIT_LABELS[selectedUnit] || ('Unit ' + selectedUnit)}`;
       if (selectedBook)  t += `  ${selectedBook} 本`;
       bar.textContent = t;
     }

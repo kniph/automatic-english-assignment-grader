@@ -308,8 +308,9 @@
         const res = await fetch(`${API}/api/assignments/${assignmentId}`);
         if (!res.ok) throw new Error('找不到習作 (id=' + assignmentId + ')');
         assignment = await res.json();
+        const unitLabel = assignment.unit === 9 ? 'Review 1' : assignment.unit === 10 ? 'Review 2' : `Unit ${assignment.unit}`;
         document.getElementById('topInfo').textContent =
-          `Howdy ${assignment.howdy_level}  Unit ${assignment.unit}  ${assignment.book_type} 本`;
+          `Howdy ${assignment.howdy_level}  ${unitLabel}  ${assignment.book_type} 本`;
 
         // Load workbook background image
         await loadBackground(assignment.assignment_image);

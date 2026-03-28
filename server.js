@@ -61,7 +61,7 @@ async function initDB() {
       CREATE TABLE IF NOT EXISTS assignments (
         id SERIAL PRIMARY KEY,
         howdy_level INTEGER NOT NULL CHECK (howdy_level BETWEEN 1 AND 10),
-        unit INTEGER NOT NULL CHECK (unit BETWEEN 1 AND 8),
+        unit INTEGER NOT NULL CHECK (unit BETWEEN 1 AND 10),
         book_type VARCHAR(1) NOT NULL CHECK (book_type IN ('A','B','C')),
         assignment_image TEXT NOT NULL,
         answer_key_image TEXT NOT NULL,
@@ -70,6 +70,11 @@ async function initDB() {
         UNIQUE(howdy_level, unit, book_type)
       );
     `);
+    // Migration: relax unit constraint to allow Review units (9=Review1, 10=Review2)
+    await client.query(`
+      ALTER TABLE assignments DROP CONSTRAINT IF EXISTS assignments_unit_check;
+      ALTER TABLE assignments ADD CONSTRAINT assignments_unit_check CHECK (unit BETWEEN 1 AND 10);
+    `).catch(() => {/* ignore if already updated */});
     await client.query(`
       CREATE TABLE IF NOT EXISTS student_submissions (
         id SERIAL PRIMARY KEY,

@@ -101,7 +101,8 @@
     }
     #drawCanvas {
       position: absolute; top: 0; left: 0;
-      touch-action: none;
+      /* pan-y + pinch-zoom: 單指捲動、雙指縮放由瀏覽器處理；Apple Pencil 由 JS 攔截 */
+      touch-action: pan-y pinch-zoom;
       cursor: crosshair;
     }
 
@@ -425,8 +426,17 @@
         b.classList.toggle('active', parseInt(b.dataset.size) === s));
     }
 
-    // Pointer events (handles Apple Pencil natively)
+    // Pointer events
+    // Apple Pencil → pointerType === 'pen'  → 書寫
+    // 手指         → pointerType === 'touch' → 捲動（交由瀏覽器 pan-y 處理）
+    // 滑鼠         → pointerType === 'mouse' → 電腦測試用，也可書寫
+
+    function isPenOrMouse(e) {
+      return e.pointerType === 'pen' || e.pointerType === 'mouse';
+    }
+
     drawCanvas.addEventListener('pointerdown', (e) => {
+      if (!isPenOrMouse(e)) return;   // 手指 → 讓瀏覽器捲動
       e.preventDefault();
       isDrawing = true;
       const pos = getPos(e);
@@ -436,7 +446,7 @@
     });
 
     drawCanvas.addEventListener('pointermove', (e) => {
-      if (!isDrawing) return;
+      if (!isDrawing || !isPenOrMouse(e)) return;
       e.preventDefault();
       const pos = getPos(e);
       const pressure = (e.pressure > 0 && e.pointerType === 'pen') ? e.pressure : 0.5;
@@ -459,9 +469,9 @@
       lastX = pos.x; lastY = pos.y;
     });
 
-    drawCanvas.addEventListener('pointerup',     (e) => { if(isDrawing){ isDrawing=false; saveHistory(); } });
+    drawCanvas.addEventListener('pointerup',     (e) => { if(isDrawing && isPenOrMouse(e)){ isDrawing=false; saveHistory(); } });
     drawCanvas.addEventListener('pointercancel', (e) => { if(isDrawing){ isDrawing=false; saveHistory(); } });
-    drawCanvas.addEventListener('pointerleave',  (e) => { if(isDrawing){ isDrawing=false; saveHistory(); } });
+    drawCanvas.addEventListener('pointerleave',  (e) => { if(isDrawing && isPenOrMouse(e)){ isDrawing=false; saveHistory(); } });
 
     function getPos(e) {
       const rect = drawCanvas.getBoundingClientRect();

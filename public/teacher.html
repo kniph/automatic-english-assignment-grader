@@ -403,16 +403,40 @@
       });
     }
 
+    // 將 PDF 所有頁面渲染後垂直拼接成一張 JPEG
     async function pdfPageToJpeg(file) {
       if (typeof pdfjsLib === 'undefined') throw new Error('PDF.js 未載入');
       const ab = await file.arrayBuffer();
       const pdf = await pdfjsLib.getDocument({ data: ab }).promise;
-      const page = await pdf.getPage(1);
-      const vp = page.getViewport({ scale: 2.5 });
-      const c = document.createElement('canvas');
-      c.width = vp.width; c.height = vp.height;
-      await page.render({ canvasContext: c.getContext('2d'), viewport: vp }).promise;
-      return c.toDataURL('image/jpeg', 0.92).split(',')[1];
+      const numPages = pdf.numPages;
+
+      // 渲染每一頁
+      const pages = [];
+      let totalH = 0, maxW = 0;
+      for (let i = 1; i <= numPages; i++) {
+        const page = await pdf.getPage(i);
+        const vp = page.getViewport({ scale: 2.5 });
+        const c = document.createElement('canvas');
+        c.width = vp.width; c.height = vp.height;
+        await page.render({ canvasContext: c.getContext('2d'), viewport: vp }).promise;
+        pages.push(c);
+        totalH += vp.height;
+        maxW = Math.max(maxW, vp.width);
+      }
+
+      // 垂直拼接所有頁面
+      const combined = document.createElement('canvas');
+      combined.width = maxW;
+      combined.height = totalH;
+      const ctx = combined.getContext('2d');
+      ctx.fillStyle = 'white';
+      ctx.fillRect(0, 0, maxW, totalH);
+      let y = 0;
+      for (const pc of pages) {
+        ctx.drawImage(pc, 0, y);
+        y += pc.height;
+      }
+      return combined.toDataURL('image/jpeg', 0.92).split(',')[1];
     }
 
     function escHtml(str) {

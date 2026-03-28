@@ -838,10 +838,11 @@ app.post('/api/assignments', async (req, res) => {
     }
 
     // Compress images server-side for storage efficiency
+    // 只限制寬度（max 2000px），高度不限——支援多頁 PDF 垂直拼接的長圖
     const compressImg = async (b64) => {
       const buf = Buffer.from(b64, 'base64');
       return (await sharp(buf).rotate()
-        .resize({ width: 2000, height: 2800, fit: 'inside', withoutEnlargement: true })
+        .resize({ width: 2000, withoutEnlargement: true })
         .jpeg({ quality: 85 }).toBuffer()).toString('base64');
     };
 

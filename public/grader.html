@@ -23,6 +23,24 @@
     .batch-item .name { flex: 1; }
     .batch-item .score { font-weight: 700; }
     .result-section { margin-top: 1rem; }
+    /* Weakness analysis */
+    .analysis-summary { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+    .stat-box { background: #f8f9fa; border-radius: 8px; padding: 0.75rem 1.25rem; text-align: center; }
+    .stat-box .stat-val { font-size: 1.8rem; font-weight: 700; color: #1a73e8; }
+    .stat-box .stat-label { font-size: 0.78rem; color: #888; margin-top: 0.1rem; }
+    .acc-bar-row { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.4rem; }
+    .acc-bar-row .q-label { min-width: 2.5rem; font-weight: 700; font-size: 0.88rem; color: #444; }
+    .acc-bar-outer { flex: 1; height: 16px; background: #eee; border-radius: 8px; overflow: hidden; }
+    .acc-bar-inner { height: 100%; border-radius: 8px; transition: width 0.4s; }
+    .acc-pct { min-width: 3rem; font-size: 0.85rem; font-weight: 600; text-align: right; }
+    .acc-mistakes { font-size: 0.78rem; color: #999; margin-left: 0.3rem; }
+    .student-row { display: flex; align-items: center; gap: 0.5rem; padding: 0.4rem 0; border-bottom: 1px solid #f0f0f0; }
+    .student-row .sname { min-width: 100px; font-weight: 600; }
+    .student-row .spct { min-width: 3rem; font-weight: 700; text-align: right; }
+    .wrong-pills { flex: 1; display: flex; flex-wrap: wrap; gap: 0.25rem; }
+    .wrong-pill { background: #fff0f0; color: #dc3545; border: 1px solid #fcc; border-radius: 4px; padding: 0.1rem 0.35rem; font-size: 0.78rem; font-weight: 600; }
+    .needs-review { background: #fff9e6; color: #856404; border: 1px solid #ffeaa7; border-radius: 4px; padding: 0.1rem 0.35rem; font-size: 0.75rem; }
+    .analysis-section-title { font-size: 0.9rem; font-weight: 700; color: #444; margin: 1rem 0 0.5rem; border-bottom: 1px solid #eee; padding-bottom: 0.25rem; }
   </style>
 </head>
 <body>
@@ -112,6 +130,15 @@
       </div>
     </div>
 
+    <!-- Weakness Analysis -->
+    <div class="card hidden" id="analysisCard">
+      <div class="flex-between">
+        <h2>📊 Weakness Analysis</h2>
+        <a id="exportBtn" href="#" class="btn btn-sm btn-outline" target="_blank">Export CSV</a>
+      </div>
+      <div id="analysisContent"></div>
+    </div>
+
     <!-- Past Results -->
     <div class="card" id="pastResultsCard">
       <h2>Past Results</h2>
@@ -174,6 +201,7 @@
         keyInfo.classList.remove('hidden');
         uploadCard.classList.remove('hidden');
         loadPastResults();
+        loadAnalysis();
       } catch (err) {
         showToast('Failed to load answer key: ' + err.message, 'error');
       }
@@ -327,6 +355,7 @@
       }
 
       loadPastResults();
+      loadAnalysis();
     }
 
     function showSingleResult(result) {
@@ -503,8 +532,65 @@
       }
     }
 
+    // --- Weakness Analysis ---
+    async function loadAnalysis() {
+      if (!selectedKeyId) return;
+      const card = document.getElementById('analysisCard');
+      const container = document.getElementById('analysisContent');
+      document.getElementById('exportBtn').href = `/api/results/${selectedKeyId}/export`;
+
+      try {
+        const data = await apiCall(`/api/results/${selectedKeyId}/analysis`);
+        if (data.total_students === 0) { card.classList.add('hidden'); return; }
+        card.classList.remove('hidden');
+
+        const avgColor = data.class_average >= 80 ? '#28a745' : data.class_average >= 60 ? '#fd7e14' : '#dc3545';
+
+        let html = `
+          <div class="analysis-summary">
+            <div class="stat-box"><div class="stat-val" style="color:${avgColor}">${data.class_average}%</div><div class="stat-label">Class Average</div></div>
+            <div class="stat-box"><div class="stat-val">${data.total_students}</div><div class="stat-label">Students Graded</div></div>
+          </div>
+          <div class="analysis-section-title">Per-Question Accuracy</div>
+        `;
+
+        for (const q of data.question_stats) {
+          const pct = q.accuracy_pct;
+          const barColor = pct >= 80 ? '#28a745' : pct >= 60 ? '#fd7e14' : '#dc3545';
+          const mistakes = q.common_mistakes.length > 0
+            ? '→ ' + q.common_mistakes.map(m => `"${escapeHtml(m.answer)}"(${m.count})`).join(', ')
+            : '';
+          html += `
+            <div class="acc-bar-row">
+              <span class="q-label">Q${q.question_number}</span>
+              <div class="acc-bar-outer"><div class="acc-bar-inner" style="width:${pct}%;background:${barColor}"></div></div>
+              <span class="acc-pct" style="color:${barColor}">${pct}%</span>
+              <span class="acc-mistakes">${escapeHtml(mistakes)}</span>
+            </div>`;
+        }
+
+        html += `<div class="analysis-section-title">Per-Student Weaknesses</div>`;
+        for (const s of data.student_stats) {
+          const sColor = s.percentage >= 80 ? '#28a745' : s.percentage >= 60 ? '#fd7e14' : '#dc3545';
+          const pills = s.wrong_questions.length > 0
+            ? s.wrong_questions.map(n => `<span class="wrong-pill">Q${n}</span>`).join('')
+            : '<span style="color:#28a745; font-size:0.82rem;">All correct ✓</span>';
+          html += `
+            <div class="student-row">
+              <span class="sname">${escapeHtml(s.student_name)}</span>
+              <span class="spct" style="color:${sColor}">${s.percentage}%</span>
+              <div class="wrong-pills">${pills}</div>
+            </div>`;
+        }
+
+        container.innerHTML = html;
+      } catch (err) {
+        card.classList.add('hidden');
+      }
+    }
+
     // --- Init ---
     loadKeys();
-  </script>
+</script>
 </body>
 </html>

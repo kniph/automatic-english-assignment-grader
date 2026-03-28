@@ -310,8 +310,8 @@ async function gradeWithClaude(answerKeyBase64, studentBase64, assignmentName) {
   const client = getAnthropicClient();
 
   const response = await client.messages.create({
-    model: 'claude-haiku-4-5-20251001',
-    max_tokens: 2048,
+    model: 'claude-sonnet-4-5-20251022',
+    max_tokens: 4096,
     messages: [{
       role: 'user',
       content: [
@@ -975,38 +975,66 @@ app.get('/api/submissions/:id', async (req, res) => {
 async function gradeHandwriting(answerKeyBase64, studentBase64, assignmentLabel) {
   const client = getAnthropicClient();
   const response = await client.messages.create({
-    model: 'claude-haiku-4-5-20251001',
+    model: 'claude-sonnet-4-5-20251022',
     max_tokens: 4096,
     messages: [{
       role: 'user',
       content: [
         {
           type: 'text',
-          text: `Grade ALL sections of this children's English workbook: "${assignmentLabel}".
+          text: `You are a precise grader for a children's English workbook: "${assignmentLabel}".
 
-Image 1 = ANSWER KEY (shows correct answers)
+Image 1 = ANSWER KEY (shows the correct answers — pre-filled or marked by teacher)
 Image 2 = STUDENT'S HANDWRITTEN WORK
 
-Grade EVERY answerable item across ALL sections (A, B, C, D, E...). Do NOT skip any section.
-Question types to grade:
-- Matching (lines connecting pictures/words): each correct pair = 1 item
-- Checkboxes / check marks: each checkbox row = 1 item
-- Fill-in blanks: each blank = 1 item
-- Numbering boxes (write the order): each box = 1 item
-- Circling words: each sentence = 1 item
-- True/False, Yes/No: each item = 1 item
+════════════════════════════════════════
+STEP 1 — IDENTIFY ALL SECTIONS
+Look at both images carefully. List every section (A, B, C, D …) and its question type before grading.
 
-Return ONLY valid JSON (no markdown, no explanation):
+STEP 2 — GRADE EVERY ITEM
+Grade ALL answerable items across ALL sections. Do NOT skip any section.
+
+QUESTION TYPE RULES:
+──────────────────────────────────────────
+【Matching — lines connecting items】
+- Compare the student's drawn lines to the answer key's lines.
+- For each character/word on the left: check which item on the right it connects to.
+- correct_answer = "LeftItem→RightItem" (use the printed label or describe the image clearly, e.g. "Lucy→roller coaster")
+- student_answer = what the student actually connected (e.g. "Lucy→merry-go-round")
+- A line from the wrong item = incorrect.
+
+【Circling words (Read and circle)】
+- Each sentence has TWO blanks to circle (one word from each pair).
+- CRITICAL: If the student circled EXACTLY ONE word per blank = grade that word.
+- If the student circled BOTH words in a single blank (e.g. both "his" AND "he") = WRONG for that blank, student_answer="(both circled)".
+- If the student circled NOTHING for a blank = WRONG, student_answer="(blank)".
+- Compare each circled word to the answer key. Case-insensitive.
+- Each sentence counts as ONE item; it is correct only if BOTH blanks are correctly circled.
+
+【Fill-in blanks】
+- Compare written text to the correct answer. Accept 1-character typos.
+- Blank or illegible = incorrect, student_answer="(blank)".
+
+【Checkboxes / tick marks】
+- Each row = 1 item. Check if the student's tick/check is on the correct row.
+
+【Numbering / ordering boxes】
+- Each box = 1 item. The written number must match the answer key.
+
+【True / False, Yes / No】
+- Accept T/F, True/False, O/X, Yes/No equivalents.
+- Blank = incorrect.
+
+════════════════════════════════════════
+Return ONLY valid JSON — no markdown, no explanation, no extra text:
 {"questions":[{"number":1,"section":"A","correct_answer":"...","student_answer":"...","correct":true}],"total_possible":N}
 
-Rules:
-- "number": sequential integer starting from 1 across ALL sections
-- "section": the section letter (A, B, C, D...) this item belongs to
-- For matching: correct_answer = "word1→word2", student_answer = what student drew
-- For checkboxes: correct_answer = the correct sentence/item that should be checked
-- For numbering: correct_answer = the correct number
-- Accept 1-character typos as correct for text answers
-- Blank or unreadable → correct:false, student_answer:"(blank)"`
+JSON field rules:
+- "number": sequential integer starting at 1 across ALL sections
+- "section": section letter (A, B, C …)
+- "correct_answer": the expected correct answer
+- "student_answer": exactly what the student wrote/circled/drew
+- "correct": true or false`
         },
         { type: 'image', source: { type: 'base64', media_type: 'image/jpeg', data: answerKeyBase64 } },
         { type: 'image', source: { type: 'base64', media_type: 'image/jpeg', data: studentBase64 } }

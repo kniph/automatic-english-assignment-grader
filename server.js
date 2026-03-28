@@ -895,10 +895,10 @@ app.post('/api/submissions', async (req, res) => {
     if (asgResult.rows.length === 0) return res.status(404).json({ error: 'Assignment not found' });
     const asg = asgResult.rows[0];
 
-    // Compress submission image
+    // Compress submission image (width-only limit to preserve multi-page height)
     const submBuf = Buffer.from(submission_image, 'base64');
     const submJpeg = (await sharp(submBuf).rotate()
-      .resize({ width: 2000, height: 2800, fit: 'inside', withoutEnlargement: true })
+      .resize({ width: 2000, withoutEnlargement: true })
       .jpeg({ quality: 88 }).toBuffer()).toString('base64');
 
     // Grade with Claude
@@ -907,6 +907,7 @@ app.post('/api/submissions', async (req, res) => {
 
     const answers = claudeResult.questions.map(q => ({
       question_number: q.number,
+      section: q.section || '',
       correct: q.correct,
       score: q.correct ? 1 : 0,
       detected_text: q.student_answer,
@@ -975,27 +976,37 @@ async function gradeHandwriting(answerKeyBase64, studentBase64, assignmentLabel)
   const client = getAnthropicClient();
   const response = await client.messages.create({
     model: 'claude-haiku-4-5-20251001',
-    max_tokens: 2048,
+    max_tokens: 4096,
     messages: [{
       role: 'user',
       content: [
         {
           type: 'text',
-          text: `Grade this children's English workbook: "${assignmentLabel}".
+          text: `Grade ALL sections of this children's English workbook: "${assignmentLabel}".
 
-Image 1 = ANSWER KEY (correct answers)
+Image 1 = ANSWER KEY (shows correct answers)
 Image 2 = STUDENT'S HANDWRITTEN WORK
 
-The student wrote by hand on the workbook page. Find every numbered question and compare.
+Grade EVERY answerable item across ALL sections (A, B, C, D, E...). Do NOT skip any section.
+Question types to grade:
+- Matching (lines connecting pictures/words): each correct pair = 1 item
+- Checkboxes / check marks: each checkbox row = 1 item
+- Fill-in blanks: each blank = 1 item
+- Numbering boxes (write the order): each box = 1 item
+- Circling words: each sentence = 1 item
+- True/False, Yes/No: each item = 1 item
+
 Return ONLY valid JSON (no markdown, no explanation):
-{"questions":[{"number":1,"correct_answer":"...","student_answer":"...","correct":true}],"total_possible":N}
+{"questions":[{"number":1,"section":"A","correct_answer":"...","student_answer":"...","correct":true}],"total_possible":N}
 
 Rules:
-- Accept 1-character typos as correct
-- T / F / True / False / O / X all accepted for true-false questions
-- Blank or unreadable → correct:false, student_answer:"(blank)"
-- Ignore trailing punctuation and capitalization differences
-- Number questions from 1`
+- "number": sequential integer starting from 1 across ALL sections
+- "section": the section letter (A, B, C, D...) this item belongs to
+- For matching: correct_answer = "word1→word2", student_answer = what student drew
+- For checkboxes: correct_answer = the correct sentence/item that should be checked
+- For numbering: correct_answer = the correct number
+- Accept 1-character typos as correct for text answers
+- Blank or unreadable → correct:false, student_answer:"(blank)"`
         },
         { type: 'image', source: { type: 'base64', media_type: 'image/jpeg', data: answerKeyBase64 } },
         { type: 'image', source: { type: 'base64', media_type: 'image/jpeg', data: studentBase64 } }

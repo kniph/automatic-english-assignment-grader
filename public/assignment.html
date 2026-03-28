@@ -35,21 +35,26 @@
     .audio-bar {
       flex-shrink: 0;
       background: #0d47a1;
-      padding: 0.5rem 0.75rem;
-      display: flex; align-items: center; gap: 0.6rem;
-      flex-wrap: wrap;
+      padding: 0.4rem 0.75rem;
+      display: flex; align-items: center; gap: 0.5rem;
+      flex-wrap: nowrap; overflow-x: auto;
       z-index: 20;
     }
     .audio-bar.hidden { display: none; }
-    .audio-label { color: rgba(255,255,255,0.7); font-size: 0.75rem; }
+    .audio-label { color: rgba(255,255,255,0.7); font-size: 0.75rem; flex-shrink: 0; }
+    /* Each track: button + progress stay on one row */
+    .audio-track {
+      display: flex; align-items: center; gap: 0.3rem; flex-shrink: 0;
+    }
     .audio-play-btn {
       background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
-      color: white; padding: 0.35rem 0.9rem; border-radius: 20px;
-      font-size: 0.82rem; cursor: pointer; display: flex; align-items: center; gap: 0.35rem;
+      color: white; padding: 0.3rem 0.8rem; border-radius: 20px;
+      font-size: 0.82rem; cursor: pointer; display: flex; align-items: center; gap: 0.3rem;
+      white-space: nowrap;
       -webkit-tap-highlight-color: transparent; transition: background 0.15s;
     }
     .audio-play-btn:active, .audio-play-btn.playing { background: rgba(255,255,255,0.3); }
-    .audio-progress { color: white; font-size: 0.75rem; min-width: 3rem; }
+    .audio-progress { color: rgba(255,255,255,0.75); font-size: 0.73rem; min-width: 2.8rem; white-space: nowrap; }
 
     /* ── Toolbar ── */
     .toolbar {
@@ -174,7 +179,7 @@
       font-size: 0.92rem;
     }
     .answer-row:last-child { border-bottom: none; }
-    .q-num { font-weight: 700; color: #666; min-width: 2rem; }
+    .q-num { font-weight: 700; color: #666; min-width: 2.8rem; font-size: 0.82rem; }
     .mark-ok  { color: #28a745; font-weight: 800; font-size: 1.1rem; }
     .mark-no  { color: #dc3545; font-weight: 800; font-size: 1.1rem; }
     .ans-text { flex: 1; font-family: monospace; }
@@ -238,7 +243,7 @@
   <!-- Audio bar -->
   <div class="audio-bar hidden" id="audioBar">
     <span class="audio-label">🎧 聽力：</span>
-    <div id="audioButtons"></div>
+    <div id="audioButtons" style="display:flex;align-items:center;gap:0.5rem;flex-shrink:0;"></div>
   </div>
 
   <!-- Drawing toolbar -->
@@ -378,8 +383,11 @@
         });
 
         btn.onclick = () => toggleAudio(idx);
-        btnsContainer.appendChild(btn);
-        btnsContainer.appendChild(prog);
+        const track = document.createElement('div');
+        track.className = 'audio-track';
+        track.appendChild(btn);
+        track.appendChild(prog);
+        btnsContainer.appendChild(track);
 
         audioElements.push({ audio, btn, prog });
       });
@@ -646,9 +654,10 @@
       const list = document.getElementById('answerList');
       list.innerHTML = (result.answers || []).map(a => {
         const correct = a.correct_answer || '';
+        const label = a.section ? `${a.section}-${a.question_number}` : `#${a.question_number}`;
         return `
           <div class="answer-row">
-            <span class="q-num">#${a.question_number}</span>
+            <span class="q-num">${escHtml(label)}</span>
             <span class="${a.correct ? 'mark-ok' : 'mark-no'}">${a.correct ? '○' : '✕'}</span>
             <span class="ans-text">${escHtml(a.detected_text || '(空白)')}</span>
             ${!a.correct ? `<span class="ans-expected">→ ${escHtml(correct)}</span>` : ''}

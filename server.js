@@ -5,8 +5,7 @@ const { Pool } = require('pg');
 const sharp = require('sharp');
 const heicConvert = require('heic-convert');
 const path = require('path');
-// Use lib path to avoid pdf-parse's test-file auto-load side effect
-const pdfParse = require('pdf-parse/lib/pdf-parse.js');
+const pdfParse = require('pdf-parse');
 const mammoth = require('mammoth');
 
 const app = express();

@@ -121,10 +121,10 @@
             <label style="margin-bottom:0.4rem; font-weight:700;">📄 空白習作頁 <span style="color:#dc3545;">*</span></label>
             <div class="upload-box" id="boxAssign" onclick="document.getElementById('fileAssign').click()">
               <div class="icon">🖼️</div>
-              <div class="title">點擊上傳空白習作</div>
-              <div class="hint">學生書寫時的底圖 · JPG / PNG / PDF</div>
+              <div class="title">點擊上傳空白習作（1–3 頁）</div>
+              <div class="hint">可同時選取多張，依序垂直拼接 · JPG / PNG / PDF</div>
               <div class="fname hidden" id="nameAssign"></div>
-              <input type="file" id="fileAssign" accept="image/*,.pdf">
+              <input type="file" id="fileAssign" accept="image/*,.pdf" multiple>
             </div>
             <img class="preview-img hidden" id="previewAssign" alt="">
           </div>
@@ -134,10 +134,10 @@
             <label style="margin-bottom:0.4rem; font-weight:700;">✅ 答案卷 <span style="color:#dc3545;">*</span></label>
             <div class="upload-box" id="boxAnswer" onclick="document.getElementById('fileAnswer').click()">
               <div class="icon">📋</div>
-              <div class="title">點擊上傳答案卷</div>
-              <div class="hint">Claude 比對用 · JPG / PNG / PDF</div>
+              <div class="title">點擊上傳答案卷（1–3 頁）</div>
+              <div class="hint">可同時選取多張，依序垂直拼接 · JPG / PNG / PDF</div>
               <div class="fname hidden" id="nameAnswer"></div>
-              <input type="file" id="fileAnswer" accept="image/*,.pdf">
+              <input type="file" id="fileAnswer" accept="image/*,.pdf" multiple>
             </div>
             <img class="preview-img hidden" id="previewAnswer" alt="">
           </div>
@@ -204,35 +204,71 @@
     }
 
     // ── Image upload helpers ──
-    async function handleImageFile(file, previewEl, nameEl, boxEl, onDone) {
+
+    // Convert a single File to JPEG base64
+    async function fileToJpegB64(file) {
       const ext = file.name.split('.').pop().toLowerCase();
-      showToast('處理圖片中…');
+      if (ext === 'pdf') {
+        return await pdfPageToJpeg(file);   // already stitches all PDF pages
+      } else if (ext === 'heic' || file.type === 'image/heic') {
+        const raw = await fileToBase64(file);
+        const res = await apiCall('/api/convert-heic', { method: 'POST', body: { image: raw } });
+        return res.image;
+      } else {
+        return await imgFileToJpeg(file);
+      }
+    }
+
+    // Stitch multiple JPEG base64 strings vertically into one
+    async function stitchImages(b64List) {
+      if (b64List.length === 1) return b64List[0];
+      const imgs = await Promise.all(b64List.map(b64 => new Promise((res, rej) => {
+        const img = new Image();
+        img.onload = () => res(img);
+        img.onerror = rej;
+        img.src = 'data:image/jpeg;base64,' + b64;
+      })));
+      const maxW = Math.max(...imgs.map(i => i.naturalWidth));
+      const totalH = imgs.reduce((s, i) => s + i.naturalHeight, 0);
+      const c = document.createElement('canvas');
+      c.width = maxW; c.height = totalH;
+      const ctx = c.getContext('2d');
+      ctx.fillStyle = 'white';
+      ctx.fillRect(0, 0, maxW, totalH);
+      let y = 0;
+      for (const img of imgs) { ctx.drawImage(img, 0, y); y += img.naturalHeight; }
+      return c.toDataURL('image/jpeg', 0.92).split(',')[1];
+    }
+
+    // Handle 1–3 files: convert each, stitch, then update UI
+    async function handleMultiImageFiles(files, previewEl, nameEl, boxEl, onDone) {
+      const fileArr = Array.from(files).slice(0, 3);
+      if (fileArr.length === 0) return;
+      showToast(`處理 ${fileArr.length} 頁圖片中…`);
       try {
-        let b64;
-        if (ext === 'pdf') {
-          b64 = await pdfPageToJpeg(file);
-        } else if (ext === 'heic' || file.type === 'image/heic') {
-          const raw = await fileToBase64(file);
-          const res = await apiCall('/api/convert-heic', { method: 'POST', body: { image: raw } });
-          b64 = res.image;
-        } else {
-          b64 = await imgFileToJpeg(file);
+        const b64List = [];
+        for (const file of fileArr) {
+          b64List.push(await fileToJpegB64(file));
         }
-        nameEl.textContent = '✅ ' + file.name;
+        const stitched = await stitchImages(b64List);
+        const names = fileArr.map(f => f.name).join('、');
+        nameEl.textContent = fileArr.length > 1
+          ? `✅ ${fileArr.length} 頁已拼接：${names}`
+          : `✅ ${names}`;
         nameEl.classList.remove('hidden');
-        previewEl.src = 'data:image/jpeg;base64,' + b64;
+        previewEl.src = 'data:image/jpeg;base64,' + stitched;
         previewEl.classList.remove('hidden');
         boxEl.classList.add('has-file');
-        onDone(b64);
-        showToast('✅ 圖片已載入');
+        onDone(stitched);
+        showToast(fileArr.length > 1 ? `✅ ${fileArr.length} 頁已垂直拼接` : '✅ 圖片已載入');
       } catch(err) {
         showToast('圖片載入失敗：' + err.message, 'error');
       }
     }
 
     document.getElementById('fileAssign').addEventListener('change', e => {
-      const f = e.target.files[0]; if (!f) return;
-      handleImageFile(f,
+      if (!e.target.files.length) return;
+      handleMultiImageFiles(e.target.files,
         document.getElementById('previewAssign'),
         document.getElementById('nameAssign'),
         document.getElementById('boxAssign'),
@@ -242,8 +278,8 @@
     });
 
     document.getElementById('fileAnswer').addEventListener('change', e => {
-      const f = e.target.files[0]; if (!f) return;
-      handleImageFile(f,
+      if (!e.target.files.length) return;
+      handleMultiImageFiles(e.target.files,
         document.getElementById('previewAnswer'),
         document.getElementById('nameAnswer'),
         document.getElementById('boxAnswer'),

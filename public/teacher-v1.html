@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Answer Key Setup - Homework Grader</title>
+  <link rel="stylesheet" href="css/common.css">
+  <style>
+    .upload-zone {
+      border: 2px dashed #ddd;
+      border-radius: 12px;
+      padding: 2rem;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      background: #fafafa;
+    }
+    .upload-zone:hover, .upload-zone.drag-over {
+      border-color: #1a73e8;
+      background: #f0f6ff;
+    }
+    .upload-zone input[type="file"] { display: none; }
+    .upload-zone .upload-icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
+    .upload-zone .upload-hint { font-size: 0.82rem; color: #888; margin-top: 0.4rem; }
+    .preview-container {
+      margin-top: 1rem;
+      text-align: center;
+      display: none;
+    }
+    .preview-container img {
+      max-width: 100%;
+      max-height: 400px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .preview-label {
+      font-size: 0.8rem;
+      color: #888;
+      margin-top: 0.4rem;
+    }
+    .replace-btn {
+      margin-top: 0.75rem;
+    }
+    .saved-key-item { display: flex; justify-content: space-between; align-items: center; padding: 0.6rem 0.4rem; border-bottom: 1px solid #eee; }
+    .saved-key-item:last-child { border-bottom: none; }
+    .key-name { font-weight: 600; }
+    .key-meta { font-size: 0.8rem; color: #888; margin-top: 0.15rem; }
+    .key-actions { display: flex; gap: 0.4rem; }
+    .mode-badge {
+      display: inline-block;
+      background: #e8f0fe;
+      color: #1a73e8;
+      border-radius: 4px;
+      padding: 0.1rem 0.5rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-left: 0.4rem;
+    }
+    .step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.6rem;
+      height: 1.6rem;
+      background: #1a73e8;
+      color: white;
+      border-radius: 50%;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-right: 0.5rem;
+      flex-shrink: 0;
+    }
+    .step-title {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+    .step-title h2 {
+      margin: 0;
+      font-size: 1.05rem;
+    }
+  </style>
+</head>
+<body>
+  <header class="app-header">
+    <h1>English Homework Grader</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="teacher.html" class="active">Answer Keys</a>
+      <a href="grader.html">Grade</a>
+    </nav>
+  </header>
+
+  <div class="container">
+
+    <!-- Step 1: Teacher Name -->
+    <div class="card">
+      <div class="step-title"><span class="step-num">1</span><h2>Teacher Name</h2></div>
+      <input id="teacherName" type="text" placeholder="Enter your name" style="max-width: 280px;">
+    </div>
+
+    <!-- Step 2: Assignment Name -->
+    <div class="card">
+      <div class="step-title"><span class="step-num">2</span><h2>Assignment Name</h2></div>
+      <input id="assignmentName" type="text" placeholder="e.g. Unit 3 Quiz / Lesson 5 Homework">
+    </div>
+
+    <!-- Step 3: Upload Answer Key Image -->
+    <div class="card">
+      <div class="step-title"><span class="step-num">3</span><h2>Upload Answer Key Image</h2></div>
+      <p style="font-size: 0.88rem; color: #666; margin-top: 0; margin-bottom: 0.75rem;">
+        Upload a photo or scan of the <strong>completed answer key</strong>. Claude AI will read it and compare with each student's work automatically.
+      </p>
+
+      <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
+        <div class="upload-icon">📷</div>
+        <div>Click to upload or drag here</div>
+        <div class="upload-hint">JPG · PNG · HEIC · PDF — Max 20 MB</div>
+        <input type="file" id="fileInput" accept="image/*,.heic,.pdf,application/pdf">
+      </div>
+
+      <div class="preview-container" id="previewContainer">
+        <img id="previewImg" src="" alt="Answer key preview">
+        <div class="preview-label" id="previewLabel"></div>
+        <br>
+        <button class="btn btn-sm btn-outline replace-btn" onclick="document.getElementById('fileInput').click()">Replace Image</button>
+      </div>
+    </div>
+
+    <!-- Step 4: Save -->
+    <div class="card">
+      <div class="step-title"><span class="step-num">4</span><h2>Save</h2></div>
+      <p style="font-size: 0.85rem; color: #666; margin-top: 0;">
+        After saving, go to <a href="grader.html">Grade</a> to upload student homework. Claude will automatically grade each student's work.
+      </p>
+      <button class="btn btn-success btn-lg" id="saveBtn" onclick="saveAnswerKey()">💾 Save Answer Key</button>
+    </div>
+
+    <!-- Saved Answer Keys -->
+    <div class="card">
+      <h2>Saved Answer Keys</h2>
+      <div id="savedKeysList"><p style="color:#aaa;">Loading...</p></div>
+    </div>
+
+  </div><!-- /container -->
+
+  <!-- PDF.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script>
+    if (typeof pdfjsLib !== 'undefined') {
+      pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    }
+  </script>
+  <script src="js/common.js"></script>
+  <script>
+    let answerKeyBase64 = null;  // JPEG base64 of the answer key image
+
+    // ---- Init ----
+    const teacherNameInput = document.getElementById('teacherName');
+    const savedName = localStorage.getItem('teacher_name') || '';
+    teacherNameInput.value = savedName;
+    teacherNameInput.addEventListener('change', () => {
+      localStorage.setItem('teacher_name', teacherNameInput.value.trim());
+      loadSavedKeys();
+    });
+
+    // ---- Drag & drop ----
+    const uploadZone = document.getElementById('uploadZone');
+    uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('drag-over'); });
+    uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('drag-over'));
+    uploadZone.addEventListener('drop', e => {
+      e.preventDefault();
+      uploadZone.classList.remove('drag-over');
+      const file = e.dataTransfer.files[0];
+      if (file) handleFile(file);
+    });
+
+    document.getElementById('fileInput').addEventListener('change', e => {
+      const file = e.target.files[0];
+      if (file) handleFile(file);
+      e.target.value = '';
+    });
+
+    // ---- File handling ----
+    async function handleFile(file) {
+      const ext = file.name.split('.').pop().toLowerCase();
+      showToast('Loading image…');
+
+      try {
+        let jpegBase64;
+
+        if (ext === 'pdf') {
+          jpegBase64 = await pdfPageToJpeg(file);
+          showToast('✅ PDF first page converted');
+        } else if (ext === 'heic' || file.type === 'image/heic') {
+          const raw = await fileToBase64(file);
+          const result = await apiCall('/api/convert-heic', { method: 'POST', body: { image: raw } });
+          jpegBase64 = result.image;
+          showToast('✅ HEIC converted');
+        } else {
+          // Regular image: convert to JPEG via canvas for consistent encoding
+          jpegBase64 = await imageToJpeg(file);
+          showToast('✅ Image loaded');
+        }
+
+        answerKeyBase64 = jpegBase64;
+        showPreview(jpegBase64, file.name);
+      } catch (err) {
+        showToast('Failed to load image: ' + err.message, 'error');
+      }
+    }
+
+    // Convert any image file to JPEG base64 via canvas
+    function imageToJpeg(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = e => {
+          const img = new Image();
+          img.onload = () => {
+            const maxDim = 3000;
+            let w = img.width, h = img.height;
+            if (w > maxDim || h > maxDim) {
+              const scale = maxDim / Math.max(w, h);
+              w = Math.round(w * scale);
+              h = Math.round(h * scale);
+            }
+            const canvas = document.createElement('canvas');
+            canvas.width = w;
+            canvas.height = h;
+            canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+            const dataUrl = canvas.toDataURL('image/jpeg', 0.9);
+            resolve(dataUrl.split(',')[1]);
+          };
+          img.onerror = reject;
+          img.src = e.target.result;
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    // Render PDF page 1 to JPEG using PDF.js
+    async function pdfPageToJpeg(file) {
+      if (typeof pdfjsLib === 'undefined') throw new Error('PDF.js not loaded');
+      const arrayBuffer = await file.arrayBuffer();
+      const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+      const page = await pdf.getPage(1);
+      const viewport = page.getViewport({ scale: 2.0 });
+      const canvas = document.createElement('canvas');
+      canvas.width = viewport.width;
+      canvas.height = viewport.height;
+      await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+      const dataUrl = canvas.toDataURL('image/jpeg', 0.92);
+      return dataUrl.split(',')[1];
+    }
+
+    // ---- Preview ----
+    function showPreview(base64, filename) {
+      const container = document.getElementById('previewContainer');
+      const img = document.getElementById('previewImg');
+      const label = document.getElementById('previewLabel');
+      img.src = `data:image/jpeg;base64,${base64}`;
+      label.textContent = `📄 ${filename}`;
+      container.style.display = 'block';
+    }
+
+    // ---- Save ----
+    async function saveAnswerKey() {
+      const teacherName = teacherNameInput.value.trim();
+      const assignmentName = document.getElementById('assignmentName').value.trim();
+      if (!teacherName) { showToast('請輸入老師名稱', 'error'); return; }
+      if (!assignmentName) { showToast('請輸入作業名稱', 'error'); return; }
+      if (!answerKeyBase64) { showToast('請上傳答案卷圖片', 'error'); return; }
+
+      localStorage.setItem('teacher_name', teacherName);
+
+      const btn = document.getElementById('saveBtn');
+      btn.disabled = true;
+      btn.textContent = '儲存中…';
+
+      try {
+        await apiCall('/api/answer-keys', {
+          method: 'POST',
+          body: {
+            teacher_name: teacherName,
+            name: assignmentName,
+            mode: 'claude',
+            template_image: answerKeyBase64,
+            questions: [],
+            settings: { case_sensitive: false, ignore_punctuation: true, fuzzy_default_threshold: 0 }
+          }
+        });
+        showToast(`✅ "${assignmentName}" 已儲存！`);
+        // Reset
+        answerKeyBase64 = null;
+        document.getElementById('assignmentName').value = '';
+        document.getElementById('previewContainer').style.display = 'none';
+        document.getElementById('previewImg').src = '';
+        loadSavedKeys();
+      } catch (err) {
+        showToast('儲存失敗：' + err.message, 'error');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = '💾 Save Answer Key';
+      }
+    }
+
+    // ---- Saved Keys list ----
+    async function loadSavedKeys() {
+      const container = document.getElementById('savedKeysList');
+      const name = teacherNameInput.value.trim();
+      if (!name) { container.innerHTML = '<p style="color:#aaa;">請輸入老師名稱以查看已儲存的答案卷。</p>'; return; }
+      try {
+        const keys = await apiCall(`/api/answer-keys?teacher_name=${encodeURIComponent(name)}`);
+        if (keys.length === 0) {
+          container.innerHTML = '<p style="color:#aaa;">尚未儲存任何答案卷。</p>';
+          return;
+        }
+        container.innerHTML = keys.map(k => {
+          const modeBadge = k.mode === 'claude' ? '<span class="mode-badge">Claude AI</span>' : '';
+          const pts = k.total_points > 0 ? `${k.total_points} pts · ` : '';
+          return `
+          <div class="saved-key-item">
+            <div>
+              <div class="key-name">${escHtml(k.name)}${modeBadge}</div>
+              <div class="key-meta">${pts}${new Date(k.created_at).toLocaleDateString('zh-TW')}</div>
+            </div>
+            <div class="key-actions">
+              <a href="grader.html?key=${k.id}" class="btn btn-sm btn-outline">批改 →</a>
+              <button class="btn btn-sm btn-danger" onclick="deleteKey(${k.id},'${escHtml(k.name)}')">刪除</button>
+            </div>
+          </div>`;
+        }).join('');
+      } catch (err) {
+        container.innerHTML = `<p style="color:#dc3545;">載入失敗：${err.message}</p>`;
+      }
+    }
+
+    async function deleteKey(id, name) {
+      if (!confirm(`確定刪除「${name}」？這也會刪除所有批改紀錄。`)) return;
+      try {
+        await apiCall(`/api/answer-keys/${id}`, { method: 'DELETE' });
+        showToast('已刪除');
+        loadSavedKeys();
+      } catch (err) {
+        showToast('刪除失敗：' + err.message, 'error');
+      }
+    }
+
+    function escHtml(str) {
+      const d = document.createElement('div');
+      d.textContent = str || '';
+      return d.innerHTML;
+    }
+
+    // ---- Boot ----
+    loadSavedKeys();
+  </script>
+</body>
+</html>

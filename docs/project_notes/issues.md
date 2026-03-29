@@ -383,6 +383,49 @@ Reviewed all pages of NH1 WB A (U1–U8 + Review 1) and NH1 WB B (U1–U8, first
 
 ---
 
+## 2026-03-30 - Supplemental Notes Manifest + Production Backfill
+
+**Work Done**:
+- Added `scripts/generate-supplemental-manifest.js` to OCR stitched blank workbook pages with Google Vision and auto-detect high-risk sections
+- Expanded the section classifier to generate `matching`, `written_only`, and `skip` notes from workbook section titles
+- Updated `scripts/import-assignments.js` so it can:
+  - load a supplemental-notes manifest
+  - import only assignments that actually need notes
+  - preserve `review_required` while still attaching guidance text
+- Generated a full manifest for the safe `Howdy 1-9` range and backfilled production assignments with notes
+- Corrected `Howdy 10` blank-page mobile ranges for Workbook A/B and re-imported those assignments with the corrected blank images
+
+**Production Result**:
+- Assignments with `supplemental_notes` after backfill: `126`
+- `Howdy 1-9`: `119` assignments updated from the generated manifest
+- `Howdy 10 / WBA-WBB`: `18` assignments re-imported with corrected blank pages
+- `Howdy 10 / WBB`: `3` assignments now also have generated supplemental notes
+- `Howdy 10 / WBC`: `8` assignments re-imported with the corrected 4-page blank structure; `4` of them now also carry generated/manual supplemental notes
+
+**Howdy 10 page-range correction**:
+- Workbook A blank pages use mobile pages `85-110`
+- Workbook B blank pages use mobile pages `113-138`
+- Workbook C blank pages use mobile pages `140-171`
+- The earlier generic page-range assumption used for Howdy 2-10 was wrong for Howdy 10
+
+**Howdy 10 Workbook C special case**:
+- Workbook C uses `32` blank pages and `32` answer-key slots, not the usual `24`
+- That means each Howdy 10 Workbook C unit spans `4` pages instead of `3`
+- Four answer-key images are missing from the source site:
+  - `HGR10_4.jpg`
+  - `HGR10_6.jpg`
+  - `HGR10_14.jpg`
+  - `HGR10_24.jpg`
+- These units were imported with blank-page AK fallbacks and explicit `skip` notes for the affected section, so they remain usable without being `blocked`
+
+**Files Modified**:
+- `scripts/generate-supplemental-manifest.js`
+- `scripts/import-assignments.js`
+- `docs/project_notes/key_facts.md`
+- `docs/project_notes/issues.md`
+
+---
+
 ## Pending / Future Work
 
 - [ ] Supplemental notes preview/edit when reopening an existing assignment from the teacher list

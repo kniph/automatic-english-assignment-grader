@@ -279,20 +279,43 @@ Dataset rechecked after batch downloading and normalization.
 |---|---|---:|---|
 | Workbook A blank pages | Howdy 1-10 | 260 | Complete |
 | Workbook B blank pages | Howdy 1-10 | 260 | Complete |
-| Workbook C blank pages | Howdy 1-10 | 240 | Complete |
+| Workbook C blank pages | Howdy 1-10 | 248 | Complete |
 | Workbook A answer keys | Howdy 1-10 | 260 | Complete |
 | Workbook B answer keys | Howdy 1-10 | 260 | Complete |
-| Workbook C answer keys | Howdy 1-10 | 240 | Complete |
+| Workbook C answer keys | Howdy 1-10 | 248 | Complete |
 | Workbook A audio | Howdy 1-10 | 143 | Complete for the series' real audio pattern |
 | Workbook B audio | Howdy 1-10 | 176 | Complete for the series' real audio pattern |
 | Workbook C audio | Howdy 1-10 | 0 | Expected; WB C has no listening activities |
 
 ### Import Readiness
 
-- `Howdy 1-10 / WBA-WBC` blank pages: ready to import
+- `Howdy 1-9 / WBA-WBC` blank pages: ready to import
+- `Howdy 10 / WBA-WBC` blank pages: ready to import after 2026-03-30 page-range correction
 - `Howdy 1-10 / WBA-WBC` answer keys: ready to import
 - `Howdy 1-10 / WBA-WBB` audio: ready to import
 - `Howdy 1-10 / WBC` audio: not applicable by design
+
+### Supplemental Notes Backfill
+
+- `scripts/generate-supplemental-manifest.js` uses Google Vision OCR on stitched blank pages to detect high-risk sections and generate default `supplemental_notes`
+- `scripts/import-assignments.js` accepts:
+  - `--supplemental-manifest <path>`
+  - `--only-manifested`
+- Production assignments with `supplemental_notes` after the 2026-03-30 backfill: `126`
+- Safe-range manifest coverage:
+  - `Howdy 1-9`: `119 / 234` assignments received generated notes
+  - `Howdy 10 / WBA-WBB`: `3` assignments received generated notes after the blank-page fix
+  - `Howdy 10 / WBC`: `4` assignments received generated/manual notes after the 4-page-unit fix
+
+### Howdy 10 Special Blank-Page Ranges
+
+- Workbook A blank pages: mobile `85-110`
+- Workbook B blank pages: mobile `113-138`
+- Workbook C blank pages: mobile `140-171`
+- The generic Howdy 2-10 mobile-page assumptions do **not** hold for Howdy 10
+- `Howdy 10 / WBC` uses `4` pages per unit instead of `3`
+- Source `pageConfig` answer keys missing: `HGR10_4.jpg`, `HGR10_6.jpg`, `HGR10_14.jpg`, `HGR10_24.jpg`
+- Those four gaps are handled by explicit `skip` notes plus blank-page AK fallbacks so the affected assignments stay importable without being `blocked`
 
 ### Series-Wide AI Grading Risk Tiers
 

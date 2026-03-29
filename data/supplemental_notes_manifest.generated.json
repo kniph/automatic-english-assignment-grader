@@ -1,0 +1,6614 @@
+[
+  {
+    "howdy_level": 1,
+    "unit": 1,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Look and match."
+      },
+      {
+        "section": "B",
+        "title": "Read and circle."
+      },
+      {
+        "section": "C",
+        "title": "Listen and check. Q1 Q2 Q3 Q4"
+      },
+      {
+        "section": "D",
+        "title": "Listen and number."
+      },
+      {
+        "section": "E",
+        "title": "Write and find the words."
+      },
+      {
+        "section": "F",
+        "title": "Draw yourself and write."
+      }
+    ],
+    "supplemental_notes": "[A] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess.\n\n[E] written_only\nIgnore the word-search / circling part. Grade only the written answers.\n\n[F] skip\ndrawing activity"
+  },
+  {
+    "howdy_level": 1,
+    "unit": 2,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Look and write."
+      },
+      {
+        "section": "B",
+        "title": "Read and check."
+      },
+      {
+        "section": "C",
+        "title": "Listen and complete the speech bubbles. Q1 Q2 Q3 Q4"
+      },
+      {
+        "section": "E",
+        "title": "Unscramble and write."
+      },
+      {
+        "section": "F",
+        "title": "Complete the puzzle! Then, write the correct number."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 1,
+    "unit": 3,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Look and circle."
+      },
+      {
+        "section": "C",
+        "title": "Listen and match. Q1 Q2 Q3 Q4"
+      },
+      {
+        "section": "D",
+        "title": "Listen and number."
+      },
+      {
+        "section": "E",
+        "title": "Look and write."
+      },
+      {
+        "section": "F",
+        "title": "Connect the dots. Then, color and write."
+      }
+    ],
+    "supplemental_notes": "[C] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess.\n\n[F] written_only\nIgnore the coloring part. Grade only the written answers."
+  },
+  {
+    "howdy_level": 1,
+    "unit": 4,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Look and color the correct spelling."
+      },
+      {
+        "section": "B",
+        "title": "Read and circle."
+      },
+      {
+        "section": "C",
+        "title": "Listen and fill in the blanks."
+      },
+      {
+        "section": "D",
+        "title": "Listen and color."
+      },
+      {
+        "section": "E",
+        "title": "Look at the picture. Then, complete the sentences."
+      },
+      {
+        "section": "F",
+        "title": "Decode the secret message."
+      }
+    ],
+    "supplemental_notes": "[A] skip\ncoloring activity\n\n[D] skip\ncoloring activity"
+  },
+  {
+    "howdy_level": 1,
+    "unit": 5,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Look and match."
+      },
+      {
+        "section": "B",
+        "title": "Read and check."
+      },
+      {
+        "section": "C",
+        "title": "Listen, circle and match."
+      },
+      {
+        "section": "D",
+        "title": "Listen and check."
+      },
+      {
+        "section": "E",
+        "title": "Read and use the words in the box to fill in the blanks."
+      },
+      {
+        "section": "F",
+        "title": "Write and color."
+      },
+      {
+        "section": "A",
+        "title": "Look! This elephant is young."
+      }
+    ],
+    "supplemental_notes": "[A] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess.\n\n[C] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess.\n\n[F] written_only\nIgnore the coloring part. Grade only the written answers."
+  },
+  {
+    "howdy_level": 1,
+    "unit": 6,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Look and check."
+      },
+      {
+        "section": "B",
+        "title": "Read and circle."
+      },
+      {
+        "section": "C",
+        "title": "Listen, write and match. Q1 Q2 Q3 Q4 Q5"
+      },
+      {
+        "section": "D",
+        "title": "Listen and unscramble."
+      },
+      {
+        "section": "E",
+        "title": "Find the words. Then, circle."
+      },
+      {
+        "section": "F",
+        "title": "Look, check and write."
+      }
+    ],
+    "supplemental_notes": "[C] written_only\nIgnore the matching lines. Grade only the written answers.\n\n[E] skip\nword-search circling activity"
+  },
+  {
+    "howdy_level": 1,
+    "unit": 7,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Read and color."
+      },
+      {
+        "section": "D",
+        "title": "Listen and number."
+      },
+      {
+        "section": "E",
+        "title": "Complete the crossword."
+      },
+      {
+        "section": "F",
+        "title": "Circle and write. Then, color each picture the correct color."
+      }
+    ],
+    "supplemental_notes": "[A] skip\ncoloring activity\n\n[E] skip\ncrossword\n\n[F] written_only\nIgnore the circling part. Grade only the written answers."
+  },
+  {
+    "howdy_level": 1,
+    "unit": 8,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Look at the picture and fill in the blanks."
+      },
+      {
+        "section": "B",
+        "title": "Match and unscramble."
+      },
+      {
+        "section": "C",
+        "title": "Listen, check and match. Q1 Q2 Q3 Q4"
+      },
+      {
+        "section": "D",
+        "title": "Listen and circle."
+      },
+      {
+        "section": "E",
+        "title": "Read and unscramble."
+      },
+      {
+        "section": "F",
+        "title": "Look at the picture and complete the sentences."
+      }
+    ],
+    "supplemental_notes": "[B] written_only\nIgnore the matching lines. Grade only the written unscrambled answers.\n\n[C] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess."
+  },
+  {
+    "howdy_level": 1,
+    "unit": 9,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Read and unscramble."
+      },
+      {
+        "section": "B",
+        "title": "Write and match."
+      },
+      {
+        "section": "C",
+        "title": "Listen and circle the correct words. ▸"
+      },
+      {
+        "section": "D",
+        "title": "Listen and check the correct sentences. Q1 Q2 Q3 Q4 Q5"
+      }
+    ],
+    "supplemental_notes": "[B] written_only\nIgnore the matching lines. Grade only the written answers."
+  },
+  {
+    "howdy_level": 1,
+    "unit": 1,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Look and circle."
+      },
+      {
+        "section": "B",
+        "title": "Read and match."
+      },
+      {
+        "section": "C",
+        "title": "Listen and number. Q1 Q2 Q3 Q4 Q5 Q6"
+      },
+      {
+        "section": "D",
+        "title": "Listen and write."
+      },
+      {
+        "section": "F",
+        "title": "Draw your best friend. Then, write and circle."
+      }
+    ],
+    "supplemental_notes": "[B] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess.\n\n[F] skip\ndrawing activity"
+  },
+  {
+    "howdy_level": 1,
+    "unit": 2,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "B",
+        "title": "Unscramble and write."
+      },
+      {
+        "section": "C",
+        "title": "Listen and check."
+      },
+      {
+        "section": "D",
+        "title": "Listen and match. Q1 Q2 Q3 Q4"
+      },
+      {
+        "section": "E",
+        "title": "Read and circle the correct pictures."
+      },
+      {
+        "section": "F",
+        "title": "Decode and match."
+      }
+    ],
+    "supplemental_notes": "[D] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess.\n\n[F] written_only\nIgnore the matching lines. Grade only the written decoded answers."
+  },
+  {
+    "howdy_level": 1,
+    "unit": 3,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Look and circle."
+      },
+      {
+        "section": "B",
+        "title": "Read and check."
+      },
+      {
+        "section": "C",
+        "title": "Listen and match. Q1 Q2 Q3 Q4"
+      },
+      {
+        "section": "D",
+        "title": "Listen and check. Q1 Q2 Q3 Q4"
+      },
+      {
+        "section": "F",
+        "title": "Who is Hank's sister? Read and color."
+      }
+    ],
+    "supplemental_notes": "[C] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess.\n\n[F] skip\ncoloring activity"
+  },
+  {
+    "howdy_level": 1,
+    "unit": 4,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Look and circle."
+      },
+      {
+        "section": "C",
+        "title": "Listen and check."
+      },
+      {
+        "section": "D",
+        "title": "Listen and match. Q1 Q2 Q3 Q4 Q5"
+      },
+      {
+        "section": "E",
+        "title": "Complete the words and draw."
+      },
+      {
+        "section": "F",
+        "title": "Look at the picture, count and write."
+      }
+    ],
+    "supplemental_notes": "[D] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess.\n\n[E] skip\ndrawing activity"
+  },
+  {
+    "howdy_level": 1,
+    "unit": 5,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Read and fill in the numbers."
+      },
+      {
+        "section": "B",
+        "title": "Unscramble and write."
+      },
+      {
+        "section": "C",
+        "title": "Listen and check. Q1 Q2 Q3 Q4"
+      },
+      {
+        "section": "D",
+        "title": "Listen and match. Q1 Q2 Q3 Q4"
+      },
+      {
+        "section": "E",
+        "title": "Help the zoo keeper find the lost animals."
+      },
+      {
+        "section": "F",
+        "title": "Read and guess. Then, draw."
+      }
+    ],
+    "supplemental_notes": "[D] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess.\n\n[F] skip\ndrawing activity"
+  },
+  {
+    "howdy_level": 1,
+    "unit": 6,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Read and check."
+      },
+      {
+        "section": "B",
+        "title": "Read and match."
+      },
+      {
+        "section": "C",
+        "title": "Listen and unscramble."
+      },
+      {
+        "section": "D",
+        "title": "Listen and circle the toys you hear."
+      },
+      {
+        "section": "F",
+        "title": "Write and choose your favorite toy(s)."
+      }
+    ],
+    "supplemental_notes": "[B] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess."
+  },
+  {
+    "howdy_level": 1,
+    "unit": 7,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Cross out the wrong letter. Then, write."
+      },
+      {
+        "section": "B",
+        "title": "Read, match and color."
+      },
+      {
+        "section": "C",
+        "title": "Listen and check. Q1 Q2 Q3 Q4"
+      },
+      {
+        "section": "D",
+        "title": "Listen and circle. Q1 Q2 Q3 Q4"
+      },
+      {
+        "section": "E",
+        "title": "Unscramble and write."
+      },
+      {
+        "section": "I",
+        "title": "color / shirt / is/her / ?"
+      },
+      {
+        "section": "F",
+        "title": "Color by letter."
+      }
+    ],
+    "supplemental_notes": "[B] skip\ncoloring activity\n\n[I] skip\ncoloring activity\n\n[F] skip\ncoloring activity"
+  },
+  {
+    "howdy_level": 1,
+    "unit": 8,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Look at the picture and complete the words."
+      },
+      {
+        "section": "B",
+        "title": "Read and match."
+      },
+      {
+        "section": "C",
+        "title": "Listen and circle."
+      },
+      {
+        "section": "D",
+        "title": "Listen and number."
+      },
+      {
+        "section": "F",
+        "title": "Draw your dream bedroom."
+      }
+    ],
+    "supplemental_notes": "[B] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess.\n\n[F] skip\ndrawing activity"
+  },
+  {
+    "howdy_level": 1,
+    "unit": 10,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "B",
+        "title": "Look at the picture and complete the words."
+      },
+      {
+        "section": "C",
+        "title": "Listen and match."
+      },
+      {
+        "section": "D",
+        "title": "Listen and circle the correct words."
+      }
+    ],
+    "supplemental_notes": "[C] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess."
+  },
+  {
+    "howdy_level": 1,
+    "unit": 1,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Check and write."
+      },
+      {
+        "section": "B",
+        "title": "Unscramble and write."
+      },
+      {
+        "section": "C",
+        "title": "Write the sentences according to the conversation."
+      },
+      {
+        "section": "D",
+        "title": "Choose and write the correct answer in the blank."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 1,
+    "unit": 2,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Circle and write."
+      },
+      {
+        "section": "B",
+        "title": "Rewrite the correct sentences."
+      },
+      {
+        "section": "C",
+        "title": "Look at the picture and complete the sentences."
+      },
+      {
+        "section": "D",
+        "title": "Read and choose the correct answers."
+      }
+    ],
+    "supplemental_notes": "[A] written_only\nIgnore the circling part. Grade only the written answers."
+  },
+  {
+    "howdy_level": 1,
+    "unit": 3,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Unscramble and write."
+      },
+      {
+        "section": "B",
+        "title": "Complete the sentences using the words in brackets."
+      },
+      {
+        "section": "C",
+        "title": "Read and write about the girl with the information in the box."
+      },
+      {
+        "section": "D",
+        "title": "Look at the picture. Read and circle T for true; F for false."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 1,
+    "unit": 4,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Look, check, and write the correct sentences."
+      },
+      {
+        "section": "B",
+        "title": "Read, unscramble, and write."
+      },
+      {
+        "section": "C",
+        "title": "Look and answer the questions."
+      },
+      {
+        "section": "D",
+        "title": "Read and number."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 1,
+    "unit": 5,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "C",
+        "title": "Look and complete the sentences using the words in brackets."
+      },
+      {
+        "section": "D",
+        "title": "Look, read, and choose the correct answers."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 1,
+    "unit": 6,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Read, check, and write."
+      },
+      {
+        "section": "B",
+        "title": "Rewrite the correct sentences."
+      },
+      {
+        "section": "C",
+        "title": "Write the questions or the answers."
+      },
+      {
+        "section": "D",
+        "title": "Read and complete the table."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 1,
+    "unit": 7,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "B",
+        "title": "Look and complete the sentences using the words in brackets."
+      },
+      {
+        "section": "D",
+        "title": "Read, write the names, and match."
+      }
+    ],
+    "supplemental_notes": "[D] written_only\nIgnore the matching lines. Grade only the written answers."
+  },
+  {
+    "howdy_level": 1,
+    "unit": 8,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Unscramble and write the questions or answers."
+      },
+      {
+        "section": "B",
+        "title": "Rewrite the correct sentences."
+      },
+      {
+        "section": "C",
+        "title": "Where are they? Look and write the sentences."
+      },
+      {
+        "section": "D",
+        "title": "Read, choose the correct answers, and write."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 2,
+    "unit": 1,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Look and color the correct spelling."
+      },
+      {
+        "section": "B",
+        "title": "Look at the pictures and complete the sentences."
+      },
+      {
+        "section": "C",
+        "title": "Listen and find the numbers. Q1 Q2 Q3 Q4"
+      },
+      {
+        "section": "D",
+        "title": "Listen, circle and match."
+      },
+      {
+        "section": "E",
+        "title": "Complete the sentences with \"is\" or \"are.\""
+      },
+      {
+        "section": "F",
+        "title": "Color by the code."
+      }
+    ],
+    "supplemental_notes": "[A] skip\ncoloring activity\n\n[D] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess.\n\n[F] skip\ncoloring activity"
+  },
+  {
+    "howdy_level": 2,
+    "unit": 2,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Look and match."
+      },
+      {
+        "section": "B",
+        "title": "Look and check."
+      },
+      {
+        "section": "C",
+        "title": "Listen and complete the puzzle. Q1 Q2 Q3 Q4 Q5"
+      },
+      {
+        "section": "D",
+        "title": "Listen and number. Then, complete the sentences."
+      },
+      {
+        "section": "E",
+        "title": "Match, write and circle."
+      },
+      {
+        "section": "F",
+        "title": "Look and draw a line."
+      }
+    ],
+    "supplemental_notes": "[A] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess.\n\n[E] written_only\nIgnore the matching lines. Grade only the written answers.\n\n[F] skip\ndrawing activity"
+  },
+  {
+    "howdy_level": 2,
+    "unit": 3,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Look and write."
+      },
+      {
+        "section": "B",
+        "title": "Look at the picture and check the correct answers."
+      },
+      {
+        "section": "C",
+        "title": "Listen and number. Q1 Q2 Q3 Q4"
+      },
+      {
+        "section": "D",
+        "title": "Listen and check."
+      },
+      {
+        "section": "E",
+        "title": "Look and unscramble."
+      },
+      {
+        "section": "F",
+        "title": "Read and write the numbers."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 2,
+    "unit": 4,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "B",
+        "title": "Unscramble and answer."
+      },
+      {
+        "section": "C",
+        "title": "Listen, match and circle. Q1 Q2 Q3 Q4"
+      },
+      {
+        "section": "D",
+        "title": "Listen and check. Q1 Q2 Q3 Q4"
+      },
+      {
+        "section": "F",
+        "title": "Color by code and write."
+      }
+    ],
+    "supplemental_notes": "[C] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess."
+  },
+  {
+    "howdy_level": 2,
+    "unit": 5,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Look and check."
+      },
+      {
+        "section": "B",
+        "title": "Complete the sentences with \"do,\" \"does,\" \"don't\" or \"doesn't.\""
+      },
+      {
+        "section": "C",
+        "title": "Listen and fill in the blanks. ▶Q1 Q2 Q3 Q4"
+      },
+      {
+        "section": "D",
+        "title": "Listen and circle."
+      },
+      {
+        "section": "E",
+        "title": "Match and unscramble."
+      },
+      {
+        "section": "F",
+        "title": "Complete the crossword."
+      }
+    ],
+    "supplemental_notes": "[E] written_only\nIgnore the matching lines. Grade only the written unscrambled answers.\n\n[F] skip\ncrossword"
+  },
+  {
+    "howdy_level": 2,
+    "unit": 6,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Trace and check."
+      },
+      {
+        "section": "B",
+        "title": "Circle and complete the sentences."
+      },
+      {
+        "section": "C",
+        "title": "Listen and match. Q1 Q2 Q3 Q4"
+      },
+      {
+        "section": "D",
+        "title": "Listen and number the pictures. Q1 Q2 Q3 Q4"
+      },
+      {
+        "section": "E",
+        "title": "Look at the pictures and fill in the missing letters."
+      },
+      {
+        "section": "F",
+        "title": "Complete the pictures and find the words."
+      }
+    ],
+    "supplemental_notes": "[C] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess."
+  },
+  {
+    "howdy_level": 2,
+    "unit": 7,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Look and write."
+      },
+      {
+        "section": "B",
+        "title": "Complete the sentences with \"have\" or \"has.\""
+      },
+      {
+        "section": "C",
+        "title": "Listen, circle and write. Q1 Q2 Q3 Q4"
+      },
+      {
+        "section": "D",
+        "title": "Listen and check."
+      },
+      {
+        "section": "E",
+        "title": "Look and match."
+      },
+      {
+        "section": "F",
+        "title": "Trace and write."
+      }
+    ],
+    "supplemental_notes": "[C] written_only\nIgnore the circling part. Grade only the written answers.\n\n[E] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess."
+  },
+  {
+    "howdy_level": 2,
+    "unit": 8,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Look and write."
+      },
+      {
+        "section": "B",
+        "title": "Look at the pictures and answer the questions."
+      },
+      {
+        "section": "C",
+        "title": "Listen and check. Then, complete the sentences. 1 2 3"
+      },
+      {
+        "section": "D",
+        "title": "Listen and circle."
+      },
+      {
+        "section": "F",
+        "title": "Color the words in the correct order."
+      }
+    ],
+    "supplemental_notes": "[F] skip\ncoloring activity"
+  },
+  {
+    "howdy_level": 2,
+    "unit": 9,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Write and match."
+      },
+      {
+        "section": "B",
+        "title": "Look at the pictures and complete the sentences."
+      },
+      {
+        "section": "C",
+        "title": "Listen and check."
+      },
+      {
+        "section": "D",
+        "title": "Listen and write \"T\" for true or \"F\" for false."
+      }
+    ],
+    "supplemental_notes": "[A] written_only\nIgnore the matching lines. Grade only the written answers."
+  },
+  {
+    "howdy_level": 2,
+    "unit": 1,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Find the missing numbers and write."
+      },
+      {
+        "section": "B",
+        "title": "Look at the pictures and answer the questions."
+      },
+      {
+        "section": "C",
+        "title": "Listen, color and match. Q1 Q2 Q3 Q4"
+      },
+      {
+        "section": "D",
+        "title": "Listen and check."
+      },
+      {
+        "section": "E",
+        "title": "Read and find the secret numbers."
+      },
+      {
+        "section": "F",
+        "title": "Follow the path and color the numbers from 15 to 30."
+      }
+    ],
+    "supplemental_notes": "[C] skip\ncoloring activity\n\n[F] skip\ncoloring activity"
+  },
+  {
+    "howdy_level": 2,
+    "unit": 2,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Look at the pictures and write."
+      },
+      {
+        "section": "B",
+        "title": "Unscramble and answer."
+      },
+      {
+        "section": "C",
+        "title": "Listen and fill in the blanks. Q1 Q2 Q3"
+      },
+      {
+        "section": "D",
+        "title": "Listen and check."
+      },
+      {
+        "section": "E",
+        "title": "Look at the pictures and fill in the missing letters."
+      },
+      {
+        "section": "F",
+        "title": "Look and color."
+      }
+    ],
+    "supplemental_notes": "[F] skip\ncoloring activity"
+  },
+  {
+    "howdy_level": 2,
+    "unit": 3,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Look and write."
+      },
+      {
+        "section": "B",
+        "title": "Read and match."
+      },
+      {
+        "section": "C",
+        "title": "Listen and put the words in the correct order. Q1 Q2"
+      },
+      {
+        "section": "D",
+        "title": "Listen and check. Q1 Q2 Q3"
+      },
+      {
+        "section": "E",
+        "title": "Look and circle."
+      },
+      {
+        "section": "F",
+        "title": "Read, write and match."
+      }
+    ],
+    "supplemental_notes": "[B] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess.\n\n[F] written_only\nIgnore the matching lines. Grade only the written answers."
+  },
+  {
+    "howdy_level": 2,
+    "unit": 4,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Complete the pictures and write."
+      },
+      {
+        "section": "B",
+        "title": "Read and check."
+      },
+      {
+        "section": "C",
+        "title": "Listen, look and check. Q1 Q2 Q3"
+      },
+      {
+        "section": "D",
+        "title": "Listen and circle."
+      },
+      {
+        "section": "E",
+        "title": "Circle the mistake in each sentence and rewrite."
+      },
+      {
+        "section": "F",
+        "title": "Color by code and write."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 2,
+    "unit": 5,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Fill in the missing letters and number the pictures."
+      },
+      {
+        "section": "B",
+        "title": "Read and circle the correct pictures."
+      },
+      {
+        "section": "C",
+        "title": "Listen and fill in the blanks."
+      },
+      {
+        "section": "D",
+        "title": "Listen and match. Then, write."
+      },
+      {
+        "section": "E",
+        "title": "Look at the pictures and answer the questions."
+      },
+      {
+        "section": "F",
+        "title": "Unscramble and number."
+      }
+    ],
+    "supplemental_notes": "[D] written_only\nIgnore the matching lines. Grade only the written answers."
+  },
+  {
+    "howdy_level": 2,
+    "unit": 6,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Color and write."
+      },
+      {
+        "section": "B",
+        "title": "Look at the pictures and complete the dialogues."
+      },
+      {
+        "section": "C",
+        "title": "Listen and check. Q1 Q2 Q3 Q4"
+      },
+      {
+        "section": "D",
+        "title": "Listen and fill in the blanks. ▸"
+      },
+      {
+        "section": "E",
+        "title": "Read and fill in the blanks with \"want\" or \"wants\". Then, match."
+      },
+      {
+        "section": "F",
+        "title": "Look, find and write."
+      }
+    ],
+    "supplemental_notes": "[A] written_only\nIgnore the coloring part. Grade only the written answers.\n\n[E] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess."
+  },
+  {
+    "howdy_level": 2,
+    "unit": 7,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Look at the pictures and complete the puzzle."
+      },
+      {
+        "section": "B",
+        "title": "Unscramble and write."
+      },
+      {
+        "section": "C",
+        "title": "Listen and choose the correct monster. Q1 Q2 Q3"
+      },
+      {
+        "section": "D",
+        "title": "Listen and complete the sentences."
+      },
+      {
+        "section": "E",
+        "title": "Circle the correct spelling and number the pictures."
+      },
+      {
+        "section": "F",
+        "title": "Find and color the correct words."
+      }
+    ],
+    "supplemental_notes": "[F] skip\ncoloring activity"
+  },
+  {
+    "howdy_level": 2,
+    "unit": 8,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Look and write.)"
+      },
+      {
+        "section": "B",
+        "title": "Look at the table and complete the sentences."
+      },
+      {
+        "section": "C",
+        "title": "Listen and match. Q1 Q2 Q3 Q4"
+      },
+      {
+        "section": "D",
+        "title": "Listen and circle. ‣"
+      },
+      {
+        "section": "E",
+        "title": "Unscramble and write."
+      },
+      {
+        "section": "F",
+        "title": "Read and write \"T\" for true or \"F\" for false."
+      }
+    ],
+    "supplemental_notes": "[C] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess."
+  },
+  {
+    "howdy_level": 2,
+    "unit": 10,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "B",
+        "title": "Circle the correct spelling and number the pictures."
+      },
+      {
+        "section": "C",
+        "title": "Listen, check and write."
+      },
+      {
+        "section": "D",
+        "title": "Listen and match. Then, write. Q1 Q2 Q3 Q4 Q5"
+      }
+    ],
+    "supplemental_notes": "[D] written_only\nIgnore the matching lines. Grade only the written answers."
+  },
+  {
+    "howdy_level": 2,
+    "unit": 1,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Circle and write."
+      },
+      {
+        "section": "B",
+        "title": "Unscramble and write."
+      },
+      {
+        "section": "B",
+        "title": "There are ten circles."
+      },
+      {
+        "section": "D",
+        "title": "Look and choose the correct answers."
+      }
+    ],
+    "supplemental_notes": "[A] written_only\nIgnore the circling part. Grade only the written answers."
+  },
+  {
+    "howdy_level": 2,
+    "unit": 2,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Rewrite the correct sentences."
+      },
+      {
+        "section": "B",
+        "title": "Circle and complete the statements using the sentences in the box."
+      },
+      {
+        "section": "C",
+        "title": "Read and complete the sentences."
+      },
+      {
+        "section": "D",
+        "title": "Read and fill in the names. Then, choose the correct answers."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 2,
+    "unit": 3,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Circle and write."
+      },
+      {
+        "section": "C",
+        "title": "Look and answer the questions with complete sentences."
+      },
+      {
+        "section": "D",
+        "title": "Read and fill in the boxes on the map. There might be two answers in one box."
+      }
+    ],
+    "supplemental_notes": "[A] written_only\nIgnore the circling part. Grade only the written answers."
+  },
+  {
+    "howdy_level": 2,
+    "unit": 4,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Read and write the questions."
+      },
+      {
+        "section": "B",
+        "title": "Complete the sentences using the words in brackets."
+      },
+      {
+        "section": "C",
+        "title": "Look and write."
+      },
+      {
+        "section": "D",
+        "title": "Look, check, and match."
+      }
+    ],
+    "supplemental_notes": "[D] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess."
+  },
+  {
+    "howdy_level": 2,
+    "unit": 5,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Circle and write."
+      },
+      {
+        "section": "B",
+        "title": "Unscramble and write."
+      },
+      {
+        "section": "C",
+        "title": "Look and complete the sentences using the words in brackets."
+      },
+      {
+        "section": "D",
+        "title": "Look, read, and circle T for true; F for false."
+      }
+    ],
+    "supplemental_notes": "[A] written_only\nIgnore the circling part. Grade only the written answers."
+  },
+  {
+    "howdy_level": 2,
+    "unit": 6,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Check and write."
+      },
+      {
+        "section": "B",
+        "title": "Read, unscramble, and write."
+      },
+      {
+        "section": "C",
+        "title": "Look and answer the questions."
+      },
+      {
+        "section": "D",
+        "title": "Read and write the things they want."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 2,
+    "unit": 7,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "B",
+        "title": "Rewrite the correct sentences."
+      },
+      {
+        "section": "C",
+        "title": "Complete the dialogue using the words in brackets."
+      },
+      {
+        "section": "D",
+        "title": "What is it? Read and choose."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 2,
+    "unit": 8,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Read, check, and write."
+      },
+      {
+        "section": "B",
+        "title": "Look, unscramble, and write the questions or answers."
+      },
+      {
+        "section": "C",
+        "title": "Write the sentences in your own words."
+      },
+      {
+        "section": "D",
+        "title": "Read, complete the schedule, and choose the correct answers."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 3,
+    "unit": 1,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Look and circle."
+      },
+      {
+        "section": "B",
+        "title": "Read and check."
+      },
+      {
+        "section": "C",
+        "title": "Listen and write. Then, match."
+      },
+      {
+        "section": "D",
+        "title": "Listen and number."
+      },
+      {
+        "section": "E",
+        "title": "Look and complete the sentences."
+      },
+      {
+        "section": "F",
+        "title": "Draw your favorite month. Then, write."
+      }
+    ],
+    "supplemental_notes": "[C] written_only\nIgnore the matching lines. Grade only the written answers.\n\n[F] skip\ndrawing activity"
+  },
+  {
+    "howdy_level": 3,
+    "unit": 2,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Look and circle."
+      },
+      {
+        "section": "B",
+        "title": "Read and complete the sentences."
+      },
+      {
+        "section": "C",
+        "title": "Listen, check and write."
+      },
+      {
+        "section": "D",
+        "title": "Listen and write."
+      },
+      {
+        "section": "E",
+        "title": "Cross out the wrong words and rewrite."
+      },
+      {
+        "section": "F",
+        "title": "Let's count."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 3,
+    "unit": 3,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Look and match."
+      },
+      {
+        "section": "B",
+        "title": "Read and write."
+      },
+      {
+        "section": "D",
+        "title": "Listen and check."
+      },
+      {
+        "section": "E",
+        "title": "Read and unscramble."
+      },
+      {
+        "section": "F",
+        "title": "Complete the words."
+      }
+    ],
+    "supplemental_notes": "[A] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess."
+  },
+  {
+    "howdy_level": 3,
+    "unit": 4,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Look and check."
+      },
+      {
+        "section": "C",
+        "title": "Listen and write. ►"
+      },
+      {
+        "section": "D",
+        "title": "Listen and number."
+      },
+      {
+        "section": "E",
+        "title": "Unscramble the sentences. Then, write the dates on the calendars."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 3,
+    "unit": 5,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Look and circle."
+      },
+      {
+        "section": "B",
+        "title": "Read and write."
+      },
+      {
+        "section": "C",
+        "title": "Listen and color."
+      },
+      {
+        "section": "D",
+        "title": "Listen and check."
+      },
+      {
+        "section": "E",
+        "title": "Look and unscramble."
+      },
+      {
+        "section": "F",
+        "title": "Find and write."
+      }
+    ],
+    "supplemental_notes": "[C] skip\ncoloring activity"
+  },
+  {
+    "howdy_level": 3,
+    "unit": 6,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Unscramble and match."
+      },
+      {
+        "section": "B",
+        "title": "Write and check."
+      },
+      {
+        "section": "C",
+        "title": "Listen and circle."
+      },
+      {
+        "section": "D",
+        "title": "Listen and check."
+      },
+      {
+        "section": "E",
+        "title": "Complete the sentences with \"Do,\" \"Does,\" \"a\" or \"some.\""
+      },
+      {
+        "section": "F",
+        "title": "Guess and write."
+      }
+    ],
+    "supplemental_notes": "[A] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess."
+  },
+  {
+    "howdy_level": 3,
+    "unit": 7,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Look and circle."
+      },
+      {
+        "section": "B",
+        "title": "Read and write."
+      },
+      {
+        "section": "D",
+        "title": "Listen and write."
+      },
+      {
+        "section": "E",
+        "title": "Look and complete the sentences."
+      },
+      {
+        "section": "F",
+        "title": "Look and write."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 3,
+    "unit": 8,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Cross out the wrong letters and rewrite."
+      },
+      {
+        "section": "B",
+        "title": "Read and check."
+      },
+      {
+        "section": "I",
+        "title": "want to read a book."
+      },
+      {
+        "section": "C",
+        "title": "Listen and circle. ‣"
+      },
+      {
+        "section": "D",
+        "title": "Listen and number."
+      },
+      {
+        "section": "F",
+        "title": "Color and write."
+      }
+    ],
+    "supplemental_notes": "[F] written_only\nIgnore the coloring part. Grade only the written answers."
+  },
+  {
+    "howdy_level": 3,
+    "unit": 9,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Look and circle."
+      },
+      {
+        "section": "C",
+        "title": "Listen and number."
+      },
+      {
+        "section": "D",
+        "title": "Listen and complete the dialogue."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 3,
+    "unit": 1,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Cross out the wrong letters and rewrite. Then, match."
+      },
+      {
+        "section": "D",
+        "title": "Listen and check."
+      },
+      {
+        "section": "E",
+        "title": "Read and complete the dialogue with the information in the box."
+      }
+    ],
+    "supplemental_notes": "[A] written_only\nIgnore the matching lines. Grade only the written answers."
+  },
+  {
+    "howdy_level": 3,
+    "unit": 2,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Count and write. Then, color."
+      },
+      {
+        "section": "B",
+        "title": "Look and circle."
+      },
+      {
+        "section": "C",
+        "title": "Listen, write and match."
+      },
+      {
+        "section": "D",
+        "title": "Listen and check."
+      },
+      {
+        "section": "F",
+        "title": "Color what you want for Christmas and complete the sentences."
+      }
+    ],
+    "supplemental_notes": "[C] written_only\nIgnore the matching lines. Grade only the written answers.\n\n[F] skip\ncoloring activity"
+  },
+  {
+    "howdy_level": 3,
+    "unit": 3,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Write and circle."
+      },
+      {
+        "section": "B",
+        "title": "Read and check."
+      },
+      {
+        "section": "D",
+        "title": "Listen and number. Then, write."
+      },
+      {
+        "section": "E",
+        "title": "Number the sentences in the dialogue."
+      },
+      {
+        "section": "F",
+        "title": "Draw your best friend. Then, write about him or her."
+      }
+    ],
+    "supplemental_notes": "[F] skip\ndrawing activity"
+  },
+  {
+    "howdy_level": 3,
+    "unit": 4,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Look and write."
+      },
+      {
+        "section": "B",
+        "title": "Read and circle."
+      },
+      {
+        "section": "C",
+        "title": "Listen and match."
+      },
+      {
+        "section": "D",
+        "title": "Listen and Write."
+      },
+      {
+        "section": "E",
+        "title": "Read and write."
+      },
+      {
+        "section": "F",
+        "title": "Read and guess his birthday. Then, write."
+      }
+    ],
+    "supplemental_notes": "[C] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess."
+  },
+  {
+    "howdy_level": 3,
+    "unit": 5,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Look and match."
+      },
+      {
+        "section": "B",
+        "title": "Read and check. Then, write."
+      },
+      {
+        "section": "C",
+        "title": "Listen and circle."
+      },
+      {
+        "section": "D",
+        "title": "Listen and number."
+      },
+      {
+        "section": "E",
+        "title": "Look and write."
+      },
+      {
+        "section": "F",
+        "title": "Look and circle. Then, write."
+      }
+    ],
+    "supplemental_notes": "[A] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess."
+  },
+  {
+    "howdy_level": 3,
+    "unit": 6,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Look and write."
+      },
+      {
+        "section": "B",
+        "title": "Read and circle."
+      },
+      {
+        "section": "C",
+        "title": "Listen and write."
+      },
+      {
+        "section": "D",
+        "title": "Listen and check."
+      },
+      {
+        "section": "E",
+        "title": "Look and write."
+      },
+      {
+        "section": "F",
+        "title": "Color the food you cannot count."
+      }
+    ],
+    "supplemental_notes": "[F] skip\ncoloring activity"
+  },
+  {
+    "howdy_level": 3,
+    "unit": 7,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Look and write."
+      },
+      {
+        "section": "B",
+        "title": "Look and check."
+      },
+      {
+        "section": "D",
+        "title": "Listen, number and check."
+      },
+      {
+        "section": "F",
+        "title": "Draw your favorite sport. Then, write."
+      }
+    ],
+    "supplemental_notes": "[F] skip\ndrawing activity"
+  },
+  {
+    "howdy_level": 3,
+    "unit": 8,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Look and unscramble."
+      },
+      {
+        "section": "B",
+        "title": "Read and check."
+      },
+      {
+        "section": "C",
+        "title": "Listen and number."
+      },
+      {
+        "section": "D",
+        "title": "Listen and circle."
+      },
+      {
+        "section": "E",
+        "title": "Look and write."
+      },
+      {
+        "section": "F",
+        "title": "Circle what you like to do on Sundays. Then, write."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 3,
+    "unit": 10,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "B",
+        "title": "Read and circle."
+      },
+      {
+        "section": "C",
+        "title": "Listen and circle."
+      },
+      {
+        "section": "D",
+        "title": "Listen and check."
+      },
+      {
+        "section": "I",
+        "title": "color pictures from 2:15 to 3:15."
+      },
+      {
+        "section": "I",
+        "title": "like to color pictures on Sundays."
+      }
+    ],
+    "supplemental_notes": "[I] skip\ncoloring activity"
+  },
+  {
+    "howdy_level": 3,
+    "unit": 1,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Look at the pictures, unscramble, and write."
+      },
+      {
+        "section": "B",
+        "title": "Look, read, and write the correct sentences."
+      },
+      {
+        "section": "D",
+        "title": "Read and choose the correct answers."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 3,
+    "unit": 2,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Read and write the correct sentences."
+      },
+      {
+        "section": "B",
+        "title": "Unscramble the sentences. Then, write the prices on the price tags."
+      },
+      {
+        "section": "C",
+        "title": "Check and write the correct sentences."
+      },
+      {
+        "section": "D",
+        "title": "Read and choose the correct answers."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 3,
+    "unit": 3,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Read and write the correct sentences."
+      },
+      {
+        "section": "B",
+        "title": "Look, read, and write the correct sentences."
+      },
+      {
+        "section": "D",
+        "title": "Read and choose the correct answers."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 3,
+    "unit": 4,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Look at the pictures and answer the questions."
+      },
+      {
+        "section": "B",
+        "title": "Circle and write the correct sentences."
+      },
+      {
+        "section": "D",
+        "title": "Read and choose the correct answers."
+      }
+    ],
+    "supplemental_notes": "[B] written_only\nIgnore the circling part. Grade only the written answers."
+  },
+  {
+    "howdy_level": 3,
+    "unit": 5,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Use the words in brackets to write the sentences."
+      },
+      {
+        "section": "B",
+        "title": "Unscramble and write the correct sentences. Then, match."
+      },
+      {
+        "section": "C",
+        "title": "Look at the pictures and write the correct sentences."
+      },
+      {
+        "section": "D",
+        "title": "Read and choose the correct answers."
+      }
+    ],
+    "supplemental_notes": "[B] written_only\nIgnore the matching lines. Grade only the written answers."
+  },
+  {
+    "howdy_level": 3,
+    "unit": 6,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "B",
+        "title": "Look, read, and write the correct sentences."
+      },
+      {
+        "section": "C",
+        "title": "Look at the pictures and write the sentences."
+      },
+      {
+        "section": "D",
+        "title": "Read and choose the correct answers."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 3,
+    "unit": 7,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "B",
+        "title": "Cross out one wrong word in each sentence and rewrite."
+      },
+      {
+        "section": "C",
+        "title": "Look at the pictures and answer the questions."
+      },
+      {
+        "section": "D",
+        "title": "Read and choose the correct answers."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 3,
+    "unit": 8,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "C",
+        "title": "Look at the pictures and write the correct sentences."
+      },
+      {
+        "section": "B",
+        "title": "No, I don't. I want to draw."
+      },
+      {
+        "section": "D",
+        "title": "Read and choose the correct answers."
+      }
+    ],
+    "supplemental_notes": "[B] skip\ndrawing activity"
+  },
+  {
+    "howdy_level": 4,
+    "unit": 1,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Look and write."
+      },
+      {
+        "section": "B",
+        "title": "Read and check."
+      },
+      {
+        "section": "C",
+        "title": "Listen and answer the questions."
+      },
+      {
+        "section": "D",
+        "title": "Listen and number."
+      },
+      {
+        "section": "E",
+        "title": "Read and fill in the blanks with \"Do\" or \"Does.\" Then, match."
+      },
+      {
+        "section": "F",
+        "title": "Color the letters to make a word. Then, check."
+      }
+    ],
+    "supplemental_notes": "[E] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess.\n\n[F] skip\ncoloring activity"
+  },
+  {
+    "howdy_level": 4,
+    "unit": 2,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Look and circle."
+      },
+      {
+        "section": "C",
+        "title": "Listen and put the words in the correct order."
+      },
+      {
+        "section": "D",
+        "title": "Listen and match."
+      },
+      {
+        "section": "E",
+        "title": "Look and check."
+      },
+      {
+        "section": "F",
+        "title": "Connect the words to make a sentence."
+      }
+    ],
+    "supplemental_notes": "[D] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess."
+  },
+  {
+    "howdy_level": 4,
+    "unit": 3,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Cross out the wrong letters. Then, write."
+      },
+      {
+        "section": "B",
+        "title": "Read and circle."
+      },
+      {
+        "section": "C",
+        "title": "Listen and fill in the blanks."
+      },
+      {
+        "section": "D",
+        "title": "Listen, check and write."
+      },
+      {
+        "section": "E",
+        "title": "Look at the pictures and complete the sentences."
+      },
+      {
+        "section": "F",
+        "title": "What fruit do you like to eat? Draw and color."
+      }
+    ],
+    "supplemental_notes": "[F] skip\ndrawing activity"
+  },
+  {
+    "howdy_level": 4,
+    "unit": 4,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Look and unscramble."
+      },
+      {
+        "section": "B",
+        "title": "Complete the sentences with \"do,\" \"does,\" \"go\" or \"goes.\""
+      },
+      {
+        "section": "C",
+        "title": "Listen and match."
+      },
+      {
+        "section": "D",
+        "title": "Listen and number."
+      },
+      {
+        "section": "E",
+        "title": "Look at the pictures and check the correct answers."
+      },
+      {
+        "section": "F",
+        "title": "Look and find."
+      }
+    ],
+    "supplemental_notes": "[C] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess."
+  },
+  {
+    "howdy_level": 4,
+    "unit": 5,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Look and number."
+      },
+      {
+        "section": "B",
+        "title": "Unscramble and answer."
+      },
+      {
+        "section": "D",
+        "title": "Listen and check."
+      },
+      {
+        "section": "E",
+        "title": "Look, circle and write."
+      },
+      {
+        "section": "F",
+        "title": "Look and write."
+      }
+    ],
+    "supplemental_notes": "[E] written_only\nIgnore the circling part. Grade only the written answers."
+  },
+  {
+    "howdy_level": 4,
+    "unit": 6,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Look and check."
+      },
+      {
+        "section": "B",
+        "title": "Follow the clues to complete the sentences."
+      },
+      {
+        "section": "C",
+        "title": "Listen, match and write."
+      },
+      {
+        "section": "D",
+        "title": "Listen and number."
+      },
+      {
+        "section": "E",
+        "title": "Look and write."
+      },
+      {
+        "section": "F",
+        "title": "Look and check your answers. Then, write."
+      }
+    ],
+    "supplemental_notes": "[C] written_only\nIgnore the matching lines. Grade only the written answers."
+  },
+  {
+    "howdy_level": 4,
+    "unit": 7,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Look, write and match."
+      },
+      {
+        "section": "B",
+        "title": "Read and circle."
+      },
+      {
+        "section": "D",
+        "title": "Listen, number and write."
+      },
+      {
+        "section": "E",
+        "title": "Look at the pictures and answer the questions."
+      },
+      {
+        "section": "F",
+        "title": "Read and write \"T\" for true or \"F\" for false."
+      }
+    ],
+    "supplemental_notes": "[A] written_only\nIgnore the matching lines. Grade only the written answers."
+  },
+  {
+    "howdy_level": 4,
+    "unit": 8,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Match, circle and write."
+      },
+      {
+        "section": "B",
+        "title": "Look at the picture and write."
+      },
+      {
+        "section": "C",
+        "title": "Listen and number."
+      },
+      {
+        "section": "D",
+        "title": "Listen and complete the speech bubbles."
+      },
+      {
+        "section": "E",
+        "title": "Look at the picture and check the correct sentences."
+      },
+      {
+        "section": "F",
+        "title": "Read and draw."
+      }
+    ],
+    "supplemental_notes": "[A] written_only\nIgnore the matching lines. Grade only the written answers.\n\n[F] skip\ndrawing activity"
+  },
+  {
+    "howdy_level": 4,
+    "unit": 9,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Look and circle."
+      },
+      {
+        "section": "C",
+        "title": "Listen and check."
+      },
+      {
+        "section": "D",
+        "title": "Listen and answer the questions with your own words."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 4,
+    "unit": 1,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Look and color."
+      },
+      {
+        "section": "B",
+        "title": "Look and check."
+      },
+      {
+        "section": "D",
+        "title": "Listen, circle and write."
+      },
+      {
+        "section": "E",
+        "title": "Look, circle and write."
+      },
+      {
+        "section": "F",
+        "title": "Decode the secret message."
+      }
+    ],
+    "supplemental_notes": "[A] skip\ncoloring activity\n\n[D] written_only\nIgnore the circling part. Grade only the written answers.\n\n[E] written_only\nIgnore the circling part. Grade only the written answers."
+  },
+  {
+    "howdy_level": 4,
+    "unit": 2,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Look and write the missing letters."
+      },
+      {
+        "section": "B",
+        "title": "Look and match."
+      },
+      {
+        "section": "C",
+        "title": "Listen and check."
+      },
+      {
+        "section": "D",
+        "title": "Listen, number and write."
+      },
+      {
+        "section": "F",
+        "title": "Complete the crossword."
+      }
+    ],
+    "supplemental_notes": "[B] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess.\n\n[F] skip\ncrossword"
+  },
+  {
+    "howdy_level": 4,
+    "unit": 3,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Look, circle and write."
+      },
+      {
+        "section": "B",
+        "title": "Look at the pictures and answer the questions."
+      },
+      {
+        "section": "C",
+        "title": "Listen, color and match."
+      },
+      {
+        "section": "D",
+        "title": "Listen and check."
+      },
+      {
+        "section": "E",
+        "title": "Unscramble and write."
+      },
+      {
+        "section": "F",
+        "title": "Circle the correct spelling and number."
+      }
+    ],
+    "supplemental_notes": "[A] written_only\nIgnore the circling part. Grade only the written answers.\n\n[C] skip\ncoloring activity"
+  },
+  {
+    "howdy_level": 4,
+    "unit": 4,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Look and write."
+      },
+      {
+        "section": "B",
+        "title": "Circle and complete the sentences."
+      },
+      {
+        "section": "C",
+        "title": "Listen and number."
+      },
+      {
+        "section": "D",
+        "title": "Listen and check."
+      },
+      {
+        "section": "E",
+        "title": "Match, write and circle."
+      },
+      {
+        "section": "F",
+        "title": "How do you go to school? Color and write."
+      }
+    ],
+    "supplemental_notes": "[E] written_only\nIgnore the matching lines. Grade only the written answers.\n\n[F] written_only\nIgnore the coloring part. Grade only the written answers."
+  },
+  {
+    "howdy_level": 4,
+    "unit": 5,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Look and unscramble."
+      },
+      {
+        "section": "B",
+        "title": "Read, write and match."
+      },
+      {
+        "section": "C",
+        "title": "Listen and fill in the blanks."
+      },
+      {
+        "section": "D",
+        "title": "Listen, number and write."
+      },
+      {
+        "section": "E",
+        "title": "Look at the calendar and fill in the blanks."
+      },
+      {
+        "section": "F",
+        "title": "Check and make your own schedule."
+      }
+    ],
+    "supplemental_notes": "[B] written_only\nIgnore the matching lines. Grade only the written answers."
+  },
+  {
+    "howdy_level": 4,
+    "unit": 6,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Look at the pictures and fill in the blanks."
+      },
+      {
+        "section": "B",
+        "title": "Read and number."
+      },
+      {
+        "section": "D",
+        "title": "Listen and fill in the blanks."
+      },
+      {
+        "section": "E",
+        "title": "Look at the pictures and write."
+      },
+      {
+        "section": "F",
+        "title": "Find and circle the words. Then, write."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 4,
+    "unit": 7,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Look and check."
+      },
+      {
+        "section": "B",
+        "title": "Look at the pictures and write \"T\" for true or \"F\" for false."
+      },
+      {
+        "section": "D",
+        "title": "Listen, fill in the blanks and match."
+      },
+      {
+        "section": "E",
+        "title": "Read and write. Then, answer the questions."
+      },
+      {
+        "section": "F",
+        "title": "What chores do you have to do? Fill in the blanks and write."
+      }
+    ],
+    "supplemental_notes": "[D] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess."
+  },
+  {
+    "howdy_level": 4,
+    "unit": 8,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Look and check."
+      },
+      {
+        "section": "I",
+        "title": "put the chopsticks on the left of"
+      },
+      {
+        "section": "C",
+        "title": "Listen and number."
+      },
+      {
+        "section": "D",
+        "title": "Listen and match."
+      },
+      {
+        "section": "E",
+        "title": "Look and circle."
+      },
+      {
+        "section": "F",
+        "title": "Look and color the words."
+      }
+    ],
+    "supplemental_notes": "[D] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess.\n\n[F] skip\ncoloring activity"
+  },
+  {
+    "howdy_level": 4,
+    "unit": 10,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Check the correct answers."
+      },
+      {
+        "section": "B",
+        "title": "Look and circle."
+      },
+      {
+        "section": "C",
+        "title": "Listen and write."
+      },
+      {
+        "section": "D",
+        "title": "Listen and write \"T\" for true or \"F\" for false."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 4,
+    "unit": 1,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Unscramble and write."
+      },
+      {
+        "section": "B",
+        "title": "Look, read, and write the correct sentences."
+      },
+      {
+        "section": "C",
+        "title": "Use the words in brackets to write the sentences."
+      },
+      {
+        "section": "D",
+        "title": "Read and choose the correct answers."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 4,
+    "unit": 2,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Look and choose the answers for B. Then, write the questions for A."
+      },
+      {
+        "section": "B",
+        "title": "Read and write the correct sentences and names."
+      },
+      {
+        "section": "C",
+        "title": "Check and write the correct sentences."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 4,
+    "unit": 3,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Circle and write the correct sentences."
+      },
+      {
+        "section": "B",
+        "title": "Use the words in brackets to write the sentences."
+      },
+      {
+        "section": "C",
+        "title": "Choose and write the correct sentences."
+      },
+      {
+        "section": "D",
+        "title": "Read and choose the correct answers."
+      }
+    ],
+    "supplemental_notes": "[A] written_only\nIgnore the circling part. Grade only the written answers."
+  },
+  {
+    "howdy_level": 4,
+    "unit": 4,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Read, unscramble, and write."
+      },
+      {
+        "section": "B",
+        "title": "Use the words in brackets to write the sentences."
+      },
+      {
+        "section": "C",
+        "title": "Look at the pictures and write the correct sentences."
+      },
+      {
+        "section": "D",
+        "title": "Read, choose, and write."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 4,
+    "unit": 5,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Look at the picture and write the correct sentences."
+      },
+      {
+        "section": "B",
+        "title": "Check and write the correct sentences."
+      },
+      {
+        "section": "C",
+        "title": "Choose and write the correct sentences."
+      },
+      {
+        "section": "D",
+        "title": "Read, choose the correct answers, and check."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 4,
+    "unit": 6,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Look at the pictures and fill in the blanks."
+      },
+      {
+        "section": "B",
+        "title": "Use the words in brackets to write the sentences. Then, number."
+      },
+      {
+        "section": "C",
+        "title": "Look at the pictures and answer the questions."
+      },
+      {
+        "section": "D",
+        "title": "Read and choose the correct answers."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 4,
+    "unit": 7,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Circle and write the correct sentences."
+      },
+      {
+        "section": "B",
+        "title": "Look at the pictures and write the sentences."
+      },
+      {
+        "section": "C",
+        "title": "Read, unscramble, and write."
+      },
+      {
+        "section": "D",
+        "title": "Read and choose the correct answers."
+      }
+    ],
+    "supplemental_notes": "[A] written_only\nIgnore the circling part. Grade only the written answers."
+  },
+  {
+    "howdy_level": 4,
+    "unit": 8,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Look at the picture and complete the sentences."
+      },
+      {
+        "section": "B",
+        "title": "Unscramble, choose, and write the correct sentences."
+      },
+      {
+        "section": "I",
+        "title": "A: the plate / put the knife / on / of the right / Do I/?"
+      },
+      {
+        "section": "B",
+        "title": "the right / No, / on / please put it / the plate / of /."
+      },
+      {
+        "section": "B",
+        "title": "between and the fork / it / the spoon / Put /."
+      },
+      {
+        "section": "C",
+        "title": "Fill in the blanks and write the correct numbers on the picture."
+      },
+      {
+        "section": "D",
+        "title": "Read and choose the correct answers."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 5,
+    "unit": 1,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and number."
+      },
+      {
+        "section": "B",
+        "title": "Look at the picture and check (√) the correct sentences."
+      },
+      {
+        "section": "C",
+        "title": "Find the words. Then, complete the sentences."
+      },
+      {
+        "section": "D",
+        "title": "Look and write."
+      },
+      {
+        "section": "E",
+        "title": "Look at the picture and fill in the blanks."
+      },
+      {
+        "section": "F",
+        "title": "Look at the pictures and answer the questions with complete sentences."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 5,
+    "unit": 2,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and color."
+      },
+      {
+        "section": "B",
+        "title": "Look at the picture and unscramble the sentences."
+      },
+      {
+        "section": "C",
+        "title": "Write the words. Then, find them in the puzzle."
+      },
+      {
+        "section": "D",
+        "title": "Write the questions and answers."
+      },
+      {
+        "section": "E",
+        "title": "Complete the sentences with the correct words."
+      },
+      {
+        "section": "F",
+        "title": "Answer using the words in brackets. Then, color."
+      }
+    ],
+    "supplemental_notes": "[A] skip\ncoloring activity\n\n[F] skip\ncoloring activity"
+  },
+  {
+    "howdy_level": 5,
+    "unit": 3,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and number."
+      },
+      {
+        "section": "B",
+        "title": "Read, look at the picture, and match."
+      },
+      {
+        "section": "C",
+        "title": "Unscramble and write. Then, draw."
+      },
+      {
+        "section": "D",
+        "title": "Follow the arrows. Complete the questions and answers."
+      },
+      {
+        "section": "E",
+        "title": "Look at the pictures and fill in the blanks."
+      },
+      {
+        "section": "F",
+        "title": "Use 'what' or 'where' to write the questions."
+      }
+    ],
+    "supplemental_notes": "[B] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess.\n\n[C] skip\ndrawing activity"
+  },
+  {
+    "howdy_level": 5,
+    "unit": 4,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and check."
+      },
+      {
+        "section": "B",
+        "title": "Look at the picture and check (√) T for true; F for false."
+      },
+      {
+        "section": "C",
+        "title": "Write and match the opposite words."
+      },
+      {
+        "section": "E",
+        "title": "Look at the pictures and fill in the blanks with the correct words."
+      },
+      {
+        "section": "I",
+        "title": "am reading in the living room. My dog Skip is sitting"
+      },
+      {
+        "section": "F",
+        "title": "Look at the picture and write two answers for each question."
+      }
+    ],
+    "supplemental_notes": "[C] written_only\nIgnore the matching lines. Grade only the written answers."
+  },
+  {
+    "howdy_level": 5,
+    "unit": 5,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and color."
+      },
+      {
+        "section": "B",
+        "title": "Look at the picture and check (√) T for true; F for false."
+      },
+      {
+        "section": "C",
+        "title": "Unscramble the words and complete the puzzle."
+      },
+      {
+        "section": "E",
+        "title": "Match and write."
+      }
+    ],
+    "supplemental_notes": "[A] skip\ncoloring activity\n\n[E] written_only\nIgnore the matching lines. Grade only the written answers."
+  },
+  {
+    "howdy_level": 5,
+    "unit": 6,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and number."
+      },
+      {
+        "section": "B",
+        "title": "Look at the picture and check (√) the correct answers."
+      },
+      {
+        "section": "C",
+        "title": "Complete the sentences."
+      },
+      {
+        "section": "D",
+        "title": "Circle the mistakes in the sentences and rewrite them."
+      },
+      {
+        "section": "E",
+        "title": "Unscramble and match."
+      },
+      {
+        "section": "F",
+        "title": "Look at the pictures and answer the questions."
+      }
+    ],
+    "supplemental_notes": "[E] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess."
+  },
+  {
+    "howdy_level": 5,
+    "unit": 7,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen to the dialogue and number."
+      },
+      {
+        "section": "B",
+        "title": "Look at the picture and answer the questions."
+      },
+      {
+        "section": "C",
+        "title": "Look and write."
+      },
+      {
+        "section": "D",
+        "title": "Answer with complete answers."
+      },
+      {
+        "section": "E",
+        "title": "Complete the sentences and number the pictures."
+      },
+      {
+        "section": "F",
+        "title": "Write the questions."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 5,
+    "unit": 8,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen to the dialogue and number."
+      },
+      {
+        "section": "B",
+        "title": "Look at the pictures and complete the puzzle. Then, find out the secret job is."
+      },
+      {
+        "section": "C",
+        "title": "Read and fill in the blanks."
+      },
+      {
+        "section": "D",
+        "title": "Write the questions and answers."
+      },
+      {
+        "section": "E",
+        "title": "Unscramble and match."
+      },
+      {
+        "section": "F",
+        "title": "Answer the questions. Then, number the pictures."
+      }
+    ],
+    "supplemental_notes": "[E] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess."
+  },
+  {
+    "howdy_level": 5,
+    "unit": 9,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and circle the mistake in the picture."
+      },
+      {
+        "section": "B",
+        "title": "Look at the pictures above and complete the questions. Then, match."
+      },
+      {
+        "section": "C",
+        "title": "Look and complete the sentences."
+      },
+      {
+        "section": "D",
+        "title": "Look at the pictures and write complete answers."
+      }
+    ],
+    "supplemental_notes": "[B] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess."
+  },
+  {
+    "howdy_level": 5,
+    "unit": 1,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and check."
+      },
+      {
+        "section": "B",
+        "title": "Write 'ee' or 'ea.' Then, match."
+      },
+      {
+        "section": "C",
+        "title": "Listen and complete the dialogue. ▸"
+      },
+      {
+        "section": "D",
+        "title": "Read and circle four mistakes in the picture."
+      },
+      {
+        "section": "E",
+        "title": "Unscramble the words and fill in the blanks."
+      }
+    ],
+    "supplemental_notes": "[B] written_only\nIgnore the matching lines. Grade only the written answers."
+  },
+  {
+    "howdy_level": 5,
+    "unit": 2,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and complete the dialogue. ☑"
+      },
+      {
+        "section": "B",
+        "title": "Use the spelling rules to write the verbs with '-ing.' Then, fill in the blanks."
+      },
+      {
+        "section": "C",
+        "title": "Listen and fill in the blanks."
+      },
+      {
+        "section": "D",
+        "title": "Read and answer the questions. Then, draw."
+      },
+      {
+        "section": "E",
+        "title": "Look at the pictures and complete the sentences."
+      }
+    ],
+    "supplemental_notes": "[D] skip\ndrawing activity"
+  },
+  {
+    "howdy_level": 5,
+    "unit": 3,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen, read and number."
+      },
+      {
+        "section": "B",
+        "title": "Read and complete the sentences."
+      },
+      {
+        "section": "C",
+        "title": "Listen and fill in the blanks."
+      },
+      {
+        "section": "D",
+        "title": "Read the story and answer the questions."
+      },
+      {
+        "section": "E",
+        "title": "Choose the correct words to complete the sentences."
+      },
+      {
+        "section": "F",
+        "title": "Look at the pictures. Circle two mistakes in each sentence and rewrite."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 5,
+    "unit": 4,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and circle."
+      },
+      {
+        "section": "C",
+        "title": "Listen and complete the sentences.①"
+      },
+      {
+        "section": "D",
+        "title": "Read and draw."
+      },
+      {
+        "section": "E",
+        "title": "Look at the pictures and fill in the blanks."
+      },
+      {
+        "section": "F",
+        "title": "Fill in the chart. Then, write sentences."
+      }
+    ],
+    "supplemental_notes": "[D] skip\ndrawing activity"
+  },
+  {
+    "howdy_level": 5,
+    "unit": 5,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen, fill in the blanks, and match."
+      },
+      {
+        "section": "B",
+        "title": "Look at the pictures and fill in the blanks."
+      },
+      {
+        "section": "C",
+        "title": "Listen and circle."
+      },
+      {
+        "section": "D",
+        "title": "Read. Then, answer the questions using complete sentences."
+      },
+      {
+        "section": "E",
+        "title": "Look at the pictures and find the words."
+      }
+    ],
+    "supplemental_notes": "[A] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess."
+  },
+  {
+    "howdy_level": 5,
+    "unit": 6,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and match. Then, number the pictures in the correct order."
+      },
+      {
+        "section": "B",
+        "title": "Find the words and fill in the blanks."
+      },
+      {
+        "section": "C",
+        "title": "Listen and fill in the blanks. ▸"
+      },
+      {
+        "section": "D",
+        "title": "Read and answer with complete sentences."
+      },
+      {
+        "section": "E",
+        "title": "Look at the pictures and complete the words."
+      },
+      {
+        "section": "F",
+        "title": "Look at the pictures and write sentences using don't or please."
+      }
+    ],
+    "supplemental_notes": "[A] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess."
+  },
+  {
+    "howdy_level": 5,
+    "unit": 7,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and complete the dialogue. ‣"
+      },
+      {
+        "section": "B",
+        "title": "Unscramble the sentences."
+      },
+      {
+        "section": "C",
+        "title": "Listen and complete the chart."
+      },
+      {
+        "section": "D",
+        "title": "Read and check (√) the correct answers."
+      },
+      {
+        "section": "F",
+        "title": "Look at the chart and make sentences."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 5,
+    "unit": 8,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and match. Q1 Q2 Q3 Q4 5 6"
+      },
+      {
+        "section": "B",
+        "title": "Circle the mistakes in the sentences and then rewrite."
+      },
+      {
+        "section": "C",
+        "title": "Listen and fill in the blanks."
+      },
+      {
+        "section": "D",
+        "title": "Read and answer the questions."
+      },
+      {
+        "section": "E",
+        "title": "Look at the pictures and find the words."
+      },
+      {
+        "section": "F",
+        "title": "Read and match."
+      }
+    ],
+    "supplemental_notes": "[A] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess.\n\n[F] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess."
+  },
+  {
+    "howdy_level": 5,
+    "unit": 10,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and match."
+      },
+      {
+        "section": "B",
+        "title": "Unscramble and answer the questions."
+      },
+      {
+        "section": "C",
+        "title": "Look at the pictures and complete the word puzzle."
+      },
+      {
+        "section": "D",
+        "title": "Listen and complete the dialogue. ‣"
+      },
+      {
+        "section": "A",
+        "title": "pie. Do you want to help me?"
+      }
+    ],
+    "supplemental_notes": "[A] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess."
+  },
+  {
+    "howdy_level": 5,
+    "unit": 1,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Circle one mistake in each sentence. Then, rewrite."
+      },
+      {
+        "section": "B",
+        "title": "Use 'Can' or 'What' to write the questions."
+      },
+      {
+        "section": "C",
+        "title": "Answer using the words in the boxes. Then, write."
+      },
+      {
+        "section": "D",
+        "title": "Read and choose the correct answers."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 5,
+    "unit": 2,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "B",
+        "title": "Write the correct sentences by unscrambling and using the words in brackets."
+      },
+      {
+        "section": "C",
+        "title": "Circle the two mistakes in each question and rewrite. Then, guess the job."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 5,
+    "unit": 3,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "D",
+        "title": "Read and check."
+      },
+      {
+        "section": "A",
+        "title": "person on it. But don't show your card! Find a friend"
+      },
+      {
+        "section": "A",
+        "title": "Write the sentences using the words in the boxes."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 5,
+    "unit": 4,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "B",
+        "title": "Check and write."
+      },
+      {
+        "section": "C",
+        "title": "Look at the picture. Write the complete sentences using the words in brackets."
+      },
+      {
+        "section": "D",
+        "title": "Read and choose the correct answers."
+      },
+      {
+        "section": "A",
+        "title": "deer loves to find pretty rocks in the woods. One day, the"
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 5,
+    "unit": 5,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Check and write."
+      },
+      {
+        "section": "B",
+        "title": "Circle, unscramble, and write."
+      },
+      {
+        "section": "C",
+        "title": "Read, check, and write the correct answers."
+      },
+      {
+        "section": "D",
+        "title": "Read and choose the correct answers."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 5,
+    "unit": 6,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "B",
+        "title": "Circle and write."
+      },
+      {
+        "section": "C",
+        "title": "Check and write."
+      }
+    ],
+    "supplemental_notes": "[B] written_only\nIgnore the circling part. Grade only the written answers."
+  },
+  {
+    "howdy_level": 5,
+    "unit": 7,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "D",
+        "title": "Read and choose the correct answers."
+      },
+      {
+        "section": "A",
+        "title": "Circle and write."
+      }
+    ],
+    "supplemental_notes": "[A] written_only\nIgnore the circling part. Grade only the written answers."
+  },
+  {
+    "howdy_level": 5,
+    "unit": 8,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "B",
+        "title": "Unscramble and write."
+      },
+      {
+        "section": "C",
+        "title": "Check and write the sentences using the words in brackets."
+      },
+      {
+        "section": "D",
+        "title": "Read and choose the correct answers."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 6,
+    "unit": 1,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and write T for true; F for false."
+      },
+      {
+        "section": "B",
+        "title": "Look at the picture and circle the correct answers."
+      },
+      {
+        "section": "C",
+        "title": "Unscramble and write the words in the boxes to find the magic word."
+      },
+      {
+        "section": "D",
+        "title": "Find the mistake in each sentence and rewrite."
+      },
+      {
+        "section": "E",
+        "title": "Look at the pictures and fill in the blanks."
+      },
+      {
+        "section": "F",
+        "title": "Unscramble the sentences."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 6,
+    "unit": 2,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen to the questions and number the answers."
+      },
+      {
+        "section": "B",
+        "title": "Look at the picture and answer the questions with complete sentences."
+      },
+      {
+        "section": "C",
+        "title": "Find the words and complete the sentences."
+      },
+      {
+        "section": "D",
+        "title": "Use the words in brackets to write the questions or answers."
+      },
+      {
+        "section": "E",
+        "title": "Write the words. Then, find them in the puzzle."
+      },
+      {
+        "section": "F",
+        "title": "Read and circle the correct words."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 6,
+    "unit": 3,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and number."
+      },
+      {
+        "section": "B",
+        "title": "Look at the picture and unscramble the sentences."
+      },
+      {
+        "section": "C",
+        "title": "Write the words. Then, find them in the puzzle."
+      },
+      {
+        "section": "D",
+        "title": "Match the questions and answers."
+      },
+      {
+        "section": "E",
+        "title": "Unscramble and write."
+      },
+      {
+        "section": "F",
+        "title": "Look at the pictures. Write the questions or the answers."
+      }
+    ],
+    "supplemental_notes": "[D] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess."
+  },
+  {
+    "howdy_level": 6,
+    "unit": 4,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and write T for true; F for false."
+      },
+      {
+        "section": "B",
+        "title": "Look at the picture and circle the correct answers."
+      },
+      {
+        "section": "C",
+        "title": "Complete the word puzzle."
+      },
+      {
+        "section": "D",
+        "title": "Use the words in brackets to rewrite the sentences."
+      },
+      {
+        "section": "E",
+        "title": "Look at the pictures and fill in the missing letters."
+      },
+      {
+        "section": "F",
+        "title": "Look at the pictures and fill in the blanks."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 6,
+    "unit": 5,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen to the questions and check(√) the correct answers."
+      },
+      {
+        "section": "B",
+        "title": "Look at the picture and fill in the blanks."
+      },
+      {
+        "section": "C",
+        "title": "Look at the pictures and complete the puzzle."
+      },
+      {
+        "section": "D",
+        "title": "Look at the pictures, complete the sentences, and answer the questions."
+      },
+      {
+        "section": "E",
+        "title": "Fill in the missing letters and number the pictures."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 6,
+    "unit": 6,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and color."
+      },
+      {
+        "section": "B",
+        "title": "Look at the picture and answer the questions with complete sentences."
+      },
+      {
+        "section": "D",
+        "title": "Read and answer the questions."
+      },
+      {
+        "section": "E",
+        "title": "Unscramble and match."
+      },
+      {
+        "section": "G",
+        "title": "Unscramble the sentences."
+      }
+    ],
+    "supplemental_notes": "[A] skip\ncoloring activity\n\n[E] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess."
+  },
+  {
+    "howdy_level": 6,
+    "unit": 7,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Look at the picture, listen, and number."
+      },
+      {
+        "section": "B",
+        "title": "Look at the picture and choose the correct words. Then, fill in the blanks."
+      },
+      {
+        "section": "C",
+        "title": "Fill in the missing letters and find the words in the puzzle."
+      },
+      {
+        "section": "D",
+        "title": "Use \"be going to\" to complete the sentences."
+      },
+      {
+        "section": "E",
+        "title": "Unscramble the words and find the magic word."
+      },
+      {
+        "section": "F",
+        "title": "Write complete sentences using be going to."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 6,
+    "unit": 8,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen to the dialogue and number."
+      },
+      {
+        "section": "B",
+        "title": "Read the questions, and complete the answers."
+      },
+      {
+        "section": "C",
+        "title": "Unscramble the words and complete the puzzle."
+      },
+      {
+        "section": "D",
+        "title": "Rewrite the sentences using \"will.\""
+      },
+      {
+        "section": "E",
+        "title": "Look at the pictures and complete the sentences."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 6,
+    "unit": 9,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and number."
+      },
+      {
+        "section": "B",
+        "title": "Look at the pictures and answer the questions with complete sentences."
+      },
+      {
+        "section": "C",
+        "title": "Read and fill in the blanks. Then, complete the word puzzle."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 6,
+    "unit": 1,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and circle."
+      },
+      {
+        "section": "B",
+        "title": "Look at the pictures and fill in the blanks."
+      },
+      {
+        "section": "C",
+        "title": "Listen and answer the questions."
+      },
+      {
+        "section": "D",
+        "title": "Read and number the pictures."
+      },
+      {
+        "section": "E",
+        "title": "Write and match."
+      }
+    ],
+    "supplemental_notes": "[E] written_only\nIgnore the matching lines. Grade only the written answers."
+  },
+  {
+    "howdy_level": 6,
+    "unit": 2,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and circle."
+      },
+      {
+        "section": "B",
+        "title": "Use \"will/won't\" to rewrite the sentences."
+      },
+      {
+        "section": "C",
+        "title": "Listen and write the numbers. Then, write them in words."
+      },
+      {
+        "section": "D",
+        "title": "Read and answer with complete sentences."
+      },
+      {
+        "section": "F",
+        "title": "Look at the calendar. Then, write the answers or the questions."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 6,
+    "unit": 3,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and complete the dialogue."
+      },
+      {
+        "section": "B",
+        "title": "Write the word under eatch picture. Then, fill in the blanks."
+      },
+      {
+        "section": "C",
+        "title": "Listen and answer the questions."
+      },
+      {
+        "section": "D",
+        "title": "Read and check (√) T for true; F for false."
+      },
+      {
+        "section": "E",
+        "title": "Write and match."
+      },
+      {
+        "section": "F",
+        "title": "Read and complete the dialogue using the correct sentences."
+      }
+    ],
+    "supplemental_notes": "[E] written_only\nIgnore the matching lines. Grade only the written answers."
+  },
+  {
+    "howdy_level": 6,
+    "unit": 4,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and fill in the blanks."
+      },
+      {
+        "section": "B",
+        "title": "Circle the mistake in each sentence and rewrite."
+      },
+      {
+        "section": "C",
+        "title": "Listen and answer the questions. Use \"one.\""
+      },
+      {
+        "section": "D",
+        "title": "Read and answer with complete sentences."
+      },
+      {
+        "section": "E",
+        "title": "Look at the pictures and write."
+      },
+      {
+        "section": "G",
+        "title": "Unscramble and complete the sentences."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 6,
+    "unit": 5,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and check T for true; F for false. ▸"
+      },
+      {
+        "section": "B",
+        "title": "Unscramble the sentences."
+      },
+      {
+        "section": "C",
+        "title": "Listen and complete the dialogue. ‣"
+      },
+      {
+        "section": "D",
+        "title": "Read and answer the questions with complete sentences."
+      },
+      {
+        "section": "E",
+        "title": "Write the words. Then, find them in the puzzle."
+      },
+      {
+        "section": "F",
+        "title": "Look at the pictures. Write the questions or the answers."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 6,
+    "unit": 6,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen, fill in the blanks, and color the pictures."
+      },
+      {
+        "section": "B",
+        "title": "Circle the mistake in each sentence and rewrite."
+      },
+      {
+        "section": "C",
+        "title": "Listen and complete the dialogue. ‣"
+      },
+      {
+        "section": "D",
+        "title": "Read and answer the questions."
+      },
+      {
+        "section": "E",
+        "title": "Circle the best words. Then, number the pictures."
+      },
+      {
+        "section": "F",
+        "title": "Complete the sentences with the words in the boxes."
+      }
+    ],
+    "supplemental_notes": "[A] skip\ncoloring activity"
+  },
+  {
+    "howdy_level": 6,
+    "unit": 7,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and number."
+      },
+      {
+        "section": "B",
+        "title": "Fill in the blanks and match."
+      },
+      {
+        "section": "C",
+        "title": "Listen and complete the dialogues."
+      },
+      {
+        "section": "D",
+        "title": "Read and answer with complete sentences."
+      },
+      {
+        "section": "E",
+        "title": "Look at the pictures. Circle the correct spellings and write."
+      },
+      {
+        "section": "F",
+        "title": "Circle the correct words. Then, answer the questions using the words"
+      }
+    ],
+    "supplemental_notes": "[B] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess."
+  },
+  {
+    "howdy_level": 6,
+    "unit": 8,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and circle."
+      },
+      {
+        "section": "B",
+        "title": "Find the words and fill in the blanks."
+      },
+      {
+        "section": "C",
+        "title": "Listen and fill in the blanks."
+      },
+      {
+        "section": "D",
+        "title": "Read and answer with complete sentences."
+      },
+      {
+        "section": "E",
+        "title": "Look at the pictures and fill in the blanks. Then, read the story."
+      },
+      {
+        "section": "F",
+        "title": "Look at the chart and complete the sentences."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 6,
+    "unit": 10,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen, number, and write."
+      },
+      {
+        "section": "C",
+        "title": "Listen and circle the correct pictures. Then, write."
+      },
+      {
+        "section": "D",
+        "title": "Unscramble the questions. Use the words in brackets to write an answer."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 6,
+    "unit": 1,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "B",
+        "title": "Circle and write."
+      },
+      {
+        "section": "C",
+        "title": "Check and write."
+      },
+      {
+        "section": "D",
+        "title": "Read and choose the correct answers."
+      }
+    ],
+    "supplemental_notes": "[B] written_only\nIgnore the circling part. Grade only the written answers."
+  },
+  {
+    "howdy_level": 6,
+    "unit": 2,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "B",
+        "title": "Correct the mistakes and write the correct sentences."
+      },
+      {
+        "section": "C",
+        "title": "Read, check, and write."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 6,
+    "unit": 3,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "D",
+        "title": "Read, choose, and write."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 6,
+    "unit": 4,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "B",
+        "title": "Check and write."
+      },
+      {
+        "section": "C",
+        "title": "Find one mistake in each sentence. Then, rewrite."
+      },
+      {
+        "section": "D",
+        "title": "Read, choose, and write."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 6,
+    "unit": 5,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "B",
+        "title": "Find one mistake in each sentence. Then, rewrite."
+      },
+      {
+        "section": "C",
+        "title": "Check and write."
+      },
+      {
+        "section": "D",
+        "title": "Read and choose the correct answers."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 6,
+    "unit": 6,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Look and fill in the blanks."
+      },
+      {
+        "section": "B",
+        "title": "Circle and write."
+      },
+      {
+        "section": "C",
+        "title": "Write the questions using the words in brackets. Then, fill in the blanks."
+      }
+    ],
+    "supplemental_notes": "[B] written_only\nIgnore the circling part. Grade only the written answers."
+  },
+  {
+    "howdy_level": 6,
+    "unit": 7,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "D",
+        "title": "Read and choose the correct answers."
+      },
+      {
+        "section": "A",
+        "title": "Check and write."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 6,
+    "unit": 8,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "B",
+        "title": "Find one mistake in each sentence. Then, rewrite."
+      },
+      {
+        "section": "C",
+        "title": "Read, circle, and write."
+      },
+      {
+        "section": "A",
+        "title": "Jellyfish have many colors!"
+      },
+      {
+        "section": "B",
+        "title": "Look! There [is / has] a yellow and white jellyfish!"
+      },
+      {
+        "section": "D",
+        "title": "Read and choose the correct answers."
+      }
+    ],
+    "supplemental_notes": "[A] skip\ncoloring activity"
+  },
+  {
+    "howdy_level": 7,
+    "unit": 1,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and complete the dialogue."
+      },
+      {
+        "section": "B",
+        "title": "Use the words in brackets to rewrite the sentences. Then, look at the"
+      },
+      {
+        "section": "C",
+        "title": "Look at the pictures, complete the puzzle, and find the magic word."
+      },
+      {
+        "section": "D",
+        "title": "Unscramble and write."
+      },
+      {
+        "section": "E",
+        "title": "Unscramble and fill in the blanks."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 7,
+    "unit": 2,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and check (√) T for true; F for false."
+      },
+      {
+        "section": "B",
+        "title": "Look at the picture and answer the questions."
+      },
+      {
+        "section": "C",
+        "title": "Write the words in the boxes to find the magic word."
+      },
+      {
+        "section": "D",
+        "title": "Circle the mistake in each sentence and rewrite."
+      },
+      {
+        "section": "E",
+        "title": "Look at the pictures and complete the puzzle."
+      },
+      {
+        "section": "F",
+        "title": "Write the questions."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 7,
+    "unit": 3,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and fill in the blanks."
+      },
+      {
+        "section": "B",
+        "title": "Look at the picture and fill in the blanks."
+      },
+      {
+        "section": "C",
+        "title": "Unscramble the words and match to the pictures."
+      },
+      {
+        "section": "D",
+        "title": "Circle the mistake in each sentence and rewrite."
+      },
+      {
+        "section": "E",
+        "title": "Match the syllables and write."
+      },
+      {
+        "section": "F",
+        "title": "Look at the table and write."
+      }
+    ],
+    "supplemental_notes": "[C] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess.\n\n[E] written_only\nIgnore the matching lines. Grade only the written answers."
+  },
+  {
+    "howdy_level": 7,
+    "unit": 4,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and write \"yes\" or \"no.\""
+      },
+      {
+        "section": "B",
+        "title": "Read and match."
+      },
+      {
+        "section": "C",
+        "title": "Complete the puzzle."
+      },
+      {
+        "section": "D",
+        "title": "Use the words in brackets to complete the sentences."
+      },
+      {
+        "section": "E",
+        "title": "Unscramble and match."
+      },
+      {
+        "section": "F",
+        "title": "Complete the table and fill in the blanks."
+      }
+    ],
+    "supplemental_notes": "[B] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess.\n\n[E] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess."
+  },
+  {
+    "howdy_level": 7,
+    "unit": 5,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen to the questions and number the answers."
+      },
+      {
+        "section": "B",
+        "title": "Look at the picture, read, and fill in the blanks."
+      },
+      {
+        "section": "C",
+        "title": "Complete the chart."
+      },
+      {
+        "section": "D",
+        "title": "Look at the pictures and fill in the blanks."
+      },
+      {
+        "section": "E",
+        "title": "Complete the sentences with the correct verb forms."
+      },
+      {
+        "section": "F",
+        "title": "Circle two mistakes in each sentence and rewrite."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 7,
+    "unit": 6,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and check (√) T for true; F for false."
+      },
+      {
+        "section": "B",
+        "title": "Look at the picture and answer."
+      },
+      {
+        "section": "C",
+        "title": "Change the words to the past tense. Then, find them in the puzzle."
+      },
+      {
+        "section": "D",
+        "title": "Circle the mistake in each sentence and rewrite."
+      },
+      {
+        "section": "E",
+        "title": "Circle the correct spelling and match."
+      },
+      {
+        "section": "F",
+        "title": "Rewrite the sentences using the words in brackets."
+      },
+      {
+        "section": "I",
+        "title": "Grace often writes songs. [last Sunday]"
+      }
+    ],
+    "supplemental_notes": "[E] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess."
+  },
+  {
+    "howdy_level": 7,
+    "unit": 7,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Who said it? Listen to the dialogue and number."
+      },
+      {
+        "section": "B",
+        "title": "Change the verbs to the past tense and match."
+      },
+      {
+        "section": "D",
+        "title": "Rewrite the sentences and number the pictures."
+      },
+      {
+        "section": "E",
+        "title": "Unscramble and complete the sentences with the correct verb forms."
+      },
+      {
+        "section": "F",
+        "title": "Match the sentences and write."
+      }
+    ],
+    "supplemental_notes": "[B] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess.\n\n[F] written_only\nIgnore the matching lines. Grade only the written answers."
+  },
+  {
+    "howdy_level": 7,
+    "unit": 8,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen to the dialogue and fill in the blanks. ▸"
+      },
+      {
+        "section": "B",
+        "title": "Look at the picture and answer the questions with complete sentences."
+      },
+      {
+        "section": "C",
+        "title": "Unscramble the words and match."
+      },
+      {
+        "section": "D",
+        "title": "Write a question for each answer. Start with \"Who...\""
+      },
+      {
+        "section": "E",
+        "title": "Write the correct words to complete the sentences."
+      },
+      {
+        "section": "F",
+        "title": "Write the questions or the answers. Use the words in brackets."
+      }
+    ],
+    "supplemental_notes": "[C] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess."
+  },
+  {
+    "howdy_level": 7,
+    "unit": 9,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and number the pictures."
+      },
+      {
+        "section": "B",
+        "title": "Look at the pictures and complete the sentences."
+      },
+      {
+        "section": "C",
+        "title": "Find the words in the puzzle."
+      },
+      {
+        "section": "D",
+        "title": "Circle the mistake in each sentence and rewrite."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 7,
+    "unit": 1,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and circle."
+      },
+      {
+        "section": "B",
+        "title": "Read, fill in the blanks, and number the pictures."
+      },
+      {
+        "section": "C",
+        "title": "Listen and fill in the blanks. Then, rewrite using the past tense."
+      },
+      {
+        "section": "D",
+        "title": "Read and check (√) the correct sentences."
+      },
+      {
+        "section": "E",
+        "title": "Use the correct words to complete the sentences."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 7,
+    "unit": 2,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and fill in the blanks."
+      },
+      {
+        "section": "B",
+        "title": "Circle the mistake, rewrite and match."
+      },
+      {
+        "section": "C",
+        "title": "Listen and complete the chart."
+      },
+      {
+        "section": "D",
+        "title": "Read and check (√) T for true; F for false."
+      },
+      {
+        "section": "F",
+        "title": "Circle one mistake in each sentence and rewrite."
+      }
+    ],
+    "supplemental_notes": "[B] written_only\nIgnore the matching lines. Grade only the written answers."
+  },
+  {
+    "howdy_level": 7,
+    "unit": 3,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and match."
+      },
+      {
+        "section": "B",
+        "title": "Look at the pictures and fill in the blanks."
+      },
+      {
+        "section": "C",
+        "title": "Listen and answer the questions. Then, draw."
+      },
+      {
+        "section": "D",
+        "title": "Read and check (√) T for true; F for false."
+      },
+      {
+        "section": "E",
+        "title": "Look at the pictures and find the words."
+      },
+      {
+        "section": "F",
+        "title": "Unscramble the sentences."
+      }
+    ],
+    "supplemental_notes": "[A] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess.\n\n[C] skip\ndrawing activity"
+  },
+  {
+    "howdy_level": 7,
+    "unit": 4,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and circle."
+      },
+      {
+        "section": "B",
+        "title": "Read and fill in the blanks."
+      },
+      {
+        "section": "C",
+        "title": "Fill in the chart. Then, listen and fill in the blanks."
+      },
+      {
+        "section": "D",
+        "title": "Read, look at the pictures, and check (√) T for true; F for false."
+      },
+      {
+        "section": "E",
+        "title": "Fill in the blanks and match."
+      },
+      {
+        "section": "F",
+        "title": "Complete the sentences with the correct words."
+      }
+    ],
+    "supplemental_notes": "[E] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess."
+  },
+  {
+    "howdy_level": 7,
+    "unit": 5,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Read and match. Then, listen and check your answers."
+      },
+      {
+        "section": "B",
+        "title": "Find the words and fill in the blanks."
+      },
+      {
+        "section": "C",
+        "title": "Listen to the questions and complete the answers."
+      },
+      {
+        "section": "D",
+        "title": "Check (√) the correct sentences. Then, number the pictures."
+      },
+      {
+        "section": "E",
+        "title": "Read and match."
+      },
+      {
+        "section": "F",
+        "title": "Look at the schedule and answer the questions."
+      }
+    ],
+    "supplemental_notes": "[A] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess.\n\n[E] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess."
+  },
+  {
+    "howdy_level": 7,
+    "unit": 6,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and match."
+      },
+      {
+        "section": "B",
+        "title": "Change the verbs to the past tense. Then, read and fill in the blanks."
+      },
+      {
+        "section": "C",
+        "title": "Listen and answer the questions."
+      },
+      {
+        "section": "D",
+        "title": "Read and check (√) T for true; F for false."
+      },
+      {
+        "section": "F",
+        "title": "Match. Then, answer with complete sentences."
+      }
+    ],
+    "supplemental_notes": "[A] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess.\n\n[F] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess."
+  },
+  {
+    "howdy_level": 7,
+    "unit": 7,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and fill in the blanks."
+      },
+      {
+        "section": "B",
+        "title": "Unscramble and number the pictures."
+      },
+      {
+        "section": "C",
+        "title": "Listen and fill in the chart."
+      },
+      {
+        "section": "D",
+        "title": "Read and check (√) T for true; F for false."
+      },
+      {
+        "section": "E",
+        "title": "Circle the correct spelling and match."
+      },
+      {
+        "section": "F",
+        "title": "Complete the chart and then answer the questions."
+      }
+    ],
+    "supplemental_notes": "[E] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess."
+  },
+  {
+    "howdy_level": 7,
+    "unit": 8,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Read and match. Then, listen and check your answers."
+      },
+      {
+        "section": "B",
+        "title": "Look at the pictures and unscramble. Then, fill in the blanks."
+      },
+      {
+        "section": "C",
+        "title": "Listen and write a question for each answer. Start with \"Why did...\""
+      },
+      {
+        "section": "D",
+        "title": "Read and number the pictures."
+      },
+      {
+        "section": "E",
+        "title": "Look at the pictures and find the words."
+      },
+      {
+        "section": "F",
+        "title": "Read and number the answers."
+      }
+    ],
+    "supplemental_notes": "[A] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess."
+  },
+  {
+    "howdy_level": 7,
+    "unit": 10,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and match."
+      },
+      {
+        "section": "B",
+        "title": "Change the verbs to the past tense. Then, listen and fill in the blanks. ▸"
+      },
+      {
+        "section": "C",
+        "title": "Complete the puzzle."
+      },
+      {
+        "section": "D",
+        "title": "Circle the mistake in each sentence and rewrite."
+      }
+    ],
+    "supplemental_notes": "[A] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess."
+  },
+  {
+    "howdy_level": 7,
+    "unit": 1,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Circle and write."
+      },
+      {
+        "section": "B",
+        "title": "Write the sentences in the past tense using the words in brackets."
+      },
+      {
+        "section": "C",
+        "title": "Rewrite the paragraph in the past tense."
+      },
+      {
+        "section": "D",
+        "title": "Read, choose, and write."
+      }
+    ],
+    "supplemental_notes": "[A] written_only\nIgnore the circling part. Grade only the written answers."
+  },
+  {
+    "howdy_level": 7,
+    "unit": 2,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Unscramble and write."
+      },
+      {
+        "section": "C",
+        "title": "Read and complete the sentences using the words in brackets."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 7,
+    "unit": 3,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "D",
+        "title": "Look at the calendar and choose the correct answers."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 7,
+    "unit": 4,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "C",
+        "title": "Look, match, and write."
+      },
+      {
+        "section": "D",
+        "title": "Read and choose the correct answers."
+      }
+    ],
+    "supplemental_notes": "[C] written_only\nIgnore the matching lines. Grade only the written answers."
+  },
+  {
+    "howdy_level": 7,
+    "unit": 5,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Check and write."
+      },
+      {
+        "section": "B",
+        "title": "Find one mistake in each question. Then, rewrite."
+      },
+      {
+        "section": "C",
+        "title": "Read, choose, and write."
+      },
+      {
+        "section": "D",
+        "title": "Read and choose the correct answers."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 7,
+    "unit": 6,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Rewrite the sentences using the words in brackets."
+      },
+      {
+        "section": "B",
+        "title": "Unscramble and write."
+      },
+      {
+        "section": "C",
+        "title": "Look and write."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 7,
+    "unit": 7,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "D",
+        "title": "Read, choose, and write."
+      },
+      {
+        "section": "A",
+        "title": "Write questions according to the underlined words."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 7,
+    "unit": 8,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "B",
+        "title": "Circle and write."
+      },
+      {
+        "section": "C",
+        "title": "Look and write the sentences using the words in brackets."
+      },
+      {
+        "section": "D",
+        "title": "Read, choose, and write."
+      }
+    ],
+    "supplemental_notes": "[B] written_only\nIgnore the circling part. Grade only the written answers."
+  },
+  {
+    "howdy_level": 8,
+    "unit": 1,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and write 'yes' or 'no.'"
+      },
+      {
+        "section": "B",
+        "title": "Look at the picture and choose a word in the brackets to fill in the blanks."
+      },
+      {
+        "section": "C",
+        "title": "Unscramble the words and write. Then, complete the puzzle."
+      },
+      {
+        "section": "D",
+        "title": "Find one mistake in each sentence and rewrite."
+      },
+      {
+        "section": "E",
+        "title": "Use the words in the boxes to complete the sentences."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 8,
+    "unit": 2,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen to the dialogue and number."
+      },
+      {
+        "section": "B",
+        "title": "Look at the picture and check (√) the correct sentences."
+      },
+      {
+        "section": "C",
+        "title": "Look at the pictures and write. Then, use the words to fill in the blanks."
+      },
+      {
+        "section": "D",
+        "title": "Use the words in brackets to answer the questions in complete sentences."
+      },
+      {
+        "section": "E",
+        "title": "Look at the pictures and fill in the blanks."
+      },
+      {
+        "section": "F",
+        "title": "Look at Cindy's schedule. Then, complete the sentences."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 8,
+    "unit": 3,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and check (√) T for true; F for false."
+      },
+      {
+        "section": "B",
+        "title": "Look at the picture and answer the questions."
+      },
+      {
+        "section": "C",
+        "title": "Unscramble and write the words in the boxes to find the magic word."
+      },
+      {
+        "section": "E",
+        "title": "Unscramble and write."
+      },
+      {
+        "section": "F",
+        "title": "Look at the pictures and answer the questions."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 8,
+    "unit": 4,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen to the questions and check (√) the correct answers."
+      },
+      {
+        "section": "B",
+        "title": "Unscramble. Look at the picture and check (√) T for true; F for false."
+      },
+      {
+        "section": "C",
+        "title": "Look at the pictures and fill in the blanks."
+      },
+      {
+        "section": "D",
+        "title": "Circle the mistake in each sentence and rewrite."
+      },
+      {
+        "section": "E",
+        "title": "Write the present tense verbs."
+      },
+      {
+        "section": "F",
+        "title": "Look at the pictures and write the sentences using the words in brackets."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 8,
+    "unit": 5,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and check (√) T for true; F for false."
+      },
+      {
+        "section": "B",
+        "title": "Look at the picture, read, and fill in the blanks."
+      },
+      {
+        "section": "C",
+        "title": "Complete the puzzle."
+      },
+      {
+        "section": "D",
+        "title": "Write a question for each answer."
+      },
+      {
+        "section": "I",
+        "title": "was listening to the radio at 9:00 this morning."
+      },
+      {
+        "section": "E",
+        "title": "Write the words. Then, find them in the puzzle."
+      },
+      {
+        "section": "F",
+        "title": "Unscramble and write."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 8,
+    "unit": 6,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Who said it? Listen and number."
+      },
+      {
+        "section": "B",
+        "title": "Look at the picture. Read and check (√) T for true; F for false."
+      },
+      {
+        "section": "C",
+        "title": "Look at the picture and fill in the blanks."
+      },
+      {
+        "section": "E",
+        "title": "Look at the pictures and write the words. Then, fill in the blanks."
+      },
+      {
+        "section": "F",
+        "title": "Look at the pictures and answer the questions."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 8,
+    "unit": 7,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and write 'true' or 'false.'"
+      },
+      {
+        "section": "B",
+        "title": "Look at the picture, read, and circle the correct words."
+      },
+      {
+        "section": "D",
+        "title": "Look at the pictures, match, and write sentences using 'when.'"
+      },
+      {
+        "section": "E",
+        "title": "Circle the correct spelling and number the pictures."
+      },
+      {
+        "section": "F",
+        "title": "Look at the pictures and answer the questions."
+      }
+    ],
+    "supplemental_notes": "[D] written_only\nIgnore the matching lines. Grade only the written answers."
+  },
+  {
+    "howdy_level": 8,
+    "unit": 8,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen to the questions and number the answers."
+      },
+      {
+        "section": "B",
+        "title": "Look at the picture and answer the questions."
+      },
+      {
+        "section": "D",
+        "title": "Look at the pictures. Rewrite using 'someone' or 'something.'"
+      },
+      {
+        "section": "E",
+        "title": "Look at the pictures and fill in the blanks."
+      },
+      {
+        "section": "F",
+        "title": "Circle the correct answers."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 8,
+    "unit": 9,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and fill in the blanks."
+      },
+      {
+        "section": "B",
+        "title": "Read the question and unscramble the answers."
+      },
+      {
+        "section": "C",
+        "title": "Listen, circle the correct picture and write."
+      },
+      {
+        "section": "D",
+        "title": "Read and write the answers."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 8,
+    "unit": 1,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and fill in the blanks."
+      },
+      {
+        "section": "B",
+        "title": "Change the verbs to the past tense, read, and fill in the blanks."
+      },
+      {
+        "section": "C",
+        "title": "Listen and complete the questions and answers."
+      },
+      {
+        "section": "D",
+        "title": "Read and answer the questions."
+      },
+      {
+        "section": "E",
+        "title": "Unscramble. Then, read the story and fill in the blanks."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 8,
+    "unit": 2,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and fill in the blanks."
+      },
+      {
+        "section": "B",
+        "title": "Read and match the pictures."
+      },
+      {
+        "section": "C",
+        "title": "Listen and answer the questions."
+      },
+      {
+        "section": "D",
+        "title": "Read and answer the questions."
+      },
+      {
+        "section": "E",
+        "title": "Fill in the puzzle and number the pictures."
+      }
+    ],
+    "supplemental_notes": "[B] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess."
+  },
+  {
+    "howdy_level": 8,
+    "unit": 3,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and fill in the blanks."
+      },
+      {
+        "section": "I",
+        "title": "read the"
+      },
+      {
+        "section": "B",
+        "title": "Read, look at the pictures, and fill in the blanks."
+      },
+      {
+        "section": "C",
+        "title": "Listen and complete the answers."
+      },
+      {
+        "section": "D",
+        "title": "Read and check T for true; F for false."
+      },
+      {
+        "section": "E",
+        "title": "Look at the pictures and write."
+      },
+      {
+        "section": "G",
+        "title": "Use the words to write sentences."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 8,
+    "unit": 4,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and circle."
+      },
+      {
+        "section": "B",
+        "title": "Choose the best word from the brackets to complete the sentences."
+      },
+      {
+        "section": "C",
+        "title": "Listen and fill in the blanks.▸"
+      },
+      {
+        "section": "D",
+        "title": "Read. Draw a line from the girl's name to her wedding."
+      },
+      {
+        "section": "E",
+        "title": "Unscramble. Then, fill in the blanks with the correct forms."
+      },
+      {
+        "section": "F",
+        "title": "Complete the sentences using the information in the box."
+      }
+    ],
+    "supplemental_notes": "[D] skip\ndrawing activity"
+  },
+  {
+    "howdy_level": 8,
+    "unit": 5,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and check the correct sentences."
+      },
+      {
+        "section": "B",
+        "title": "Read and fill in the blanks."
+      },
+      {
+        "section": "C",
+        "title": "Listen and fill in the blanks."
+      },
+      {
+        "section": "D",
+        "title": "Read, write the names, and answer the questions."
+      },
+      {
+        "section": "E",
+        "title": "Read, circle the correct words, and write."
+      },
+      {
+        "section": "F",
+        "title": "Choose the best answers and write."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 8,
+    "unit": 6,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and use the words in the box to complete the sentences."
+      },
+      {
+        "section": "B",
+        "title": "Unscramble the sentences."
+      },
+      {
+        "section": "C",
+        "title": "Listen and answer the questions."
+      },
+      {
+        "section": "D",
+        "title": "Read and circle three mistakes in the picture."
+      },
+      {
+        "section": "E",
+        "title": "Look at the pictures and fill in the blanks."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 8,
+    "unit": 7,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Read. Then, listen to the answers and number the questions."
+      },
+      {
+        "section": "B",
+        "title": "Look at the pictures, correct the sentences, and rewrite them."
+      },
+      {
+        "section": "C",
+        "title": "Listen to the questions and complete the answers."
+      },
+      {
+        "section": "E",
+        "title": "Circle the best words. Then, number the pictures."
+      },
+      {
+        "section": "F",
+        "title": "Unscramble the sentences."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 8,
+    "unit": 8,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and fill in the blanks."
+      },
+      {
+        "section": "B",
+        "title": "Find the words and fill in the blanks."
+      },
+      {
+        "section": "C",
+        "title": "Listen and write. Then, match."
+      },
+      {
+        "section": "D",
+        "title": "Read the dialogue. Then, answer the questions."
+      },
+      {
+        "section": "E",
+        "title": "Look at the pictures and unscramble the words."
+      },
+      {
+        "section": "F",
+        "title": "Unscramble the questions and answers."
+      }
+    ],
+    "supplemental_notes": "[C] written_only\nIgnore the matching lines. Grade only the written answers."
+  },
+  {
+    "howdy_level": 8,
+    "unit": 10,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and fill in the blanks. Then, number."
+      },
+      {
+        "section": "B",
+        "title": "Listen and fill in the blanks. Then, answer the questions."
+      },
+      {
+        "section": "C",
+        "title": "Look at the pictures and complete the puzzle."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 8,
+    "unit": 1,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Unscramble and write."
+      },
+      {
+        "section": "C",
+        "title": "Check the correct answers."
+      },
+      {
+        "section": "D",
+        "title": "Read, fill in the chart, and choose the correct answers."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 8,
+    "unit": 2,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "B",
+        "title": "Correct the mistakes in the circles and rewrite."
+      },
+      {
+        "section": "C",
+        "title": "Check and write."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 8,
+    "unit": 3,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "D",
+        "title": "Read and choose the correct answers."
+      },
+      {
+        "section": "A",
+        "title": "Unscramble and write."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 8,
+    "unit": 4,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "C",
+        "title": "Look, circle, and write."
+      },
+      {
+        "section": "D",
+        "title": "Read, choose, and fill in the blanks."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 8,
+    "unit": 5,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "B",
+        "title": "Circle and write."
+      },
+      {
+        "section": "C",
+        "title": "Find one mistake in each sentence. Then, rewrite."
+      },
+      {
+        "section": "D",
+        "title": "Read, circle, and choose the correct answers."
+      },
+      {
+        "section": "I",
+        "title": "Circle T for true; F for false."
+      }
+    ],
+    "supplemental_notes": "[B] written_only\nIgnore the circling part. Grade only the written answers."
+  },
+  {
+    "howdy_level": 8,
+    "unit": 6,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "B",
+        "title": "Circle two mistakes in each sentence and rewrite."
+      },
+      {
+        "section": "C",
+        "title": "Read, check, and write."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 8,
+    "unit": 7,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "D",
+        "title": "Read, choose, and write."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 8,
+    "unit": 8,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "B",
+        "title": "Find one mistake in each sentence. Then, rewrite."
+      },
+      {
+        "section": "C",
+        "title": "Read, check, and write."
+      },
+      {
+        "section": "D",
+        "title": "Read and choose the correct answers."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 9,
+    "unit": 1,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and check. Which containers are mentioned in the story?"
+      },
+      {
+        "section": "B",
+        "title": "Read Student Book 9, pages 8-9. Answer the questions."
+      },
+      {
+        "section": "D",
+        "title": "Read and circle four mistakes. Then, rewrite."
+      },
+      {
+        "section": "E",
+        "title": "Look at the pictures and unscramble the sentences."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 9,
+    "unit": 2,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen to the story and write T for true; F for false."
+      },
+      {
+        "section": "B",
+        "title": "Read Student Book 9, pages 14-15. Answer the questions."
+      },
+      {
+        "section": "D",
+        "title": "Read and choose the best words."
+      },
+      {
+        "section": "E",
+        "title": "Look at the pictures and write sentences using 'I would like...'"
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 9,
+    "unit": 3,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen to the story and write T for true; F for false."
+      },
+      {
+        "section": "B",
+        "title": "Read Student Book 9, pages 20-21. Answer the questions with complete"
+      },
+      {
+        "section": "D",
+        "title": "Read the dialogues and check the correct answers."
+      },
+      {
+        "section": "E",
+        "title": "Look at the pictures and rewrite the sentences in the correct order."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 9,
+    "unit": 4,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and check the correct sentences."
+      },
+      {
+        "section": "B",
+        "title": "Read Student Book 9, pages 26-27. Answer the questions."
+      },
+      {
+        "section": "D",
+        "title": "Read and answer."
+      },
+      {
+        "section": "E",
+        "title": "Look at the pictures and write sentences using 'must' or 'mustn't'."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 9,
+    "unit": 5,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen to the story and check T or F."
+      },
+      {
+        "section": "B",
+        "title": "Read Student Book 9, pages 36-37. Rewrite the false sentences."
+      },
+      {
+        "section": "D",
+        "title": "Choose the correct words to complete the sentences."
+      },
+      {
+        "section": "E",
+        "title": "Look at the pictures and write sentences using 'himself,' 'herself,' or 'itself.'"
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 9,
+    "unit": 6,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and connect the questions and answers. Then, fill in the blanks."
+      },
+      {
+        "section": "B",
+        "title": "Read Student Book 9, pages 42-43. Fill in the blanks."
+      },
+      {
+        "section": "C",
+        "title": "Listen and circle the correct answer."
+      },
+      {
+        "section": "D",
+        "title": "Look at the pictures and answer the questions."
+      },
+      {
+        "section": "E",
+        "title": "Unscramble the sentences and answer."
+      },
+      {
+        "section": "I",
+        "title": "read / you / Do/?/ or /comic books/to/like/novels"
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 9,
+    "unit": 7,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen to the story. Find the mistakes and rewrite the sentences."
+      },
+      {
+        "section": "B",
+        "title": "Read Student Book 9, pages 48-49. Answer the questions."
+      },
+      {
+        "section": "D",
+        "title": "Find eight words in the puzzle and write them on the lines."
+      },
+      {
+        "section": "E",
+        "title": "Look at the picture and answer using complete sentences."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 9,
+    "unit": 8,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen to the story and choose the correct words to complete the sentences."
+      },
+      {
+        "section": "B",
+        "title": "Read Student Book 9, pages 54-55. Answer the questions."
+      },
+      {
+        "section": "E",
+        "title": "Look at the pictures. Write complete sentences using the words in brackets."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 9,
+    "unit": 9,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and circle the mistake in each sentence. Write the correct word on the line."
+      },
+      {
+        "section": "A",
+        "title": "fast wind in a circle"
+      },
+      {
+        "section": "D",
+        "title": "Read and answer."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 9,
+    "unit": 1,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "F",
+        "title": "Listen and fill in the blanks. Then, check the things at Peter's house."
+      },
+      {
+        "section": "G",
+        "title": "Read and answer."
+      },
+      {
+        "section": "H",
+        "title": "Unscramble. Then, read and fill in the blanks."
+      },
+      {
+        "section": "I",
+        "title": "Listen to the dialogue and check T for true; F for false. Rewrite the false"
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 9,
+    "unit": 2,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "G",
+        "title": "Read and answer."
+      },
+      {
+        "section": "H",
+        "title": "Circle the correct spelling. Then, fill in the blanks."
+      },
+      {
+        "section": "I",
+        "title": "Would Bill like to read a novel?"
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 9,
+    "unit": 3,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "F",
+        "title": "Listen and connect the questions and answers. Then, number the pictures."
+      },
+      {
+        "section": "H",
+        "title": "Look at the picture. Use the words in the box to fill in the blanks."
+      },
+      {
+        "section": "I",
+        "title": "Listen to the dialogue and circle the mistakes. Then, write the correct words."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 9,
+    "unit": 4,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "G",
+        "title": "Circle the mistakes and rewrite."
+      },
+      {
+        "section": "I",
+        "title": "Listen to the dialogue and number the speech bubbles. Then, check T for"
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 9,
+    "unit": 5,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "F",
+        "title": "Listen and circle the wrong words. Then, check the correct ones."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 9,
+    "unit": 6,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "F",
+        "title": "Listen to the questions and connect the parts of the answers."
+      },
+      {
+        "section": "G",
+        "title": "Answer the questions. For numbers 3-4, answer with a classmate's name."
+      },
+      {
+        "section": "H",
+        "title": "Circle the correct spelling and use the words/phrases to fill in the blanks."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 9,
+    "unit": 7,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "F",
+        "title": "Listen and circle the correct answers."
+      },
+      {
+        "section": "H",
+        "title": "Complete the words and use them to fill in the blanks."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 9,
+    "unit": 8,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "F",
+        "title": "What will the person say? Listen and check the answers."
+      },
+      {
+        "section": "H",
+        "title": "Unscramble the words and use them to fill in the blanks."
+      },
+      {
+        "section": "I",
+        "title": "Listen to the dialogue and check T for true; F for false. Rewrite the three"
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 9,
+    "unit": 10,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and fill in the blanks."
+      },
+      {
+        "section": "D",
+        "title": "Read and answer the questions."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 9,
+    "unit": 1,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Check and write the correct questions. Then, write your answers."
+      },
+      {
+        "section": "B",
+        "title": "Read and choose the correct answers."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 9,
+    "unit": 2,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Read and write the questions or answers using the words in brackets."
+      },
+      {
+        "section": "B",
+        "title": "[read a novel ]"
+      },
+      {
+        "section": "B",
+        "title": "Read and choose the correct answers."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 9,
+    "unit": 3,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Unscramble and answer."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 9,
+    "unit": 4,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "B",
+        "title": "Read and choose the correct answers."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 9,
+    "unit": 5,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Read and rewrite the sentences using \"... before...\" or \"not... until...\"."
+      },
+      {
+        "section": "B",
+        "title": "Read and choose the correct answers."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 9,
+    "unit": 6,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Circle and write the correct sentences."
+      },
+      {
+        "section": "B",
+        "title": "Read and choose the correct answers."
+      }
+    ],
+    "supplemental_notes": "[A] written_only\nIgnore the circling part. Grade only the written answers."
+  },
+  {
+    "howdy_level": 9,
+    "unit": 7,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Read, circle, and write the correct sentences."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 9,
+    "unit": 8,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "B",
+        "title": "Read and choose the correct answers."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 10,
+    "unit": 1,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen to the story and questions. Then, check the correct answers."
+      },
+      {
+        "section": "B",
+        "title": "Read Student Book 10, pages 8-9. Answer the questions."
+      },
+      {
+        "section": "D",
+        "title": "Look at the pictures and fill in the blanks."
+      },
+      {
+        "section": "E",
+        "title": "Look at the pictures. Unscramble the sentences."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 10,
+    "unit": 2,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen to the story. Circle the correct words and fill in the blanks. >"
+      },
+      {
+        "section": "B",
+        "title": "Read Student Book 10, pages 14-15. Circle the correct answers."
+      },
+      {
+        "section": "A",
+        "title": "Because she wants her friends to read it."
+      },
+      {
+        "section": "B",
+        "title": "Because she wants to write secrets in it."
+      },
+      {
+        "section": "E",
+        "title": "Look at the pictures and write using 'has' and 'have.'"
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 10,
+    "unit": 3,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen to the story and questions. Then, check the correct answers."
+      },
+      {
+        "section": "B",
+        "title": "Read Student Book 10, pages 20-21. Circle the mistakes and rewrite."
+      },
+      {
+        "section": "D",
+        "title": "Look at the pictures and fill in the blanks."
+      },
+      {
+        "section": "E",
+        "title": "Look at the pictures and answer the questions. Then, help Sue write a letter"
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 10,
+    "unit": 4,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen to the story. Circle the correct answers and complete the sentences. ‣"
+      },
+      {
+        "section": "B",
+        "title": "Read Student Book 10, pages 26-27. Answer the questions."
+      },
+      {
+        "section": "D",
+        "title": "Find the words. Then, use the words to complete the sentences."
+      },
+      {
+        "section": "E",
+        "title": "Read and complete the sentences with the correct words."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 10,
+    "unit": 5,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen to the story. Circle the things Peter and his family take to the picnic."
+      },
+      {
+        "section": "B",
+        "title": "Read Student Book 10, pages 36-37. Circle the mistakes and rewrite."
+      },
+      {
+        "section": "D",
+        "title": "Read and choose the best words to fill in the blanks."
+      },
+      {
+        "section": "A",
+        "title": "small purse. She looks beautiful."
+      },
+      {
+        "section": "E",
+        "title": "Look at the pictures and write the dialogues."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 10,
+    "unit": 6,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen to the story and check T for true; F for false. >"
+      },
+      {
+        "section": "B",
+        "title": "Read Student Book 10, pages 42-43. Answer the questions."
+      },
+      {
+        "section": "D",
+        "title": "Read and circle the correct words. Then, rewrite."
+      },
+      {
+        "section": "E",
+        "title": "Use the words to write a sentence for each picture."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 10,
+    "unit": 7,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen to the story. Circle the mistakes and rewrite."
+      },
+      {
+        "section": "B",
+        "title": "Read Student Book 10, pages 48-49. Write the correct answers."
+      },
+      {
+        "section": "E",
+        "title": "Look at the picture and answer the questions using the words in brackets."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 10,
+    "unit": 8,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen to the story and questions. Then, choose the correct answers."
+      },
+      {
+        "section": "B",
+        "title": "Read Student Book 10, pages 54-55. Circle the mistakes and rewrite."
+      },
+      {
+        "section": "D",
+        "title": "Read and circle the correct words."
+      },
+      {
+        "section": "E",
+        "title": "Write the questions."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 10,
+    "unit": 9,
+    "book_type": "A",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and circle the mistakes. Write the correct words on the lines."
+      },
+      {
+        "section": "B",
+        "title": "Rewrite the words so they are correct. Then, use the words to fill in the blanks."
+      },
+      {
+        "section": "D",
+        "title": "Read and answer."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 10,
+    "unit": 1,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "F",
+        "title": "Listen and number the answer."
+      },
+      {
+        "section": "H",
+        "title": "Read and fill in the blanks."
+      },
+      {
+        "section": "I",
+        "title": "Listen to the dialogue. Then, read the questions and choose the best answers."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 10,
+    "unit": 2,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "H",
+        "title": "Fill in the missing letters. Then, match each word to its meaning."
+      },
+      {
+        "section": "I",
+        "title": "Listen to the dialogue. Circle the mistakes and rewrite.①"
+      }
+    ],
+    "supplemental_notes": "[H] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess."
+  },
+  {
+    "howdy_level": 10,
+    "unit": 3,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "F",
+        "title": "Listen to the dialogues and check T for true; F for false."
+      },
+      {
+        "section": "H",
+        "title": "Circle the correct spelling and use the words to fill in the blanks."
+      },
+      {
+        "section": "I",
+        "title": "Listen to the dialogue and check T for true; F for false. Then, rewrite the three"
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 10,
+    "unit": 4,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "F",
+        "title": "Listen to the questions and number the answers."
+      },
+      {
+        "section": "H",
+        "title": "Unscramble the words, then use them to fill in the blanks."
+      },
+      {
+        "section": "I",
+        "title": "Listen to the dialogue and fill in the blanks. Then, answer the questions."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 10,
+    "unit": 5,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "F",
+        "title": "Listen to the dialogues. Write T for true; F for false."
+      },
+      {
+        "section": "H",
+        "title": "Fill in the blanks with the correct words. Then, match the sentences."
+      },
+      {
+        "section": "I",
+        "title": "I can't find the basket."
+      }
+    ],
+    "supplemental_notes": "[H] matching\nThis is a line-connecting matching section. If any student line is unclear, do not guess."
+  },
+  {
+    "howdy_level": 10,
+    "unit": 6,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "F",
+        "title": "Listen to the dialogues. Answer the questions with complete sentences."
+      },
+      {
+        "section": "G",
+        "title": "Read and answer."
+      },
+      {
+        "section": "H",
+        "title": "Read and choose the best words to fill in the blanks."
+      },
+      {
+        "section": "I",
+        "title": "Listen to the dialogue and read the sentences. Write T for true; F for false."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 10,
+    "unit": 7,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "F",
+        "title": "Listen and fill in the blanks."
+      },
+      {
+        "section": "G",
+        "title": "Match the verbs and the prepositions. Then, look at each picture and write a"
+      },
+      {
+        "section": "H",
+        "title": "Unscramble the words and fill in the blanks."
+      },
+      {
+        "section": "I",
+        "title": "Listen to the dialogue. Then, read the sentences and check T for true; F for"
+      },
+      {
+        "section": "I",
+        "title": "A fairy princess told Sam to find the Magic Belt."
+      }
+    ],
+    "supplemental_notes": "[G] written_only\nIgnore the matching lines. Grade only the written answers."
+  },
+  {
+    "howdy_level": 10,
+    "unit": 8,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "G",
+        "title": "Rewrite the questions starting with \"Do you know if...?\""
+      },
+      {
+        "section": "H",
+        "title": "Read and choose the best words to fill in the blanks."
+      },
+      {
+        "section": "I",
+        "title": "Listen to the dialogue and fill in the blanks. Then, read and check the"
+      },
+      {
+        "section": "I",
+        "title": "don't. But it looks like"
+      },
+      {
+        "section": "A",
+        "title": "panda looks like a bear."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 10,
+    "unit": 10,
+    "book_type": "B",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Listen and check the best answers."
+      },
+      {
+        "section": "B",
+        "title": "Read and Write. Then, circle the hidden words."
+      },
+      {
+        "section": "D",
+        "title": "Each sentence has two mistakes. Circle them. Then, rewrite."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 10,
+    "unit": 1,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Unscramble and answer."
+      },
+      {
+        "section": "B",
+        "title": "Read, choose, and write. Then, check the correct answers."
+      }
+    ],
+    "supplemental_notes": "[C] skip\nOpen-ended paragraph writing page without a usable answer-key image. Do not auto-grade this section."
+  },
+  {
+    "howdy_level": 10,
+    "unit": 2,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Write complete sentences using the present perfect tense."
+      },
+      {
+        "section": "B",
+        "title": "Read, choose, and write."
+      }
+    ],
+    "supplemental_notes": "[B] skip\nThis section has no usable answer-key image in the source materials. Do not auto-grade this section."
+  },
+  {
+    "howdy_level": 10,
+    "unit": 3,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Check and write the correct questions. Then, write the answers."
+      },
+      {
+        "section": "B",
+        "title": "Read, choose, and write."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 10,
+    "unit": 4,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Circle and write the correct sentences."
+      },
+      {
+        "section": "B",
+        "title": "Read and choose the correct answers."
+      }
+    ],
+    "supplemental_notes": "[A] written_only\nIgnore the circling part. Grade only the written answers.\n\n[B] skip\nThis section has no usable answer-key image in the source materials. Do not auto-grade this section."
+  },
+  {
+    "howdy_level": 10,
+    "unit": 5,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Write questions using the words in brackets. Then, write the answers."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 10,
+    "unit": 6,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Unscramble and answer."
+      },
+      {
+        "section": "B",
+        "title": "Read and choose the correct answers."
+      }
+    ],
+    "supplemental_notes": "[C] skip\nOpen-ended paragraph writing page without a usable answer-key image. Do not auto-grade this section."
+  },
+  {
+    "howdy_level": 10,
+    "unit": 7,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Write the correct sentences using the words in brackets and boxes."
+      },
+      {
+        "section": "B",
+        "title": "Read and choose the correct answers."
+      }
+    ],
+    "supplemental_notes": ""
+  },
+  {
+    "howdy_level": 10,
+    "unit": 8,
+    "book_type": "C",
+    "sections": [
+      {
+        "section": "A",
+        "title": "Check and write the correct questions. Then, write the answers."
+      },
+      {
+        "section": "B",
+        "title": "Read and choose the correct answers."
+      }
+    ],
+    "supplemental_notes": ""
+  }
+]

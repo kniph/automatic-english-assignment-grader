@@ -8,6 +8,13 @@ const sharp = require('sharp');
 const ROOT = path.resolve(__dirname, '..');
 const WBS_DIR = path.join(ROOT, 'WBs');
 const DEFAULT_API_BASE = process.env.IMPORT_API_BASE_URL || 'https://automatic-english-assignment-grader-production.up.railway.app';
+const DEFAULT_SUPPLEMENTAL_MANIFEST = path.join(ROOT, 'data', 'supplemental_notes_manifest.generated.json');
+const BLANK_AK_ALLOWED_KEYS = new Set([
+  '10-1-C-4',
+  '10-2-C-2',
+  '10-4-C-2',
+  '10-6-C-4'
+]);
 
 function parseArgs(argv) {
   const args = {
@@ -16,7 +23,9 @@ function parseArgs(argv) {
     dryRun: false,
     howdyLevels: Array.from({ length: 10 }, (_, i) => i + 1),
     books: ['A', 'B', 'C'],
-    units: null
+    units: null,
+    supplementalManifest: null,
+    onlyManifested: false
   };
 
   for (let i = 0; i < argv.length; i++) {
@@ -27,6 +36,8 @@ function parseArgs(argv) {
     else if (arg === '--howdy') args.howdyLevels = parseNumberList(argv[++i], 1, 10);
     else if (arg === '--books') args.books = parseBookList(argv[++i]);
     else if (arg === '--units') args.units = parseNumberList(argv[++i], 1, 10);
+    else if (arg === '--supplemental-manifest') args.supplementalManifest = path.resolve(argv[++i]);
+    else if (arg === '--only-manifested') args.onlyManifested = true;
     else if (arg === '--help' || arg === '-h') args.help = true;
     else throw new Error(`Unknown argument: ${arg}`);
   }
@@ -77,6 +88,11 @@ function bookFolder(bookType) {
   return `WB${bookType}`;
 }
 
+function pagesPerAssignment(level, bookType) {
+  if (level === 10 && bookType === 'C') return 4;
+  return 3;
+}
+
 async function listFiles(dir) {
   try {
     const entries = await fs.readdir(dir, { withFileTypes: true });
@@ -85,6 +101,18 @@ async function listFiles(dir) {
     if (err.code === 'ENOENT') return [];
     throw err;
   }
+}
+
+async function loadSupplementalManifest(manifestPath) {
+  if (!manifestPath) return new Map();
+  const raw = await fs.readFile(manifestPath, 'utf8');
+  const rows = JSON.parse(raw);
+  const map = new Map();
+  for (const row of rows) {
+    const key = `${row.howdy_level}-${row.unit}-${String(row.book_type || '').toUpperCase()}`;
+    map.set(key, String(row.supplemental_notes || '').trim());
+  }
+  return map;
 }
 
 async function buildAkMap(dir) {
@@ -180,7 +208,7 @@ async function loadAudioFiles(audioDir, prefix) {
   return audioFiles;
 }
 
-async function buildAssignmentPayload(level, bookType, unit) {
+async function buildAssignmentPayload(level, bookType, unit, supplementalNotes = '') {
   const baseDir = path.join(WBS_DIR, `Howdy ${level}`);
   const blankDir = path.join(baseDir, bookFolder(bookType));
   const akDir = path.join(baseDir, 'AK', bookFolder(bookType));
@@ -214,8 +242,9 @@ async function buildAssignmentPayload(level, bookType, unit) {
     audioPrefix = `H${level}_B_RW2_`;
   } else {
     const pagePrefix = `H${level}_${bookType}_U${assignmentUnit}`;
-    blankPaths = [1, 2, 3].map(page => path.join(blankDir, `${pagePrefix}-${page}.jpg`));
-    akPaths = [1, 2, 3].map(page => akMap.get(`${pagePrefix}-${page}_AK`));
+    const pageCount = pagesPerAssignment(level, bookType);
+    blankPaths = Array.from({ length: pageCount }, (_, index) => path.join(blankDir, `${pagePrefix}-${index + 1}.jpg`));
+    akPaths = Array.from({ length: pageCount }, (_, index) => akMap.get(`${pagePrefix}-${index + 1}_AK`));
     audioPrefix = `H${level}_${bookType}_U${assignmentUnit}_`;
   }
 
@@ -228,13 +257,18 @@ async function buildAssignmentPayload(level, bookType, unit) {
   for (let i = 0; i < blankPaths.length; i++) {
     const akPath = akPaths[i];
     const label = `page ${i + 1}`;
+    const allowBlankFallback = BLANK_AK_ALLOWED_KEYS.has(`${level}-${assignmentUnit}-${bookType}-${i + 1}`);
     if (!akPath) {
-      akIssues.push(`${label}: missing answer key file`);
+      if (!allowBlankFallback) {
+        akIssues.push(`${label}: missing answer key file`);
+      }
       resolvedAkPaths.push(blankPaths[i]);
       continue;
     }
     if (!(await isReadableImage(akPath))) {
-      akIssues.push(`${label}: unreadable answer key (${path.basename(akPath)})`);
+      if (!allowBlankFallback) {
+        akIssues.push(`${label}: unreadable answer key (${path.basename(akPath)})`);
+      }
       resolvedAkPaths.push(blankPaths[i]);
       continue;
     }
@@ -248,7 +282,9 @@ async function buildAssignmentPayload(level, bookType, unit) {
   ]);
 
   const hasAkFallback = akIssues.length > 0;
+  const cleanedSupplementalNotes = String(supplementalNotes || '').trim();
   const defaultRiskSummary = '這份作業已批次匯入，但尚未逐課完成高風險題設定；目前分數只視為暫定，需老師覆核後再正式採計。';
+  const guidedRiskSummary = '這份作業已預先套用高風險題型補充規則；系統分數仍先視為暫定，請老師覆核高風險題結果後再正式採計。';
   const blockedRiskSummary = `這份作業已批次匯入，但答案卷仍有缺漏或損壞：${akIssues.join('；')}。系統先封鎖這份作業，請補上正確 Answer Key 後再開放。`;
 
   return {
@@ -258,9 +294,11 @@ async function buildAssignmentPayload(level, bookType, unit) {
     assignment_image: assignmentBuffer.toString('base64'),
     answer_key_image: answerKeyBuffer.toString('base64'),
     audio_files: audioFiles,
-    supplemental_notes: '',
+    supplemental_notes: cleanedSupplementalNotes,
     grading_status: hasAkFallback ? 'blocked' : 'review_required',
-    risk_summary: hasAkFallback ? blockedRiskSummary : defaultRiskSummary
+    risk_summary: hasAkFallback
+      ? blockedRiskSummary
+      : (cleanedSupplementalNotes ? guidedRiskSummary : defaultRiskSummary)
   };
 }
 
@@ -307,6 +345,8 @@ Options:
   --howdy <list>             Levels to import, e.g. 1-10 or 1,2,5
   --books <list>             Books to import, e.g. A,B,C
   --units <list>             Units/reviews to import, e.g. 5 or 2,7,9,10
+  --supplemental-manifest    JSON manifest generated by generate-supplemental-manifest.js
+  --only-manifested          Import only assignments whose manifest entry has non-empty notes
   --overwrite-existing       Re-upload assignments that already exist
   --dry-run                  Validate and print what would be imported
 `);
@@ -314,6 +354,8 @@ Options:
   }
 
   const apiBase = normalizeApiBase(args.apiBase);
+  const manifestPath = args.supplementalManifest || (await fileExists(DEFAULT_SUPPLEMENTAL_MANIFEST) ? DEFAULT_SUPPLEMENTAL_MANIFEST : null);
+  const supplementalManifest = await loadSupplementalManifest(manifestPath);
   const existing = await fetchExistingAssignments(apiBase);
   const queue = [];
 
@@ -322,11 +364,15 @@ Options:
       for (const unit of expectedUnitsForBook(bookType)) {
         if (args.units && !args.units.includes(unit)) continue;
         const key = `${level}-${unit}-${bookType}`;
+        const supplementalNotes = String(supplementalManifest.get(key) || '').trim();
+        if (args.onlyManifested && !supplementalNotes) {
+          continue;
+        }
         if (existing.has(key) && !args.overwriteExisting) {
           queue.push({ key, action: 'skip-existing' });
           continue;
         }
-        queue.push({ key, action: 'import', level, bookType, unit });
+        queue.push({ key, action: 'import', level, bookType, unit, supplementalNotes });
       }
     }
   }
@@ -342,11 +388,12 @@ Options:
 
     const label = `Howdy ${item.level} / ${item.bookType} / unit ${item.unit}`;
     try {
-      const payload = await buildAssignmentPayload(item.level, item.bookType, item.unit);
+      const payload = await buildAssignmentPayload(item.level, item.bookType, item.unit, item.supplementalNotes);
       if (payload.grading_status === 'blocked') {
         console.log(`[prepare-blocked] ${label} | placeholder AK | audio ${payload.audio_files.length}`);
       } else {
-        console.log(`[prepare] ${label} | pages ok | audio ${payload.audio_files.length}`);
+        const noteSuffix = payload.supplemental_notes ? ' | notes yes' : ' | notes no';
+        console.log(`[prepare] ${label} | pages ok | audio ${payload.audio_files.length}${noteSuffix}`);
       }
       if (!args.dryRun) {
         await fetchJson(`${apiBase}/api/assignments`, {

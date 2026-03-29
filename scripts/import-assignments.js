@@ -15,7 +15,8 @@ function parseArgs(argv) {
     overwriteExisting: false,
     dryRun: false,
     howdyLevels: Array.from({ length: 10 }, (_, i) => i + 1),
-    books: ['A', 'B', 'C']
+    books: ['A', 'B', 'C'],
+    units: null
   };
 
   for (let i = 0; i < argv.length; i++) {
@@ -25,6 +26,7 @@ function parseArgs(argv) {
     else if (arg === '--dry-run') args.dryRun = true;
     else if (arg === '--howdy') args.howdyLevels = parseNumberList(argv[++i], 1, 10);
     else if (arg === '--books') args.books = parseBookList(argv[++i]);
+    else if (arg === '--units') args.units = parseNumberList(argv[++i], 1, 10);
     else if (arg === '--help' || arg === '-h') args.help = true;
     else throw new Error(`Unknown argument: ${arg}`);
   }
@@ -304,6 +306,7 @@ Options:
   --api-base <url>           API base URL (default: ${DEFAULT_API_BASE})
   --howdy <list>             Levels to import, e.g. 1-10 or 1,2,5
   --books <list>             Books to import, e.g. A,B,C
+  --units <list>             Units/reviews to import, e.g. 5 or 2,7,9,10
   --overwrite-existing       Re-upload assignments that already exist
   --dry-run                  Validate and print what would be imported
 `);
@@ -317,6 +320,7 @@ Options:
   for (const level of args.howdyLevels) {
     for (const bookType of args.books) {
       for (const unit of expectedUnitsForBook(bookType)) {
+        if (args.units && !args.units.includes(unit)) continue;
         const key = `${level}-${unit}-${bookType}`;
         if (existing.has(key) && !args.overwriteExisting) {
           queue.push({ key, action: 'skip-existing' });

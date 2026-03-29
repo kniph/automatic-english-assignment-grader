@@ -40,6 +40,8 @@ Essential project configuration, constants, and quick reference information.
 | `answer_key_image` | TEXT | Base64 JPEG of answer key (never sent to student) |
 | `audio_files` | JSONB | `[{name, label, data (base64 mp3)}]` |
 | `supplemental_notes` | TEXT | Optional teacher-entered grading notes for hard question types (`matching`, `skip`, `written_only`, etc.) |
+| `grading_status` | VARCHAR(20) | `ready`, `review_required`, or `blocked` |
+| `risk_summary` | TEXT | Teacher-facing / student-facing note explaining why manual review is needed |
 | `created_at` | TIMESTAMP | |
 
 **Unique constraint**: `(howdy_level, unit, book_type)` — UPSERT on duplicate
@@ -62,6 +64,8 @@ Essential project configuration, constants, and quick reference information.
 | `total_score` | INTEGER | |
 | `total_possible` | INTEGER | |
 | `percentage` | INTEGER | |
+| `score_status` | VARCHAR(20) | `official` or `provisional` |
+| `review_summary` | TEXT | Warning shown when the score is provisional |
 | `graded_at` | TIMESTAMP | |
 
 ### `answer_keys` (v1 — legacy, kept for backward compatibility)
@@ -94,12 +98,12 @@ Essential project configuration, constants, and quick reference information.
 ## API Endpoints
 
 ### Student Workflow (v2)
-- `GET  /api/assignments/available` — list all (howdy, unit, book) combinations that have been uploaded
-- `GET  /api/assignments?howdy=&unit=&book=` — filter assignments (no images/audio, metadata only; includes `has_supplemental_notes`)
-- `GET  /api/assignments/:id` — get assignment with workbook image + audio (NO answer key)
-- `POST /api/assignments` — create/upsert assignment (teacher only; accepts optional `supplemental_notes`)
+- `GET  /api/assignments/available` — list all non-blocked (howdy, unit, book) combinations available to students
+- `GET  /api/assignments?howdy=&unit=&book=` — filter assignments (no images/audio, metadata only; includes `has_supplemental_notes`, `grading_status`, `risk_summary`)
+- `GET  /api/assignments/:id` — get assignment with workbook image + audio (NO answer key); blocked assignments return 403
+- `POST /api/assignments` — create/upsert assignment (teacher only; accepts optional `supplemental_notes`, `grading_status`, `risk_summary`)
 - `DELETE /api/assignments/:id`
-- `POST /api/submissions` — student submits merged drawing → Claude grades → returns results
+- `POST /api/submissions` — student submits merged drawing → Claude grades → returns results with `score_status` / `review_summary`
 - `GET  /api/submissions?assignment_id=X` — list submissions for teacher view
 - `GET  /api/submissions/:id` — get single submission with answers
 
@@ -262,6 +266,134 @@ Analysed by reviewing NH1 WB A (U1–U8, Review 1) and NH1 WB B (U1–U8, Review
 | Match and unscramble | Written unscrambled word | Matching line |
 | Circle and write, then color | Written word | Circle in jumble + coloring |
 | Complete the words and draw | Missing letters filled in | Drawing the shape |
+
+---
+
+## 2026-03-30 Import Readiness Snapshot (Howdy 1-10)
+
+Dataset rechecked after batch downloading and normalization.
+
+### Asset Completeness
+
+| Asset Type | Scope | Count | Status |
+|---|---|---:|---|
+| Workbook A blank pages | Howdy 1-10 | 260 | Complete |
+| Workbook B blank pages | Howdy 1-10 | 260 | Complete |
+| Workbook C blank pages | Howdy 1-10 | 240 | Complete |
+| Workbook A answer keys | Howdy 1-10 | 260 | Complete |
+| Workbook B answer keys | Howdy 1-10 | 260 | Complete |
+| Workbook C answer keys | Howdy 1-10 | 240 | Complete |
+| Workbook A audio | Howdy 1-10 | 143 | Complete for the series' real audio pattern |
+| Workbook B audio | Howdy 1-10 | 176 | Complete for the series' real audio pattern |
+| Workbook C audio | Howdy 1-10 | 0 | Expected; WB C has no listening activities |
+
+### Import Readiness
+
+- `Howdy 1-10 / WBA-WBC` blank pages: ready to import
+- `Howdy 1-10 / WBA-WBC` answer keys: ready to import
+- `Howdy 1-10 / WBA-WBB` audio: ready to import
+- `Howdy 1-10 / WBC` audio: not applicable by design
+
+### Series-Wide AI Grading Risk Tiers
+
+These tiers are based on:
+- full question-type review of Howdy 1 WB A/B
+- representative sampling from Howdy 5, 8, and 10 across WB A/B/C
+- observed recurring task patterns across the series
+
+#### 🟢 No-Risk
+
+Use normal import flow. These rely mostly on OCR + text comparison and require little or no spatial reasoning.
+
+- Fill in the blanks from a word bank
+- Complete missing letters in a word
+- Unscramble words or sentences and write the answer
+- Choose the correct word form from brackets and write it
+- Rewrite a sentence in a fixed target form
+- Short fixed-answer written responses where the expected wording is explicit in the answer key
+- Dialogue completion when students write text into dedicated blanks
+
+#### 🟡 Low-Risk
+
+Usually safe to auto-grade, but still worth spot-checking after first import of a new series/book.
+
+- True/False with a clear mark and a fixed correction sentence
+- Single-choice text options marked by circling or checking
+- Numbering tasks where students write `1-6` or similar in boxes or blanks
+- Read-and-answer items where the answer is copied or lightly transformed from the passage
+- Simple decode tasks when grading only the written decoded answer
+- Listen-and-write sections with short word or phrase answers
+
+#### 🟠 Medium-Risk
+
+Importable, but these should be watched more closely. They depend on image interpretation, spatial position, or allow more answer variation.
+
+- Circle the correct picture
+- Check the correct picture in a pair or row
+- Count objects in a scene and write the number
+- Checkbox tasks inside a grid or table
+- Order/number speech bubbles or picture panels
+- Mixed tasks such as `listen and check`, `read and circle`, then write
+- Reading short-answer questions where multiple acceptable phrasings are likely
+- Sentence rewriting tasks where the student's wording may be correct but not identical to the answer key
+
+#### 🔴 High-Risk
+
+Do not rely on image-only grading. These need `supplemental_notes`, `written_only`, or `skip`.
+
+- Matching by drawing lines
+- Any combined `circle + match` or `listen + match` section
+- Crossword or puzzle grids
+- Hidden-word / word-search circling
+- Tasks that require tracing lines, arrows, or paths through a complex image
+- Any section where correctness depends mainly on where a student drew or circled, rather than what they wrote
+
+### Recommended Import Policy
+
+- Import no-risk and low-risk sections normally
+- Import medium-risk sections, but plan for smoke tests and per-book spot checks
+- Pre-mark high-risk sections with:
+  - `matching` plus teacher-entered text pairs
+  - `written_only`
+  - `skip`
+
+### Non-Scoring Activity Types
+
+These are not "no-risk"; they should usually be excluded from scoring entirely.
+
+- Draw / guess and draw
+- Read and color / write and color
+- Dot-to-dot / connect the dots
+- Maze / path-finding
+- Any free drawing or coloring extension activity
+
+---
+
+## Batch Import Tool
+
+- Command: `npm run import:assignments`
+- Script: `scripts/import-assignments.js`
+- Source of truth: local `WBs/Howdy N/` folders
+- Transport: assignment API upload, not direct DB writes
+- Default behavior:
+  - import `Howdy 1-10`, books `A/B/C`
+  - skip existing `(howdy_level, unit, book_type)` rows
+  - mark newly imported assignments as `review_required`
+- Special fallback:
+  - if an answer-key image is missing or unreadable, the importer substitutes the blank page only as a placeholder image
+  - the assignment is then marked `blocked` with a precise `risk_summary`
+  - this keeps the dataset structurally complete without silently exposing broken grading data
+
+### 2026-03-30 Import Snapshot
+
+- Production assignment count after batch import: `260`
+- Imported in this run: `259`
+- Skipped existing: `1`
+- Placeholder `blocked` assignments expected from the importer:
+  - `Howdy 6 / Unit 5 / B`
+  - `Howdy 7 / Unit 2 / B`
+  - `Howdy 8 / Unit 7 / A`
+  - `Howdy 10 / Unit 7 / B`
 
 ---
 

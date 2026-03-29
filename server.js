@@ -12,6 +12,8 @@ const Anthropic = require('@anthropic-ai/sdk');
 const app = express();
 const PORT = process.env.PORT || 3000;
 const GRADING_REFERENCE_DIR = path.join(__dirname, 'data', 'grading_references');
+const ASSIGNMENT_GRADING_STATUSES = new Set(['ready', 'review_required', 'blocked']);
+const SUBMISSION_SCORE_STATUSES = new Set(['official', 'provisional']);
 
 // --- Middleware ---
 app.use(cors());
@@ -69,6 +71,8 @@ async function initDB() {
         answer_key_image TEXT NOT NULL,
         audio_files JSONB DEFAULT '[]',
         supplemental_notes TEXT DEFAULT '',
+        grading_status VARCHAR(20) DEFAULT 'review_required',
+        risk_summary TEXT DEFAULT '',
         created_at TIMESTAMP DEFAULT NOW(),
         UNIQUE(howdy_level, unit, book_type)
       );
@@ -80,6 +84,22 @@ async function initDB() {
     `).catch(() => {/* ignore if already updated */});
     await client.query(`ALTER TABLE assignments ADD COLUMN IF NOT EXISTS supplemental_notes TEXT DEFAULT ''`).catch(() => {});
     await client.query(`UPDATE assignments SET supplemental_notes = '' WHERE supplemental_notes IS NULL`).catch(() => {});
+    await client.query(`ALTER TABLE assignments ADD COLUMN IF NOT EXISTS grading_status VARCHAR(20) DEFAULT 'review_required'`).catch(() => {});
+    await client.query(`ALTER TABLE assignments ADD COLUMN IF NOT EXISTS risk_summary TEXT DEFAULT ''`).catch(() => {});
+    await client.query(`UPDATE assignments SET risk_summary = '' WHERE risk_summary IS NULL`).catch(() => {});
+    await client.query(`
+      ALTER TABLE assignments DROP CONSTRAINT IF EXISTS assignments_grading_status_check;
+      ALTER TABLE assignments ADD CONSTRAINT assignments_grading_status_check
+      CHECK (grading_status IN ('ready', 'review_required', 'blocked'));
+    `).catch(() => {/* ignore if already updated */});
+    await client.query(`
+      UPDATE assignments
+      SET grading_status = CASE
+        WHEN COALESCE(BTRIM(supplemental_notes), '') <> '' THEN 'ready'
+        ELSE 'review_required'
+      END
+      WHERE grading_status IS NULL OR BTRIM(grading_status) = '';
+    `).catch(() => {});
     await client.query(`
       CREATE TABLE IF NOT EXISTS student_submissions (
         id SERIAL PRIMARY KEY,
@@ -90,9 +110,24 @@ async function initDB() {
         total_score INTEGER,
         total_possible INTEGER,
         percentage INTEGER,
+        score_status VARCHAR(20) DEFAULT 'official',
+        review_summary TEXT DEFAULT '',
         graded_at TIMESTAMP DEFAULT NOW()
       );
     `);
+    await client.query(`ALTER TABLE student_submissions ADD COLUMN IF NOT EXISTS score_status VARCHAR(20) DEFAULT 'official'`).catch(() => {});
+    await client.query(`ALTER TABLE student_submissions ADD COLUMN IF NOT EXISTS review_summary TEXT DEFAULT ''`).catch(() => {});
+    await client.query(`UPDATE student_submissions SET review_summary = '' WHERE review_summary IS NULL`).catch(() => {});
+    await client.query(`
+      ALTER TABLE student_submissions DROP CONSTRAINT IF EXISTS student_submissions_score_status_check;
+      ALTER TABLE student_submissions ADD CONSTRAINT student_submissions_score_status_check
+      CHECK (score_status IN ('official', 'provisional'));
+    `).catch(() => {/* ignore if already updated */});
+    await client.query(`
+      UPDATE student_submissions
+      SET score_status = 'official'
+      WHERE score_status IS NULL OR BTRIM(score_status) = '';
+    `).catch(() => {});
 
     // Migrations (idempotent)
     await client.query(`ALTER TABLE answer_keys ALTER COLUMN image_width SET DEFAULT 0`).catch(() => {});
@@ -784,6 +819,24 @@ app.get('/api/results/:answerKeyId/export', async (req, res) => {
 // Assignments API (student workflow)
 // ============================================================
 
+function normalizeAssignmentGradingStatus(value, supplementalNotes = '') {
+  const raw = String(value || '').trim().toLowerCase();
+  if (ASSIGNMENT_GRADING_STATUSES.has(raw)) return raw;
+  return String(supplementalNotes || '').trim() ? 'ready' : 'review_required';
+}
+
+function buildReviewSummary(status, riskSummary = '') {
+  const trimmed = String(riskSummary || '').trim();
+  if (trimmed) return trimmed;
+  if (status === 'review_required') {
+    return '這份作業含高風險題型，批改結果屬暫定分數，需老師人工覆核後再採計。';
+  }
+  if (status === 'blocked') {
+    return '這份作業尚未完成高風險題設定，暫不開放學生作答。';
+  }
+  return '';
+}
+
 // List available assignments (no images/audio, just metadata)
 app.get('/api/assignments', async (req, res) => {
   try {
@@ -791,6 +844,8 @@ app.get('/api/assignments', async (req, res) => {
     let query = `SELECT id, howdy_level, unit, book_type,
                    jsonb_array_length(audio_files) AS audio_count,
                    (COALESCE(BTRIM(supplemental_notes), '') <> '') AS has_supplemental_notes,
+                   grading_status,
+                   risk_summary,
                    created_at
                  FROM assignments`;
     const params = [];
@@ -811,7 +866,10 @@ app.get('/api/assignments', async (req, res) => {
 app.get('/api/assignments/available', async (req, res) => {
   try {
     const result = await pool.query(
-      'SELECT howdy_level, unit, book_type FROM assignments ORDER BY howdy_level, unit, book_type'
+      `SELECT id, howdy_level, unit, book_type, grading_status, risk_summary
+       FROM assignments
+       WHERE grading_status <> 'blocked'
+       ORDER BY howdy_level, unit, book_type`
     );
     res.json(result.rows);
   } catch (err) {
@@ -825,6 +883,9 @@ app.get('/api/assignments/:id', async (req, res) => {
     const result = await pool.query('SELECT * FROM assignments WHERE id = $1', [req.params.id]);
     if (result.rows.length === 0) return res.status(404).json({ error: 'Assignment not found' });
     const row = result.rows[0];
+    if (row.grading_status === 'blocked') {
+      return res.status(403).json({ error: buildReviewSummary('blocked', row.risk_summary) });
+    }
     // Return assignment_image and audio, but NOT answer_key_image (don't expose to student)
     res.json({
       id: row.id,
@@ -833,6 +894,8 @@ app.get('/api/assignments/:id', async (req, res) => {
       book_type: row.book_type,
       assignment_image: row.assignment_image,
       audio_files: row.audio_files,
+      grading_status: row.grading_status,
+      risk_summary: buildReviewSummary(row.grading_status, row.risk_summary),
       created_at: row.created_at
     });
   } catch (err) {
@@ -851,7 +914,9 @@ app.post('/api/assignments', async (req, res) => {
       assignment_image,
       answer_key_image,
       audio_files = [],
-      supplemental_notes = ''
+      supplemental_notes = '',
+      grading_status = '',
+      risk_summary = ''
     } = req.body;
     if (!howdy_level || !unit || !book_type || !assignment_image || !answer_key_image) {
       return res.status(400).json({ error: 'Missing required fields' });
@@ -871,17 +936,21 @@ app.post('/api/assignments', async (req, res) => {
       compressImg(answer_key_image)
     ]);
     const cleanedSupplementalNotes = String(supplemental_notes || '').trim();
+    const normalizedGradingStatus = normalizeAssignmentGradingStatus(grading_status, cleanedSupplementalNotes);
+    const cleanedRiskSummary = String(risk_summary || '').trim();
 
     const result = await pool.query(`
-      INSERT INTO assignments (howdy_level, unit, book_type, assignment_image, answer_key_image, audio_files, supplemental_notes)
-      VALUES ($1, $2, $3, $4, $5, $6, $7)
+      INSERT INTO assignments (howdy_level, unit, book_type, assignment_image, answer_key_image, audio_files, supplemental_notes, grading_status, risk_summary)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
       ON CONFLICT (howdy_level, unit, book_type) DO UPDATE SET
         assignment_image = EXCLUDED.assignment_image,
         answer_key_image = EXCLUDED.answer_key_image,
         audio_files = EXCLUDED.audio_files,
         supplemental_notes = EXCLUDED.supplemental_notes,
+        grading_status = EXCLUDED.grading_status,
+        risk_summary = EXCLUDED.risk_summary,
         created_at = NOW()
-      RETURNING id, howdy_level, unit, book_type, created_at`,
+      RETURNING id, howdy_level, unit, book_type, grading_status, risk_summary, created_at`,
       [
         parseInt(howdy_level),
         parseInt(unit),
@@ -889,7 +958,9 @@ app.post('/api/assignments', async (req, res) => {
         storedAssign,
         storedAnswer,
         JSON.stringify(audio_files),
-        cleanedSupplementalNotes
+        cleanedSupplementalNotes,
+        normalizedGradingStatus,
+        cleanedRiskSummary
       ]
     );
     res.status(201).json(result.rows[0]);
@@ -924,6 +995,9 @@ app.post('/api/submissions', async (req, res) => {
     const asgResult = await pool.query('SELECT * FROM assignments WHERE id=$1', [assignment_id]);
     if (asgResult.rows.length === 0) return res.status(404).json({ error: 'Assignment not found' });
     const asg = asgResult.rows[0];
+    if (asg.grading_status === 'blocked') {
+      return res.status(403).json({ error: buildReviewSummary('blocked', asg.risk_summary) });
+    }
 
     // Compress submission image (width-only limit to preserve multi-page height)
     const submBuf = Buffer.from(submission_image, 'base64');
@@ -957,13 +1031,15 @@ app.post('/api/submissions', async (req, res) => {
     const totalScore = answers.filter(a => a.correct).length;
     const totalPossible = claudeResult.total_possible;
     const percentage = totalPossible > 0 ? Math.round((totalScore / totalPossible) * 100) : 0;
+    const scoreStatus = asg.grading_status === 'review_required' ? 'provisional' : 'official';
+    const reviewSummary = buildReviewSummary(asg.grading_status, asg.risk_summary);
 
     const saveResult = await pool.query(`
       INSERT INTO student_submissions
-        (assignment_id, student_name, submission_image, answers, total_score, total_possible, percentage)
-      VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id, graded_at`,
+        (assignment_id, student_name, submission_image, answers, total_score, total_possible, percentage, score_status, review_summary)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id, graded_at`,
       [assignment_id, student_name || null, submJpeg, JSON.stringify(answers),
-       totalScore, totalPossible, percentage]
+       totalScore, totalPossible, percentage, scoreStatus, reviewSummary]
     );
 
     res.json({
@@ -973,7 +1049,9 @@ app.post('/api/submissions', async (req, res) => {
       answers,
       total_score: totalScore,
       total_possible: totalPossible,
-      percentage
+      percentage,
+      score_status: scoreStatus,
+      review_summary: reviewSummary
     });
   } catch (err) {
     console.error('Submission error:', err);
@@ -987,7 +1065,7 @@ app.get('/api/submissions', async (req, res) => {
     const { assignment_id } = req.query;
     if (!assignment_id) return res.status(400).json({ error: 'Missing assignment_id' });
     const result = await pool.query(`
-      SELECT id, student_name, total_score, total_possible, percentage, graded_at
+      SELECT id, student_name, total_score, total_possible, percentage, score_status, review_summary, graded_at
       FROM student_submissions WHERE assignment_id=$1 ORDER BY graded_at DESC`,
       [assignment_id]
     );

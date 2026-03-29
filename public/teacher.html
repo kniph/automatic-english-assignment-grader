@@ -57,6 +57,11 @@
       font-family: "SFMono-Regular", Menlo, Consolas, monospace;
       font-size: 0.78rem; color: #333;
     }
+    .status-help {
+      margin-top: 0.55rem; padding: 0.75rem 0.85rem;
+      border-radius: 10px; background: #fff8e1; border: 1px solid #ffe08a;
+      font-size: 0.8rem; color: #6b5900;
+    }
 
     /* Assignment table */
     .asg-table { width: 100%; border-collapse: collapse; }
@@ -75,6 +80,14 @@
       display: inline-block; background: #e6f4ea; color: #137333; border-radius: 4px;
       padding: 0.1rem 0.4rem; font-size: 0.75rem;
     }
+    .status-badge {
+      display: inline-block; border-radius: 4px;
+      padding: 0.1rem 0.45rem; font-size: 0.75rem; font-weight: 700;
+    }
+    .status-ready { background: #e6f4ea; color: #137333; }
+    .status-review { background: #fff4e5; color: #b06000; }
+    .status-blocked { background: #fdecea; color: #b3261e; }
+    .risk-text { color: #777; font-size: 0.78rem; max-width: 260px; }
 
     /* Tabs */
     .tabs { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
@@ -195,6 +208,23 @@ crossword
 Ignore the circled hidden word. Grade only the written answers.
 1. yellow
 2. red</pre>
+          </div>
+        </div>
+
+        <!-- Step E: Grading status -->
+        <div style="margin-top:1rem;">
+          <label for="gradingStatus" style="font-weight:700; margin-bottom:0.4rem; display:block;">🚦 批改狀態</label>
+          <select id="gradingStatus">
+            <option value="review_required">暫定分數，需老師覆核（建議預設）</option>
+            <option value="ready">可正式採計</option>
+            <option value="blocked">先不上線給學生作答</option>
+          </select>
+          <textarea id="riskSummary" class="note-box" style="min-height:110px;" placeholder="選填。可寫：Section C matching 需人工覆核；Section E crossword 已 skip，不列入分數。"></textarea>
+          <div class="status-help">
+            建議規則：
+            <br>`可正式採計`：高風險題都已用 `matching` / `written_only` / `skip` 處理完
+            <br>`暫定分數，需老師覆核`：允許學生作答，但結果只能當參考，不能直接採計
+            <br>`先不上線`：高風險題還沒處理好，學生端看不到這份作業
           </div>
         </div>
 
@@ -374,6 +404,13 @@ Ignore the circled hidden word. Grade only the written answers.
       if (!howdy || !unit || !book) { showToast('請先選擇冊、Unit 和習作本', 'error'); return; }
       if (!assignBase64) { showToast('請上傳空白習作頁圖片', 'error'); return; }
       if (!answerBase64) { showToast('請上傳答案卷圖片', 'error'); return; }
+      const supplementalNotes = document.getElementById('supplementalNotes').value.trim();
+      const gradingStatus = document.getElementById('gradingStatus').value;
+      const riskSummary = document.getElementById('riskSummary').value.trim();
+      if (gradingStatus === 'ready' && !supplementalNotes) {
+        const ok = confirm('你將這份作業標成「可正式採計」，但尚未填補充判題規則。若這份作業含高風險題型，分數可能不可靠。確定仍要儲存嗎？');
+        if (!ok) return;
+      }
 
       const btn = document.getElementById('saveBtn');
       btn.disabled = true; btn.textContent = '儲存中…';
@@ -386,7 +423,9 @@ Ignore the circled hidden word. Grade only the written answers.
             assignment_image: assignBase64,
             answer_key_image: answerBase64,
             audio_files: audioFiles,
-            supplemental_notes: document.getElementById('supplementalNotes').value.trim()
+            supplemental_notes: supplementalNotes,
+            grading_status: gradingStatus,
+            risk_summary: riskSummary
           }
         });
         showToast(`✅ Howdy ${howdy} Unit ${unit} ${book}本 已儲存！`);
@@ -405,6 +444,8 @@ Ignore the circled hidden word. Grade only the written answers.
         document.getElementById('selUnit').value = '';
         document.getElementById('selBook').value = '';
         document.getElementById('supplementalNotes').value = '';
+        document.getElementById('gradingStatus').value = 'review_required';
+        document.getElementById('riskSummary').value = '';
       } catch(err) {
         showToast('儲存失敗：' + err.message, 'error');
       } finally {
@@ -424,7 +465,7 @@ Ignore the circled hidden word. Grade only the written answers.
         wrap.innerHTML = `
           <table class="asg-table">
             <thead>
-              <tr><th>Howdy</th><th>Unit</th><th>習作本</th><th>音檔</th><th>補充規則</th><th>上傳時間</th><th></th></tr>
+              <tr><th>Howdy</th><th>Unit</th><th>習作本</th><th>批改狀態</th><th>音檔</th><th>補充規則</th><th>覆核說明</th><th>上傳時間</th><th></th></tr>
             </thead>
             <tbody>
               ${list.map(a => `
@@ -432,12 +473,14 @@ Ignore the circled hidden word. Grade only the written answers.
                   <td>Howdy ${a.howdy_level}</td>
                   <td>Unit ${a.unit}</td>
                   <td><span class="book-badge">${a.book_type} 本</span></td>
+                  <td>${renderGradingStatusBadge(a.grading_status)}</td>
                   <td>${parseInt(a.audio_count) > 0
                         ? `<span class="audio-badge">🎵 ${a.audio_count} 個</span>`
                         : '<span style="color:#ccc;">—</span>'}</td>
                   <td>${a.has_supplemental_notes
                         ? '<span class="note-badge">🧠 已設定</span>'
                         : '<span style="color:#ccc;">—</span>'}</td>
+                  <td><span class="risk-text">${escHtml(a.risk_summary || '—')}</span></td>
                   <td>${new Date(a.created_at).toLocaleDateString('zh-TW')}</td>
                   <td>
                     <button class="btn btn-sm btn-danger" onclick="deleteAssignment(${a.id}, ${a.howdy_level}, ${a.unit}, '${a.book_type}')">刪除</button>
@@ -459,6 +502,12 @@ Ignore the circled hidden word. Grade only the written answers.
       } catch(err) {
         showToast('刪除失敗：' + err.message, 'error');
       }
+    }
+
+    function renderGradingStatusBadge(status) {
+      if (status === 'ready') return '<span class="status-badge status-ready">正式採計</span>';
+      if (status === 'blocked') return '<span class="status-badge status-blocked">未開放</span>';
+      return '<span class="status-badge status-review">暫定需覆核</span>';
     }
 
     // ── Image helpers ──

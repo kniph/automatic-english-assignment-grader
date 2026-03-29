@@ -55,6 +55,17 @@
     }
     .audio-play-btn:active, .audio-play-btn.playing { background: rgba(255,255,255,0.3); }
     .audio-progress { color: rgba(255,255,255,0.75); font-size: 0.73rem; min-width: 2.8rem; white-space: nowrap; }
+    .risk-banner {
+      flex-shrink: 0;
+      background: #fff4e5;
+      color: #8a4b00;
+      border-bottom: 1px solid #ffd199;
+      padding: 0.55rem 0.75rem;
+      font-size: 0.82rem;
+      line-height: 1.45;
+    }
+    .risk-banner.hidden { display: none; }
+    .risk-banner strong { display: block; margin-bottom: 0.15rem; }
 
     /* ── Toolbar ── */
     .toolbar {
@@ -173,6 +184,17 @@
     .score-big { font-size: 3rem; font-weight: 900; color: #1a73e8; }
     .score-label { font-size: 0.85rem; color: #888; margin-top: 0.2rem; }
     .score-pct { font-size: 1.4rem; font-weight: 700; margin-top: 0.3rem; }
+    .result-warning {
+      background: #fff4e5;
+      color: #8a4b00;
+      border: 1px solid #ffd199;
+      border-radius: 12px;
+      padding: 0.8rem 0.9rem;
+      font-size: 0.86rem;
+      line-height: 1.5;
+      margin-bottom: 1rem;
+    }
+    .result-warning.hidden { display: none; }
     .answer-row {
       display: flex; align-items: center; gap: 0.5rem;
       padding: 0.45rem 0; border-bottom: 1px solid #f0f0f0;
@@ -219,6 +241,7 @@
         <div class="score-label" id="scoreLabel">得分 / 總分</div>
         <div class="score-pct" id="scorePct"></div>
       </div>
+      <div class="result-warning hidden" id="resultWarning"></div>
       <div id="answerList"></div>
       <div class="result-actions">
         <button class="result-btn result-btn-back" onclick="goBack()">← 返回首頁</button>
@@ -238,6 +261,11 @@
       <div class="small" id="topStudent"></div>
     </div>
     <div style="width:56px;"></div>
+  </div>
+
+  <div class="risk-banner hidden" id="riskBanner">
+    <strong>這份作業的批改結果是暫定分數</strong>
+    <span id="riskBannerText"></span>
   </div>
 
   <!-- Audio bar -->
@@ -306,11 +334,23 @@
       document.getElementById('topStudent').textContent = '👤 ' + studentName;
       try {
         const res = await fetch(`${API}/api/assignments/${assignmentId}`);
-        if (!res.ok) throw new Error('找不到習作 (id=' + assignmentId + ')');
+        if (!res.ok) {
+          let msg = '找不到習作 (id=' + assignmentId + ')';
+          try {
+            const err = await res.json();
+            if (err?.error) msg = err.error;
+          } catch (_) {}
+          throw new Error(msg);
+        }
         assignment = await res.json();
         const unitLabel = assignment.unit === 9 ? 'Review 1' : assignment.unit === 10 ? 'Review 2' : `Unit ${assignment.unit}`;
         document.getElementById('topInfo').textContent =
           `Howdy ${assignment.howdy_level}  ${unitLabel}  ${assignment.book_type} 本`;
+        if (assignment.grading_status === 'review_required') {
+          document.getElementById('riskBannerText').textContent =
+            assignment.risk_summary || '這份作業含高風險題型，分數需要老師人工覆核後才算正式。';
+          document.getElementById('riskBanner').classList.remove('hidden');
+        }
 
         // Load workbook background image
         await loadBackground(assignment.assignment_image);
@@ -642,14 +682,25 @@
     // Results
     // ──────────────────────────────────────────────
     function showResults(result) {
+      const provisional = result.score_status === 'provisional';
       const pct = result.percentage;
-      const pctColor = pct >= 80 ? '#28a745' : pct >= 60 ? '#fd7e14' : '#dc3545';
+      const pctColor = provisional ? '#b06000' : (pct >= 80 ? '#28a745' : pct >= 60 ? '#fd7e14' : '#dc3545');
 
       document.getElementById('scoreBig').textContent = `${result.total_score} / ${result.total_possible}`;
-      document.getElementById('scoreLabel').textContent = `得分 / 總分  ·  ${studentName}`;
+      document.getElementById('scoreLabel').textContent = provisional
+        ? `暫定分數 / 需老師覆核  ·  ${studentName}`
+        : `得分 / 總分  ·  ${studentName}`;
       const pctEl = document.getElementById('scorePct');
-      pctEl.textContent = pct + '%';
+      pctEl.textContent = provisional ? `${pct}%（暫定）` : pct + '%';
       pctEl.style.color = pctColor;
+      const warning = document.getElementById('resultWarning');
+      if (provisional) {
+        warning.textContent = result.review_summary || '這份作業含高風險題型，這次批改結果只能當參考，老師覆核後才算正式成績。';
+        warning.classList.remove('hidden');
+      } else {
+        warning.textContent = '';
+        warning.classList.add('hidden');
+      }
 
       // Per-question breakdown
       const list = document.getElementById('answerList');
@@ -675,6 +726,7 @@
     function redoAssignment() {
       document.getElementById('resultsOverlay').classList.add('hidden');
       document.getElementById('submitBtn').disabled = false;
+      document.getElementById('resultWarning').classList.add('hidden');
       // Clear drawing
       drawCtx.clearRect(0, 0, drawCanvas.width, drawCanvas.height);
       history = [];

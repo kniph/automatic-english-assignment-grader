@@ -102,6 +102,16 @@
     .go-btn:active { transform: scale(0.98); background: #2d9144; }
     .go-btn:disabled { background: #aaa; box-shadow: none; cursor: not-allowed; }
     .go-btn.hidden { display: none; }
+    .warn-card {
+      width: 100%; max-width: 580px;
+      background: #fff4e5; color: #8a4b00;
+      border: 1px solid #ffd199; border-radius: 14px;
+      padding: 0.9rem 1rem; margin-top: 0.75rem;
+      font-size: 0.86rem; line-height: 1.5;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.12);
+    }
+    .warn-card.hidden { display: none; }
+    .warn-title { font-weight: 800; margin-bottom: 0.2rem; }
     /* Error */
     .err { color: #dc3545; font-size: 0.8rem; margin-top: 0.4rem; text-align: center; }
     .err.hidden { display: none; }
@@ -166,6 +176,10 @@
 
   <!-- Start button -->
   <button class="go-btn hidden" id="goBtn" onclick="startAssignment()">開始寫作業 ✏️</button>
+  <div class="warn-card hidden" id="riskNotice">
+    <div class="warn-title">這份作業會顯示暫定分數</div>
+    <div id="riskNoticeText"></div>
+  </div>
 
   <script>
     const API = window.location.origin;
@@ -225,6 +239,7 @@
       showStep('stepUnit');
       document.getElementById('stepBook').classList.add('hidden');
       document.getElementById('goBtn').classList.add('hidden');
+      document.getElementById('riskNotice').classList.add('hidden');
       updateSummary();
     }
 
@@ -256,6 +271,7 @@
       updateBookGrid(selectedHowdy, u);
       showStep('stepBook');
       document.getElementById('goBtn').classList.add('hidden');
+      document.getElementById('riskNotice').classList.add('hidden');
       updateSummary();
     }
 
@@ -274,8 +290,31 @@
       document.querySelectorAll('.book-btn').forEach(b =>
         b.classList.toggle('selected', b.dataset.book === bk));
       document.getElementById('goBtn').classList.remove('hidden');
+      updateRiskNotice();
       updateSummary();
       setTimeout(() => document.getElementById('goBtn').scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 80);
+    }
+
+    function getSelectedAssignmentMeta() {
+      if (!selectedHowdy || !selectedUnit || !selectedBook) return null;
+      return available.find(a =>
+        a.howdy_level === selectedHowdy &&
+        a.unit === selectedUnit &&
+        a.book_type === selectedBook
+      ) || null;
+    }
+
+    function updateRiskNotice() {
+      const meta = getSelectedAssignmentMeta();
+      const card = document.getElementById('riskNotice');
+      const text = document.getElementById('riskNoticeText');
+      if (!meta || meta.grading_status !== 'review_required') {
+        card.classList.add('hidden');
+        text.textContent = '';
+        return;
+      }
+      text.textContent = meta.risk_summary || '這份作業含高風險題型，系統顯示的會是暫定分數，老師覆核後才算正式成績。';
+      card.classList.remove('hidden');
     }
 
     // Summary
@@ -307,8 +346,21 @@
           alert('找不到這份習作，請通知老師上傳教材。');
           return;
         }
+        const asg = list[0];
+        if (asg.grading_status === 'blocked') {
+          document.getElementById('loadingOverlay').classList.add('hidden');
+          alert(asg.risk_summary || '這份作業尚未開放作答，請先通知老師。');
+          return;
+        }
+        if (asg.grading_status === 'review_required') {
+          const ok = confirm((asg.risk_summary || '這份作業含高風險題型，系統顯示的會是暫定分數，需老師覆核。') + '\n\n要繼續開始作答嗎？');
+          if (!ok) {
+            document.getElementById('loadingOverlay').classList.add('hidden');
+            return;
+          }
+        }
         sessionStorage.setItem('student_name', name);
-        window.location.href = `assignment.html?id=${list[0].id}&name=${encodeURIComponent(name)}`;
+        window.location.href = `assignment.html?id=${asg.id}&name=${encodeURIComponent(name)}`;
       } catch(err) {
         document.getElementById('loadingOverlay').classList.add('hidden');
         alert('連線失敗：' + err.message);

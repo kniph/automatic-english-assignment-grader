@@ -287,6 +287,102 @@ Reviewed all pages of NH1 WB A (U1–U8 + Review 1) and NH1 WB B (U1–U8, first
 
 ---
 
+## 2026-03-30 - Howdy 1-10 Dataset Completeness Check and Risk Tiers
+
+**Work Done**:
+- Rechecked the full `WBs/` dataset after batch download and normalization
+- Confirmed `Howdy 1-10` blanks and answer keys are complete for WB A, WB B, and WB C
+- Confirmed WB C has no audio by design
+- Normalized and completed `Howdy 1` audio into standard `Audio/WBA` and `Audio/WBB` folders
+- Reviewed representative workbook pages from multiple levels/books to generalize AI grading risk beyond the original Howdy 1-only analysis
+- Added a series-wide import-readiness and grading-risk summary to `key_facts.md`
+
+**Key findings**:
+- `WBA` blanks: 260, AK: 260
+- `WBB` blanks: 260, AK: 260
+- `WBC` blanks: 240, AK: 240
+- `WBA` audio: 143 files total across Howdy 1-10
+- `WBB` audio: 176 files total across Howdy 1-10
+- `WBC` audio: 0, expected
+- Dataset is now ready for import
+- High-risk sections remain the same family of tasks: matching lines, crosswords, hidden-word circling, and other visually traced activities
+
+**Documentation**:
+- Updated `docs/project_notes/key_facts.md` with:
+  - import completeness snapshot
+  - series-wide AI grading risk tiers
+  - recommended import policy
+
+---
+
+## 2026-03-30 - Assignment Grading Status Guardrails
+
+**Work Done**:
+- Added assignment-level grading states:
+  - `ready` = score can be treated as official
+  - `review_required` = score is provisional and needs teacher review
+  - `blocked` = assignment is hidden from the student selector
+- Added `risk_summary` on assignments so the warning can explain what needs review
+- Added `score_status` / `review_summary` on `student_submissions`
+- Updated the student landing page to warn before opening `review_required` assignments
+- Updated the workbook page to show a provisional banner for risky assignments
+- Updated the result screen to label provisional scores clearly instead of presenting them as fully reliable
+- Updated the teacher upload page to let teachers choose grading status explicitly when saving an assignment
+
+**Purpose**:
+- Prevent unstable high-risk sections from being silently treated as official scores
+- Move the risk warning to both sides of the workflow:
+  - before student starts
+  - after AI grading finishes
+- Give teachers a clean way to keep unfinished risky assignments off the student side
+
+**Files Modified**:
+- `server.js`
+- `public/index.html`
+- `public/assignment.html`
+- `public/teacher.html`
+- `docs/project_notes/key_facts.md`
+- `docs/project_notes/issues.md`
+
+---
+
+## 2026-03-30 - Batch Import of Howdy 1-10 Workbook Data
+
+**Work Done**:
+- Added `scripts/import-assignments.js` to batch-import local `WBs/` assets through the assignment API
+- Added `npm run import:assignments` in `package.json`
+- Stitched 2-page review workbooks and 3-page unit workbooks into single upload images during import
+- Imported blanks, answer keys, and audio for the full `Howdy 1-10` set through the deployed API
+- Preserved existing assignments by default instead of overwriting teacher-entered content
+- Added importer fallback behavior for damaged/missing answer-key files:
+  - import the assignment record anyway
+  - substitute the blank page only as a placeholder image
+  - mark the assignment as `blocked` with a precise `risk_summary`
+
+**Import Result**:
+- Imported: `259`
+- Skipped existing: `1`
+- Imported as `blocked`: `4`
+- Failed: `0`
+
+**Blocked placeholders created by importer**:
+- `Howdy 6 / Unit 5 / B`
+- `Howdy 7 / Unit 2 / B`
+- `Howdy 8 / Unit 7 / A`
+- `Howdy 10 / Unit 7 / B`
+
+**Important deployment note**:
+- The deployed Railway API accepted the imported data, but at verification time it was still returning the older assignment schema without `grading_status`
+- That means the data import succeeded before the new guardrail fields were confirmed live on production
+- The repo therefore needs the latest backend deployed so those `blocked` records are actually hidden from students
+
+**Files Modified**:
+- `scripts/import-assignments.js`
+- `package.json`
+- `docs/project_notes/issues.md`
+
+---
+
 ## Pending / Future Work
 
 - [ ] Supplemental notes preview/edit when reopening an existing assignment from the teacher list
@@ -297,4 +393,5 @@ Reviewed all pages of NH1 WB A (U1–U8 + Review 1) and NH1 WB B (U1–U8, first
 - [ ] Offline support / PWA manifest for iPad home screen installation
 - [ ] Rate limiting on `/api/submissions` to prevent accidental repeated grading
 - [ ] Authentication layer if deployed publicly (currently assumes trusted LAN)
-- [ ] WB C question type analysis (not yet reviewed)
+- [ ] Batch import should set `ready` / `review_required` / `blocked` automatically from per-unit risk templates
+- [ ] Per-unit default `supplemental_notes` templates for high-risk sections before full batch import

@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const crypto = require('crypto');
 const { Pool } = require('pg');
 const fs = require('fs/promises');
 const sharp = require('sharp');
@@ -14,6 +15,9 @@ const PORT = process.env.PORT || 3000;
 const GRADING_REFERENCE_DIR = path.join(__dirname, 'data', 'grading_references');
 const ASSIGNMENT_GRADING_STATUSES = new Set(['ready', 'review_required', 'blocked']);
 const SUBMISSION_SCORE_STATUSES = new Set(['official', 'provisional']);
+const TEACHER_PASSCODE = String(process.env.TEACHER_PASSCODE || '').trim();
+const TEACHER_AUTH_COOKIE = 'teacher_auth';
+const TEACHER_AUTH_COOKIE_MAX_AGE = 1000 * 60 * 60 * 24 * 30;
 
 // --- Middleware ---
 app.use(cors());
@@ -464,15 +468,100 @@ async function gradeStudent({ answerKey, studentImage, studentName }) {
   return { answers, totalScore, totalPossible: answerKey.total_points, studentName };
 }
 
+function isTeacherPasscodeEnabled() {
+  return Boolean(TEACHER_PASSCODE);
+}
+
+function parseCookies(req) {
+  const raw = String(req.headers.cookie || '');
+  if (!raw) return {};
+
+  return raw.split(';').reduce((cookies, segment) => {
+    const [name, ...rest] = segment.trim().split('=');
+    if (!name) return cookies;
+    cookies[name] = decodeURIComponent(rest.join('=') || '');
+    return cookies;
+  }, {});
+}
+
+function secureEquals(left, right) {
+  const leftBuffer = Buffer.from(String(left || ''), 'utf8');
+  const rightBuffer = Buffer.from(String(right || ''), 'utf8');
+  if (leftBuffer.length !== rightBuffer.length) return false;
+  return crypto.timingSafeEqual(leftBuffer, rightBuffer);
+}
+
+function hasTeacherAccess(req) {
+  if (!isTeacherPasscodeEnabled()) return true;
+  const cookies = parseCookies(req);
+  return secureEquals(cookies[TEACHER_AUTH_COOKIE], TEACHER_PASSCODE);
+}
+
+function requireTeacherAuth(req, res, next) {
+  if (hasTeacherAccess(req)) return next();
+  return res.status(401).json({
+    error: 'Teacher passcode required',
+    requires_teacher_auth: true
+  });
+}
+
+function requireTeacherAssignmentListAuth(req, res, next) {
+  const { howdy, unit, book } = req.query || {};
+  if (howdy && unit && book) return next();
+  return requireTeacherAuth(req, res, next);
+}
+
 // ============================================================
 // API Routes
 // ============================================================
 
 app.get('/api/health', (req, res) => res.json({ status: 'ok', timestamp: new Date().toISOString() }));
 
+app.get('/api/teacher-auth/status', (req, res) => {
+  res.json({
+    enabled: isTeacherPasscodeEnabled(),
+    authenticated: hasTeacherAccess(req)
+  });
+});
+
+app.post('/api/teacher-auth/verify', (req, res) => {
+  if (!isTeacherPasscodeEnabled()) {
+    return res.json({ enabled: false, authenticated: true });
+  }
+
+  const passcode = String(req.body?.passcode || '').trim();
+  if (!secureEquals(passcode, TEACHER_PASSCODE)) {
+    return res.status(401).json({
+      error: '教師 passcode 錯誤',
+      enabled: true,
+      authenticated: false
+    });
+  }
+
+  res.cookie(TEACHER_AUTH_COOKIE, encodeURIComponent(TEACHER_PASSCODE), {
+    httpOnly: true,
+    sameSite: 'lax',
+    secure: process.env.NODE_ENV === 'production',
+    path: '/',
+    maxAge: TEACHER_AUTH_COOKIE_MAX_AGE
+  });
+
+  return res.json({ enabled: true, authenticated: true });
+});
+
+app.post('/api/teacher-auth/logout', (req, res) => {
+  res.clearCookie(TEACHER_AUTH_COOKIE, {
+    httpOnly: true,
+    sameSite: 'lax',
+    secure: process.env.NODE_ENV === 'production',
+    path: '/'
+  });
+  res.json({ ok: true });
+});
+
 // --- Answer Keys CRUD ---
 
-app.post('/api/answer-keys', async (req, res) => {
+app.post('/api/answer-keys', requireTeacherAuth, async (req, res) => {
   try {
     const { teacher_name, name, mode = 'simple', template_image, image_width = 0, image_height = 0, questions, settings } = req.body;
     if (!teacher_name || !name || !questions) {
@@ -502,7 +591,7 @@ app.post('/api/answer-keys', async (req, res) => {
   }
 });
 
-app.get('/api/answer-keys', async (req, res) => {
+app.get('/api/answer-keys', requireTeacherAuth, async (req, res) => {
   try {
     const { teacher_name } = req.query;
     let query = 'SELECT id, teacher_name, name, mode, image_width, image_height, total_points, created_at FROM answer_keys';
@@ -517,7 +606,7 @@ app.get('/api/answer-keys', async (req, res) => {
   }
 });
 
-app.get('/api/answer-keys/:id', async (req, res) => {
+app.get('/api/answer-keys/:id', requireTeacherAuth, async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM answer_keys WHERE id = $1', [req.params.id]);
     if (result.rows.length === 0) return res.status(404).json({ error: 'Answer key not found' });
@@ -527,7 +616,7 @@ app.get('/api/answer-keys/:id', async (req, res) => {
   }
 });
 
-app.delete('/api/answer-keys/:id', async (req, res) => {
+app.delete('/api/answer-keys/:id', requireTeacherAuth, async (req, res) => {
   try {
     const result = await pool.query('DELETE FROM answer_keys WHERE id = $1 RETURNING id', [req.params.id]);
     if (result.rows.length === 0) return res.status(404).json({ error: 'Answer key not found' });
@@ -539,7 +628,7 @@ app.delete('/api/answer-keys/:id', async (req, res) => {
 
 // --- Document Parsing (PDF / DOCX → structured answers) ---
 
-app.post('/api/parse-document', async (req, res) => {
+app.post('/api/parse-document', requireTeacherAuth, async (req, res) => {
   try {
     const { data, type } = req.body;  // data: base64, type: 'pdf' | 'docx'
     if (!data || !type) return res.status(400).json({ error: 'Missing data or type' });
@@ -584,7 +673,7 @@ app.post('/api/parse-document', async (req, res) => {
 
 // --- OCR ---
 
-app.post('/api/ocr/region', async (req, res) => {
+app.post('/api/ocr/region', requireTeacherAuth, async (req, res) => {
   try {
     const { image, region } = req.body;
     if (!image || !region) return res.status(400).json({ error: 'Missing image or region' });
@@ -595,7 +684,7 @@ app.post('/api/ocr/region', async (req, res) => {
   }
 });
 
-app.post('/api/convert-heic', async (req, res) => {
+app.post('/api/convert-heic', requireTeacherAuth, async (req, res) => {
   try {
     const { image } = req.body;
     if (!image) return res.status(400).json({ error: 'Missing image' });
@@ -611,7 +700,7 @@ app.post('/api/convert-heic', async (req, res) => {
 
 // --- Grading ---
 
-app.post('/api/grade', async (req, res) => {
+app.post('/api/grade', requireTeacherAuth, async (req, res) => {
   try {
     const { answer_key_id, student_image, student_name } = req.body;
     if (!answer_key_id || !student_image) return res.status(400).json({ error: 'Missing answer_key_id or student_image' });
@@ -648,7 +737,7 @@ app.post('/api/grade', async (req, res) => {
   }
 });
 
-app.post('/api/grade/batch', async (req, res) => {
+app.post('/api/grade/batch', requireTeacherAuth, async (req, res) => {
   try {
     const { answer_key_id, students } = req.body;
     if (!answer_key_id || !Array.isArray(students)) return res.status(400).json({ error: 'Missing answer_key_id or students array' });
@@ -687,7 +776,7 @@ app.post('/api/grade/batch', async (req, res) => {
 
 // --- Results & Analysis ---
 
-app.get('/api/results/:answerKeyId', async (req, res) => {
+app.get('/api/results/:answerKeyId', requireTeacherAuth, async (req, res) => {
   try {
     const result = await pool.query(
       `SELECT id, student_name, answers, total_score, total_possible, graded_at
@@ -700,7 +789,7 @@ app.get('/api/results/:answerKeyId', async (req, res) => {
   }
 });
 
-app.get('/api/results/:answerKeyId/analysis', async (req, res) => {
+app.get('/api/results/:answerKeyId/analysis', requireTeacherAuth, async (req, res) => {
   try {
     const keyResult = await pool.query('SELECT * FROM answer_keys WHERE id = $1', [req.params.answerKeyId]);
     if (keyResult.rows.length === 0) return res.status(404).json({ error: 'Answer key not found' });
@@ -777,7 +866,7 @@ app.get('/api/results/:answerKeyId/analysis', async (req, res) => {
 });
 
 // CSV export of all results for an assignment
-app.get('/api/results/:answerKeyId/export', async (req, res) => {
+app.get('/api/results/:answerKeyId/export', requireTeacherAuth, async (req, res) => {
   try {
     const keyResult = await pool.query('SELECT * FROM answer_keys WHERE id = $1', [req.params.answerKeyId]);
     if (keyResult.rows.length === 0) return res.status(404).json({ error: 'Answer key not found' });
@@ -838,7 +927,7 @@ function buildReviewSummary(status, riskSummary = '') {
 }
 
 // List available assignments (no images/audio, just metadata)
-app.get('/api/assignments', async (req, res) => {
+app.get('/api/assignments', requireTeacherAssignmentListAuth, async (req, res) => {
   try {
     const { howdy, unit, book } = req.query;
     let query = `SELECT id, howdy_level, unit, book_type,
@@ -905,7 +994,7 @@ app.get('/api/assignments/:id', async (req, res) => {
 
 // Create or update assignment (teacher upload)
 // UPSERT on (howdy_level, unit, book_type)
-app.post('/api/assignments', async (req, res) => {
+app.post('/api/assignments', requireTeacherAuth, async (req, res) => {
   try {
     const {
       howdy_level,
@@ -970,7 +1059,7 @@ app.post('/api/assignments', async (req, res) => {
   }
 });
 
-app.delete('/api/assignments/:id', async (req, res) => {
+app.delete('/api/assignments/:id', requireTeacherAuth, async (req, res) => {
   try {
     const result = await pool.query('DELETE FROM assignments WHERE id=$1 RETURNING id', [req.params.id]);
     if (result.rows.length === 0) return res.status(404).json({ error: 'Assignment not found' });
@@ -1060,7 +1149,7 @@ app.post('/api/submissions', async (req, res) => {
 });
 
 // List submissions for an assignment (teacher view)
-app.get('/api/submissions', async (req, res) => {
+app.get('/api/submissions', requireTeacherAuth, async (req, res) => {
   try {
     const { assignment_id } = req.query;
     if (!assignment_id) return res.status(400).json({ error: 'Missing assignment_id' });
@@ -1076,7 +1165,7 @@ app.get('/api/submissions', async (req, res) => {
 });
 
 // Get single submission with answers (for results display)
-app.get('/api/submissions/:id', async (req, res) => {
+app.get('/api/submissions/:id', requireTeacherAuth, async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM student_submissions WHERE id=$1', [req.params.id]);
     if (result.rows.length === 0) return res.status(404).json({ error: 'Submission not found' });

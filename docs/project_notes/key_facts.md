@@ -24,6 +24,7 @@ Essential project configuration, constants, and quick reference information.
 - `PORT` — Server port (default: 3000; Railway sets this automatically)
 - `NODE_ENV` — `production` on Railway (enables SSL for DB)
 - `GOOGLE_VISION_API_KEY` — Legacy OCR key (no longer used in main workflow)
+- `TEACHER_PASSCODE` — optional simple teacher passcode; when set, upload / grading / teacher-result APIs require a teacher auth cookie
 
 ---
 
@@ -106,6 +107,9 @@ Essential project configuration, constants, and quick reference information.
 - `POST /api/submissions` — student submits merged drawing → Claude grades → returns results with `score_status` / `review_summary`
 - `GET  /api/submissions?assignment_id=X` — list submissions for teacher view
 - `GET  /api/submissions/:id` — get single submission with answers
+- `GET  /api/teacher-auth/status` — whether teacher passcode is enabled / current browser is authenticated
+- `POST /api/teacher-auth/verify` — verify teacher passcode and set teacher auth cookie
+- `POST /api/teacher-auth/logout` — clear teacher auth cookie
 
 ### Legacy v1 (still functional)
 - `POST /api/answer-keys` — create answer key
@@ -132,8 +136,8 @@ Essential project configuration, constants, and quick reference information.
 |---|---|---|
 | `public/index.html` | Student entry: name → Howdy → Unit → Book | Student |
 | `public/assignment.html` | Canvas drawing + audio + submit + results | Student |
-| `public/teacher.html` | Upload assignments (image + answer key + audio) | Teacher |
-| `public/grader.html` | Legacy: manual upload + grade + analysis | Teacher (v1) |
+| `public/teacher.html` | Upload assignments (image + answer key + audio); prompts for teacher passcode when enabled | Teacher |
+| `public/grader.html` | Legacy: manual upload + grade + analysis; prompts for teacher passcode when enabled | Teacher (v1) |
 | `public/*-v1.html` | Backup of v1 pages | Archive |
 
 ---

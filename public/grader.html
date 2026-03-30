@@ -592,8 +592,14 @@
       }
     }
 
+    async function initPage() {
+      const allowed = await ensureTeacherAccess({ redirectTo: 'index.html' });
+      if (!allowed) return;
+      loadKeys();
+    }
+
     // --- Init ---
-    loadKeys();
+    initPage();
 </script>
 </body>
 </html>

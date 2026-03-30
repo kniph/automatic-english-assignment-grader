@@ -241,3 +241,29 @@ The `GET /api/assignments/:id` endpoint returns `assignment_image` and `audio_fi
 **Consequences**:
 - Students cannot inspect network responses to get answers
 - No authentication system needed for this security property (answer key never leaves server)
+
+---
+
+## ADR-010: Simple Teacher Passcode Before Full Teacher Accounts
+
+**Date**: 2026-03-30
+
+**Context**:
+The project now has teacher-only upload and grading interfaces that can modify assignments, delete answer keys, and access grading history. Full multi-user accounts would add significant complexity, but leaving these pages completely open is no longer acceptable once the app is used beyond a tightly controlled setup.
+
+**Decision**:
+Add a lightweight teacher gate controlled by `TEACHER_PASSCODE`.
+
+- If `TEACHER_PASSCODE` is not set, the app behaves as before.
+- If it is set, teacher-only APIs require a teacher-auth cookie obtained by verifying the passcode.
+- Teacher-facing pages (`teacher.html`, `grader.html`, and legacy `*-v1.html`) prompt for the passcode before loading teacher data.
+- Student-facing routes remain public.
+
+**Consequences**:
+- Faster and much lower risk than building full accounts, sessions, roles, and password reset flows now
+- Prevents casual access to teacher upload / grading operations on a public URL
+- Still not a full authorization model: all teachers share one passcode and there is no audit trail
+
+**Alternatives Considered**:
+- Full teacher account system now — stronger long-term model, but too much implementation and admin overhead for the current phase
+- No protection / LAN-only trust — simplest, but unsafe once the app is reachable from the public internet

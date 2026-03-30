@@ -426,6 +426,36 @@ Reviewed all pages of NH1 WB A (U1–U8 + Review 1) and NH1 WB B (U1–U8, first
 
 ---
 
+## 2026-03-30 - Teacher Passcode Gate
+
+**Work Done**:
+- Added a simple teacher-only passcode flow controlled by `TEACHER_PASSCODE`
+- Added `GET /api/teacher-auth/status`, `POST /api/teacher-auth/verify`, and `POST /api/teacher-auth/logout`
+- Protected teacher-only APIs with a cookie-based auth check:
+  - assignment upload/delete
+  - legacy answer-key CRUD
+  - legacy grading/results APIs
+  - teacher submission list/detail APIs
+- Kept student APIs public where needed:
+  - `/api/assignments/available`
+  - filtered `/api/assignments?howdy=&unit=&book=`
+  - `/api/assignments/:id`
+  - `/api/submissions`
+- Updated `public/js/common.js` with shared passcode prompt helpers
+- Updated `teacher.html`, `grader.html`, and both `*-v1.html` pages to require passcode before loading teacher data
+
+**Files Modified**:
+- `server.js`
+- `public/js/common.js`
+- `public/teacher.html`
+- `public/grader.html`
+- `public/teacher-v1.html`
+- `public/grader-v1.html`
+- `docs/project_notes/key_facts.md`
+- `docs/project_notes/issues.md`
+
+---
+
 ## Pending / Future Work
 
 - [ ] Supplemental notes preview/edit when reopening an existing assignment from the teacher list
@@ -435,6 +465,6 @@ Reviewed all pages of NH1 WB A (U1–U8 + Review 1) and NH1 WB B (U1–U8, first
 - [ ] Teacher: student management (class list, progress over time)
 - [ ] Offline support / PWA manifest for iPad home screen installation
 - [ ] Rate limiting on `/api/submissions` to prevent accidental repeated grading
-- [ ] Authentication layer if deployed publicly (currently assumes trusted LAN)
+- [ ] Upgrade simple teacher passcode into full teacher accounts / permissions if multiple teachers need separate ownership and audit logs
 - [ ] Batch import should set `ready` / `review_required` / `blocked` automatically from per-unit risk templates
 - [ ] Per-unit default `supplemental_notes` templates for high-risk sections before full batch import

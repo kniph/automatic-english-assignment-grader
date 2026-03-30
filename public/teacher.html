@@ -577,8 +577,14 @@ Ignore the circled hidden word. Grade only the written answers.
       d.textContent = str || ''; return d.innerHTML;
     }
 
+    async function initPage() {
+      const allowed = await ensureTeacherAccess({ redirectTo: 'index.html' });
+      if (!allowed) return;
+      loadAssignments();
+    }
+
     // Init
-    loadAssignments();
+    initPage();
   </script>
 </body>
 </html>

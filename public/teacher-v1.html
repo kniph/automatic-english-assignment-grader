@@ -354,8 +354,14 @@
       return d.innerHTML;
     }
 
+    async function initPage() {
+      const allowed = await ensureTeacherAccess({ redirectTo: 'index.html' });
+      if (!allowed) return;
+      loadSavedKeys();
+    }
+
     // ---- Boot ----
-    loadSavedKeys();
+    initPage();
   </script>
 </body>
 </html>

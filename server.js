@@ -23,7 +23,13 @@ const TEACHER_AUTH_COOKIE_MAX_AGE = 1000 * 60 * 60 * 24 * 30;
 // --- Middleware ---
 app.use(cors());
 app.use(express.json({ limit: '50mb' }));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public'), {
+  setHeaders(res, filePath) {
+    if (/\.(html|js|css)$/i.test(filePath)) {
+      res.setHeader('Cache-Control', 'no-store, max-age=0');
+    }
+  }
+}));
 
 // --- Database ---
 const pool = new Pool({

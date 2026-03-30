@@ -659,6 +659,33 @@ Reviewed all pages of NH1 WB A (U1–U8 + Review 1) and NH1 WB B (U1–U8, first
 
 ---
 
+## 2026-03-31 - Vocab OCR Hardening: Answer Guides + Blank-Template Subtraction
+
+**Work Done**:
+- Exposed public `question_guides` from `GET /api/vocab/exams/:id` without leaking answers
+- Updated `public/vocab-exam.html` / `public/js/vocab-drawing.js` / `public/js/vocab-exam.js` to draw visible answer guides on the student page
+- Added a guide note instructing students to write inside the dashed box and start from the left side
+- Strengthened iPad Safari suppression by adding legacy touch-event prevention on the vocab draw canvas
+- Reworked vocab OCR preprocessing in `vocab-module.js`:
+  - normalize the submitted page and the stored blank page to the same size
+  - crop both with the same `answer_box`
+  - subtract the blank crop from the student crop to isolate handwriting
+  - binarize and enlarge the handwriting-only mask before sending it to Google Vision
+
+**Why This Matters**:
+- The biggest OCR gains came from cleaner input, not from changing OCR vendors
+- Fixed-template vocab exams are a special case where the platform already owns the blank template, so direct page OCR is unnecessarily noisy
+- Student guidance and crop purity were both major factors in moving the demo from unusable to near-pass performance
+
+**Related Files**:
+- `vocab-module.js`
+- `public/vocab-exam.html`
+- `public/css/vocab.css`
+- `public/js/vocab-drawing.js`
+- `public/js/vocab-exam.js`
+
+---
+
 ## Pending / Future Work
 
 - [ ] Supplemental notes preview/edit when reopening an existing assignment from the teacher list

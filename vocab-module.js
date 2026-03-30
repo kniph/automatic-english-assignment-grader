@@ -500,8 +500,66 @@ function registerVocabRoutes({ app, pool, requireTeacherAuth, hasTeacherAccess, 
     };
   }
 
-  async function ocrAnswerRegion(pageBase64, answerBox) {
+  async function normalizePageBase64(base64) {
+    const buffer = Buffer.from(base64, 'base64');
+    return (await sharp(buffer)
+      .rotate()
+      .flatten({ background: '#ffffff' })
+      .resize({ width: 2000, withoutEnlargement: true })
+      .jpeg({ quality: 90 })
+      .toBuffer()).toString('base64');
+  }
+
+  async function buildHandwritingMask(studentBuffer, blankBuffer, cropBox) {
+    const studentCrop = await sharp(studentBuffer)
+      .extract(cropBox)
+      .removeAlpha()
+      .raw()
+      .toBuffer({ resolveWithObject: true });
+    const blankCrop = await sharp(blankBuffer)
+      .extract(cropBox)
+      .removeAlpha()
+      .raw()
+      .toBuffer({ resolveWithObject: true });
+
+    const { width, height } = studentCrop.info;
+    const masked = Buffer.alloc(width * height * 3, 255);
+
+    for (let index = 0; index < studentCrop.data.length; index += 3) {
+      const studentRed = studentCrop.data[index];
+      const studentGreen = studentCrop.data[index + 1];
+      const studentBlue = studentCrop.data[index + 2];
+      const blankRed = blankCrop.data[index];
+      const blankGreen = blankCrop.data[index + 1];
+      const blankBlue = blankCrop.data[index + 2];
+
+      const diff = Math.abs(studentRed - blankRed)
+        + Math.abs(studentGreen - blankGreen)
+        + Math.abs(studentBlue - blankBlue);
+      const studentBrightness = studentRed + studentGreen + studentBlue;
+      const blankBrightness = blankRed + blankGreen + blankBlue;
+      const darkerThanBlank = studentBrightness + 28 < blankBrightness;
+      const isInk = diff >= 58 || darkerThanBlank;
+
+      if (isInk) {
+        masked[index] = 0;
+        masked[index + 1] = 0;
+        masked[index + 2] = 0;
+      }
+    }
+
+    return sharp(masked, {
+      raw: {
+        width,
+        height,
+        channels: 3
+      }
+    }).png().toBuffer();
+  }
+
+  async function ocrAnswerRegion(pageBase64, blankPageBase64, answerBox) {
     const input = Buffer.from(pageBase64, 'base64');
+    const blankInput = Buffer.from(blankPageBase64, 'base64');
     const metadata = await sharp(input).metadata();
     const paddedBox = clampBox(
       answerBox,
@@ -510,18 +568,20 @@ function registerVocabRoutes({ app, pool, requireTeacherAuth, hasTeacherAccess, 
       Math.max(12, Math.round(Math.min(answerBox.width, answerBox.height) * 0.15))
     );
 
-    const processed = await sharp(input)
-      .extract(paddedBox)
-      .flatten({ background: '#ffffff' })
+    const handwritingOnly = await buildHandwritingMask(input, blankInput, paddedBox);
+
+    const processed = await sharp(handwritingOnly)
       .grayscale()
       .normalize()
       .sharpen()
       .resize({
-        width: Math.max(420, paddedBox.width * 3),
-        height: Math.max(160, paddedBox.height * 3),
-        fit: 'fill',
-        withoutEnlargement: false
+        width: Math.max(520, paddedBox.width * 4),
+        height: Math.max(220, paddedBox.height * 4),
+        fit: 'contain',
+        withoutEnlargement: false,
+        background: '#ffffff'
       })
+      .threshold(210)
       .png()
       .toBuffer();
 
@@ -546,9 +606,11 @@ function registerVocabRoutes({ app, pool, requireTeacherAuth, hasTeacherAccess, 
       .resize({
         width: 640,
         height: 240,
-        fit: 'inside',
-        withoutEnlargement: false
+        fit: 'contain',
+        withoutEnlargement: false,
+        background: '#ffffff'
       })
+      .threshold(210)
       .png()
       .toBuffer();
 
@@ -594,26 +656,22 @@ function registerVocabRoutes({ app, pool, requireTeacherAuth, hasTeacherAccess, 
     });
   }
 
-  async function normalizeSubmissionImages(images) {
-    return Promise.all(images.map(async image => {
-      const buffer = Buffer.from(image, 'base64');
-      return (await sharp(buffer)
-        .rotate()
-        .flatten({ background: '#ffffff' })
-        .jpeg({ quality: 90 })
-        .toBuffer()).toString('base64');
-    }));
+  async function normalizePageImages(images) {
+    return Promise.all(images.map(image => normalizePageBase64(image)));
   }
 
   async function gradeFullSubmission(bundle, submissionImages) {
     validateSubmissionImages(submissionImages, bundle.pages.length);
-    const normalizedImages = await normalizeSubmissionImages(submissionImages);
+    const normalizedImages = await normalizePageImages(submissionImages);
+    const normalizedBlankImages = await normalizePageImages(bundle.pages.map(page => page.blank_image));
     const pageMap = new Map(bundle.pages.map((page, index) => [page.page_number, normalizedImages[index]]));
+    const blankPageMap = new Map(bundle.pages.map((page, index) => [page.page_number, normalizedBlankImages[index]]));
     const gradedAnswers = [];
 
     for (const question of bundle.questions) {
       const pageImage = pageMap.get(question.page_number);
-      const ocrResult = await ocrAnswerRegion(pageImage, question.answer_box);
+      const blankPageImage = blankPageMap.get(question.page_number);
+      const ocrResult = await ocrAnswerRegion(pageImage, blankPageImage, question.answer_box);
       const scoreResult = scoreVocabAnswer(ocrResult.detected_text, question.answer_text, question.points);
       gradedAnswers.push({
         question_id: question.id,

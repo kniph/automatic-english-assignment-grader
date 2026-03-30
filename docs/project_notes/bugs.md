@@ -274,3 +274,39 @@ The first pass at tightening the student boxes preserved the right boundary but 
 When converting answer-key detections into student handwriting boxes, leave extra space on the left side for natural handwriting drift. Students do not anchor their first stroke at the same x-position as the printed answer key.
 
 ---
+
+## 2026-03-31 - BUG-018: OCR Still Saw Worksheet Noise Even After Better Boxes
+
+**Issue**: After adding answer guides and widening the demo boxes, vocab grading improved to the `55/70` range but still produced failures caused by extra printed noise or stray strokes inside the crop.
+
+**Root Cause**:
+The grading pipeline still OCRed the merged worksheet crop directly. Even when the answer box was better aligned, Google Vision still saw the worksheet background, prompt text, and any residual artifacts together with the handwriting. For fixed-template exams, this is the wrong input: the system already has the exact blank page and should isolate only the student's added ink.
+
+**Solution**:
+- normalize both the submission page and the stored blank page to the same pixel grid
+- crop the same region from both
+- subtract the blank crop from the student crop to keep only changed pixels
+- OCR the handwriting-only mask instead of the raw worksheet crop
+- binarize and enlarge the masked crop before sending it to Google Vision
+
+**Prevention**:
+For any fixed-template handwriting product, do not OCR the merged page directly if the blank template is available. Always isolate student-added pixels first; OCR accuracy depends more on crop purity than on swapping vendors.
+
+---
+
+## 2026-03-31 - BUG-019: Safari Selection / Live Text Still Surfaced Above Vocab Canvas
+
+**Issue**: Even after disabling `user-select` and clearing browser selection, iPad Safari could still show selection / lookup UI above the vocab canvas while the student was writing.
+
+**Root Cause**:
+Pointer-event suppression alone did not fully stop Safari's native touch-driven selection pipeline. The canvas needed lower-level `touchstart` / `touchmove` / `touchend` prevention to reduce browser ownership of the gesture.
+
+**Solution**:
+- add non-passive legacy touch listeners on the vocab draw canvas
+- call `preventDefault()` on native touch events in addition to the pointer model
+- continue clearing transient selection state during interactions
+
+**Prevention**:
+On iPad drawing surfaces, treat pointer events and legacy touch events as separate suppression layers. Preventing one does not guarantee Safari will stop Live Text / selection UI.
+
+---

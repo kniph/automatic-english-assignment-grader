@@ -180,11 +180,21 @@ class VocabCanvasSurface {
       event.preventDefault();
       this.clearDocumentSelection();
     };
+    const suppressNativeTouch = event => {
+      if (event.cancelable) {
+        event.preventDefault();
+      }
+      this.clearDocumentSelection();
+    };
 
     this.drawCanvas.addEventListener('pointerdown', event => this.handlePointerDown(event));
     this.drawCanvas.addEventListener('pointermove', event => this.handlePointerMove(event));
     this.drawCanvas.addEventListener('pointerup', event => this.handlePointerUp(event));
     this.drawCanvas.addEventListener('pointercancel', event => this.handlePointerUp(event));
+    this.drawCanvas.addEventListener('touchstart', suppressNativeTouch, { passive: false });
+    this.drawCanvas.addEventListener('touchmove', suppressNativeTouch, { passive: false });
+    this.drawCanvas.addEventListener('touchend', suppressNativeTouch, { passive: false });
+    this.drawCanvas.addEventListener('touchcancel', suppressNativeTouch, { passive: false });
     this.drawCanvas.addEventListener('contextmenu', suppressBrowserSelection);
     this.drawCanvas.addEventListener('selectstart', suppressBrowserSelection);
     this.drawCanvas.addEventListener('dragstart', suppressBrowserSelection);

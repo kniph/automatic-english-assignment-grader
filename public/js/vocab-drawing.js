@@ -6,6 +6,7 @@ class VocabCanvasSurface {
     this.height = options.height || 0;
     this.maxDisplayWidth = options.maxDisplayWidth || null;
     this.onInteraction = options.onInteraction || (() => {});
+    this.guideBoxes = Array.isArray(options.guideBoxes) ? options.guideBoxes : [];
 
     this.backgroundImage = null;
     this.isDrawing = false;
@@ -40,15 +41,21 @@ class VocabCanvasSurface {
     this.shell.style.webkitTapHighlightColor = 'transparent';
 
     this.bgCanvas = document.createElement('canvas');
+    this.guideCanvas = document.createElement('canvas');
     this.drawCanvas = document.createElement('canvas');
     this.bgCtx = this.bgCanvas.getContext('2d');
+    this.guideCtx = this.guideCanvas.getContext('2d');
     this.drawCtx = this.drawCanvas.getContext('2d');
 
-    [this.bgCanvas, this.drawCanvas].forEach(canvas => {
+    [this.bgCanvas, this.guideCanvas, this.drawCanvas].forEach(canvas => {
       canvas.style.display = 'block';
       canvas.style.width = '100%';
       canvas.style.height = '100%';
     });
+
+    this.guideCanvas.style.position = 'absolute';
+    this.guideCanvas.style.inset = '0';
+    this.guideCanvas.style.pointerEvents = 'none';
 
     this.drawCanvas.style.position = 'absolute';
     this.drawCanvas.style.inset = '0';
@@ -65,6 +72,7 @@ class VocabCanvasSurface {
     this.bgCanvas.style.webkitTouchCallout = 'none';
 
     this.shell.appendChild(this.bgCanvas);
+    this.shell.appendChild(this.guideCanvas);
     this.shell.appendChild(this.drawCanvas);
     this.mount.innerHTML = '';
     this.mount.appendChild(this.shell);
@@ -104,8 +112,11 @@ class VocabCanvasSurface {
     this.height = height;
     this.bgCanvas.width = width;
     this.bgCanvas.height = height;
+    this.guideCanvas.width = width;
+    this.guideCanvas.height = height;
     this.drawCanvas.width = width;
     this.drawCanvas.height = height;
+    this.drawGuides();
   }
 
   fitToContainer() {
@@ -120,6 +131,48 @@ class VocabCanvasSurface {
 
     this.shell.style.width = `${displayWidth}px`;
     this.shell.style.height = `${displayHeight}px`;
+  }
+
+  drawGuides() {
+    if (!this.guideCtx) return;
+    this.guideCtx.clearRect(0, 0, this.width, this.height);
+    if (!this.guideBoxes.length) return;
+
+    this.guideCtx.save();
+    this.guideCtx.setLineDash([14, 10]);
+    this.guideCtx.lineWidth = 3;
+    this.guideCtx.strokeStyle = 'rgba(31, 122, 224, 0.9)';
+    this.guideCtx.fillStyle = 'rgba(31, 122, 224, 0.06)';
+
+    for (const guide of this.guideBoxes) {
+      const box = guide.answer_box || guide;
+      const x = Number(box.x) || 0;
+      const y = Number(box.y) || 0;
+      const width = Number(box.width) || 0;
+      const height = Number(box.height) || 0;
+      if (width <= 0 || height <= 0) continue;
+
+      this.guideCtx.fillRect(x, y, width, height);
+      this.guideCtx.strokeRect(x, y, width, height);
+
+      const label = `Q${guide.question_number || ''}`.trim();
+      if (!label || !this.guideCtx.fillText) continue;
+      const labelX = x + 6;
+      const labelY = Math.max(16, y - 8);
+
+      this.guideCtx.save();
+      this.guideCtx.setLineDash([]);
+      this.guideCtx.font = 'bold 16px -apple-system, BlinkMacSystemFont, sans-serif';
+      const metrics = this.guideCtx.measureText(label);
+      const pillWidth = Math.ceil(metrics.width + 12);
+      this.guideCtx.fillStyle = 'rgba(31, 122, 224, 0.95)';
+      this.guideCtx.fillRect(labelX - 4, labelY - 14, pillWidth, 18);
+      this.guideCtx.fillStyle = '#ffffff';
+      this.guideCtx.fillText(label, labelX, labelY);
+      this.guideCtx.restore();
+    }
+
+    this.guideCtx.restore();
   }
 
   bindEvents() {

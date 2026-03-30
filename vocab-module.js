@@ -357,7 +357,12 @@ function registerVocabRoutes({ app, pool, requireTeacherAuth, hasTeacherAccess, 
         page_number: page.page_number,
         blank_image: page.blank_image
       })),
-      question_count: questions.length
+      question_count: questions.length,
+      question_guides: questions.map(question => ({
+        page_number: question.page_number,
+        question_number: question.question_number,
+        answer_box: question.answer_box
+      }))
     };
   }
 

@@ -423,6 +423,17 @@ a {
   margin-bottom: 0.9rem;
 }
 
+.vocab-guide-note {
+  margin-top: 0.1rem;
+  padding: 0.7rem 0.9rem;
+  border-radius: 14px;
+  background: #eef5fc;
+  border: 1px solid rgba(31, 122, 224, 0.18);
+  color: var(--vocab-blue-dark);
+  font-size: 0.86rem;
+  font-weight: 600;
+}
+
 .vocab-zoom-group {
   display: inline-flex;
   align-items: center;

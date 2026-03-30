@@ -125,9 +125,13 @@
     `).join('');
 
     for (const page of exam.pages) {
+      const guideBoxes = Array.isArray(exam.question_guides)
+        ? exam.question_guides.filter(question => Number(question.page_number) === Number(page.page_number))
+        : [];
       const surface = new VocabCanvasSurface({
         mount: document.getElementById(`pageMount-${page.page_number}`),
         backgroundBase64: page.blank_image,
+        guideBoxes,
         zoom: state.zoom,
         onInteraction: current => {
           state.activeSurface = current;

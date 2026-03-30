@@ -257,3 +257,20 @@ The published `answer_box` values came straight from answer-key detection crops.
 Do not reuse answer-key detection boxes as student OCR boxes without a second normalization step. Answer-key boxes are for locating colored answers; student boxes must target only the blank handwriting region.
 
 ---
+
+## 2026-03-30 - BUG-017: Tightened Demo Boxes Still Clipped Handwriting Prefixes
+
+**Issue**: After removing most printed prompt text from the demo vocab OCR boxes, the next test still missed many first letters. Example outputs included `one -> le`, `six -> ix`, `seven -> ven`, `ten -> en`.
+
+**Root Cause**:
+The first pass at tightening the student boxes preserved the right boundary but left the capture window too close to the colored answer word anchor. Real handwriting on the blank worksheet starts further left than the printed answer key word, so the OCR crop clipped the first letter even though the box no longer included much prompt text.
+
+**Solution**:
+- expand the demo publish boxes further to the left
+- keep the right edge relatively conservative to avoid reintroducing printed `(adj.) / (n.)` text
+- republish the Railway demo exam again with the wider-left boxes
+
+**Prevention**:
+When converting answer-key detections into student handwriting boxes, leave extra space on the left side for natural handwriting drift. Students do not anchor their first stroke at the same x-position as the printed answer key.
+
+---

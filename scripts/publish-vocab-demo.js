@@ -145,9 +145,12 @@ async function loadReviewQuestions(reviewCsvPath) {
     const baseHeight = Number(row.height);
     const column = String(row.column || '').trim().toLowerCase();
 
-    const leftPad = column === 'right'
+    // Answer-key detection boxes hug the printed answer too tightly.
+    // Student handwriting starts further left, so keep the right edge conservative
+    // but pull the capture window left to preserve the first letter.
+    const leftPad = 52 + (column === 'right'
       ? Math.max(10, Math.round(baseWidth * 0.1))
-      : Math.max(16, Math.round(baseWidth * 0.18));
+      : Math.max(16, Math.round(baseWidth * 0.18)));
     const rightTrim = Math.max(24, Math.round(baseWidth * 0.22));
     const topPad = Math.max(12, Math.round(baseHeight * 0.24));
     const bottomPad = Math.max(12, Math.round(baseHeight * 0.24));

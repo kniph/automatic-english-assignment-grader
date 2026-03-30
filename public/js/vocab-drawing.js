@@ -18,6 +18,10 @@ class VocabCanvasSurface {
     this.zoom = Number.isFinite(Number(options.zoom)) ? Number(options.zoom) : 1;
     this.minZoom = Number.isFinite(Number(options.minZoom)) ? Number(options.minZoom) : 0.45;
     this.maxZoom = Number.isFinite(Number(options.maxZoom)) ? Number(options.maxZoom) : 2.4;
+    this.activePointers = new Map();
+    this.activeDrawPointerId = null;
+    this.touchScroll = null;
+    this.pageScroller = document.scrollingElement || document.documentElement;
 
     this.mount.style.overflowX = 'auto';
     this.mount.style.overflowY = 'hidden';
@@ -44,7 +48,7 @@ class VocabCanvasSurface {
 
     this.drawCanvas.style.position = 'absolute';
     this.drawCanvas.style.inset = '0';
-    this.drawCanvas.style.touchAction = 'pan-y pinch-zoom';
+    this.drawCanvas.style.touchAction = 'none';
     this.drawCanvas.style.cursor = 'crosshair';
 
     this.shell.appendChild(this.bgCanvas);
@@ -117,48 +121,129 @@ class VocabCanvasSurface {
     });
   }
 
+  isPenPointer(event) {
+    return event.pointerType === 'pen' || event.pointerType === 'mouse';
+  }
+
+  getTouchPointers() {
+    return [...this.activePointers.values()].filter(pointer => pointer.type === 'touch');
+  }
+
   handlePointerDown(event) {
-    if (event.pointerType === 'touch') return;
-    event.preventDefault();
-    this.onInteraction(this);
-    this.isDrawing = true;
-    const pos = this.getCanvasPoint(event);
-    this.lastX = pos.x;
-    this.lastY = pos.y;
+    this.activePointers.set(event.pointerId, {
+      type: event.pointerType,
+      clientX: event.clientX,
+      clientY: event.clientY
+    });
+
+    if (this.isPenPointer(event)) {
+      event.preventDefault();
+      event.stopPropagation();
+      this.onInteraction(this);
+      this.touchScroll = null;
+      this.isDrawing = true;
+      this.activeDrawPointerId = event.pointerId;
+      if (typeof this.drawCanvas.setPointerCapture === 'function') {
+        try {
+          this.drawCanvas.setPointerCapture(event.pointerId);
+        } catch (_) {}
+      }
+
+      const pos = this.getCanvasPoint(event);
+      this.lastX = pos.x;
+      this.lastY = pos.y;
+      return;
+    }
+
+    if (event.pointerType === 'touch') {
+      const touches = this.getTouchPointers();
+      if (touches.length === 1) {
+        this.touchScroll = {
+          id: event.pointerId,
+          startX: event.clientX,
+          startY: event.clientY,
+          startScrollLeft: this.mount.scrollLeft,
+          startPageScrollTop: this.pageScroller.scrollTop
+        };
+      } else {
+        this.touchScroll = null;
+      }
+    }
   }
 
   handlePointerMove(event) {
-    if (!this.isDrawing || event.pointerType === 'touch') return;
-    event.preventDefault();
-
-    const pos = this.getCanvasPoint(event);
-    const pressure = event.pointerType === 'pen' && event.pressure > 0 ? event.pressure : 0.6;
-
-    this.drawCtx.lineJoin = 'round';
-    this.drawCtx.lineCap = 'round';
-
-    if (this.tool === 'eraser') {
-      const eraseSize = this.strokeSize * 8;
-      this.drawCtx.clearRect(pos.x - eraseSize / 2, pos.y - eraseSize / 2, eraseSize, eraseSize);
-    } else {
-      this.drawCtx.globalCompositeOperation = 'source-over';
-      this.drawCtx.strokeStyle = this.color;
-      this.drawCtx.lineWidth = Math.max(1.2, this.strokeSize * pressure * 1.6);
-      this.drawCtx.beginPath();
-      this.drawCtx.moveTo(this.lastX, this.lastY);
-      this.drawCtx.lineTo(pos.x, pos.y);
-      this.drawCtx.stroke();
+    const previous = this.activePointers.get(event.pointerId);
+    if (previous) {
+      this.activePointers.set(event.pointerId, {
+        ...previous,
+        clientX: event.clientX,
+        clientY: event.clientY
+      });
     }
 
-    this.lastX = pos.x;
-    this.lastY = pos.y;
+    if (this.isPenPointer(event)) {
+      if (!this.isDrawing || event.pointerId !== this.activeDrawPointerId) return;
+      event.preventDefault();
+      event.stopPropagation();
+
+      const pos = this.getCanvasPoint(event);
+      const pressure = event.pointerType === 'pen' && event.pressure > 0 ? event.pressure : 0.6;
+
+      this.drawCtx.lineJoin = 'round';
+      this.drawCtx.lineCap = 'round';
+
+      if (this.tool === 'eraser') {
+        const eraseSize = this.strokeSize * 8;
+        this.drawCtx.clearRect(pos.x - eraseSize / 2, pos.y - eraseSize / 2, eraseSize, eraseSize);
+      } else {
+        this.drawCtx.globalCompositeOperation = 'source-over';
+        this.drawCtx.strokeStyle = this.color;
+        this.drawCtx.lineWidth = Math.max(1.2, this.strokeSize * pressure * 1.6);
+        this.drawCtx.beginPath();
+        this.drawCtx.moveTo(this.lastX, this.lastY);
+        this.drawCtx.lineTo(pos.x, pos.y);
+        this.drawCtx.stroke();
+      }
+
+      this.lastX = pos.x;
+      this.lastY = pos.y;
+      return;
+    }
+
+    if (event.pointerType === 'touch' && this.touchScroll && this.touchScroll.id === event.pointerId) {
+      event.preventDefault();
+      const dx = this.touchScroll.startX - event.clientX;
+      const dy = this.touchScroll.startY - event.clientY;
+      this.mount.scrollLeft = this.touchScroll.startScrollLeft + dx;
+      this.pageScroller.scrollTop = this.touchScroll.startPageScrollTop + dy;
+    }
   }
 
   handlePointerUp(event) {
-    if (event.pointerType === 'touch') return;
-    if (!this.isDrawing) return;
-    this.isDrawing = false;
-    this.saveHistory();
+    this.activePointers.delete(event.pointerId);
+
+    if (this.isPenPointer(event)) {
+      if (this.activeDrawPointerId !== event.pointerId) return;
+      if (typeof this.drawCanvas.releasePointerCapture === 'function') {
+        try {
+          this.drawCanvas.releasePointerCapture(event.pointerId);
+        } catch (_) {}
+      }
+      if (!this.isDrawing) return;
+      this.isDrawing = false;
+      this.activeDrawPointerId = null;
+      this.saveHistory();
+      return;
+    }
+
+    if (event.pointerType === 'touch') {
+      if (this.touchScroll && this.touchScroll.id === event.pointerId) {
+        this.touchScroll = null;
+      }
+      if (!this.getTouchPointers().length) {
+        this.touchScroll = null;
+      }
+    }
   }
 
   getCanvasPoint(event) {

@@ -184,3 +184,23 @@ if (questions.length === 0 && results.length > 0) {
 Always guard against empty arrays when the data might not be populated yet. Claude mode assigns questions lazily (on first grading).
 
 ---
+
+## 2026-03-30 - BUG-013: Vocab Canvas Hands Off Apple Pencil to Page Drag
+
+**Issue**: On `vocab-exam.html`, Apple Pencil could draw briefly, then iPad Safari started treating later movements as page dragging instead of ink input.
+
+**Root Cause**:
+The vocab canvas used `touch-action: pan-y pinch-zoom` and only partially handled pointer events. Safari could still let browser gestures take over after the initial stroke, especially when pen and touch interactions mixed on the same canvas.
+
+**Solution**:
+Moved the vocab canvas to the same event model already proven in `assignment.html`:
+- set canvas `touch-action: none`
+- explicitly separate `pen/mouse` drawing from `touch` scrolling
+- track active pointers in JS
+- use pointer capture for the active pen pointer
+- keep page/mount scrolling under JS control for touch input
+
+**Prevention**:
+On iPad drawing surfaces, do not rely on browser gesture defaults once Apple Pencil writing is required. Use a fully owned pointer model with explicit pen-vs-touch handling and pointer capture.
+
+---

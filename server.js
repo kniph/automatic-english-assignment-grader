@@ -155,7 +155,11 @@ async function initDB() {
 
 async function callVisionAPI(imageBase64) {
   const apiKey = process.env.GOOGLE_VISION_API_KEY;
-  if (!apiKey || apiKey === 'YOUR_KEY_HERE') throw new Error('Google Vision API key not configured');
+  if (!apiKey || apiKey === 'YOUR_KEY_HERE') {
+    const err = new Error('OCR service unavailable: GOOGLE_VISION_API_KEY is not configured on the server');
+    err.statusCode = 503;
+    throw err;
+  }
 
   const res = await fetch(`https://vision.googleapis.com/v1/images:annotate?key=${apiKey}`, {
     method: 'POST',
@@ -164,10 +168,18 @@ async function callVisionAPI(imageBase64) {
       requests: [{ image: { content: imageBase64 }, features: [{ type: 'DOCUMENT_TEXT_DETECTION', maxResults: 1 }] }]
     })
   });
-  if (!res.ok) throw new Error('Google Vision API request failed');
+  if (!res.ok) {
+    const err = new Error(`Google Vision API request failed (${res.status})`);
+    err.statusCode = 502;
+    throw err;
+  }
   const data = await res.json();
   const annotation = data.responses?.[0];
-  if (annotation?.error) throw new Error(`Vision API: ${annotation.error.message}`);
+  if (annotation?.error) {
+    const err = new Error(`Vision API: ${annotation.error.message}`);
+    err.statusCode = 502;
+    throw err;
+  }
   return annotation;
 }
 
@@ -642,7 +654,9 @@ app.post('/api/parse-document', requireTeacherAuth, async (req, res) => {
     if (type === 'pdf') {
       // PDF must use files:annotate (not images:annotate) with inputConfig
       const apiKey = process.env.GOOGLE_VISION_API_KEY;
-      if (!apiKey || apiKey === 'YOUR_KEY_HERE') return res.status(500).json({ error: 'Google Vision API key not configured' });
+      if (!apiKey || apiKey === 'YOUR_KEY_HERE') {
+        return res.status(503).json({ error: 'OCR service unavailable: GOOGLE_VISION_API_KEY is not configured on the server' });
+      }
       const visionRes = await fetch(`https://vision.googleapis.com/v1/files:annotate?key=${apiKey}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -683,7 +697,7 @@ app.post('/api/ocr/region', requireTeacherAuth, async (req, res) => {
     const result = await ocrRegion(image, region);
     res.json(result);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(err.statusCode || 500).json({ error: err.message });
   }
 });
 

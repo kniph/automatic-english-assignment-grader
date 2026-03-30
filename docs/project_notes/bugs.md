@@ -204,3 +204,21 @@ Moved the vocab canvas to the same event model already proven in `assignment.htm
 On iPad drawing surfaces, do not rely on browser gesture defaults once Apple Pencil writing is required. Use a fully owned pointer model with explicit pen-vs-touch handling and pointer capture.
 
 ---
+
+## 2026-03-30 - BUG-014: Vocab Submissions Fail on Railway When Vision Key Is Missing
+
+**Issue**: `POST /api/vocab/submissions` returned 400 on Railway when students submitted a vocab exam. Railway logs showed `Google Vision API key not configured`.
+
+**Root Cause**:
+The vocab module grades each answer box with Google Vision OCR via `callVisionAPI()`. Production was deployed without `GOOGLE_VISION_API_KEY`. The route also collapsed the config failure into a generic 400, which made it look like a bad student submission instead of a server-side OCR outage.
+
+**Solution**:
+- `callVisionAPI()` now throws a clearer error: `OCR service unavailable: GOOGLE_VISION_API_KEY is not configured on the server`
+- Missing-key failures now carry HTTP `503`
+- `POST /api/vocab/submissions` preserves that status instead of forcing `400`
+- project docs now explicitly state that vocab grading still requires `GOOGLE_VISION_API_KEY`
+
+**Prevention**:
+Do not rely on the main assignment grader's Anthropic flow when deploying vocab grading. Treat `GOOGLE_VISION_API_KEY` as a required production variable for any deployment that uses vocab exams, document parsing, or region OCR.
+
+---

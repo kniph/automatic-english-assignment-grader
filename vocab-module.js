@@ -948,7 +948,7 @@ function registerVocabRoutes({ app, pool, requireTeacherAuth, hasTeacherAccess, 
       });
     } catch (err) {
       console.error('Create vocab submission error:', err);
-      res.status(400).json({ error: err.message || 'Failed to grade vocab submission' });
+      res.status(err.statusCode || 400).json({ error: err.message || 'Failed to grade vocab submission' });
     }
   });
 

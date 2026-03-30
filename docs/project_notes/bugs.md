@@ -239,3 +239,21 @@ The vocab workspace allowed Safari's default selection and touch-callout behavio
 For iPad writing surfaces, suppress browser text selection and touch callouts at both the CSS layer and the canvas event layer. Pointer capture alone is not enough to stop Safari's selection UI.
 
 ---
+
+## 2026-03-30 - BUG-016: Auto-Published Vocab Answer Boxes Included Printed Prompt Text
+
+**Issue**: The demo vocab exam for `Howdy 1 Unit 2` graded obvious correct handwriting as wrong. OCR output looked like fragments such as `re (c`, `hree (a`, `ight (a`, `abbit /n` instead of the full target words.
+
+**Root Cause**:
+The published `answer_box` values came straight from answer-key detection crops. Those crops were good enough to detect the colored answer word on the answer sheet, but they still included nearby printed prompt characters like `(` or part of the English sentence. When reused on the blank student page, the same box captured handwriting plus printed worksheet text, so Google Vision was solving the wrong image.
+
+**Solution**:
+- tighten the demo exam boxes before publishing
+- shift boxes slightly left/up to preserve handwritten strokes
+- trim the right edge so the printed `(adj.) / (n.)` text stays out of the OCR crop
+- republish the Railway demo exam with the corrected boxes
+
+**Prevention**:
+Do not reuse answer-key detection boxes as student OCR boxes without a second normalization step. Answer-key boxes are for locating colored answers; student boxes must target only the blank handwriting region.
+
+---

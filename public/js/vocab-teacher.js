@@ -452,7 +452,7 @@
             : 'Custom'}</td>
           <td>${exam.page_count}</td>
           <td>${exam.question_count}</td>
-          <td>${exam.pass_score}</td>
+          <td>${exam.pass_score}%</td>
           <td><span class="vocab-badge ${exam.status}">${exam.status}</span></td>
           <td>${exam.submission_count}</td>
           <td>${new Date(exam.updated_at || exam.created_at).toLocaleString('zh-TW')}</td>

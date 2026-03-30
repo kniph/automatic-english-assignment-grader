@@ -563,6 +563,12 @@ a {
   color: var(--vocab-blue);
 }
 
+.vocab-result-subscore {
+  font-size: 0.92rem;
+  color: var(--vocab-muted);
+  font-weight: 700;
+}
+
 .vocab-question-cards {
   display: grid;
   gap: 1rem;

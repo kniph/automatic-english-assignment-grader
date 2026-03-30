@@ -310,3 +310,22 @@ Pointer-event suppression alone did not fully stop Safari's native touch-driven 
 On iPad drawing surfaces, treat pointer events and legacy touch events as separate suppression layers. Preventing one does not guarantee Safari will stop Live Text / selection UI.
 
 ---
+
+## 2026-03-31 - BUG-020: Vocab Result UI Displayed Raw Points Beside a Percentage Pass Threshold
+
+**Issue**: The vocab result page showed a large score like `65 / 70` while the pass threshold was displayed as `80`. Even though pass/fail was correctly calculated from `percentage`, the UI made it look as if the student needed 80 raw points, which is impossible on shorter exams.
+
+**Root Cause**:
+The backend stored both raw points and percentage, and pass/fail already used percentage. The confusion came from the presentation layer: the hero score emphasized raw points while the pass threshold remained percentage-based.
+
+**Solution**:
+- keep internal per-question scoring unchanged (`5` points or `0`)
+- keep pass/fail based on `percentage >= pass_score`
+- change the main result display to percentage-based score (`93 / 100`)
+- show raw points only as secondary detail (`原始題分 65 / 70`)
+- relabel teacher inputs and list columns so `pass_score` is clearly a percentage threshold
+
+**Prevention**:
+When exam lengths vary, never present raw points as the primary score if the pass threshold is percentage-based. Keep raw points for audit, but use a percentage score as the main teacher/student-facing grade.
+
+---

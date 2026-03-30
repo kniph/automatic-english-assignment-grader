@@ -9,13 +9,14 @@
   }
 
   function renderResult(submission) {
-    document.getElementById('scoreDisplay').textContent = `${submission.total_score} / ${submission.total_possible}`;
+    document.getElementById('scoreDisplay').textContent = `${submission.percentage} / 100`;
+    document.getElementById('rawScoreDisplay').textContent = `原始題分 ${submission.total_score} / ${submission.total_possible}`;
     document.getElementById('resultTitle').textContent = submission.title;
     document.getElementById('resultMeta').innerHTML = [
       submission.student_name,
       `第 ${submission.attempt_no} 次`,
-      `${submission.percentage}%`,
-      `通過門檻 ${submission.pass_score}`
+      `答對率 ${submission.percentage}%`,
+      `通過門檻 ${submission.pass_score}%`
     ].map(text => `<span>${escHtml(text)}</span>`).join('');
 
     const passBadge = document.getElementById('passBadge');

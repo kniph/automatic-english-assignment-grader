@@ -686,6 +686,24 @@ Reviewed all pages of NH1 WB A (U1–U8 + Review 1) and NH1 WB B (U1–U8, first
 
 ---
 
+## 2026-03-31 - Vocab Score Display Switched to Percentage-First
+
+**Work Done**:
+- Kept vocab grading logic unchanged:
+  - each question still scores full points or zero
+  - pass/fail still uses `percentage >= pass_score`
+- Changed the result page to show percentage as the main grade (`93 / 100`)
+- Moved raw point totals to a secondary line (`原始題分 65 / 70`)
+- Updated teacher builder labels so `pass_score` is clearly treated as a percentage threshold
+- Updated the teacher exam list to display `pass_score` with a `%` suffix
+
+**Why This Matters**:
+- Vocab exams have variable question counts, so raw totals are inconsistent across exams
+- Teachers conceptually grade these tests out of 100, then compare to a pass line like 80
+- The system was already doing that mathematically; this change makes the UI match the grading model
+
+---
+
 ## Pending / Future Work
 
 - [ ] Supplemental notes preview/edit when reopening an existing assignment from the teacher list

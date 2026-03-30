@@ -15,6 +15,13 @@ class VocabCanvasSurface {
     this.tool = 'pen';
     this.color = '#111111';
     this.strokeSize = 3;
+    this.zoom = Number.isFinite(Number(options.zoom)) ? Number(options.zoom) : 1;
+    this.minZoom = Number.isFinite(Number(options.minZoom)) ? Number(options.minZoom) : 0.45;
+    this.maxZoom = Number.isFinite(Number(options.maxZoom)) ? Number(options.maxZoom) : 2.4;
+
+    this.mount.style.overflowX = 'auto';
+    this.mount.style.overflowY = 'hidden';
+    this.mount.style.paddingBottom = '0.35rem';
 
     this.shell = document.createElement('div');
     this.shell.style.position = 'relative';
@@ -89,9 +96,10 @@ class VocabCanvasSurface {
     const targetWidth = this.maxDisplayWidth
       ? Math.min(parentWidth, this.maxDisplayWidth)
       : Math.min(parentWidth, this.width);
-    const scale = targetWidth / this.width;
-    const displayWidth = Math.round(this.width * scale);
-    const displayHeight = Math.round(this.height * scale);
+    const baseScale = targetWidth / this.width;
+    const scale = baseScale * this.zoom;
+    const displayWidth = Math.max(120, Math.round(this.width * scale));
+    const displayHeight = Math.max(120, Math.round(this.height * scale));
 
     this.shell.style.width = `${displayWidth}px`;
     this.shell.style.height = `${displayHeight}px`;
@@ -172,6 +180,16 @@ class VocabCanvasSurface {
 
   setStrokeSize(size) {
     this.strokeSize = size;
+  }
+
+  setZoom(zoom) {
+    const nextZoom = Math.max(this.minZoom, Math.min(this.maxZoom, Number(zoom) || 1));
+    this.zoom = nextZoom;
+    this.fitToContainer();
+  }
+
+  resetZoom() {
+    this.setZoom(1);
   }
 
   saveHistory() {

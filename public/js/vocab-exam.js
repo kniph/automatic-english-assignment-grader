@@ -9,7 +9,8 @@
     activeSurface: null,
     tool: 'pen',
     color: '#111111',
-    strokeSize: 3
+    strokeSize: 3,
+    zoom: 1
   };
 
   function escHtml(value) {
@@ -75,6 +76,23 @@
     state.surfaces.forEach(applyBrush);
   }
 
+  function updateZoomLabel() {
+    const label = document.getElementById('zoomLabel');
+    if (!label) return;
+    label.textContent = `${Math.round(state.zoom * 100)}%`;
+  }
+
+  function applyZoomToAllSurfaces() {
+    state.surfaces.forEach(surface => surface.setZoom(state.zoom));
+    updateZoomLabel();
+  }
+
+  function setZoom(nextZoom) {
+    const clamped = Math.max(0.45, Math.min(2.4, Number(nextZoom) || 1));
+    state.zoom = clamped;
+    applyZoomToAllSurfaces();
+  }
+
   async function buildExamWorkspace(exam) {
     state.exam = exam;
     state.surfaces = [];
@@ -100,6 +118,7 @@
       const surface = new VocabCanvasSurface({
         mount: document.getElementById(`pageMount-${page.page_number}`),
         backgroundBase64: page.blank_image,
+        zoom: state.zoom,
         onInteraction: current => {
           state.activeSurface = current;
         }
@@ -109,6 +128,7 @@
       state.surfaces.push(surface);
     }
     state.activeSurface = state.surfaces[0] || null;
+    applyZoomToAllSurfaces();
   }
 
   async function openExam(examId) {
@@ -159,6 +179,18 @@
         document.querySelectorAll('[data-size]').forEach(item => item.classList.toggle('active', Number(item.dataset.size) === state.strokeSize));
         applyBrushToAllSurfaces();
       });
+    });
+
+    document.getElementById('zoomOutBtn').addEventListener('click', () => {
+      setZoom(state.zoom - 0.15);
+    });
+
+    document.getElementById('zoomInBtn').addEventListener('click', () => {
+      setZoom(state.zoom + 0.15);
+    });
+
+    document.getElementById('zoomFitBtn').addEventListener('click', () => {
+      setZoom(1);
     });
 
     document.getElementById('undoBtn').addEventListener('click', () => {
@@ -217,6 +249,7 @@
     }
 
     bindToolbar();
+    updateZoomLabel();
     await loadExamList();
 
     if (preselectedExamId) {

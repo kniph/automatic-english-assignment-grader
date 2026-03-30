@@ -2,7 +2,7 @@
 <html lang="zh-TW">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5, user-scalable=yes">
   <title>Vocabulary Exam</title>
   <link rel="stylesheet" href="css/vocab.css">
 </head>
@@ -55,6 +55,12 @@
           <button class="vocab-tool active" type="button" data-size="3">S</button>
           <button class="vocab-tool" type="button" data-size="5">M</button>
           <button class="vocab-tool" type="button" data-size="7">L</button>
+          <div class="vocab-zoom-group" aria-label="縮放控制">
+            <button class="vocab-btn secondary" id="zoomOutBtn" type="button">縮小</button>
+            <button class="vocab-btn secondary" id="zoomFitBtn" type="button">適合寬度</button>
+            <button class="vocab-btn secondary" id="zoomInBtn" type="button">放大</button>
+            <span class="vocab-zoom-label" id="zoomLabel">100%</span>
+          </div>
           <button class="vocab-btn secondary" id="undoBtn" type="button">復原</button>
           <button class="vocab-btn danger" id="clearBtn" type="button">清空</button>
           <button class="vocab-btn primary" id="submitBtn" type="button">送出批改</button>

@@ -543,6 +543,122 @@ Reviewed all pages of NH1 WB A (U1–U8 + Review 1) and NH1 WB B (U1–U8, first
 
 ---
 
+## 2026-03-30 - NH9 Prompt Extraction
+
+**Work Done**:
+- Checked the newly added `VOCs` documents for machine-readable text
+- Confirmed the NH9 DOCX files are text-extractable
+- Confirmed `VOCs/空白卷/NH9/U1-8.pdf` is also text-extractable, but contains the same prompt content as the DOCX files
+- Confirmed the NH1 bundled PDFs and scan PDFs are not useful as answer-key text sources
+- Added `scripts/extract-vocab-prompts.js`
+- Generated:
+  - `data/vocab-prompts/nh9-vocab-prompts.csv`
+  - `data/vocab-prompts/nh9-vocab-prompts.json`
+
+**Findings**:
+- The NH9 files provide prompt text, Chinese clues, unit numbers, and special instructions
+- They do not provide a completed answer-key column
+- This conversion is useful for structuring NH9 content, but it does not unblock safe bulk publishing for Howdy 1-8 vocab exams
+
+**Files Modified**:
+- `scripts/extract-vocab-prompts.js`
+- `data/vocab-prompts/nh9-vocab-prompts.csv`
+- `data/vocab-prompts/nh9-vocab-prompts.json`
+- `docs/project_notes/key_facts.md`
+- `docs/project_notes/issues.md`
+
+---
+
+## 2026-03-30 - Howdy 1–8 Vocab Answer Bank Found in Legacy CSVs
+
+**Work Done**:
+- Inspected `VOCs/CSVs/` and found structured vocab CSVs for Howdy 1–10
+- Confirmed Howdy 1–8 units already have `word / definition / level / sentence / sequence`
+- Added `scripts/build-vocab-answer-bank.js` to normalize Howdy 1–8 into project-owned output files
+- Added npm script `build:vocab-bank`
+- Generated:
+  - `data/vocab-prompts/howdy-1-8-answer-bank.json`
+  - `data/vocab-prompts/howdy-1-8-answer-bank.csv`
+  - `data/vocab-prompts/howdy-1-8-answer-bank-issues.txt`
+
+**Result**:
+- There is now a reliable text answer source for Howdy 1–8 vocab exams
+- The main remaining problem is no longer answer discovery; it is reconciling page order and answer-box coordinates with the imported exam images
+
+**Known Issues**:
+- `howdy_1_all_units.csv` contains stray `Howdy 10 Unit 1–8` rows and must be filtered by exact level label
+- CSV order is not guaranteed to match visual exam order on the page, so it cannot be published blindly without template reconciliation
+
+---
+
+## 2026-03-30 - Vocab Review Extractor for Howdy 1–8
+
+**Work Done**:
+- Added `scripts/extract-vocab-review.js`
+- Built a review-extraction pipeline that:
+  - aligns the answer scan to the blank page
+  - detects newly added answer text by color family
+  - OCRs each candidate crop
+  - matches OCR output against the normalized answer bank
+  - writes `review.csv`, `review-raw.csv`, crop PNGs, and `review.json` per unit
+- Added npm script `extract:vocab-review`
+
+**Detection Strategy**:
+- Howdy 1–4: new answer text is primarily green
+- Howdy 5–8: new answer text is primarily blue
+- Duplicate candidates are reduced by keeping the best unique match per expected answer
+
+**Batch Result**:
+- Ran the full matched set into `data/vocab-review-batch-v2/`
+- Summary:
+  - 63 matched exams processed
+  - 35 perfect
+  - 13 near-complete (missing 1–2 answers)
+  - 15 harder units still missing 3+ answers
+
+**Main Remaining Hard Units**:
+- Howdy 1 Unit 7
+- Howdy 5 Units 1, 2, 3, 5, 6
+- Howdy 6 Units 1, 3, 4, 5, 7, 8
+- Howdy 7 Units 3, 6, 7
+
+---
+
+## 2026-03-30 - Demo Publish: Howdy 1 Unit 2
+
+**Work Done**:
+- Added `scripts/publish-vocab-demo.js` for one-off Railway publishing from a reviewed vocab CSV
+- Used `data/vocab-review-batch-v2/howdy-1-unit-2/review.csv` as the source of truth
+- Updated the existing Railway draft exam titled `Howdy 1 Unit 2 Vocabulary`
+- Published the exam
+
+**Railway Result**:
+- `id: 1`
+- `title: Howdy 1 Unit 2 Vocabulary`
+- `status: published`
+- `question_count: 14`
+- `pass_score: 80`
+
+**Purpose**:
+- Safe demo unit for teacher / student walkthrough before broader batch publication
+
+---
+
+## 2026-03-30 - Vocab Exam Zoom Controls
+
+**Work Done**:
+- Added zoom controls to `public/vocab-exam.html`
+- Enabled browser-level pinch zoom by updating the viewport meta tag
+- Added shared zoom support to `public/js/vocab-drawing.js`
+- Wired global exam zoom state in `public/js/vocab-exam.js`
+- Added responsive zoom control styling in `public/css/vocab.css`
+
+**Result**:
+- Students can zoom out to see more of the page, zoom back in for writing, and reset to fit-width
+- Zoom applies consistently across all exam pages without changing underlying drawing coordinates
+
+---
+
 ## Pending / Future Work
 
 - [ ] Supplemental notes preview/edit when reopening an existing assignment from the teacher list

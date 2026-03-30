@@ -414,6 +414,28 @@ a {
   margin-bottom: 0.9rem;
 }
 
+.vocab-zoom-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.18rem 0.22rem;
+  border: 1px solid var(--vocab-line);
+  border-radius: 999px;
+  background: #f8fbfe;
+}
+
+.vocab-zoom-group .vocab-btn {
+  padding: 0.52rem 0.82rem;
+}
+
+.vocab-zoom-label {
+  min-width: 3.6rem;
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--vocab-muted);
+}
+
 .vocab-tool {
   border: 1px solid var(--vocab-line);
   border-radius: 999px;
@@ -564,5 +586,12 @@ a {
 
   .vocab-upload-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .vocab-zoom-group {
+    width: 100%;
+    justify-content: center;
   }
 }

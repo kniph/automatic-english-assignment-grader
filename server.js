@@ -9,6 +9,7 @@ const heicConvert = require('heic-convert');
 const path = require('path');
 const mammoth = require('mammoth');
 const Anthropic = require('@anthropic-ai/sdk');
+const { initVocabDB, registerVocabRoutes } = require('./vocab-module');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -132,6 +133,8 @@ async function initDB() {
       SET score_status = 'official'
       WHERE score_status IS NULL OR BTRIM(score_status) = '';
     `).catch(() => {});
+
+    await initVocabDB(client);
 
     // Migrations (idempotent)
     await client.query(`ALTER TABLE answer_keys ALTER COLUMN image_width SET DEFAULT 0`).catch(() => {});
@@ -1336,6 +1339,14 @@ JSON field rules:
   if (!jsonMatch) throw new Error('Claude 未回傳有效的 JSON');
   return JSON.parse(jsonMatch[0]);
 }
+
+registerVocabRoutes({
+  app,
+  pool,
+  requireTeacherAuth,
+  hasTeacherAccess,
+  callVisionAPI
+});
 
 // --- Start Server ---
 async function start() {

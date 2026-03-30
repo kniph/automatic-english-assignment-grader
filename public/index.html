@@ -20,8 +20,11 @@
     .app-title { color: white; font-size: 2rem; font-weight: 800; margin-bottom: 0.2rem; text-align: center; }
     .app-subtitle { color: rgba(255,255,255,0.7); font-size: 0.88rem; margin-bottom: 1.5rem; text-align: center; }
     /* Teacher link */
-    .teacher-link {
+    .teacher-links {
       position: absolute; top: 1rem; right: 1rem;
+      display: flex; gap: 0.5rem;
+    }
+    .teacher-link {
       color: rgba(255,255,255,0.5); font-size: 0.78rem; text-decoration: none;
       padding: 0.3rem 0.6rem; border-radius: 6px;
     }
@@ -128,7 +131,10 @@
 </head>
 <body>
 
-  <a href="teacher.html" class="teacher-link">教師管理 ⚙️</a>
+  <div class="teacher-links">
+    <a href="vocab-exam.html" class="teacher-link">單字考試 ✏️</a>
+    <a href="teacher.html" class="teacher-link">教師管理 ⚙️</a>
+  </div>
 
   <div class="loading-overlay hidden" id="loadingOverlay">
     <div class="spinner"></div>

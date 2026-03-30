@@ -261,6 +261,93 @@ Reviewed all pages of NH1 WB A (U1–U8 + Review 1) and NH1 WB B (U1–U8, first
 
 ---
 
+## 2026-03-30 - Vocab Exam MVP Module
+
+**Work Done**:
+1. Added a separate vocab module backend in `vocab-module.js`
+2. Added new DB tables:
+   - `vocab_exams`
+   - `vocab_exam_pages`
+   - `vocab_questions`
+   - `vocab_submissions`
+3. Added teacher-facing vocab APIs for create/list/get/update/publish
+4. Added strict per-question OCR grading:
+   - crop each answer box from the submitted page
+   - Google Vision OCR on the cropped answer area
+   - strict string comparison after trim / whitespace collapse only
+5. Added wrong-question retest generation from `wrong_question_ids`
+6. Built new pages:
+   - `public/vocab-teacher.html`
+   - `public/vocab-exam.html`
+   - `public/vocab-result.html`
+   - `public/vocab-retest.html`
+7. Added shared vocab UI assets:
+   - `public/css/vocab.css`
+   - `public/js/vocab-drawing.js`
+   - `public/js/vocab-teacher.js`
+   - `public/js/vocab-exam.js`
+   - `public/js/vocab-result.js`
+   - `public/js/vocab-retest.js`
+8. Added entry links from `public/index.html` and `public/teacher.html`
+
+**Scope Notes**:
+- Current MVP supports manual template creation with teacher-drawn answer boxes
+- Howdy metadata is supported as the source type, but automatic local-material import is not wired yet for vocab exams
+- Runtime smoke test inside sandbox was blocked because the app could not bind `0.0.0.0:3000`, and the session DB env was not available
+
+**Files Modified**:
+- `server.js`
+- `vocab-module.js`
+- `public/index.html`
+- `public/teacher.html`
+- `public/vocab-teacher.html`
+- `public/vocab-exam.html`
+- `public/vocab-result.html`
+- `public/vocab-retest.html`
+- `public/css/vocab.css`
+- `public/js/vocab-drawing.js`
+- `public/js/vocab-teacher.js`
+- `public/js/vocab-exam.js`
+- `public/js/vocab-result.js`
+- `public/js/vocab-retest.js`
+- `docs/project_notes/decisions.md`
+- `docs/project_notes/key_facts.md`
+- `docs/project_notes/issues.md`
+
+---
+
+## 2026-03-30 - VOCs Local Import Script
+
+**Work Done**:
+1. Added `scripts/import-vocab-exams.js`
+2. Added `npm run import:vocab`
+3. Importer pairs:
+   - `VOCs/空白卷/NH*/H*U*`
+   - `VOCs/掃描檔/H*/H*U*`
+4. Matching imports create vocab **draft** exams with:
+   - 1 blank page
+   - 1 answer-key page
+   - no question boxes yet
+5. `--dry-run` works without API calls and was used to validate the local corpus
+
+**Dry-run result on current repo**:
+- matched pairs: 63
+- blank-only: `1-1`
+- scan-only: none
+
+**Scope Notes**:
+- Current importer only consumes direct image pairs (`jpg/jpeg/png`)
+- It does not yet split the bundled PDFs or parse NH9 DOCX files
+- Imported exams are created as drafts so teachers can finish the template safely before publishing
+
+**Files Modified**:
+- `scripts/import-vocab-exams.js`
+- `package.json`
+- `docs/project_notes/key_facts.md`
+- `docs/project_notes/issues.md`
+
+---
+
 ## 2026-03-29 - Shared Grading Reference Files
 
 **Work Done**:

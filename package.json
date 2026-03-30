@@ -8,6 +8,7 @@
     "dev": "nodemon server.js",
     "download:sequence": "node scripts/download-sequence.js",
     "import:assignments": "node scripts/import-assignments.js",
+    "import:vocab": "node scripts/import-vocab-exams.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "version:update": "node scripts/update-version.js",
     "version:check": "node scripts/check-version.js"

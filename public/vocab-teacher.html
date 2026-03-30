@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vocab Builder</title>
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/vocab.css">
+</head>
+<body>
+  <header class="vocab-header">
+    <h1>單字批改 Builder</h1>
+    <nav>
+      <a href="vocab-exam.html">學生考試</a>
+      <a href="teacher.html">習作管理</a>
+      <a href="index.html">學生首頁</a>
+    </nav>
+  </header>
+
+  <main class="vocab-shell">
+    <div class="vocab-actions" style="margin-bottom: 1rem;">
+      <button class="vocab-btn primary" id="tabBuilderBtn" type="button">模板編輯</button>
+      <button class="vocab-btn secondary" id="tabListBtn" type="button">考卷清單</button>
+    </div>
+
+    <section id="builderTab">
+      <div class="vocab-card">
+        <h2>考卷設定</h2>
+        <div class="vocab-field" style="margin-bottom: 1rem;">
+          <label>來源類型</label>
+          <div class="vocab-source-row">
+            <label class="vocab-pill-radio"><input type="radio" name="sourceType" value="howdy" checked>Howdy 單元</label>
+            <label class="vocab-pill-radio"><input type="radio" name="sourceType" value="custom">自訂考卷</label>
+          </div>
+        </div>
+
+        <div class="vocab-form-grid" id="howdyFields">
+          <div class="vocab-field">
+            <label for="howdyLevel">Howdy</label>
+            <select id="howdyLevel"></select>
+          </div>
+          <div class="vocab-field">
+            <label for="unitNumber">Unit</label>
+            <select id="unitNumber"></select>
+          </div>
+          <div class="vocab-field">
+            <label for="bookType">Book</label>
+            <select id="bookType">
+              <option value="A">A</option>
+              <option value="B">B</option>
+              <option value="C">C</option>
+            </select>
+          </div>
+          <div class="vocab-field">
+            <label for="passScore">通過分數</label>
+            <input id="passScore" type="number" min="0" max="100" value="80">
+          </div>
+        </div>
+
+        <div class="vocab-form-grid compact vocab-hidden" id="customFields">
+          <div class="vocab-field">
+            <label for="customTitle">考卷標題</label>
+            <input id="customTitle" type="text" maxlength="200" placeholder="例如：Unit 4 Vocabulary Quiz">
+          </div>
+          <div class="vocab-field">
+            <label for="customPassScore">通過分數</label>
+            <input id="customPassScore" type="number" min="0" max="100" value="80">
+          </div>
+        </div>
+
+        <div class="vocab-field" style="margin-top: 1rem;">
+          <label for="examTitle">顯示標題</label>
+          <input id="examTitle" type="text" maxlength="200" placeholder="不填會依來源自動命名">
+        </div>
+
+        <div class="vocab-actions" style="margin-top: 0.8rem;">
+          <button class="vocab-btn primary" id="saveDraftBtn" type="button">儲存草稿</button>
+          <button class="vocab-btn success" id="publishBtn" type="button">儲存並發布</button>
+          <button class="vocab-btn secondary" id="renumberBtn" type="button">自動重編題號</button>
+          <button class="vocab-btn ghost" id="resetBtn" type="button">清空表單</button>
+          <span class="vocab-helper" id="builderStatus"></span>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <h2>上傳考卷頁面</h2>
+        <div class="vocab-upload-grid">
+          <label class="vocab-upload-box" id="blankUploadBox">
+            <strong>空白卷</strong>
+            <div class="vocab-helper" style="margin-top: 0.35rem;">支援 JPG / PNG / HEIC / PDF，可一次 1-4 頁</div>
+            <input id="blankUploadInput" type="file" accept="image/*,.pdf" multiple>
+            <div class="vocab-upload-preview" id="blankPreview"></div>
+          </label>
+
+          <label class="vocab-upload-box" id="answerUploadBox">
+            <strong>答案卷</strong>
+            <div class="vocab-helper" style="margin-top: 0.35rem;">頁數需和空白卷一致</div>
+            <input id="answerUploadInput" type="file" accept="image/*,.pdf" multiple>
+            <div class="vocab-upload-preview" id="answerPreview"></div>
+          </label>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-toolbar" style="justify-content: space-between;">
+          <div>
+            <strong>模板標註</strong>
+            <div class="vocab-helper">在空白卷上拖曳畫框建立作答區，再到右側填入正確答案。</div>
+          </div>
+          <div class="vocab-actions">
+            <button class="vocab-btn secondary" id="toggleAnswerBtn" type="button">顯示答案頁</button>
+            <button class="vocab-btn danger" id="deleteQuestionBtn" type="button">刪除所選題目</button>
+          </div>
+        </div>
+
+        <div class="vocab-page-tabs" id="pageTabs"></div>
+
+        <div class="vocab-editor-grid">
+          <div>
+            <div class="vocab-canvas-wrap">
+              <canvas id="templateCanvas"></canvas>
+            </div>
+            <div class="vocab-hidden" id="answerPreviewWrap" style="margin-top: 1rem;">
+              <img id="answerPagePreview" class="vocab-answer-preview" alt="Answer preview">
+            </div>
+          </div>
+
+          <div class="vocab-grid">
+            <div class="vocab-card" style="padding: 0.9rem;">
+              <h3>題目設定</h3>
+              <div class="vocab-form-grid compact">
+                <div class="vocab-field">
+                  <label for="questionNumberInput">題號</label>
+                  <input id="questionNumberInput" type="number" min="1">
+                </div>
+                <div class="vocab-field">
+                  <label for="questionPageInput">頁數</label>
+                  <select id="questionPageInput"></select>
+                </div>
+                <div class="vocab-field">
+                  <label for="questionPointsInput">分數</label>
+                  <input id="questionPointsInput" type="number" min="1" value="5">
+                </div>
+                <div class="vocab-field">
+                  <label for="questionPromptTypeInput">題型</label>
+                  <select id="questionPromptTypeInput">
+                    <option value="picture_word">picture_word</option>
+                    <option value="phrase">phrase</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="vocab-field">
+                <label for="questionAnswerInput">正確答案</label>
+                <input id="questionAnswerInput" type="text" maxlength="200" placeholder="例如：apple">
+              </div>
+
+              <div class="vocab-form-grid compact">
+                <div class="vocab-field">
+                  <label for="boxXInput">x</label>
+                  <input id="boxXInput" type="number" min="0">
+                </div>
+                <div class="vocab-field">
+                  <label for="boxYInput">y</label>
+                  <input id="boxYInput" type="number" min="0">
+                </div>
+                <div class="vocab-field">
+                  <label for="boxWidthInput">width</label>
+                  <input id="boxWidthInput" type="number" min="1">
+                </div>
+                <div class="vocab-field">
+                  <label for="boxHeightInput">height</label>
+                  <input id="boxHeightInput" type="number" min="1">
+                </div>
+              </div>
+            </div>
+
+            <div class="vocab-card" style="padding: 0.9rem;">
+              <h3>題目列表</h3>
+              <div class="vocab-list">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>頁</th>
+                      <th>答案</th>
+                      <th>分數</th>
+                    </tr>
+                  </thead>
+                  <tbody id="questionTableBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="listTab" class="vocab-hidden">
+      <div class="vocab-card">
+        <div class="vocab-actions" style="justify-content: space-between; margin-bottom: 0.8rem;">
+          <h2 style="margin: 0;">已建立考卷</h2>
+          <button class="vocab-btn secondary" id="refreshListBtn" type="button">重新整理</button>
+        </div>
+        <div class="vocab-list">
+          <table>
+            <thead>
+              <tr>
+                <th>標題</th>
+                <th>來源</th>
+                <th>頁數</th>
+                <th>題數</th>
+                <th>通過</th>
+                <th>狀態</th>
+                <th>作答</th>
+                <th>更新</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="examListBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script>
+    if (typeof pdfjsLib !== 'undefined') {
+      pdfjsLib.GlobalWorkerOptions.workerSrc =
+        'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    }
+  </script>
+  <script src="js/common.js"></script>
+  <script src="js/roi-editor.js"></script>
+  <script src="js/vocab-teacher.js"></script>
+</body>
+</html>

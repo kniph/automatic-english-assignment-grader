@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Vocabulary Retest</title>
+  <link rel="stylesheet" href="css/vocab.css">
+</head>
+<body>
+  <header class="vocab-header">
+    <h1>錯題重考</h1>
+    <nav>
+      <a href="vocab-exam.html">考卷列表</a>
+      <a href="index.html">主系統首頁</a>
+    </nav>
+  </header>
+
+  <main class="vocab-shell">
+    <div class="vocab-card">
+      <div class="vocab-actions" style="justify-content: space-between;">
+        <div>
+          <h2 id="retestTitle" style="margin: 0 0 0.3rem;">錯題重考</h2>
+          <div class="vocab-meta-row" id="retestMeta"></div>
+        </div>
+        <a class="vocab-btn secondary" id="backToResultLink" href="#">回上一份結果</a>
+      </div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-toolbar">
+        <button class="vocab-tool active" type="button" data-tool="pen">筆</button>
+        <button class="vocab-tool" type="button" data-tool="eraser">橡皮擦</button>
+        <span class="vocab-color black active" data-color="#111111"></span>
+        <span class="vocab-color blue" data-color="#1f7ae0"></span>
+        <span class="vocab-color red" data-color="#d84d4d"></span>
+        <span class="vocab-color green" data-color="#1c8a5b"></span>
+        <button class="vocab-tool active" type="button" data-size="3">S</button>
+        <button class="vocab-tool" type="button" data-size="5">M</button>
+        <button class="vocab-tool" type="button" data-size="7">L</button>
+        <button class="vocab-btn secondary" id="undoRetestBtn" type="button">復原</button>
+        <button class="vocab-btn danger" id="clearRetestBtn" type="button">清空</button>
+        <button class="vocab-btn primary" id="submitRetestBtn" type="button">送出重考</button>
+      </div>
+    </div>
+
+    <div class="vocab-question-cards" id="retestQuestionCards"></div>
+  </main>
+
+  <script src="js/common.js"></script>
+  <script src="js/vocab-drawing.js"></script>
+  <script src="js/vocab-retest.js"></script>
+</body>
+</html>

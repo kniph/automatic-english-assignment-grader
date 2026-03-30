@@ -219,6 +219,42 @@ Use `unit = 9` for Review 1 and `unit = 10` for Review 2 in the database. The `b
 
 **DB migration**: ALTER TABLE drops and recreates the CHECK constraint to allow `unit BETWEEN 1 AND 10`.
 
+---
+
+## ADR-011: Vocab Module Uses Per-Question OCR + Strict String Match
+
+**Date**: 2026-03-30
+
+**Context**:
+The vocab-test MVP needs stricter grading than the workbook workflow. Teachers explicitly want:
+- fixed answer boxes
+- fixed correct answers
+- case-sensitive grading
+- singular/plural treated strictly
+- one missing letter = fully wrong
+- unreadable handwriting = fully wrong
+
+Whole-page vision grading is too loose for this use case and would make pass/fail outcomes unpredictable.
+
+**Decision**:
+Implement vocab grading as a separate module using:
+- `vocab_exams`, `vocab_exam_pages`, `vocab_questions`, `vocab_submissions`
+- teacher-defined answer boxes per question
+- per-question crop OCR via Google Vision `DOCUMENT_TEXT_DETECTION`
+- strict normalized string equality after trimming/collapsing whitespace only
+- wrong-question retest built from the stored `wrong_question_ids`
+
+**Rationale**:
+- Keeps vocab grading isolated from the existing workbook/Claude workflow
+- Makes scoring deterministic and easy for teachers to understand
+- Reuses existing infrastructure (Railway, PostgreSQL, teacher passcode, image upload) without coupling answer logic
+- Supports targeted retests without generating a brand-new repo or backend
+
+**Consequences**:
+- OCR quality depends on `GOOGLE_VISION_API_KEY`; this module does not fall back to whole-page LLM grading
+- Teacher must manually mark answer boxes and answers in the first version
+- Current MVP supports manual template creation now; automated local-material import can be added later on the same schema
+
 **UI**: Dropdowns show "Review 1（A本）" and "Review 2（B本）" as selectable options. The UNIT_LABELS map in index.html and assignment.html translates 9→"Review 1" and 10→"Review 2" for display.
 
 **Alternatives Considered**:

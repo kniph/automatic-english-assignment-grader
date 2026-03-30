@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vocabulary Result</title>
+  <link rel="stylesheet" href="css/vocab.css">
+</head>
+<body>
+  <header class="vocab-header">
+    <h1>批改結果</h1>
+    <nav>
+      <a href="vocab-exam.html">再考一份</a>
+      <a href="index.html">主系統首頁</a>
+    </nav>
+  </header>
+
+  <main class="vocab-shell">
+    <div class="vocab-card">
+      <div class="vocab-result-hero">
+        <div class="score" id="scoreDisplay">--</div>
+        <div id="resultTitle">載入中…</div>
+        <div class="vocab-meta-row" id="resultMeta"></div>
+      </div>
+      <div class="vocab-actions" style="justify-content: center;">
+        <span class="vocab-badge" id="passBadge">--</span>
+      </div>
+    </div>
+
+    <div class="vocab-card">
+      <h2>每題結果</h2>
+      <div class="vocab-list">
+        <table>
+          <thead>
+            <tr>
+              <th>題號</th>
+              <th>狀態</th>
+              <th>辨識答案</th>
+              <th>正確答案</th>
+              <th>分數</th>
+            </tr>
+          </thead>
+          <tbody id="gradedAnswerBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="vocab-card">
+      <h2>下一步</h2>
+      <div class="vocab-actions" id="resultActions">
+        <a class="vocab-btn secondary" href="vocab-exam.html">回到考卷列表</a>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/common.js"></script>
+  <script src="js/vocab-result.js"></script>
+</body>
+</html>

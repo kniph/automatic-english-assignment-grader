@@ -128,6 +128,17 @@ Essential project configuration, constants, and quick reference information.
 - `POST /api/parse-document` — PDF/DOCX → structured answers (Google Vision)
 - `POST /api/ocr/region` — OCR a cropped region (legacy)
 
+### Vocab Module
+- `GET  /api/vocab/exams` — published vocab exams for student selection
+- `GET  /api/vocab/exams?scope=teacher` — full vocab exam list for teacher builder
+- `POST /api/vocab/exams` — create vocab exam draft (teacher only)
+- `GET  /api/vocab/exams/:id` — public exam data when published; full template when teacher-authenticated
+- `PATCH /api/vocab/exams/:id` — update exam/pages/questions (teacher only)
+- `POST /api/vocab/exams/:id/publish` — validate and publish exam (teacher only)
+- `POST /api/vocab/submissions` — submit full exam or retest answers for grading
+- `GET  /api/vocab/submissions/:id` — fetch saved result details
+- `POST /api/vocab/submissions/:id/retest` — build wrong-question retest payload
+
 ---
 
 ## Pages
@@ -139,6 +150,68 @@ Essential project configuration, constants, and quick reference information.
 | `public/teacher.html` | Upload assignments (image + answer key + audio); prompts for teacher passcode when enabled | Teacher |
 | `public/grader.html` | Legacy: manual upload + grade + analysis; prompts for teacher passcode when enabled | Teacher (v1) |
 | `public/*-v1.html` | Backup of v1 pages | Archive |
+| `public/vocab-teacher.html` | Vocab exam builder: page upload, answer-box marking, publish/list | Teacher |
+| `public/vocab-exam.html` | Student vocab exam selection + multi-page writing UI | Student |
+| `public/vocab-result.html` | Per-attempt vocab grading result page | Student |
+| `public/vocab-retest.html` | Wrong-question retest UI built from a previous submission | Student |
+
+---
+
+## Vocab Module Schema
+
+### `vocab_exams`
+| Column | Type | Notes |
+|---|---|---|
+| `id` | SERIAL PK | |
+| `source_type` | VARCHAR(20) | `howdy` or `custom` |
+| `howdy_level` | INTEGER | nullable unless source=`howdy` |
+| `unit` | INTEGER | nullable unless source=`howdy` |
+| `book_type` | VARCHAR(1) | nullable unless source=`howdy` |
+| `title` | VARCHAR(200) | teacher-facing / student-facing exam name |
+| `pass_score` | INTEGER | default 80 |
+| `page_count` | INTEGER | 1–4 |
+| `status` | VARCHAR(20) | `draft` or `published` |
+| `created_at` | TIMESTAMP | |
+| `updated_at` | TIMESTAMP | |
+
+### `vocab_exam_pages`
+| Column | Type | Notes |
+|---|---|---|
+| `id` | SERIAL PK | |
+| `exam_id` | INTEGER FK | → `vocab_exams(id)` CASCADE DELETE |
+| `page_number` | INTEGER | 1–4 |
+| `blank_image` | TEXT | base64 JPEG |
+| `answer_key_image` | TEXT | base64 JPEG |
+
+### `vocab_questions`
+| Column | Type | Notes |
+|---|---|---|
+| `id` | SERIAL PK | |
+| `exam_id` | INTEGER FK | → `vocab_exams(id)` CASCADE DELETE |
+| `page_number` | INTEGER | which uploaded page contains the question |
+| `question_number` | INTEGER | unique within exam |
+| `prompt_type` | VARCHAR(40) | currently `picture_word` / `phrase` |
+| `answer_text` | TEXT | canonical strict answer |
+| `answer_box` | JSONB | `{x,y,width,height}` in original page coordinates |
+| `points` | INTEGER | default 5 |
+
+### `vocab_submissions`
+| Column | Type | Notes |
+|---|---|---|
+| `id` | SERIAL PK | |
+| `exam_id` | INTEGER FK | → `vocab_exams(id)` CASCADE DELETE |
+| `student_name` | VARCHAR(100) | |
+| `attempt_no` | INTEGER | increments per exam + student |
+| `attempt_mode` | VARCHAR(20) | `full` or `retest` |
+| `source_submission_id` | INTEGER FK | prior attempt when this is a retest |
+| `submission_images` | JSONB | base64 JPEG array |
+| `graded_answers` | JSONB | per-question OCR + score payload |
+| `total_score` | INTEGER | |
+| `total_possible` | INTEGER | |
+| `percentage` | INTEGER | |
+| `passed` | BOOLEAN | based on exam `pass_score` |
+| `wrong_question_ids` | JSONB | source for the next retest |
+| `created_at` | TIMESTAMP | |
 
 ---
 
@@ -153,6 +226,20 @@ Essential project configuration, constants, and quick reference information.
 | `pg` | PostgreSQL client |
 | `express` | HTTP server |
 | PDF.js (CDN) | Client-side PDF → canvas → JPEG |
+
+---
+
+## Import Scripts
+
+- `npm run import:assignments` — batch import workbook assignments from `WBs/`
+- `npm run import:vocab` — batch import vocab blank/answer image pairs from `VOCs/`
+
+Current `import:vocab` behavior:
+- scans `VOCs/空白卷/NH*/H*U*.{jpg,jpeg,png}`
+- scans `VOCs/掃描檔/H*/H*U*.{jpg,jpeg,png}`
+- ignores conflict duplicates such as `_Conflict.jpg`
+- creates vocab draft exams with 1 page and no questions yet
+- intended to preload blank/answer sheets so teachers only need to draw answer boxes and type answers
 
 ---
 

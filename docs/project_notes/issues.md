@@ -704,6 +704,33 @@ Reviewed all pages of NH1 WB A (U1–U8 + Review 1) and NH1 WB B (U1–U8, first
 
 ---
 
+## 2026-03-31 - Vocab Batch Backfill Workflow for Reviewed Units
+
+**Work Done**:
+- Added shared review-sync helpers in `scripts/lib/vocab-review-sync.js`
+- Refactored `scripts/publish-vocab-demo.js` to use the shared helper layer
+- Added `scripts/sync-vocab-review-batch.js` to:
+  - select reviewed units from `data/vocab-review-batch-v2/summary.json`
+  - filter by `max_missing`, `levels`, `units`, and `limit`
+  - dry-run against local files only or verify against Railway
+  - backfill reviewed questions into existing Railway vocab drafts
+  - optionally publish after backfill
+- Added request timeouts and per-exam progress output so long batch runs are observable and do not hang silently
+- Preserved already-published exams during non-publish backfills by republishing them after the template refresh
+
+**Railway Result**:
+- Verified the first safe batch as `35` perfect reviewed units (`missing_count = 0`)
+- Backfilled all `35` units into the existing Railway vocab exams
+- Preserved `Howdy 1 Unit 2 Vocabulary` as the live published demo
+- Left the remaining batch items in `draft` for later teacher review and selective publish
+
+**Why This Matters**:
+- The project now has a repeatable path from:
+  reviewed `review.csv` -> Railway draft exam with answers and answer boxes
+- This closes the gap between one-off demo publishing and scalable staged rollout
+
+---
+
 ## Pending / Future Work
 
 - [ ] Supplemental notes preview/edit when reopening an existing assignment from the teacher list

@@ -731,6 +731,25 @@ Reviewed all pages of NH1 WB A (U1–U8 + Review 1) and NH1 WB B (U1–U8, first
 
 ---
 
+## 2026-03-31 - Vocab Perfect Batch Published + Student Selection Switched to Howdy/Unit Flow
+
+**Work Done**:
+- Used `scripts/sync-vocab-review-batch.js --publish` to publish all `35` perfect reviewed vocab units to Railway
+- Confirmed the public vocab exam list now returns `35` published exams
+- Updated `public/vocab-exam.html`, `public/js/vocab-exam.js`, and `public/css/vocab.css` so students no longer see one long flat list
+- Replaced the old list with a step flow:
+  - student name
+  - Howdy level
+  - Unit
+  - exam card(s)
+- Added title-based metadata fallback in the student exam page because the existing imported vocab exams currently have `source_type=custom` and null `howdy_level/unit` in production
+
+**Why This Matters**:
+- After the batch publish, the flat published-exam list became too long for students to browse efficiently
+- The new selection flow keeps the student UX aligned with the existing WB ABC flow without requiring an immediate data migration of legacy vocab exam metadata
+
+---
+
 ## Pending / Future Work
 
 - [ ] Supplemental notes preview/edit when reopening an existing assignment from the teacher list

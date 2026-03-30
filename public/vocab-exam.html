@@ -17,6 +17,8 @@
 
   <main class="vocab-shell">
     <section id="selectionSection">
+      <div class="vocab-summary-bar" id="selectionSummaryBar">請輸入姓名開始</div>
+
       <div class="vocab-card">
         <h2>開始作答</h2>
         <div class="vocab-form-grid compact">
@@ -30,7 +32,29 @@
         </div>
       </div>
 
-      <div class="vocab-selection-list" id="examSelectionList"></div>
+      <div class="vocab-step-card vocab-hidden" id="stepHowdyCard">
+        <div class="vocab-step-label">Step 2</div>
+        <div class="vocab-step-title">選擇 Howdy 幾冊？</div>
+        <div class="vocab-select-grid cols-5" id="howdySelectionGrid"></div>
+      </div>
+
+      <div class="vocab-step-card vocab-hidden" id="stepUnitCard">
+        <div class="vocab-step-label">Step 3</div>
+        <div class="vocab-step-title">選擇 Unit 幾？</div>
+        <div class="vocab-select-grid cols-4" id="unitSelectionGrid"></div>
+      </div>
+
+      <div class="vocab-step-card vocab-hidden" id="stepExamCard">
+        <div class="vocab-step-label">Step 4</div>
+        <div class="vocab-step-title">選擇考卷</div>
+        <div class="vocab-selection-list" id="examSelectionList"></div>
+      </div>
+
+      <div class="vocab-step-card vocab-hidden" id="customExamCard">
+        <div class="vocab-step-label">其他</div>
+        <div class="vocab-step-title">自訂考卷</div>
+        <div class="vocab-selection-list" id="customExamSelectionList"></div>
+      </div>
     </section>
 
     <section id="workspaceSection" class="vocab-hidden vocab-no-select">

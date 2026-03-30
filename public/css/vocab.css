@@ -93,9 +93,88 @@ a {
   margin-top: 1rem;
 }
 
+.vocab-summary-bar {
+  margin-bottom: 1rem;
+  padding: 0.8rem 1rem;
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(31, 122, 224, 0.08), rgba(28, 138, 91, 0.08));
+  border: 1px solid rgba(31, 122, 224, 0.16);
+  color: var(--vocab-ink);
+  font-weight: 700;
+}
+
 .vocab-card h2,
 .vocab-card h3 {
   margin: 0 0 0.8rem;
+}
+
+.vocab-step-card {
+  margin-top: 1rem;
+  background: var(--vocab-panel);
+  border: 1px solid rgba(20, 50, 74, 0.06);
+  border-radius: 22px;
+  box-shadow: 0 18px 45px rgba(15, 33, 56, 0.08);
+  padding: 1rem;
+}
+
+.vocab-step-label {
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--vocab-blue);
+  margin-bottom: 0.35rem;
+}
+
+.vocab-step-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  margin-bottom: 0.85rem;
+}
+
+.vocab-select-grid {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.vocab-select-grid.cols-5 {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.vocab-select-grid.cols-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.vocab-select-btn {
+  border: 1px solid var(--vocab-line);
+  background: #ffffff;
+  color: var(--vocab-ink);
+  border-radius: 18px;
+  padding: 0.9rem 0.75rem;
+  font-size: 0.95rem;
+  font-weight: 800;
+  cursor: pointer;
+  text-align: center;
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.vocab-select-btn:active {
+  transform: translateY(1px);
+}
+
+.vocab-select-btn.selected {
+  background: var(--vocab-blue);
+  border-color: var(--vocab-blue);
+  color: #ffffff;
+  box-shadow: 0 12px 28px rgba(31, 122, 224, 0.22);
+}
+
+.vocab-select-btn.unavail {
+  background: #f6f8fb;
+  color: #b7c3cf;
+  border-color: #e4ebf2;
+  cursor: default;
+  box-shadow: none;
 }
 
 .vocab-grid {
@@ -603,6 +682,8 @@ a {
 }
 
 @media (max-width: 980px) {
+  .vocab-select-grid.cols-5,
+  .vocab-select-grid.cols-4,
   .vocab-editor-grid,
   .vocab-grid.two,
   .vocab-grid.three,

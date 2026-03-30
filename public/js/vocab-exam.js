@@ -4,13 +4,29 @@
 
   const state = {
     exams: [],
+    customExams: [],
     exam: null,
     surfaces: [],
     activeSurface: null,
+    selectedHowdy: null,
+    selectedUnit: null,
     tool: 'pen',
     color: '#111111',
     strokeSize: 3,
     zoom: 1
+  };
+
+  const UNIT_LABELS = {
+    1: 'Unit 1',
+    2: 'Unit 2',
+    3: 'Unit 3',
+    4: 'Unit 4',
+    5: 'Unit 5',
+    6: 'Unit 6',
+    7: 'Unit 7',
+    8: 'Unit 8',
+    9: 'Review 1',
+    10: 'Review 2'
   };
 
   function escHtml(value) {
@@ -30,6 +46,181 @@
     }
   }
 
+  function getExamDerivedMeta(exam) {
+    const directHowdy = Number(exam.howdy_level);
+    const directUnit = Number(exam.unit);
+    if (Number.isInteger(directHowdy) && directHowdy > 0 && Number.isInteger(directUnit) && directUnit > 0) {
+      return {
+        kind: 'howdy',
+        howdy_level: directHowdy,
+        unit: directUnit
+      };
+    }
+
+    const titleMatch = String(exam.title || '').match(/^Howdy\s+(\d+)\s+Unit\s+(\d+)/i);
+    if (titleMatch) {
+      return {
+        kind: 'howdy',
+        howdy_level: Number(titleMatch[1]),
+        unit: Number(titleMatch[2])
+      };
+    }
+
+    return { kind: 'custom', howdy_level: null, unit: null };
+  }
+
+  function annotateExam(exam) {
+    return {
+      ...exam,
+      derived_meta: getExamDerivedMeta(exam)
+    };
+  }
+
+  function getExamMetaLabel(exam) {
+    const meta = exam.derived_meta || getExamDerivedMeta(exam);
+    if (meta.kind === 'howdy') {
+      return `Howdy ${meta.howdy_level} / ${UNIT_LABELS[meta.unit] || `Unit ${meta.unit}`}`;
+    }
+    return 'Custom exam';
+  }
+
+  function updateSelectionSummary() {
+    const studentName = getStudentName();
+    const bar = document.getElementById('selectionSummaryBar');
+    if (!bar) return;
+
+    if (!studentName) {
+      bar.textContent = '請輸入姓名開始';
+      return;
+    }
+
+    let text = `👤 ${studentName}`;
+    if (state.selectedHowdy) text += `　📘 Howdy ${state.selectedHowdy}`;
+    if (state.selectedUnit) text += `　${UNIT_LABELS[state.selectedUnit] || `Unit ${state.selectedUnit}`}`;
+    bar.textContent = text;
+  }
+
+  function showSelectionStep(stepId) {
+    const target = document.getElementById(stepId);
+    if (!target) return;
+    target.classList.remove('vocab-hidden');
+  }
+
+  function bindExamButtons(root) {
+    if (!root) return;
+    root.querySelectorAll('[data-open]').forEach(button => {
+      button.addEventListener('click', () => openExam(Number(button.dataset.open)));
+    });
+  }
+
+  function renderExamCards(exams, mountId, emptyMessage) {
+    const wrap = document.getElementById(mountId);
+    if (!wrap) return;
+
+    if (!exams.length) {
+      wrap.innerHTML = `<div class="vocab-card"><div class="vocab-empty">${escHtml(emptyMessage)}</div></div>`;
+      return;
+    }
+
+    wrap.innerHTML = exams.map(exam => `
+      <div class="vocab-exam-card">
+        <h3>${escHtml(exam.title)}</h3>
+        <div class="vocab-meta-row">
+          <span>${escHtml(getExamMetaLabel(exam))}</span>
+          <span>${exam.page_count} 頁</span>
+          <span>${exam.question_count} 題</span>
+          <span>通過 ${exam.pass_score}%</span>
+        </div>
+        <div class="vocab-actions" style="margin-top: 0.9rem;">
+          <button class="vocab-btn primary" type="button" data-open="${exam.id}">開始作答</button>
+        </div>
+      </div>
+    `).join('');
+
+    bindExamButtons(wrap);
+  }
+
+  function renderHowdyGrid() {
+    const grid = document.getElementById('howdySelectionGrid');
+    if (!grid) return;
+
+    const howdyLevels = new Set(
+      state.exams
+        .map(exam => exam.derived_meta)
+        .filter(meta => meta.kind === 'howdy')
+        .map(meta => meta.howdy_level)
+    );
+
+    if (!howdyLevels.size) {
+      grid.innerHTML = '<div class="vocab-empty">目前沒有可用的 Howdy 單字考卷。</div>';
+      return;
+    }
+
+    grid.innerHTML = '';
+    for (let level = 1; level <= 10; level += 1) {
+      const has = howdyLevels.has(level);
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = `vocab-select-btn${has ? '' : ' unavail'}${state.selectedHowdy === level ? ' selected' : ''}`;
+      button.textContent = String(level);
+      if (has) {
+        button.addEventListener('click', () => selectHowdy(level));
+      }
+      grid.appendChild(button);
+    }
+  }
+
+  function renderUnitGrid(howdyLevel) {
+    const grid = document.getElementById('unitSelectionGrid');
+    if (!grid) return;
+
+    grid.innerHTML = '';
+    for (let unit = 1; unit <= 10; unit += 1) {
+      const has = state.exams.some(exam => {
+        const meta = exam.derived_meta;
+        return meta.kind === 'howdy' && meta.howdy_level === howdyLevel && meta.unit === unit;
+      });
+
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = `vocab-select-btn${has ? '' : ' unavail'}${state.selectedUnit === unit ? ' selected' : ''}`;
+      button.textContent = UNIT_LABELS[unit] || `Unit ${unit}`;
+      if (has) {
+        button.addEventListener('click', () => selectUnit(unit));
+      }
+      grid.appendChild(button);
+    }
+  }
+
+  function renderFilteredExamList() {
+    const filtered = state.exams.filter(exam => {
+      const meta = exam.derived_meta;
+      return meta.kind === 'howdy' && meta.howdy_level === state.selectedHowdy && meta.unit === state.selectedUnit;
+    });
+
+    renderExamCards(filtered, 'examSelectionList', '這個單元目前沒有可作答的考卷。');
+    document.getElementById('stepExamCard').classList.toggle('vocab-hidden', !state.selectedHowdy || !state.selectedUnit);
+  }
+
+  function selectHowdy(level) {
+    state.selectedHowdy = level;
+    state.selectedUnit = null;
+    updateSelectionSummary();
+    renderHowdyGrid();
+    renderUnitGrid(level);
+    showSelectionStep('stepUnitCard');
+    document.getElementById('stepExamCard').classList.add('vocab-hidden');
+    document.getElementById('examSelectionList').innerHTML = '';
+  }
+
+  function selectUnit(unit) {
+    state.selectedUnit = unit;
+    updateSelectionSummary();
+    renderUnitGrid(state.selectedHowdy);
+    renderFilteredExamList();
+    showSelectionStep('stepExamCard');
+  }
+
   function clearWorkspaceSelection() {
     const workspace = document.getElementById('workspaceSection');
     if (!workspace || workspace.classList.contains('vocab-hidden')) return;
@@ -42,35 +233,31 @@
 
   async function loadExamList() {
     const wrap = document.getElementById('examSelectionList');
+    const customWrap = document.getElementById('customExamSelectionList');
     wrap.innerHTML = '<div class="vocab-card"><div class="vocab-empty">載入考卷中…</div></div>';
+    if (customWrap) customWrap.innerHTML = '';
 
     try {
-      state.exams = await apiCall('/api/vocab/exams');
+      state.exams = (await apiCall('/api/vocab/exams')).map(annotateExam);
+      state.customExams = state.exams.filter(exam => exam.derived_meta.kind !== 'howdy');
       if (!state.exams.length) {
         wrap.innerHTML = '<div class="vocab-card"><div class="vocab-empty">目前沒有已發布的單字考卷。</div></div>';
         return;
       }
 
-      wrap.innerHTML = state.exams.map(exam => `
-        <div class="vocab-exam-card">
-          <h3>${escHtml(exam.title)}</h3>
-          <div class="vocab-meta-row">
-            <span>${exam.source_type === 'howdy'
-              ? `Howdy ${exam.howdy_level} / Unit ${exam.unit} / ${exam.book_type}`
-              : 'Custom exam'}</span>
-            <span>${exam.page_count} 頁</span>
-            <span>${exam.question_count} 題</span>
-            <span>通過 ${exam.pass_score}</span>
-          </div>
-          <div class="vocab-actions" style="margin-top: 0.9rem;">
-            <button class="vocab-btn primary" type="button" data-open="${exam.id}">開始作答</button>
-          </div>
-        </div>
-      `).join('');
+      if (getStudentName()) {
+        showSelectionStep('stepHowdyCard');
+      }
 
-      wrap.querySelectorAll('[data-open]').forEach(button => {
-        button.addEventListener('click', () => openExam(Number(button.dataset.open)));
-      });
+      renderHowdyGrid();
+      if (state.customExams.length) {
+        renderExamCards(state.customExams, 'customExamSelectionList', '目前沒有自訂考卷。');
+        document.getElementById('customExamCard').classList.remove('vocab-hidden');
+      } else {
+        document.getElementById('customExamCard').classList.add('vocab-hidden');
+      }
+
+      updateSelectionSummary();
     } catch (error) {
       wrap.innerHTML = `<div class="vocab-card"><div class="vocab-empty">${escHtml(error.message)}</div></div>`;
     }
@@ -110,10 +297,10 @@
 
     document.getElementById('workspaceTitle').textContent = exam.title;
     document.getElementById('workspaceMeta').innerHTML = [
-      exam.source_type === 'howdy' ? `Howdy ${exam.howdy_level} / Unit ${exam.unit} / ${exam.book_type}` : 'Custom exam',
+      getExamMetaLabel(annotateExam(exam)),
       `${exam.page_count} 頁`,
       `${exam.question_count} 題`,
-      `通過 ${exam.pass_score}`
+      `通過 ${exam.pass_score}%`
     ].map(text => `<span>${escHtml(text)}</span>`).join('');
 
     const stack = document.getElementById('pageSurfaceStack');
@@ -220,8 +407,17 @@
 
     document.getElementById('submitBtn').addEventListener('click', submitExam);
     document.getElementById('backToSelectionBtn').addEventListener('click', backToSelection);
-    document.getElementById('studentNameInput').addEventListener('change', rememberStudentName);
-    document.getElementById('studentNameInput').addEventListener('blur', rememberStudentName);
+    document.getElementById('studentNameInput').addEventListener('change', () => {
+      rememberStudentName();
+      if (getStudentName()) showSelectionStep('stepHowdyCard');
+      updateSelectionSummary();
+    });
+    document.getElementById('studentNameInput').addEventListener('blur', () => {
+      rememberStudentName();
+      if (getStudentName()) showSelectionStep('stepHowdyCard');
+      updateSelectionSummary();
+    });
+    document.getElementById('studentNameInput').addEventListener('input', updateSelectionSummary);
   }
 
   async function submitExam() {

@@ -222,3 +222,20 @@ The vocab module grades each answer box with Google Vision OCR via `callVisionAP
 Do not rely on the main assignment grader's Anthropic flow when deploying vocab grading. Treat `GOOGLE_VISION_API_KEY` as a required production variable for any deployment that uses vocab exams, document parsing, or region OCR.
 
 ---
+
+## 2026-03-30 - BUG-015: iPad Safari Shows Text Selection / Lookup UI While Writing on Vocab Exam
+
+**Issue**: On `vocab-exam.html`, Apple Pencil writing could trigger Safari's selection / lookup callout mid-writing. Ink still worked, but the `Copy / Look Up / Translate / Search Web` overlay kept appearing on top of the page.
+
+**Root Cause**:
+The vocab workspace allowed Safari's default selection and touch-callout behavior to stay active around the canvas stack. On iPad, this could surface selection UI over the exam image while the student was writing or pausing.
+
+**Solution**:
+- mark the vocab workspace as non-selectable with `user-select: none` / `-webkit-touch-callout: none`
+- disable selection / drag / context-menu behavior on the canvas shell
+- clear any transient browser selection during canvas pointer interactions
+
+**Prevention**:
+For iPad writing surfaces, suppress browser text selection and touch callouts at both the CSS layer and the canvas event layer. Pointer capture alone is not enough to stop Safari's selection UI.
+
+---

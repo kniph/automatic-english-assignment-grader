@@ -30,6 +30,16 @@
     }
   }
 
+  function clearWorkspaceSelection() {
+    const workspace = document.getElementById('workspaceSection');
+    if (!workspace || workspace.classList.contains('vocab-hidden')) return;
+
+    const selection = typeof window.getSelection === 'function' ? window.getSelection() : null;
+    if (selection && selection.rangeCount) {
+      selection.removeAllRanges();
+    }
+  }
+
   async function loadExamList() {
     const wrap = document.getElementById('examSelectionList');
     wrap.innerHTML = '<div class="vocab-card"><div class="vocab-empty">載入考卷中…</div></div>';
@@ -248,6 +258,7 @@
       document.getElementById('studentNameInput').value = savedName;
     }
 
+    document.addEventListener('selectionchange', clearWorkspaceSelection);
     bindToolbar();
     updateZoomLabel();
     await loadExamList();

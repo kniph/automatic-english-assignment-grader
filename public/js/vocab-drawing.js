@@ -34,6 +34,10 @@ class VocabCanvasSurface {
     this.shell.style.borderRadius = '16px';
     this.shell.style.boxShadow = '0 10px 30px rgba(10, 27, 51, 0.08)';
     this.shell.style.overflow = 'hidden';
+    this.shell.style.webkitUserSelect = 'none';
+    this.shell.style.userSelect = 'none';
+    this.shell.style.webkitTouchCallout = 'none';
+    this.shell.style.webkitTapHighlightColor = 'transparent';
 
     this.bgCanvas = document.createElement('canvas');
     this.drawCanvas = document.createElement('canvas');
@@ -50,6 +54,15 @@ class VocabCanvasSurface {
     this.drawCanvas.style.inset = '0';
     this.drawCanvas.style.touchAction = 'none';
     this.drawCanvas.style.cursor = 'crosshair';
+    this.drawCanvas.style.webkitUserSelect = 'none';
+    this.drawCanvas.style.userSelect = 'none';
+    this.drawCanvas.style.webkitTouchCallout = 'none';
+    this.drawCanvas.style.webkitTapHighlightColor = 'transparent';
+
+    this.bgCanvas.style.pointerEvents = 'none';
+    this.bgCanvas.style.webkitUserSelect = 'none';
+    this.bgCanvas.style.userSelect = 'none';
+    this.bgCanvas.style.webkitTouchCallout = 'none';
 
     this.shell.appendChild(this.bgCanvas);
     this.shell.appendChild(this.drawCanvas);
@@ -110,15 +123,33 @@ class VocabCanvasSurface {
   }
 
   bindEvents() {
+    const suppressBrowserSelection = event => {
+      event.preventDefault();
+      this.clearDocumentSelection();
+    };
+
     this.drawCanvas.addEventListener('pointerdown', event => this.handlePointerDown(event));
     this.drawCanvas.addEventListener('pointermove', event => this.handlePointerMove(event));
     this.drawCanvas.addEventListener('pointerup', event => this.handlePointerUp(event));
     this.drawCanvas.addEventListener('pointercancel', event => this.handlePointerUp(event));
+    this.drawCanvas.addEventListener('contextmenu', suppressBrowserSelection);
+    this.drawCanvas.addEventListener('selectstart', suppressBrowserSelection);
+    this.drawCanvas.addEventListener('dragstart', suppressBrowserSelection);
+    this.shell.addEventListener('contextmenu', suppressBrowserSelection);
+    this.shell.addEventListener('selectstart', suppressBrowserSelection);
+    this.shell.addEventListener('dragstart', suppressBrowserSelection);
     this.drawCanvas.addEventListener('pointerleave', event => {
       if (this.isDrawing && event.pointerType !== 'touch') {
         this.handlePointerUp(event);
       }
     });
+  }
+
+  clearDocumentSelection() {
+    const selection = typeof window.getSelection === 'function' ? window.getSelection() : null;
+    if (selection && selection.rangeCount) {
+      selection.removeAllRanges();
+    }
   }
 
   isPenPointer(event) {
@@ -130,6 +161,7 @@ class VocabCanvasSurface {
   }
 
   handlePointerDown(event) {
+    this.clearDocumentSelection();
     this.activePointers.set(event.pointerId, {
       type: event.pointerType,
       clientX: event.clientX,
@@ -172,6 +204,7 @@ class VocabCanvasSurface {
   }
 
   handlePointerMove(event) {
+    this.clearDocumentSelection();
     const previous = this.activePointers.get(event.pointerId);
     if (previous) {
       this.activePointers.set(event.pointerId, {
@@ -220,6 +253,7 @@ class VocabCanvasSurface {
   }
 
   handlePointerUp(event) {
+    this.clearDocumentSelection();
     this.activePointers.delete(event.pointerId);
 
     if (this.isPenPointer(event)) {

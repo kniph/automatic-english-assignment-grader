@@ -100,10 +100,14 @@
     bar.textContent = text;
   }
 
-  function showSelectionStep(stepId) {
+  function showSelectionStep(stepId, options = {}) {
     const target = document.getElementById(stepId);
     if (!target) return;
     target.classList.remove('vocab-hidden');
+    if (options.scroll === false) return;
+    setTimeout(() => {
+      target.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 80);
   }
 
   function bindExamButtons(root) {
@@ -246,7 +250,7 @@
       }
 
       if (getStudentName()) {
-        showSelectionStep('stepHowdyCard');
+        showSelectionStep('stepHowdyCard', { scroll: false });
       }
 
       renderHowdyGrid();
@@ -457,6 +461,8 @@
     if (savedName) {
       document.getElementById('studentNameInput').value = savedName;
     }
+
+    document.documentElement.classList.add('selection-smooth-scroll');
 
     document.addEventListener('selectionchange', clearWorkspaceSelection);
     bindToolbar();

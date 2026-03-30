@@ -750,6 +750,20 @@ Reviewed all pages of NH1 WB A (U1–U8 + Review 1) and NH1 WB B (U1–U8, first
 
 ---
 
+## 2026-03-31 - Vocab Selection UX Tightened to Match Workbook Flow
+
+**Work Done**:
+- Tightened the vocab selection layout to the same narrow step-card rhythm used by the workbook home page
+- Changed the name entry card into a true Step 1 card
+- Matched the Howdy / Unit button sizing and selection states more closely to the workbook selector
+- Added smooth step reveal scrolling with `scrollIntoView({ behavior: 'smooth' })` so selecting a step moves the user down to the next card
+
+**UX Note**:
+- This interaction pattern is a step-by-step flow with progressive disclosure
+- The “tap then automatically move down to the next card” behavior is implemented with smooth scrolling
+
+---
+
 ## Pending / Future Work
 
 - [ ] Supplemental notes preview/edit when reopening an existing assignment from the teacher list

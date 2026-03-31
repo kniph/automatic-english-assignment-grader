@@ -13,7 +13,10 @@
     tool: 'pen',
     color: '#111111',
     strokeSize: 3,
-    zoom: 1
+    zoom: 1,
+    diagnosticsTapCount: 0,
+    diagnosticsTapTimer: null,
+    diagnosticsCache: null
   };
 
   const UNIT_LABELS = {
@@ -277,6 +280,153 @@
     state.surfaces.forEach(applyBrush);
   }
 
+  function formatDateTime(value) {
+    if (!value) return '未提供';
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return String(value);
+    return new Intl.DateTimeFormat('zh-TW', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false
+    }).format(date);
+  }
+
+  async function copyText(text) {
+    if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(text);
+      return;
+    }
+
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.setAttribute('readonly', '');
+    textarea.style.position = 'absolute';
+    textarea.style.left = '-9999px';
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    textarea.remove();
+  }
+
+  async function loadDiagnosticsData() {
+    if (!state.diagnosticsCache?.serverInfo) {
+      const serverInfoResult = await Promise.allSettled([
+        apiCall('/api/server-info')
+      ]);
+      state.diagnosticsCache = {
+        ...(state.diagnosticsCache || {}),
+        serverInfo: serverInfoResult[0].status === 'fulfilled' ? serverInfoResult[0].value : null
+      };
+    }
+
+    const authResult = await Promise.allSettled([getTeacherAuthStatus()]);
+    state.diagnosticsCache = {
+      ...(state.diagnosticsCache || {}),
+      teacherAuth: authResult[0].status === 'fulfilled' ? authResult[0].value : null
+    };
+
+    return state.diagnosticsCache;
+  }
+
+  function buildDiagnosticsSnapshot() {
+    const cached = state.diagnosticsCache || {};
+    const serverInfo = cached.serverInfo || {};
+    const teacherAuth = cached.teacherAuth || {};
+    const exam = state.exam;
+
+    const supportCode = serverInfo.support_code || '未提供';
+    const appVersion = serverInfo.app_version || '未提供';
+    const startedAt = formatDateTime(serverInfo.started_at);
+    const teacherState = !teacherAuth || teacherAuth.enabled === false
+      ? '未啟用'
+      : teacherAuth.authenticated
+        ? '已登入'
+        : '未登入';
+    const examLabel = exam
+      ? `${exam.title} (#${exam.id})`
+      : '尚未開啟';
+
+    return {
+      supportCode,
+      appVersion,
+      startedAt,
+      teacherState,
+      examLabel,
+      techText: [
+        `support_code: ${supportCode}`,
+        `app_version: ${appVersion}`,
+        `build_commit: ${serverInfo.build_commit || '未提供'}`,
+        `deployment_id: ${serverInfo.deployment_id || '未提供'}`,
+        `environment: ${serverInfo.environment || '未提供'}`,
+        `started_at: ${serverInfo.started_at || '未提供'}`,
+        `teacher_auth: ${teacherState}`,
+        `current_exam_id: ${exam?.id ?? 'none'}`,
+        `current_exam_title: ${exam?.title || 'none'}`,
+        `current_url: ${window.location.href}`,
+        `user_agent: ${navigator.userAgent}`
+      ].join('\n')
+    };
+  }
+
+  function renderDiagnostics(snapshot) {
+    document.getElementById('diagnosticsSupportCode').textContent = snapshot.supportCode;
+    document.getElementById('diagnosticsStartedAt').textContent = snapshot.startedAt;
+    document.getElementById('diagnosticsAppVersion').textContent = snapshot.appVersion;
+    document.getElementById('diagnosticsExam').textContent = snapshot.examLabel;
+    document.getElementById('diagnosticsTeacherState').textContent = snapshot.teacherState;
+    document.getElementById('diagnosticsTechInfo').textContent = snapshot.techText;
+  }
+
+  async function openDiagnosticsPanel() {
+    const panel = document.getElementById('diagnosticsPanel');
+    panel.classList.remove('vocab-hidden');
+    panel.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('vocab-no-select');
+
+    document.getElementById('diagnosticsSupportCode').textContent = '載入中…';
+    document.getElementById('diagnosticsStartedAt').textContent = '載入中…';
+    document.getElementById('diagnosticsAppVersion').textContent = '載入中…';
+    document.getElementById('diagnosticsExam').textContent = state.exam ? `${state.exam.title} (#${state.exam.id})` : '尚未開啟';
+    document.getElementById('diagnosticsTeacherState').textContent = '載入中…';
+    document.getElementById('diagnosticsTechInfo').textContent = '載入中…';
+
+    try {
+      await loadDiagnosticsData();
+      renderDiagnostics(buildDiagnosticsSnapshot());
+    } catch (error) {
+      document.getElementById('diagnosticsTechInfo').textContent = `載入失敗: ${error.message}`;
+    }
+  }
+
+  function closeDiagnosticsPanel() {
+    const panel = document.getElementById('diagnosticsPanel');
+    panel.classList.add('vocab-hidden');
+    panel.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('vocab-no-select');
+  }
+
+  function registerDiagnosticsTap() {
+    state.diagnosticsTapCount += 1;
+    if (state.diagnosticsTapTimer) {
+      window.clearTimeout(state.diagnosticsTapTimer);
+    }
+
+    if (state.diagnosticsTapCount >= 5) {
+      state.diagnosticsTapCount = 0;
+      state.diagnosticsTapTimer = null;
+      openDiagnosticsPanel();
+      return;
+    }
+
+    state.diagnosticsTapTimer = window.setTimeout(() => {
+      state.diagnosticsTapCount = 0;
+      state.diagnosticsTapTimer = null;
+    }, 1400);
+  }
+
   function updateZoomLabel() {
     const label = document.getElementById('zoomLabel');
     if (!label) return;
@@ -435,6 +585,40 @@
     document.getElementById('studentNameInput').addEventListener('input', updateSelectionSummary);
   }
 
+  function bindDiagnosticsPanel() {
+    const openTargets = [
+      document.getElementById('diagnosticsTrigger'),
+      document.getElementById('workspaceTitle')
+    ].filter(Boolean);
+
+    openTargets.forEach(target => {
+      target.addEventListener('click', registerDiagnosticsTap);
+    });
+
+    document.querySelectorAll('[data-close-diagnostics]').forEach(node => {
+      node.addEventListener('click', closeDiagnosticsPanel);
+    });
+    document.getElementById('closeDiagnosticsBtn').addEventListener('click', closeDiagnosticsPanel);
+
+    document.getElementById('copyDiagnosticsBtn').addEventListener('click', async () => {
+      try {
+        await loadDiagnosticsData();
+        const snapshot = buildDiagnosticsSnapshot();
+        renderDiagnostics(snapshot);
+        await copyText(snapshot.techText);
+        showToast('已複製支援資訊');
+      } catch (error) {
+        showToast(error.message || '複製失敗', 'error');
+      }
+    });
+
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape') {
+        closeDiagnosticsPanel();
+      }
+    });
+  }
+
   async function submitExam() {
     if (!state.exam || !state.surfaces.length) return;
     const studentName = getStudentName();
@@ -477,6 +661,7 @@
 
     document.addEventListener('selectionchange', clearWorkspaceSelection);
     bindToolbar();
+    bindDiagnosticsPanel();
     updateZoomLabel();
     await loadExamList();
 

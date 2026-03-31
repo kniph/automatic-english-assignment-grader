@@ -10,6 +10,7 @@ const path = require('path');
 const mammoth = require('mammoth');
 const Anthropic = require('@anthropic-ai/sdk');
 const { initVocabDB, registerVocabRoutes } = require('./vocab-module');
+const { version: APP_VERSION } = require('./package.json');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -19,6 +20,31 @@ const SUBMISSION_SCORE_STATUSES = new Set(['official', 'provisional']);
 const TEACHER_PASSCODE = String(process.env.TEACHER_PASSCODE || '').trim();
 const TEACHER_AUTH_COOKIE = 'teacher_auth';
 const TEACHER_AUTH_COOKIE_MAX_AGE = 1000 * 60 * 60 * 24 * 30;
+const SERVER_STARTED_AT = new Date().toISOString();
+const BUILD_COMMIT_SHA = String(
+  process.env.RAILWAY_GIT_COMMIT_SHA ||
+  process.env.SOURCE_VERSION ||
+  process.env.VERCEL_GIT_COMMIT_SHA ||
+  ''
+).trim();
+const BUILD_COMMIT_SHORT = BUILD_COMMIT_SHA ? BUILD_COMMIT_SHA.slice(0, 7) : '';
+const DEPLOYMENT_ID = String(
+  process.env.RAILWAY_DEPLOYMENT_ID ||
+  process.env.RAILWAY_PUBLIC_DOMAIN ||
+  process.env.RAILWAY_SERVICE_NAME ||
+  ''
+).trim();
+const SUPPORT_CODE = (() => {
+  const started = new Date(SERVER_STARTED_AT);
+  const stamp = [
+    String(started.getUTCMonth() + 1).padStart(2, '0'),
+    String(started.getUTCDate()).padStart(2, '0'),
+    String(started.getUTCHours()).padStart(2, '0'),
+    String(started.getUTCMinutes()).padStart(2, '0')
+  ].join('');
+  const buildRef = (BUILD_COMMIT_SHORT || DEPLOYMENT_ID || 'local').replace(/[^a-z0-9-]/gi, '').slice(0, 8) || 'local';
+  return `SUP-${stamp}-${buildRef.toUpperCase()}`;
+})();
 
 // --- Middleware ---
 app.use(cors());
@@ -537,6 +563,18 @@ function requireTeacherAssignmentListAuth(req, res, next) {
 // ============================================================
 
 app.get('/api/health', (req, res) => res.json({ status: 'ok', timestamp: new Date().toISOString() }));
+
+app.get('/api/server-info', (req, res) => {
+  res.json({
+    app_version: APP_VERSION,
+    support_code: SUPPORT_CODE,
+    build_commit: BUILD_COMMIT_SHA || null,
+    build_commit_short: BUILD_COMMIT_SHORT || null,
+    deployment_id: DEPLOYMENT_ID || null,
+    environment: process.env.NODE_ENV || 'development',
+    started_at: SERVER_STARTED_AT
+  });
+});
 
 app.get('/api/teacher-auth/status', (req, res) => {
   res.json({

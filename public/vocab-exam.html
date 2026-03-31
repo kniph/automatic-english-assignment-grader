@@ -8,7 +8,7 @@
 </head>
 <body>
   <header class="vocab-header">
-    <h1>單字考試</h1>
+    <h1 id="diagnosticsTrigger">單字考試</h1>
     <nav>
       <a href="vocab-teacher.html">教師 Builder</a>
       <a href="index.html">主系統首頁</a>
@@ -95,6 +95,52 @@
       <div class="vocab-surface-stack" id="pageSurfaceStack"></div>
     </section>
   </main>
+
+  <div class="vocab-diagnostics vocab-hidden" id="diagnosticsPanel" aria-hidden="true">
+    <div class="vocab-diagnostics-backdrop" data-close-diagnostics></div>
+    <div class="vocab-diagnostics-sheet" role="dialog" aria-modal="true" aria-labelledby="diagnosticsTitle">
+      <div class="vocab-diagnostics-head">
+        <div>
+          <div class="vocab-step-label">Support</div>
+          <h2 id="diagnosticsTitle">系統資訊</h2>
+        </div>
+        <button class="vocab-btn secondary" id="closeDiagnosticsBtn" type="button">關閉</button>
+      </div>
+
+      <div class="vocab-diagnostics-code-wrap">
+        <div class="vocab-diagnostics-kicker">支援碼</div>
+        <div class="vocab-diagnostics-code" id="diagnosticsSupportCode">載入中…</div>
+      </div>
+
+      <div class="vocab-diagnostics-grid">
+        <div class="vocab-diagnostics-item">
+          <span>更新時間</span>
+          <strong id="diagnosticsStartedAt">載入中…</strong>
+        </div>
+        <div class="vocab-diagnostics-item">
+          <span>頁面版本</span>
+          <strong id="diagnosticsAppVersion">載入中…</strong>
+        </div>
+        <div class="vocab-diagnostics-item">
+          <span>目前考卷</span>
+          <strong id="diagnosticsExam">尚未開啟</strong>
+        </div>
+        <div class="vocab-diagnostics-item">
+          <span>教師狀態</span>
+          <strong id="diagnosticsTeacherState">載入中…</strong>
+        </div>
+      </div>
+
+      <details class="vocab-diagnostics-details">
+        <summary>技術資訊</summary>
+        <pre class="vocab-diagnostics-tech" id="diagnosticsTechInfo">載入中…</pre>
+      </details>
+
+      <div class="vocab-actions" style="margin-top: 1rem;">
+        <button class="vocab-btn primary" id="copyDiagnosticsBtn" type="button">複製支援資訊</button>
+      </div>
+    </div>
+  </div>
 
   <script src="js/common.js"></script>
   <script src="js/vocab-drawing.js"></script>

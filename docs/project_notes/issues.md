@@ -833,6 +833,29 @@ Reviewed all pages of NH1 WB A (U1–U8 + Review 1) and NH1 WB B (U1–U8, first
 
 ---
 
+## 2026-03-31 - Hidden Diagnostics Panel for Vocab Exam Page
+
+**Work Done**:
+- Added a lightweight `/api/server-info` endpoint in `server.js` with:
+  - app version
+  - support code
+  - commit hash
+  - deployment identifier
+  - server start time
+- Added a hidden diagnostics panel to `public/vocab-exam.html`
+- Styled the diagnostics sheet in `public/css/vocab.css`
+- Wired the interaction in `public/js/vocab-exam.js`:
+  - tap the page title or exam title 5 times to open
+  - copy full support info with one button
+  - include current exam and teacher-auth state in the copied payload
+
+**Why This Matters**:
+- Users do not see obvious build numbers or “testing” UI during normal use
+- Developers can still quickly identify the exact deployed build and browser/session state
+- This is especially useful for iPad-only issues where cache, teacher auth, and deployment state can interact in non-obvious ways
+
+---
+
 ## Pending / Future Work
 
 - [ ] Supplemental notes preview/edit when reopening an existing assignment from the teacher list

@@ -53,12 +53,18 @@ class VocabCanvasSurface {
       canvas.style.height = '100%';
     });
 
+    this.bgCanvas.style.position = 'absolute';
+    this.bgCanvas.style.inset = '0';
+    this.bgCanvas.style.zIndex = '0';
+
     this.guideCanvas.style.position = 'absolute';
     this.guideCanvas.style.inset = '0';
+    this.guideCanvas.style.zIndex = '1';
     this.guideCanvas.style.pointerEvents = 'none';
 
     this.drawCanvas.style.position = 'absolute';
     this.drawCanvas.style.inset = '0';
+    this.drawCanvas.style.zIndex = '2';
     this.drawCanvas.style.touchAction = 'none';
     this.drawCanvas.style.cursor = 'crosshair';
     this.drawCanvas.style.webkitUserSelect = 'none';

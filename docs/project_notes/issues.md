@@ -764,6 +764,21 @@ Reviewed all pages of NH1 WB A (U1–U8 + Review 1) and NH1 WB B (U1–U8, first
 
 ---
 
+## 2026-03-31 - Vocab Guide Boxes Missing on iPad Due to Canvas Layer Order
+
+**Work Done**:
+- Locked the three-canvas stack in `public/js/vocab-drawing.js` to an explicit z-order:
+  - background canvas `z-index: 0`
+  - guide canvas `z-index: 1`
+  - drawing canvas `z-index: 2`
+
+**Why This Matters**:
+- Production exam payloads already contained `question_guides`, and the deployed student JS already included guide rendering logic
+- On iPad Safari, the blue dashed guide layer could still disappear because canvas stacking was implicit
+- Explicit z-order prevents the guide canvas from being visually buried under the worksheet background
+
+---
+
 ## Pending / Future Work
 
 - [ ] Supplemental notes preview/edit when reopening an existing assignment from the teacher list

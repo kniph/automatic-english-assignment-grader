@@ -779,6 +779,22 @@ Reviewed all pages of NH1 WB A (U1–U8 + Review 1) and NH1 WB B (U1–U8, first
 
 ---
 
+## 2026-03-31 - Vocab Fit-Width Now Uses Visible Layout and Resets Per Exam
+
+**Work Done**:
+- Updated `public/js/vocab-exam.js` so opening an exam:
+  - resets zoom back to `100%`
+  - reveals the workspace first
+  - waits for a visible layout pass before building the canvas surfaces
+
+**Why This Matters**:
+- Previously, exam pages could be initialized while the workspace section was still hidden
+- In that hidden state, the surface width fallback used the image’s natural width instead of the real container width
+- That made the initial view too large and could make one `100%` state look different from another `100%` state
+- The new flow makes `100%` consistently mean fit-to-width, including the first time the exam opens
+
+---
+
 ## Pending / Future Work
 
 - [ ] Supplemental notes preview/edit when reopening an existing assignment from the teacher list

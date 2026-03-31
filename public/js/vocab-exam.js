@@ -283,6 +283,14 @@
     label.textContent = `${Math.round(state.zoom * 100)}%`;
   }
 
+  function waitForVisibleLayout() {
+    return new Promise(resolve => {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(resolve);
+      });
+    });
+  }
+
   function applyZoomToAllSurfaces() {
     state.surfaces.forEach(surface => surface.setZoom(state.zoom));
     updateZoomLabel();
@@ -346,9 +354,12 @@
 
     try {
       const exam = await apiCall(`/api/vocab/exams/${examId}`);
-      await buildExamWorkspace(exam);
+      state.zoom = 1;
+      updateZoomLabel();
       document.getElementById('selectionSection').classList.add('vocab-hidden');
       document.getElementById('workspaceSection').classList.remove('vocab-hidden');
+      await waitForVisibleLayout();
+      await buildExamWorkspace(exam);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch (error) {
       showToast(error.message, 'error');

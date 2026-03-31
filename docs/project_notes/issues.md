@@ -819,6 +819,20 @@ Reviewed all pages of NH1 WB A (U1–U8 + Review 1) and NH1 WB B (U1–U8, first
 
 ---
 
+## 2026-03-31 - Teacher Cookie Broke Student Guide Boxes
+
+**Work Done**:
+- Updated `vocab-module.js` so the teacher-view exam payload also includes:
+  - `question_count`
+  - `question_guides`
+
+**Why This Matters**:
+- On iPad Safari, if the browser already had teacher auth cookie, `GET /api/vocab/exams/:id` returned the teacher serializer instead of the public serializer
+- The student exam page depends on `question_count` and `question_guides` to render the top metadata and blue dashed answer boxes
+- Because those fields were missing from the teacher serializer, the page showed `undefined 題` and no guide boxes even though the exam itself was valid
+
+---
+
 ## Pending / Future Work
 
 - [ ] Supplemental notes preview/edit when reopening an existing assignment from the teacher list

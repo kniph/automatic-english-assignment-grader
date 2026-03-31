@@ -320,6 +320,14 @@ function registerVocabRoutes({ app, pool, requireTeacherAuth, hasTeacherAccess, 
     return exam.title;
   }
 
+  function buildQuestionGuides(questions) {
+    return questions.map(question => ({
+      page_number: question.page_number,
+      question_number: question.question_number,
+      answer_box: question.answer_box
+    }));
+  }
+
   function serializeExamForTeacher(bundle) {
     const { exam, pages, questions, submissionCount } = bundle;
     return {
@@ -335,6 +343,8 @@ function registerVocabRoutes({ app, pool, requireTeacherAuth, hasTeacherAccess, 
       created_at: exam.created_at,
       updated_at: exam.updated_at,
       submission_count: submissionCount,
+      question_count: questions.length,
+      question_guides: buildQuestionGuides(questions),
       pages,
       questions
     };
@@ -358,11 +368,7 @@ function registerVocabRoutes({ app, pool, requireTeacherAuth, hasTeacherAccess, 
         blank_image: page.blank_image
       })),
       question_count: questions.length,
-      question_guides: questions.map(question => ({
-        page_number: question.page_number,
-        question_number: question.question_number,
-        answer_box: question.answer_box
-      }))
+      question_guides: buildQuestionGuides(questions)
     };
   }
 

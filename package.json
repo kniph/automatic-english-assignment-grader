@@ -9,6 +9,9 @@
     "download:sequence": "node scripts/download-sequence.js",
     "import:assignments": "node scripts/import-assignments.js",
     "import:vocab": "node scripts/import-vocab-exams.js",
+    "build:vocab-bank": "node scripts/build-vocab-answer-bank.js",
+    "extract:vocab-review": "node scripts/extract-vocab-review.js",
+    "sync:vocab-reviews": "node scripts/sync-vocab-review-exams.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "version:update": "node scripts/update-version.js",
     "version:check": "node scripts/check-version.js"

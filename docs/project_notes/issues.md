@@ -795,6 +795,30 @@ Reviewed all pages of NH1 WB A (U1–U8 + Review 1) and NH1 WB B (U1–U8, first
 
 ---
 
+## 2026-03-31 - Vocab Review 1 / Review 2 Composite Exams Published
+
+**Work Done**:
+- Added `scripts/sync-vocab-review-exams.js` to build 4-page vocab review exams by composing existing single-unit vocab exams:
+  - `Review 1` = Unit 1-4
+  - `Review 2` = Unit 5-8
+- Added npm script `sync:vocab-reviews`
+- Published the currently safe composite exams to Railway:
+  - `Howdy 2 Review 1 Vocabulary` (`id=64`, `47` questions, `4` pages)
+  - `Howdy 2 Review 2 Vocabulary` (`id=65`, `52` questions, `4` pages)
+  - `Howdy 3 Review 1 Vocabulary` (`id=66`, `49` questions, `4` pages)
+  - `Howdy 8 Review 1 Vocabulary` (`id=67`, `60` questions, `4` pages)
+
+**Skipped For Now**:
+- `Howdy 3 Review 2 Vocabulary` because `Howdy 3 Unit 7 Vocabulary` still has no reviewed questions
+- `Howdy 8 Review 2 Vocabulary` because `Howdy 8 Unit 5 Vocabulary` still has no reviewed questions
+
+**Why This Matters**:
+- The student selector already had `Review 1 / Review 2` slots, but they were disabled until real composite exams existed
+- Reusing the existing reviewed unit templates is safer than re-detecting boxes from bundled PDFs
+- This matches the real midterm/final workflow where vocab testing uses four pages across grouped units
+
+---
+
 ## Pending / Future Work
 
 - [ ] Supplemental notes preview/edit when reopening an existing assignment from the teacher list

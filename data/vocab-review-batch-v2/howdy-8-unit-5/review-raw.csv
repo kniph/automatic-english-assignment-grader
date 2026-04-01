@@ -1,0 +1,17 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+8,5,1,left,) Chinese (n.,chinese,0.9,335,341,273,56,I speak Chinese.,中文,answer-01.png
+8,5,2,left,% Chinese chess (n.) £,chinese chess,1,289,570,491,55,We are playing Chinese chess.,象棋,answer-02.png
+8,5,3,left,be,basement,0.25,373,799,60,54,There are spiders in the basement.,地下室,answer-03.png
+8,5,4,left,_ basement (n.,basement,0.9,355,802,296,52,There are spiders in the basement.,地下室,answer-04.png
+8,5,5,left,garage (n,garage,0.9,342,1094,239,56,Dad's new car is in the garage.,車庫,answer-05.png
+8,5,6,left,sailboat (n.,sailboat,0.9,334,1314,277,55,April is on her sailboat now.,帆船,answer-06.png
+8,5,7,left,- radio (r,radio,0.9,355,1544,175,54,I listened to the radio yesterday.,收音機,answer-07.png
+8,5,8,left,build / built (v.),build / built,1,314,1772,379,55,Steve built a house last year.,建造,answer-08.png
+8,5,9,left,try / tried (v.),try / tried,1,327,1998,312,71,Jerry tried to build a robot yesterday.,嘗試,answer-09.png
+8,5,10,left,- noon (I,noon,0.9,359,2354,164,45,Tim ate lunch at noon.,正午,answer-10.png
+8,5,11,right,_ midnight (n.,midnight,0.9,1219,336,297,68,I didn't go to bed until midnight.,半夜,answer-11.png
+8,5,12,right,forest (r,forest,0.9,1238,566,200,55,There are many birds in the forest.,森林,answer-12.png
+8,5,13,right,_ dream (r,dream,0.9,1236,854,215,53,I had a dream about flying last night.,夢,answer-13.png
+8,5,14,right,_. _ wake up / woke up (v.) Ae,wake up / woke up,0.9,1147,1137,651,68,I woke up because my alarm rang.,醒來,answer-14.png
+8,5,15,right,™ leave / left (v.),leave / left,1,1209,1425,354,56,We left home at 7:30.,離開,answer-15.png
+8,5,16,right,_ horrible (a,horrible,0.9,1227,1655,262,54,Ken had a horrible dream last night.,可怕的,answer-16.png

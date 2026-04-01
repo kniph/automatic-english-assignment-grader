@@ -1,0 +1,16 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+5,7,1,left,hike (,hike,1,394,329,142,54,Hiking is fun! I love it.,健行,answer-01.png
+5,7,2,left,_ camp (\,camp,1,381,568,188,55,Ted likes camping in the woods.,露營,answer-02.png
+5,7,3,left,fish (,fish,1,393,845,122,55,He is fishing by the river.,釣魚,answer-03.png
+5,7,4,left,sail (,sail,1,394,1075,116,54,Sailing on the lake is fun.,航行,answer-04.png
+5,7,5,left,easy (,easy,1,381,1314,164,55,This game is easy.,簡單的,answer-05.png
+5,7,6,left,difficult (a,difficult,0.9,360,1534,262,55,This game is difficult. I can't do it.,困難的,answer-06.png
+5,7,7,left,exciting (a,exciting,0.9,358,1824,268,63,Is sailing exciting? Yes it is.,刺激的,answer-07.png
+5,7,8,left,. interesting (ac,interesting,0.9,353,2051,344,67,This book is interesting.,有趣的,answer-08.png
+5,7,9,left,_ dangerous (ad,dangerous,0.9,336,2276,359,71,It's dangerous to swim here.,危險,answer-09.png
+5,7,10,right,- safe (,safe,1,1275,335,145,55,This path is safe for hiking.,安全的,answer-10.png
+5,7,11,right,~ sailor (r,sailor,1,1264,565,190,54,There is a sailor on the boat.,水手,answer-11.png
+5,7,12,right,barbecue (n.’,barbecue,0.9,1237,795,317,55,Let's have a barbecue!,烤肉,answer-12.png
+5,7,13,right,_ ready (c,ready,0.9,1259,1023,198,68,They are ready to run.,準備好的,answer-13.png
+5,7,14,right,love (,love,1,1271,1254,142,54,I love my doll.,愛,answer-14.png
+5,7,15,right,enjoy (\,enjoy,1,1257,1492,193,56,We enjoy hiking in the mountains.,享受,answer-15.png

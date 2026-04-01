@@ -1,0 +1,14 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+4,3,1,left,spring (n,spring,0.9,369,213,229,74,I like spring. It's cool.,春天,answer-01.png
+4,3,2,left,. summer (n.,summer,0.9,356,550,295,46,My brother likes to swim in the summer.,夏天,answer-02.png
+4,3,3,left,autumn / fall (n.).,autumn,0.9,319,922,470,63,I like to play in the autumn.,秋天,answer-03.png
+4,3,4,left,winter (n,winter,0.9,370,1308,233,57,It's cold in the winter here.,冬天,answer-04.png
+4,3,5,left,", Strawberry (n.)",strawberry,1,334,1629,409,74,Grandma likes to eat strawberries.,草莓,answer-05.png
+4,3,6,left,— mango (n,mango,0.9,367,2025,249,60,Tim likes to eat mangoes in the summer.,芒果,answer-06.png
+4,3,7,right,- peach (r,peach,0.9,1239,214,215,67,I like to eat peaches.,桃子,answer-07.png
+4,3,8,right,) tangerine (n.),tangerine,1,1210,522,349,74,I want to eat a tangerine.,橘子,answer-08.png
+4,3,9,right,~ scarf (1,scarf,0.9,1247,848,181,60,I wear a scarf in winter.,圍巾,answer-09.png
+4,3,10,right,— skirt (,skirt,1,1250,1163,165,56,Your skirt is cute.,裙子,answer-10.png
+4,3,11,right,wear (\,wear,1,1246,1487,184,46,I like to wear dresses in the summer.,穿,answer-11.png
+4,3,12,right,* usually (a,usually,0.9,1229,1848,267,74,I usually wear jeans in the fall.,通常,answer-12.png
+4,3,13,right,->%& sometimes (ad,sometimes,0.9,1202,2228,399,53,She sometimes drinks juice in the winter.,有時候,answer-13.png

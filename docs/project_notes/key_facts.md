@@ -23,7 +23,7 @@ Essential project configuration, constants, and quick reference information.
 **Optional:**
 - `PORT` — Server port (default: 3000; Railway sets this automatically)
 - `NODE_ENV` — `production` on Railway (enables SSL for DB)
-- `GOOGLE_VISION_API_KEY` — Legacy OCR key (no longer used in main workflow)
+- `GOOGLE_VISION_API_KEY` — Google Vision OCR key. Not used by the main assignment grading path anymore, but still required for `POST /api/parse-document`, `POST /api/ocr/region`, and the entire vocab grading flow under `POST /api/vocab/submissions`
 - `TEACHER_PASSCODE` — optional simple teacher passcode; when set, upload / grading / teacher-result APIs require a teacher auth cookie
 
 ---
@@ -139,6 +139,35 @@ Essential project configuration, constants, and quick reference information.
 - `GET  /api/vocab/submissions/:id` — fetch saved result details
 - `POST /api/vocab/submissions/:id/retest` — build wrong-question retest payload
 
+### Vocab Answer Sources
+- `VOCs/CSVs/howdy_1_all_units.csv` through `VOCs/CSVs/howdy_8_all_units.csv` provide a structured answer bank for Howdy 1–8 vocab work.
+- CSV columns: `word`, `definition`, `level`, `sentence`, `sequence`.
+- `scripts/build-vocab-answer-bank.js` normalizes these CSVs into:
+  - `data/vocab-prompts/howdy-1-8-answer-bank.json`
+  - `data/vocab-prompts/howdy-1-8-answer-bank.csv`
+  - `data/vocab-prompts/howdy-1-8-answer-bank-issues.txt`
+- `data/vocab-prompts/manual-answer-overrides.json` corrects known source anomalies before the normalized bank is written
+  - current overrides fix `Howdy 3 Unit 7` (`snack`), remove the bogus extra item in `Howdy 4 Unit 3`, and change `Howdy 4 Unit 8` from `glass of water` to `glass`
+  - current overrides also collapse `Howdy 5 Unit 8` `cowgirl` + `cowboy` into the single combined sheet answer `cowgirl / cowboy`
+- `data/vocab-prompts/manual-review-overrides.json` patches review-extraction edge cases after OCR candidate generation
+  - current override promotes `Howdy 4 Unit 6` `cut` from a low-score raw OCR candidate into the selected review set
+- The normalized bank contains 941 records across 64 units.
+- Known source anomaly: `VOCs/CSVs/howdy_1_all_units.csv` also contains Howdy 10 rows; the normalizer filters them out and records this in the issues file.
+- The CSV order is reliable as a per-unit vocabulary set, but does not always match the visual top-to-bottom order on the vocab exam page, so template generation still needs page-order / answer-box reconciliation.
+- `scripts/extract-vocab-review.js` generates reviewable vocab template candidates from blank/answer image pairs plus the answer bank.
+- Current detection rules:
+  - Howdy 1–4: detect newly added green answer text
+  - Howdy 5–8: detect newly added blue answer text
+- Latest batch output:
+  - `data/vocab-review-batch-v2/summary.json`
+  - per-unit folders under `data/vocab-review-batch-v2/howdy-<level>-unit-<unit>/`
+  - each folder includes `review.csv`, `review-raw.csv`, crop PNGs, and `review.json`
+- Current batch quality for the 63 matched exams:
+  - 35 units perfect
+  - 13 units near-complete (missing 1–2 answers)
+  - 15 harder units still missing 3+ answers and need extra heuristics or manual review
+- `scripts/lib/vocab-review-sync.js` now uses a `90s` request timeout so 4-page `Review 1 / Review 2` upserts can finish on Railway without false timeouts.
+
 ---
 
 ## Pages
@@ -233,6 +262,7 @@ Essential project configuration, constants, and quick reference information.
 
 - `npm run import:assignments` — batch import workbook assignments from `WBs/`
 - `npm run import:vocab` — batch import vocab blank/answer image pairs from `VOCs/`
+- `node scripts/extract-vocab-prompts.js` — extract NH9 DOCX prompt text into structured CSV/JSON
 
 Current `import:vocab` behavior:
 - scans `VOCs/空白卷/NH*/H*U*.{jpg,jpeg,png}`
@@ -240,6 +270,13 @@ Current `import:vocab` behavior:
 - ignores conflict duplicates such as `_Conflict.jpg`
 - creates vocab draft exams with 1 page and no questions yet
 - intended to preload blank/answer sheets so teachers only need to draw answer boxes and type answers
+
+Current `extract-vocab-prompts.js` behavior:
+- reads `VOCs/空白卷/NH9/*.docx`
+- writes `data/vocab-prompts/nh9-vocab-prompts.csv`
+- writes `data/vocab-prompts/nh9-vocab-prompts.json`
+- extracts unit number, item order, English prompt, Chinese clue, and special instructions
+- leaves `answer_text` blank because the NH9 DOCX files contain prompts/clues, not an answer key
 
 ---
 

@@ -88,7 +88,7 @@ function csvParse(text) {
 
 async function fetchJson(url, options = {}) {
   const {
-    timeoutMs = 30000,
+    timeoutMs = 90000,
     ...fetchOptions
   } = options;
   const controller = new AbortController();

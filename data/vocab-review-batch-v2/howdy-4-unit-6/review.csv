@@ -1,0 +1,11 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+4,6,1,left,", —s brush (my) teeth (phr.)",brush,0.9,308,214,593,68,I brush my teeth three times a day.,刷,answer-01.png
+4,6,2,left,~ comb (my) hair (phr.),comb,0.9,313,584,563,74,Maggie combs her hair every morning.,梳,answer-02.png
+4,6,3,left,_ wash (my) face (phr.),wash,0.9,312,1029,567,74,Emma washes her face once a day.,洗,answer-03.png
+4,6,4,left,» cut (my) nails (phr.,cut,1,325,1404,501,74,I cut my nails once a week.,剪,answer-04.png
+4,6,6,left,_ shampoo (my) hair (phr.)_,shampoo,0.9,277,1718,737,74,We shampoo our hair every day.,洗髮乳,answer-06.png
+4,6,7,left,» take a shower (phr.,take a shower,0.9,321,2166,525,56,I take a shower twice a day.,洗澡,answer-07.png
+4,6,8,right,first (,first,1,1291,216,150,56,First we wash the dog.,首先,answer-08.png
+4,6,9,right,next (,next,1,1291,531,161,53,Next we use a towel.,接下來,answer-09.png
+4,6,10,right,— then (,then,1,1290,841,159,57,Then we brush his hair.,然後,answer-10.png
+4,6,11,right,finally (c,finally,0.9,1274,1150,233,77,Finally we brush his teeth.,最後,answer-11.png

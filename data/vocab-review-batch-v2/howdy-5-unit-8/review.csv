@@ -1,0 +1,16 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+5,8,1,left,job(s) (r,jobs,0.6,337,330,194,68,Al Ken and Jean have different jobs.,工作,answer-01.png
+5,8,2,left,Singer (r,singer,0.9,333,686,208,55,My aunt is a great singer.,歌手,answer-02.png
+5,8,3,left,reporter (n.,reporter,0.9,320,909,273,61,Ian wants to be a reporter.,記者,answer-03.png
+5,8,4,left,scientist (n.,scientist,0.9,317,1139,286,51,Tom's father is a scientist.,科學家,answer-04.png
+5,8,5,left,musician(s) (n.),musicians,0.9,294,1364,397,62,Those musicians can play very well.,音樂家,answer-05.png
+5,8,6,left,4 cowgirl / cowboy (n.) —,cowgirl / cowboy,0.9,252,1649,594,71,Is Peter a cowboy?,女 / 男牛仔,answer-06.png
+5,8,7,left,2 hairdresser (n.),hairdresser,0.9,297,1938,379,54,Let's go to the hairdresser today.,髮型師,answer-07.png
+5,8,8,left,~ teach (\,teach,1,336,2225,185,53,My mom teaches at our school.,教學,answer-08.png
+5,8,9,right,Say (,say,1,1210,345,122,55,What are you saying? I can't hear you.,說,answer-09.png
+5,8,10,right,_ report (v,report,0.9,1191,624,209,62,Ed's father reports the weather.,播報,answer-10.png
+5,8,11,right,fix,fix,1,1215,850,88,55,My dad fixes cars.,修理,answer-11.png
+5,8,12,right,mechanic (n.),mechanic,1,1167,1081,326,54,Let's take the car to the mechanic.,技工,answer-12.png
+5,8,13,right,~ model (r,model,0.9,1192,1367,205,54,Lillian wants to be a model.,模特兒,answer-13.png
+5,8,14,right,~ clean (,clean,1,1195,1596,181,54,Danny's hands are very clean.,乾淨的,answer-14.png
+5,8,15,right,| dirty (,dirty,1,1199,1824,161,68,Your hands are dirty. Please wash them.,髒的,answer-15.png

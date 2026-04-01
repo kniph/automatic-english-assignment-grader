@@ -1,0 +1,57 @@
+[
+  {
+    "action": "replace",
+    "match": {
+      "howdy_level": 3,
+      "unit": 7,
+      "sequence_in_source": 82
+    },
+    "set": {
+      "answer_text": "snack",
+      "definition_zh": "點心",
+      "prompt_en": "What do you want for a snack?"
+    }
+  },
+  {
+    "action": "remove",
+    "match": {
+      "howdy_level": 4,
+      "unit": 3,
+      "sequence_in_source": 32
+    }
+  },
+  {
+    "action": "replace",
+    "match": {
+      "howdy_level": 4,
+      "unit": 8,
+      "sequence_in_source": 88
+    },
+    "set": {
+      "answer_text": "glass",
+      "definition_zh": "杯子",
+      "prompt_en": "I want a glass of water, please."
+    }
+  },
+  {
+    "action": "replace",
+    "match": {
+      "howdy_level": 5,
+      "unit": 8,
+      "sequence_in_source": 133
+    },
+    "set": {
+      "answer_text": "cowgirl / cowboy",
+      "definition_zh": "女 / 男牛仔",
+      "prompt_en": "Is Peter a cowboy?"
+    }
+  },
+  {
+    "action": "remove",
+    "match": {
+      "howdy_level": 5,
+      "unit": 8,
+      "sequence_in_source": 134
+    }
+  }
+]

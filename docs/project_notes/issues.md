@@ -856,6 +856,75 @@ Reviewed all pages of NH1 WB A (U1–U8 + Review 1) and NH1 WB B (U1–U8, first
 
 ---
 
+## 2026-04-01 - Remaining Near-Complete Vocab Units Split Into Source Errors vs Detection Gaps
+
+**Work Done**:
+- Re-checked the remaining near-complete units against the actual answer-sheet images instead of trusting the normalized answer bank alone
+- Confirmed that the blockers for these units are not all the same problem:
+  - `Howdy 3 Unit 7`: source CSV typo (`stuck`) should be `snack`
+  - `Howdy 4 Unit 3`: normalized bank contains an extra bogus item (`tall`); the answer sheet only has 13 items
+  - `Howdy 4 Unit 6`: answer sheet does contain `cut`, but the OCR crop was matched too conservatively because the detected text included the full phrase (`cut my nails`)
+  - `Howdy 4 Unit 8`: answer sheet answer is `glass`, not `glass of water`
+  - `Howdy 8 Unit 5`: the bank is correct for this unit, but review extraction missed the bottom-left items `try / tried` and `noon`
+
+**Why This Matters**:
+- The unresolved draft units are blocked by a mix of:
+  - source CSV anomalies
+  - phrase-vs-headword normalization mistakes
+  - answer-box / detector misses near the bottom of the page
+- Treating all of them as generic OCR misses would keep producing wrong fixes and wrong publish decisions
+
+---
+
+## 2026-04-01 - Five Blocked Vocab Units Repaired and Published
+
+**Work Done**:
+- Added `data/vocab-prompts/manual-answer-overrides.json` and taught `scripts/build-vocab-answer-bank.js` to apply source-level overrides before rebuilding the normalized answer bank
+- Added `data/vocab-prompts/manual-review-overrides.json` and taught `scripts/extract-vocab-review.js` to patch OCR review candidates after extraction
+- Updated `scripts/extract-vocab-review.js` so partial re-runs merge into the existing `summary.json` instead of overwriting it
+- Rebuilt and re-reviewed the previously blocked units:
+  - `Howdy 3 Unit 7`
+  - `Howdy 4 Unit 3`
+  - `Howdy 4 Unit 6`
+  - `Howdy 4 Unit 8`
+  - `Howdy 8 Unit 5`
+- Synced those repaired units back to Railway and published them
+- Re-ran composite review sync and published the newly unblocked review exams:
+  - `Howdy 3 Review 2 Vocabulary` (`id=68`)
+  - `Howdy 4 Review 1 Vocabulary` (`id=69`)
+  - `Howdy 4 Review 2 Vocabulary` (`id=70`)
+  - `Howdy 8 Review 2 Vocabulary` (`id=71`)
+
+**Resolved Root Causes**:
+- `Howdy 3 Unit 7`: source CSV typo `stuck` -> `snack`
+- `Howdy 4 Unit 3`: extra bogus source item `tall`
+- `Howdy 4 Unit 6`: raw OCR already saw `cut`, but needed a review-layer promotion
+- `Howdy 4 Unit 8`: answer sheet headword is `glass`, not `glass of water`
+- `Howdy 8 Unit 5`: after rebuilding with the corrected bank, extraction recovered the missing bottom-of-page answers
+
+---
+
+## 2026-04-01 - Howdy 5 Units 4 / 7 / 8 Repaired and Published
+
+**Work Done**:
+- Added a source-level override for `Howdy 5 Unit 8` so the sheet answer `cowgirl / cowboy` is treated as one combined vocab item instead of two separate bank rows
+- Added review-level overrides for:
+  - `Howdy 5 Unit 4` extended-vocabulary items `house` and `super`
+  - `Howdy 5 Unit 7` `sailor`, which was OCRed but matched to `sail`
+- Rebuilt and published:
+  - `Howdy 5 Unit 4 Vocabulary` (`id=35`, `17` questions)
+  - `Howdy 5 Unit 7 Vocabulary` (`id=38`, `15` questions)
+  - `Howdy 5 Unit 8 Vocabulary` (`id=39`, `15` questions)
+
+**Why This Matters**:
+- `Howdy 5` pages are denser than earlier Howdy levels, so the extractor often tops out near `15` detected answers
+- Some misses are not generic OCR errors:
+  - `H5U8` was a source-structure mismatch (`cowgirl / cowboy` displayed as one sheet answer)
+  - `H5U4` missed the bottom-right extended-vocabulary answers entirely
+  - `H5U7` already had the right raw text but selected the wrong bank entry
+
+---
+
 ## Pending / Future Work
 
 - [ ] Supplemental notes preview/edit when reopening an existing assignment from the teacher list

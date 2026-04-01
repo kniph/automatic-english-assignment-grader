@@ -329,3 +329,55 @@ The backend stored both raw points and percentage, and pass/fail already used pe
 When exam lengths vary, never present raw points as the primary score if the pass threshold is percentage-based. Keep raw points for audit, but use a percentage score as the main teacher/student-facing grade.
 
 ---
+
+## 2026-04-01 - BUG-021: Vocab Answer Bank Can Drift From the Real Answer Sheets
+
+**Issue**: Several near-complete vocab units looked like OCR misses, but the real blocker was that the normalized answer bank did not exactly match the printed answer sheets.
+
+**Root Cause**:
+`VOCs/CSVs/*.csv` were treated as the source of truth for Howdy 1-8 vocab answers, but some rows do not match the actual answer images:
+- typo: `Howdy 3 Unit 7` contains `stuck` where the answer sheet shows `snack`
+- extra item: `Howdy 4 Unit 3` includes `tall`, which does not appear on the answer sheet
+- phrase vs headword mismatch: `Howdy 4 Unit 8` uses `glass of water` in the bank while the sheet answer is just `glass`
+
+**Solution**:
+- verify unresolved units against the answer-sheet image before assuming OCR failed
+- treat these discrepancies as answer-bank overrides, not OCR tuning problems
+- separate source corrections from true detector misses such as `Howdy 8 Unit 5`, where the sheet is correct but the extraction missed bottom-of-page answers
+
+**Prevention**:
+Do not assume `VOCs/CSVs` are perfectly canonical. For any unit that remains draft after review extraction, compare the normalized answer bank with the scanned answer sheet before changing OCR thresholds or publishing the template.
+
+---
+
+## 2026-04-01 - BUG-022: Composite Vocab Review Sync Timed Out on Railway
+
+**Issue**: Publishing 4-page `Review 1 / Review 2` vocab exams could fail with `Request timed out after 30000ms` even when the underlying source units were valid.
+
+**Root Cause**:
+`scripts/lib/vocab-review-sync.js` used a default fetch timeout of `30s`. That was fine for single-unit exam patch/publish calls, but too short for larger composite upserts that need to fetch multiple source bundles and write a multi-page payload back to Railway.
+
+**Solution**:
+- raised the shared sync helper timeout from `30s` to `90s`
+- retried the blocked composite review upserts after the timeout change
+
+**Prevention**:
+Use a longer default timeout for script-driven Railway sync flows that move multi-page exam payloads. Composite vocab review exam publishing is materially slower than single-page unit publishing.
+
+---
+
+## 2026-04-01 - BUG-023: Some Vocab Sheets Merge Two Lexical Forms Into One Printed Answer
+
+**Issue**: `Howdy 5 Unit 8` looked like it was missing `cowboy`, but the real answer sheet prints a single combined answer `cowgirl / cowboy` for one visible item.
+
+**Root Cause**:
+The normalized answer bank assumed one CSV row equals one sheet item. That failed on sheets where the printed answer combines two lexical forms into one displayed headword. In this case the CSV had separate `cowgirl` and `cowboy` rows, while the worksheet presents one combined prompt/answer block.
+
+**Solution**:
+- add a manual answer-bank override to collapse the pair into one combined answer
+- rebuild the normalized answer bank before regenerating the review template
+
+**Prevention**:
+When a sheet visually shows one colored answer but the CSV contains two related rows, trust the sheet layout over the CSV row count. Treat it as a source-structure override, not an OCR miss.
+
+---

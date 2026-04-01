@@ -1,0 +1,13 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+4,8,1,left,plate (,plate,1,381,220,184,66,Your plate is on the table.,盤子,answer-01.png
+4,8,2,left,~ napkin (n,napkin,0.9,368,529,249,72,The napkin is on the plate.,餐巾紙,answer-02.png
+4,8,3,left,_ spoon (r,spoon,0.9,374,855,219,57,Please put the spoon on the plate.,湯匙,answer-03.png
+4,8,4,left,fork (,fork,1,389,1220,147,56,I want a fork thanks.,叉子,answer-04.png
+4,8,5,left,in front of (ph,in front of,0.9,348,1533,358,57,Jane is in front of Alice.,在前面,answer-05.png
+4,8,6,left,- between (pr,between,0.9,357,1847,315,56,Rosa is between Ann and Kobe.,在之間,answer-06.png
+4,8,7,right,on the left of (phr.,on the left of,0.9,1207,218,465,57,Put the spoon on the left of the plate please.,在左邊,answer-07.png
+4,8,8,right,"4, on the right of (phr.",on the right of,0.9,1197,658,514,74,The spoon is on the right of the plate.,在右邊,answer-08.png
+4,8,9,right,bowl (,bowl,1,1268,1107,179,56,Put the bowl on the table please.,碗,answer-09.png
+4,8,10,right,chopsticks (n.),chopsticks,1,1223,1478,398,73,I use chopsticks to eat noodles.,筷子,answer-10.png
+4,8,11,right,— knife (1,knife,0.9,1269,1855,185,56,Mindy uses a knife and fork to eat.,刀子,answer-11.png
+4,8,12,right,* glass (1,glass,0.9,1269,2287,190,73,"I want a glass of water, please.",杯子,answer-12.png

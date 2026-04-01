@@ -1,0 +1,13 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+3,7,1,left,breakfast (n.,breakfast,0.9,298,331,355,57,It's time for breakfast.,早餐,answer-01.png
+3,7,2,left,~ lunch (1,lunch,0.9,331,643,194,60,Shelly is very hungry. She wants a big lunch.,午餐,answer-02.png
+3,7,3,left,~ snack (r,snack,0.9,328,1080,213,57,What do you want for a snack?,點心,answer-03.png
+3,7,4,left,~ dinner (r,dinner,0.9,324,1455,227,55,May eats dinner at 6:30.,晚餐,answer-04.png
+3,7,5,left,- get up (F,get up,0.9,324,1770,227,67,Lisa wake up. It's time to get up.,起床,answer-05.png
+3,7,6,left,go to school (ph,go to school,0.9,286,2199,419,73,It's 7:45. It's time to go to school.,上學去,answer-06.png
+3,7,7,right,4 go home (pt,go home,0.9,1181,329,312,73,It's 4:30. It's time to go home.,回家,answer-07.png
+3,7,8,right,»~ go to bed (pt,go to bed,0.9,1175,703,341,74,It's time to go to bed.,上床睡覺,answer-08.png
+3,7,9,right,} basketball (n.,basketball,0.9,1172,1091,364,56,I like to play basketball.,籃球,answer-09.png
+3,7,10,right,— soccer (n,soccer,0.9,1198,1414,237,47,My favorite sport is soccer.,足球,answer-10.png
+3,7,11,right,P volleyball (n,volleyball,0.9,1178,1715,336,73,We love volleyball today.,排球,answer-11.png
+3,7,12,right,baseball (r,baseball,0.9,1188,2031,286,57,They want to play baseball.,棒球,answer-12.png

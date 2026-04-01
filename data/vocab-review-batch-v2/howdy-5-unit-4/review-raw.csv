@@ -1,0 +1,19 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+5,4,1,left,truck (,truck,1,359,343,176,54,He is driving his old truck.,卡車,answer-01.png
+5,4,2,left,he,house,0.4,377,572,57,54,It's my uncle's house.,房子,answer-02.png
+5,4,3,left,_ helicopter (n.,helicopter,0.9,357,575,297,62,There's a helicopter above the tree.,直升機,answer-03.png
+5,4,4,left,race (,race,1,365,869,146,44,Do you want to run a race with me?,賽跑；比賽,answer-04.png
+5,4,5,left,win (,win,1,370,1155,121,44,Frank is winning the race!,贏,answer-05.png
+5,4,6,left,— inside (,inside,1,354,1376,198,53,It's so hot. Let's go inside.,裡面,answer-06.png
+5,4,7,left,outside (a,outside,0.9,343,1605,248,54,The dog wants to play outside.,外面,answer-07.png
+5,4,8,left,into (,into,1,384,1837,108,51,May is going into the house.,進入...,answer-08.png
+5,4,9,left,out of (f,out of,0.9,352,2063,199,54,Sam is running out of the house.,從...離開,answer-09.png
+5,4,10,left,up,up,1,377,2358,83,54,Elsa is walking up the hill.,往上,answer-10.png
+5,4,11,right,~ down («,down,1,1214,346,188,53,Joe is running down the hill.,往下,answer-11.png
+5,4,12,right,‘ box (,box,1,1227,574,127,54,The pens are in the box.,盒子,answer-12.png
+5,4,13,right,~ bucket (n,bucket,0.9,1205,803,234,54,Put some water in the bucket.,桶子,answer-13.png
+5,4,14,right,jar |,jar,1,1233,1042,92,54,There is some candy in the jar.,罐子,answer-14.png
+5,4,15,right,~ above (f,above,0.9,1209,1262,210,54,The bee is flying above the flower.,上方,answer-15.png
+5,4,16,right,around (p,around,0.9,1203,1549,239,54,Mosquitoes are flying around the room.,周圍,answer-16.png
+5,4,17,right,house (n.),house,1,1185,1860,220,60,It's my uncle's house.,房子,manual-answer-17.png
+5,4,18,right,super (adj.),super,1,1185,2142,210,60,I like this game. It's super!,超級的；極好的,manual-answer-18.png

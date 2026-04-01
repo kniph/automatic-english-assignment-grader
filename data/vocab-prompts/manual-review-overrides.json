@@ -1,0 +1,64 @@
+{
+  "4-6": {
+    "patch_rows": [
+      {
+        "match": {
+          "candidate_index": 4
+        },
+        "set": {
+          "suggested_answer": "cut",
+          "match_score": 1,
+          "prompt_en": "I cut my nails once a week.",
+          "definition_zh": "剪"
+        }
+      }
+    ]
+  },
+  "5-4": {
+    "append_rows": [
+      {
+        "candidate_index": 17,
+        "column": "right",
+        "detected_text": "house (n.)",
+        "suggested_answer": "house",
+        "match_score": 1,
+        "left": 1185,
+        "top": 1860,
+        "width": 220,
+        "height": 60,
+        "prompt_en": "It's my uncle's house.",
+        "definition_zh": "房子",
+        "crop_file": "manual-answer-17.png"
+      },
+      {
+        "candidate_index": 18,
+        "column": "right",
+        "detected_text": "super (adj.)",
+        "suggested_answer": "super",
+        "match_score": 1,
+        "left": 1185,
+        "top": 2142,
+        "width": 210,
+        "height": 60,
+        "prompt_en": "I like this game. It's super!",
+        "definition_zh": "超級的；極好的",
+        "crop_file": "manual-answer-18.png"
+      }
+    ]
+  },
+  "5-7": {
+    "patch_rows": [
+      {
+        "match": {
+          "candidate_index": 11
+        },
+        "set": {
+          "suggested_answer": "sailor",
+          "match_score": 1,
+          "prompt_en": "There is a sailor on the boat.",
+          "definition_zh": "水手"
+        }
+      }
+    ]
+  }
+}

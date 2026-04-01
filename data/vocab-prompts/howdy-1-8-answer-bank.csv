@@ -1,0 +1,942 @@
+source_file,howdy_level,unit,unit_item_order,sequence_in_source,answer_text,definition_zh,prompt_en
+howdy_1_all_units.csv,1,1,1,1,peter,人名 P_ _ _ _,My friend Peter is very nice.
+howdy_1_all_units.csv,1,1,2,2,grace,人名 G_ _ _ _,Grace likes to read books.
+howdy_1_all_units.csv,1,1,3,3,lucy,人名 L_ _ _ y,Lucy has a beautiful smile.
+howdy_1_all_units.csv,1,1,4,4,lynn,人名 L_ _ _ n,Lynn is my classmate.
+howdy_1_all_units.csv,1,1,5,5,steve,人名 S_ _ _ _,Steve plays basketball very well.
+howdy_1_all_units.csv,1,1,6,6,good morning,早安,Good morning! How are you today?
+howdy_1_all_units.csv,1,1,7,7,jennifer,人名 J_ _ _ _ _ _ _,Jennifer is our English teacher.
+howdy_1_all_units.csv,1,1,8,8,good afternoon,午安,Good afternoon! Nice to see you.
+howdy_1_all_units.csv,1,1,9,9,yuma,人名 Y_ _ _ _,Yuma comes from Japan.
+howdy_1_all_units.csv,1,1,10,10,good evening,晚安,Good evening! Have a great night.
+howdy_1_all_units.csv,1,1,11,11,mr. clark,人名 Mr. _ _ _ _ _,Mr. Clark teaches us math.
+howdy_1_all_units.csv,1,1,12,12,good-bye,再見,Good-bye! See you tomorrow.
+howdy_1_all_units.csv,1,1,13,13,tim,人名 T_ _,Tim is my little brother.
+howdy_1_all_units.csv,1,1,14,14,sam,人名 S_ _,Sam likes to play soccer.
+howdy_1_all_units.csv,1,2,1,15,one,1,There is one cat on the table.
+howdy_1_all_units.csv,1,2,2,16,nine,9,There are nine dogs in the yard.
+howdy_1_all_units.csv,1,2,3,17,two,2,There are two dogs in the yard.
+howdy_1_all_units.csv,1,2,4,18,ten,10,I have ten fingers.
+howdy_1_all_units.csv,1,2,5,19,three,3,There are three apples in the bowl.
+howdy_1_all_units.csv,1,2,6,20,rabbit,兔子,Rabbits like carrots.
+howdy_1_all_units.csv,1,2,7,21,four,4,There are four places on the table.
+howdy_1_all_units.csv,1,2,8,22,cat,貓,Kelly has a brown cat.
+howdy_1_all_units.csv,1,2,9,23,five,5,I have five fingers.
+howdy_1_all_units.csv,1,2,10,24,dog,狗,Jokes dog is very big.
+howdy_1_all_units.csv,1,2,11,25,six,6,There are six fish in the pond.
+howdy_1_all_units.csv,1,2,12,26,bird,小鳥,This bird is very pretty.
+howdy_1_all_units.csv,1,2,13,27,seven,7,There are seven days in a week.
+howdy_1_all_units.csv,1,2,14,28,eight,8,There are eight children in the yard.
+howdy_1_all_units.csv,1,3,1,29,father,父親,My father is very tall.
+howdy_1_all_units.csv,1,3,2,30,short,矮的、短的,Tom is short but strong.
+howdy_1_all_units.csv,1,3,3,31,mother,母親,My mother cooks delicious food.
+howdy_1_all_units.csv,1,3,4,32,grandpa,爺爺、外公,Grandpa tells funny stories.
+howdy_1_all_units.csv,1,3,5,33,brother,哥哥/弟弟,My brother plays guitar.
+howdy_1_all_units.csv,1,3,6,34,grandma,奶奶、外婆,Grandma makes the best cookies.
+howdy_1_all_units.csv,1,3,7,35,sister,姊姊/妹妹,My sister loves dancing.
+howdy_1_all_units.csv,1,3,8,36,young,幼小的,The young boy is very smart.
+howdy_1_all_units.csv,1,3,9,37,baby,寶寶,The baby is sleeping quietly.
+howdy_1_all_units.csv,1,3,10,38,old,老的、舊的,This old tree is very big.
+howdy_1_all_units.csv,1,3,11,39,chubby,圓胖的,The chubby cat is very cute.
+howdy_1_all_units.csv,1,3,12,40,pretty,漂亮的,She wears a pretty dress.
+howdy_1_all_units.csv,1,3,13,41,thin,瘦的,The thin man runs very fast.
+howdy_1_all_units.csv,1,3,14,42,tall,高的,The tall building has many floors.
+howdy_1_all_units.csv,1,4,1,43,book,書,I love reading this book.
+howdy_1_all_units.csv,1,4,2,44,circle,圓圈,Draw a perfect circle here.
+howdy_1_all_units.csv,1,4,3,45,pencil,鉛筆,Please give me a pencil.
+howdy_1_all_units.csv,1,4,4,46,square,正方形,This square is very neat.
+howdy_1_all_units.csv,1,4,5,47,pen,筆、鋼筆,I write with a blue pen.
+howdy_1_all_units.csv,1,4,6,48,triangle,三角形,Can you draw a triangle?
+howdy_1_all_units.csv,1,4,7,49,eraser,橡皮擦、板擦,Use the eraser to fix mistakes.
+howdy_1_all_units.csv,1,4,8,50,heart,心型,I drew a red heart.
+howdy_1_all_units.csv,1,4,9,51,crayon,蠟筆,Color the picture with crayons.
+howdy_1_all_units.csv,1,4,10,52,diamond,菱形、鑽石,The diamond shape is beautiful.
+howdy_1_all_units.csv,1,4,11,53,ruler,尺,Measure the line with a ruler.
+howdy_1_all_units.csv,1,4,12,54,pencil case,鉛筆盒,Put your pencils in the pencil case.
+howdy_1_all_units.csv,1,4,13,55,schoolbag,書包,Pack your books in the schoolbag.
+howdy_1_all_units.csv,1,5,1,56,tiger,虎,The tiger is very strong.
+howdy_1_all_units.csv,1,5,2,57,long,長的,This snake is very long.
+howdy_1_all_units.csv,1,5,3,58,lion,獅,The lion roars loudly.
+howdy_1_all_units.csv,1,5,4,59,short,短的、矮的,My hair is short and neat.
+howdy_1_all_units.csv,1,5,5,60,monkey,猴,The monkey climbs the tree.
+howdy_1_all_units.csv,1,5,6,61,huge,非常巨大的,The elephant is huge.
+howdy_1_all_units.csv,1,5,7,62,snake,蛇,The snake moves slowly.
+howdy_1_all_units.csv,1,5,8,63,small,小的,This ant is very small.
+howdy_1_all_units.csv,1,5,9,64,hippo,河馬,The hippo lives in the river.
+howdy_1_all_units.csv,1,5,10,65,elephant,象,The elephant has a long trunk.
+howdy_1_all_units.csv,1,5,11,66,giraffe,長頸鹿,The giraffe has a long neck.
+howdy_1_all_units.csv,1,5,12,67,zebra,斑馬,The zebra has black and white stripes.
+howdy_1_all_units.csv,1,6,1,68,computer game,電腦遊戲,I play computer games on weekends.
+howdy_1_all_units.csv,1,6,2,69,blocks,積木,Build a castle with blocks.
+howdy_1_all_units.csv,1,6,3,70,teddy bear,玩具熊,My teddy bear is very soft.
+howdy_1_all_units.csv,1,6,4,71,new,新的,I got a new bicycle.
+howdy_1_all_units.csv,1,6,5,72,toy car,玩具車,The red toy car is fast.
+howdy_1_all_units.csv,1,6,6,73,old,舊的、老的,This old book is interesting.
+howdy_1_all_units.csv,1,6,7,74,robot,機器人,The robot can walk and talk.
+howdy_1_all_units.csv,1,6,8,75,fun,有趣的,The game is very fun.
+howdy_1_all_units.csv,1,6,9,76,doll,洋娃娃,She plays with her favorite doll.
+howdy_1_all_units.csv,1,6,10,77,boring,無聊的,The movie was boring.
+howdy_1_all_units.csv,1,6,11,78,puzzle,拼圖,Complete this 1000-piece puzzle.
+howdy_1_all_units.csv,1,6,12,79,board game,棋盤遊戲,We play board games on rainy days.
+howdy_1_all_units.csv,1,7,1,80,skateboard,滑板,He rides his skateboard to school.
+howdy_1_all_units.csv,1,7,2,81,orange,橘色,The orange sunset is beautiful.
+howdy_1_all_units.csv,1,7,3,82,rollerblades,直排輪,She wears rollerblades in the park.
+howdy_1_all_units.csv,1,7,4,83,shirt,襯衫(男式),He wears a white shirt to work.
+howdy_1_all_units.csv,1,7,5,84,bicycle (bike),腳踏車,I ride my bicycle to school.
+howdy_1_all_units.csv,1,7,6,85,shorts,短褲(兩腿褲),Wear shorts in hot weather.
+howdy_1_all_units.csv,1,7,7,86,socks,襪子(雙),Put on clean socks every day.
+howdy_1_all_units.csv,1,7,8,87,helmet,頭盔、安全帽,Always wear a helmet when cycling.
+howdy_1_all_units.csv,1,7,9,88,sneakers,運動鞋(雙),These sneakers are comfortable.
+howdy_1_all_units.csv,1,7,10,89,yellow,黃,The sun is bright yellow.
+howdy_1_all_units.csv,1,7,11,90,pink,粉紅,She likes the pink flowers.
+howdy_1_all_units.csv,1,7,12,91,red,紅,The apple is red and sweet.
+howdy_1_all_units.csv,1,7,13,92,green,綠,The grass is green in spring.
+howdy_1_all_units.csv,1,7,14,93,blue,藍,The sky is clear blue today.
+howdy_1_all_units.csv,1,7,15,94,white,白,Snow is pure white.
+howdy_1_all_units.csv,1,8,1,95,closet,衣櫥,Hang your clothes in the closet.
+howdy_1_all_units.csv,1,8,2,96,behind,在…下面,The cat is hiding behind the tree.
+howdy_1_all_units.csv,1,8,3,97,chair,椅子,Sit down on this comfortable chair.
+howdy_1_all_units.csv,1,8,4,98,yard,院子,Children play in the yard.
+howdy_1_all_units.csv,1,8,5,99,table,桌子,Put the books on the table.
+howdy_1_all_units.csv,1,8,6,100,kitchen,廚房,Mom cooks dinner in the kitchen.
+howdy_1_all_units.csv,1,8,7,101,sofa,沙發,We watch TV on the sofa.
+howdy_1_all_units.csv,1,8,8,102,living room,客廳,The family gathers in the living room.
+howdy_1_all_units.csv,1,8,9,103,tv,電視,We watch cartoons on TV.
+howdy_1_all_units.csv,1,8,10,104,bedroom,臥室,I sleep in my cozy bedroom.
+howdy_1_all_units.csv,1,8,11,105,in,在…裡面,The cat is sleeping in the box.
+howdy_1_all_units.csv,1,8,12,106,bathroom,浴室,Brush your teeth in the bathroom.
+howdy_1_all_units.csv,1,8,13,107,on,在…上面,The book is on the desk.
+howdy_1_all_units.csv,1,8,14,108,under,在…下面,The dog is under the table.
+howdy_2_all_units.csv,2,1,1,1,eleven,十一,Joe can eat eleven cookies.
+howdy_2_all_units.csv,2,1,2,2,twelve,十二,There are twelve apples.
+howdy_2_all_units.csv,2,1,3,3,thirteen,十三,I can see thirteen eggs.
+howdy_2_all_units.csv,2,1,4,4,fourteen,十四,Tom has fourteen oranges.
+howdy_2_all_units.csv,2,1,5,5,fifteen,十五,She has fifteen candles.
+howdy_2_all_units.csv,2,1,6,6,sixteen,十六,There are sixteen pens.
+howdy_2_all_units.csv,2,1,7,7,seventeen,十七,Mary has seventeen books.
+howdy_2_all_units.csv,2,1,8,8,eighteen,十八,I can see eighteen balloons.
+howdy_2_all_units.csv,2,1,9,9,nineteen,十九,There are nineteen cars.
+howdy_2_all_units.csv,2,1,10,10,twenty,二十,Tim has twenty crayons.
+howdy_2_all_units.csv,2,2,1,11,first,第一,Jane sits in the first row.
+howdy_2_all_units.csv,2,2,2,12,second,第二,Tom's second; he can run fast.
+howdy_2_all_units.csv,2,2,3,13,third,第三,Adam is the third boy in his class.
+howdy_2_all_units.csv,2,2,4,14,fourth,第四,Amy is the fourth girl in her family.
+howdy_2_all_units.csv,2,2,5,15,fifth,第五,Today is the fifth day of the week.
+howdy_2_all_units.csv,2,2,6,16,sixth,第六,Today is the sixth day of the week.
+howdy_2_all_units.csv,2,2,7,17,seventh,第七,Today is the seventh day of the week.
+howdy_2_all_units.csv,2,2,8,18,eighth,第八,Are you eighth?
+howdy_2_all_units.csv,2,2,9,19,ninth,第九,Look! David is ninth.
+howdy_2_all_units.csv,2,2,10,20,tenth,第十,Oh no! I'm tenth.
+howdy_2_all_units.csv,2,2,11,21,next,下一個,Who is next in line?
+howdy_2_all_units.csv,2,2,12,22,test,測驗,Ruby wants to do well on the test.
+howdy_2_all_units.csv,2,3,1,23,next to,隔壁,Lucy's house is next to Sam's house.
+howdy_2_all_units.csv,2,3,2,24,near,附近,The library is near the park.
+howdy_2_all_units.csv,2,3,3,25,bookstore,書店,Let's go to the new bookstore.
+howdy_2_all_units.csv,2,3,4,26,department store,百貨公司,There is a sale at the department store.
+howdy_2_all_units.csv,2,3,5,27,supermarket,超市,Mom is in the supermarket.
+howdy_2_all_units.csv,2,3,6,28,train station,火車站,Where is the train station?
+howdy_2_all_units.csv,2,3,7,29,school,學校,Jenny likes to go to school.
+howdy_2_all_units.csv,2,3,8,30,library,圖書館,Where is the library?
+howdy_2_all_units.csv,2,3,9,31,bank,銀行,My brother is in the bank.
+howdy_2_all_units.csv,2,3,10,32,post office,郵局,There are two post offices in the city.
+howdy_2_all_units.csv,2,3,11,33,park,公園,There is a park near the post office.
+howdy_2_all_units.csv,2,3,12,34,across from,對面,The park is across from the bank.
+howdy_2_all_units.csv,2,4,1,35,sing,唱（歌）,Jackie can sing very well.
+howdy_2_all_units.csv,2,4,2,36,fast,快地；迅速地,Brian can run fast.
+howdy_2_all_units.csv,2,4,3,37,dance,跳舞,Can Grace dance?
+howdy_2_all_units.csv,2,4,4,38,well,很好地,I can dance very well.
+howdy_2_all_units.csv,2,4,5,39,run,跑,My brother can run very fast.
+howdy_2_all_units.csv,2,4,6,40,piano,鋼琴,Jenny has a piano lesson today.
+howdy_2_all_units.csv,2,4,7,41,swim,游泳,Sam swims very well.
+howdy_2_all_units.csv,2,4,8,42,drums,鼓,Can you play the drums?
+howdy_2_all_units.csv,2,4,9,43,hop,單腳跳或雙腳跳,He can hop.
+howdy_2_all_units.csv,2,4,10,44,violin,小提琴,Ken can play the violin.
+howdy_2_all_units.csv,2,4,11,45,jump,跳；跳躍,She can jump high.
+howdy_2_all_units.csv,2,4,12,46,flute,長笛；橫笛,Serena can play the flute very well.
+howdy_2_all_units.csv,2,4,13,47,high,高,Can you jump high?
+howdy_2_all_units.csv,2,5,1,48,t-shirt,短袖圓領運動衫；T恤,Ben's T-shirt is gray.
+howdy_2_all_units.csv,2,5,2,49,hat,帽子,Lucy's hat is pretty.
+howdy_2_all_units.csv,2,5,3,50,shoes,鞋子,I like your new shoes.
+howdy_2_all_units.csv,2,5,4,51,sweater,毛衣,Do you like my sweater?
+howdy_2_all_units.csv,2,5,5,52,pants,褲子；長褲,Your pants are cool.
+howdy_2_all_units.csv,2,5,6,53,gray,灰色的,That snake is gray.
+howdy_2_all_units.csv,2,5,7,54,jacket,夾克,My brother likes your jacket.
+howdy_2_all_units.csv,2,5,8,55,brown,棕色的,I like your brown hat.
+howdy_2_all_units.csv,2,5,9,56,slippers,拖鞋,Peter's slippers are orange.
+howdy_2_all_units.csv,2,5,10,57,cute,可愛的,That baby is cute.
+howdy_2_all_units.csv,2,5,11,58,raincoat,雨衣,Do you like his new raincoat?
+howdy_2_all_units.csv,2,5,12,59,ugly,難看的,Her hair is ugly.
+howdy_2_all_units.csv,2,6,1,60,papaya,木瓜,There are two papayas on the chair.
+howdy_2_all_units.csv,2,6,2,61,pineapple,鳳梨,I want a pineapple for lunch.
+howdy_2_all_units.csv,2,6,3,62,vegetables,蔬菜,I don't like vegetables.
+howdy_2_all_units.csv,2,6,4,63,carrot,胡蘿蔔,My rabbit wants some carrots.
+howdy_2_all_units.csv,2,6,5,64,onion,洋蔥,Onions are good for us.
+howdy_2_all_units.csv,2,6,6,65,cabbage,高麗菜,Hi! I want a cabbage and two carrots.
+howdy_2_all_units.csv,2,6,7,66,pumpkin,南瓜,There are two pumpkins on the table.
+howdy_2_all_units.csv,2,6,8,67,watermelon,西瓜,There is a watermelon on the table.
+howdy_2_all_units.csv,2,6,9,68,banana,香蕉,She wants a banana.
+howdy_2_all_units.csv,2,6,10,69,guava,芭樂,There is a guava on the table.
+howdy_2_all_units.csv,2,6,11,70,apple,蘋果,Sally wants two apples for lunch.
+howdy_2_all_units.csv,2,6,12,71,orange,柳橙,There are some oranges in the box.
+howdy_2_all_units.csv,2,6,13,72,pear,梨子,Do you want a pear or a guava?
+howdy_2_all_units.csv,2,7,1,73,eye,眼,Ruby has pretty eyes.
+howdy_2_all_units.csv,2,7,2,74,shoulder,肩膀,My dad has big shoulders.
+howdy_2_all_units.csv,2,7,3,75,knee,膝蓋,Is your knee hurt?
+howdy_2_all_units.csv,2,7,4,76,toe,腳趾,My doll has ten toes.
+howdy_2_all_units.csv,2,7,5,77,finger,手指,Do you have five fingers?
+howdy_2_all_units.csv,2,7,6,78,strong,強壯的,That boy is very strong.
+howdy_2_all_units.csv,2,7,7,79,weak,虛弱的,That boy is weak.
+howdy_2_all_units.csv,2,7,8,80,head,頭,Judy's head is big.
+howdy_2_all_units.csv,2,7,9,81,hand,手,They have small hands.
+howdy_2_all_units.csv,2,7,10,82,arm,手臂,Kelly's arms are not short.
+howdy_2_all_units.csv,2,7,11,83,leg,腿,I have long legs.
+howdy_2_all_units.csv,2,7,12,84,ear,耳朵,Tim has big ears.
+howdy_2_all_units.csv,2,7,13,85,nose,鼻子,This monster has two noses.
+howdy_2_all_units.csv,2,7,14,86,mouth,嘴巴,Sam's mouth is big.
+howdy_2_all_units.csv,2,8,1,87,math,數學,I like math class.
+howdy_2_all_units.csv,2,8,2,88,chinese,中文,Tim is in Chinese class now.
+howdy_2_all_units.csv,2,8,3,89,music,音樂,Peter does not like music class.
+howdy_2_all_units.csv,2,8,4,90,english,英文,Do you have English class today?
+howdy_2_all_units.csv,2,8,5,91,art,美術,Music and art are fun.
+howdy_2_all_units.csv,2,8,6,92,science,科學,Science class is cool.
+howdy_2_all_units.csv,2,8,7,93,monday,星期一,I dance on Mondays.
+howdy_2_all_units.csv,2,8,8,94,tuesday,星期二,Lynn swims on Tuesdays.
+howdy_2_all_units.csv,2,8,9,95,wednesday,星期三,What do you do on Wednesday?
+howdy_2_all_units.csv,2,8,10,96,thursday,星期四,Grace plays the piano on Thursdays.
+howdy_2_all_units.csv,2,8,11,97,friday,星期五,Lynn has music class on Fridays.
+howdy_2_all_units.csv,2,8,12,98,saturday,星期六,Today is Saturday.
+howdy_2_all_units.csv,2,8,13,99,sunday,星期日,I swim on Sundays.
+howdy_3_all_units.csv,3,1,1,1,cold,冷的,It's cold today.
+howdy_3_all_units.csv,3,1,2,2,freezing,冰凍的,It is freezing cold today.
+howdy_3_all_units.csv,3,1,3,3,july,七月,The seventh month of the year is July.
+howdy_3_all_units.csv,3,1,4,4,august,八月,The weather in August is hot.
+howdy_3_all_units.csv,3,1,5,5,september,九月,It's cool in September.
+howdy_3_all_units.csv,3,1,6,6,october,十月,October is my favorite month.
+howdy_3_all_units.csv,3,1,7,7,november,十一月,My birthday is in November.
+howdy_3_all_units.csv,3,1,8,8,december,十二月,Christmas is in December.
+howdy_3_all_units.csv,3,1,9,9,january,一月,The weather in January is freezing.
+howdy_3_all_units.csv,3,1,10,10,february,二月,February is the second month of the year.
+howdy_3_all_units.csv,3,1,11,11,march,三月,It's windy in March here.
+howdy_3_all_units.csv,3,1,12,12,april,四月,In Taiwan it rains in April.
+howdy_3_all_units.csv,3,1,13,13,may,五月,May is a warm month.
+howdy_3_all_units.csv,3,1,14,14,june,六月,It's hot in June.
+howdy_3_all_units.csv,3,1,15,15,hot,熱的,It's hot today.
+howdy_3_all_units.csv,3,1,16,16,warm,溫暖的,It's warm today.
+howdy_3_all_units.csv,3,2,1,17,one hundred,一百,I can count to one hundred.
+howdy_3_all_units.csv,3,2,2,18,dollar,一元,This is one dollar.
+howdy_3_all_units.csv,3,2,3,19,expensive,昂貴的,The cake is too expensive.
+howdy_3_all_units.csv,3,2,4,20,cheap,便宜的,This red sweater is cheap.
+howdy_3_all_units.csv,3,2,5,21,thirty,三十,The pants are thirty dollars.
+howdy_3_all_units.csv,3,2,6,22,forty,四十,There are forty students in the classroom.
+howdy_3_all_units.csv,3,2,7,23,fifty,五十,We only have fifty dollars.
+howdy_3_all_units.csv,3,2,8,24,sixty,六十,The game is sixty dollars.
+howdy_3_all_units.csv,3,2,9,25,seventy,七十,Grandma is seventy years old.
+howdy_3_all_units.csv,3,2,10,26,eighty,八十,The robot is eighty colors.
+howdy_3_all_units.csv,3,2,11,27,ninety,九十,Grandpa is ninety years old.
+howdy_3_all_units.csv,3,3,1,28,france,法國,My favorite country is France.
+howdy_3_all_units.csv,3,3,2,29,australia,澳洲,It's cold in July in Australia.
+howdy_3_all_units.csv,3,3,3,30,telephone,電話,What is your telephone number?
+howdy_3_all_units.csv,3,3,4,31,cell phone,手機,I want a cell phone for my birthday.
+howdy_3_all_units.csv,3,3,5,32,number,號碼,What's your room number?
+howdy_3_all_units.csv,3,3,6,33,friend,朋友,They are good friends.
+howdy_3_all_units.csv,3,3,7,34,taiwan,台灣,They are from Taiwan.
+howdy_3_all_units.csv,3,3,8,35,china,中國,Hsiao-Ming is from China.
+howdy_3_all_units.csv,3,3,9,36,korea,韓國,Korea is next to China.
+howdy_3_all_units.csv,3,3,10,37,japan,日本,Japan is a beautiful country.
+howdy_3_all_units.csv,3,3,11,38,the us,美國,My new friend is from the US.
+howdy_3_all_units.csv,3,3,12,39,the uk,英國,Her teacher is from the UK.
+howdy_3_all_units.csv,3,4,1,40,twenty-sixth,二十六,The play is on October twenty-sixth.
+howdy_3_all_units.csv,3,4,2,41,twenty-seventh,二十七,Today is April twenty-seventh.
+howdy_3_all_units.csv,3,4,3,42,twenty-eighth,二十八,They don't have school on the twenty-eighth.
+howdy_3_all_units.csv,3,4,4,43,twenty-ninth,二十九,He has art class on July twenty-ninth.
+howdy_3_all_units.csv,3,4,5,44,thirtieth,三十,Tom's birthday is on May thirtieth.
+howdy_3_all_units.csv,3,4,6,45,twenty-first,二十一,The music show is on May twenty-first.
+howdy_3_all_units.csv,3,4,7,46,twenty-second,二十二,I have a math test on the twenty-second.
+howdy_3_all_units.csv,3,4,8,47,twenty-third,二十三,Today is August twenty-third.
+howdy_3_all_units.csv,3,4,9,48,twenty-fourth,二十四,Tomorrow is April twenty-fourth.
+howdy_3_all_units.csv,3,4,10,49,twenty-fifth,二十五,Matt's birthday is on March twenty-fifth.
+howdy_3_all_units.csv,3,5,1,50,apple pie,蘋果派,May we have two apple pie?
+howdy_3_all_units.csv,3,5,2,51,cookie,餅乾,You may eat a cookie now.
+howdy_3_all_units.csv,3,5,3,52,eat,吃,I want to eat a sandwich.
+howdy_3_all_units.csv,3,5,4,53,watch,看,Johnny wants to watch TV.
+howdy_3_all_units.csv,3,5,5,54,buy,買,Amy wants to buy a book.
+howdy_3_all_units.csv,3,5,6,55,go,去,They go to the bank every morning.
+howdy_3_all_units.csv,3,5,7,56,hamburger,漢堡,Can I have a hamburger?
+howdy_3_all_units.csv,3,5,8,57,chicken nuggets,雞塊,May I have some chicken nuggets please?
+howdy_3_all_units.csv,3,5,9,58,hot dog,熱狗,We have hot dogs for lunch.
+howdy_3_all_units.csv,3,5,10,59,salad,沙拉,Mom makes a fresh salad every day.
+howdy_3_all_units.csv,3,5,11,60,sandwiches,三明治,May I have two sandwiches?
+howdy_3_all_units.csv,3,5,12,61,pancakes,鬆餅,Ted likes to eat pancakes.
+howdy_3_all_units.csv,3,6,1,62,milk,牛奶,Yuma wants some milk.
+howdy_3_all_units.csv,3,6,2,63,water,水,I'm thirsty. I want some water.
+howdy_3_all_units.csv,3,6,3,64,cake,蛋糕,We have an orange cake.
+howdy_3_all_units.csv,3,6,4,65,pizza,披薩,Do you want some pizza?
+howdy_3_all_units.csv,3,6,5,66,cereal,麥片,Joe wants some cereal.
+howdy_3_all_units.csv,3,6,6,67,meat,肉,Linda likes to eat meat.
+howdy_3_all_units.csv,3,6,7,68,rice,米飯,Do you want some rice?
+howdy_3_all_units.csv,3,6,8,69,fish,魚,May I have some fish?
+howdy_3_all_units.csv,3,6,9,70,soup,湯,I want some soup for dinner.
+howdy_3_all_units.csv,3,6,10,71,bread,麵包,Do they want some bread?
+howdy_3_all_units.csv,3,6,11,72,tea,茶,Can I have some tea too?
+howdy_3_all_units.csv,3,6,12,73,juice,果汁,Do you want some juice?
+howdy_3_all_units.csv,3,7,1,74,go home,回家,It's 4:30. It's time to go home.
+howdy_3_all_units.csv,3,7,2,75,go to bed,上床睡覺,It's time to go to bed.
+howdy_3_all_units.csv,3,7,3,76,basketball,籃球,I like to play basketball.
+howdy_3_all_units.csv,3,7,4,77,soccer,足球,My favorite sport is soccer.
+howdy_3_all_units.csv,3,7,5,78,volleyball,排球,We love volleyball today.
+howdy_3_all_units.csv,3,7,6,79,baseball,棒球,They want to play baseball.
+howdy_3_all_units.csv,3,7,7,80,breakfast,早餐,It's time for breakfast.
+howdy_3_all_units.csv,3,7,8,81,lunch,午餐,Shelly is very hungry. She wants a big lunch.
+howdy_3_all_units.csv,3,7,9,82,snack,點心,What do you want for a snack?
+howdy_3_all_units.csv,3,7,10,83,dinner,晚餐,May eats dinner at 6:30.
+howdy_3_all_units.csv,3,7,11,84,get up,起床,Lisa wake up. It's time to get up.
+howdy_3_all_units.csv,3,7,12,85,go to school,上學去,It's 7:45. It's time to go to school.
+howdy_3_all_units.csv,3,8,1,86,read,讀,Ken likes to read books.
+howdy_3_all_units.csv,3,8,2,87,study,讀書,Mia and Ann are studying at the library.
+howdy_3_all_units.csv,3,8,3,88,draw,畫,Jenny can draw very well.
+howdy_3_all_units.csv,3,8,4,89,color,顏色,I want to color some pictures.
+howdy_3_all_units.csv,3,8,5,90,write,寫,Kate likes to write stories.
+howdy_3_all_units.csv,3,8,6,91,make,做,My sister can make sandwiches.
+howdy_3_all_units.csv,3,8,7,92,ride,騎,Ben rides his bike to school.
+howdy_3_all_units.csv,3,8,8,93,do,做,It's time to do your homework.
+howdy_3_all_units.csv,3,8,9,94,call,打電話,I want to call my friend.
+howdy_3_all_units.csv,3,8,10,95,drink,喝,I like to drink water.
+howdy_3_all_units.csv,3,8,11,96,wash,洗,Dad washes his car on Sundays.
+howdy_3_all_units.csv,3,8,12,97,play,玩,We like to play in the park.
+howdy_4_all_units.csv,4,1,1,1,sports,運動,I like to play sports with my friends.
+howdy_4_all_units.csv,4,1,2,2,golf,高爾夫球,Sue likes to play golf.
+howdy_4_all_units.csv,4,1,3,3,football,美式足球,My brother likes to play football with his friends.
+howdy_4_all_units.csv,4,1,4,4,table tennis,桌球,My sister likes to play table tennis.
+howdy_4_all_units.csv,4,1,5,5,badminton,羽球,I want to play badminton with my brother.
+howdy_4_all_units.csv,4,1,6,6,tennis,網球,I want to play tennis on Sunday.
+howdy_4_all_units.csv,4,1,7,7,dodge ball,躲避球,We play dodge ball with our school friends.
+howdy_4_all_units.csv,4,1,8,8,softball,壘球,I like to play softball.
+howdy_4_all_units.csv,4,1,9,9,swing,鞦韆,Ivy wants to play on the swings with me.
+howdy_4_all_units.csv,4,1,10,10,seesaw,蹺蹺板,I don't like to play on the seesaw.
+howdy_4_all_units.csv,4,1,11,11,slide,溜滑梯,Let's play on the slide.
+howdy_4_all_units.csv,4,1,12,12,jungle gym,攀爬架,They like to play on the jungle gym.
+howdy_4_all_units.csv,4,2,1,13,waiter,男服務生,The man is a waiter.
+howdy_4_all_units.csv,4,2,2,14,waitress,女服務生,That girl is a waitress.
+howdy_4_all_units.csv,4,2,3,15,nurse,護士,My mom is a nurse.
+howdy_4_all_units.csv,4,2,4,16,police officer,警察,He is a nice police officer.
+howdy_4_all_units.csv,4,2,5,17,mail carrier,郵差,My uncle is a mail carrier.
+howdy_4_all_units.csv,4,2,6,18,teacher,老師,I like my teacher.
+howdy_4_all_units.csv,4,2,7,19,bank clerk,銀行行員,I am a bank clerk.
+howdy_4_all_units.csv,4,2,8,20,shopkeeper,店長,The shopkeeper is cool.
+howdy_4_all_units.csv,4,2,9,21,salesperson,業務員,Danny is a salesperson.
+howdy_4_all_units.csv,4,2,10,22,restaurant,餐廳,Emily's sister works in a restaurant.
+howdy_4_all_units.csv,4,2,11,23,shop,商店,My brother works in a shop.
+howdy_4_all_units.csv,4,2,12,24,hospital,醫院,My grandpa is in the hospital.
+howdy_4_all_units.csv,4,2,13,25,police station,警察局,The police station is next to the bank.
+howdy_4_all_units.csv,4,3,1,26,peach,桃子,I like to eat peaches.
+howdy_4_all_units.csv,4,3,2,27,tangerine,橘子,I want to eat a tangerine.
+howdy_4_all_units.csv,4,3,3,28,scarf,圍巾,I wear a scarf in winter.
+howdy_4_all_units.csv,4,3,4,29,skirt,裙子,Your skirt is cute.
+howdy_4_all_units.csv,4,3,5,30,wear,穿,I like to wear dresses in the summer.
+howdy_4_all_units.csv,4,3,6,31,usually,通常,I usually wear jeans in the fall.
+howdy_4_all_units.csv,4,3,7,33,sometimes,有時候,She sometimes drinks juice in the winter.
+howdy_4_all_units.csv,4,3,8,34,spring,春天,I like spring. It's cool.
+howdy_4_all_units.csv,4,3,9,35,summer,夏天,My brother likes to swim in the summer.
+howdy_4_all_units.csv,4,3,10,36,autumn,秋天,I like to play in the autumn.
+howdy_4_all_units.csv,4,3,11,37,winter,冬天,It's cold in the winter here.
+howdy_4_all_units.csv,4,3,12,38,strawberry,草莓,Grandma likes to eat strawberries.
+howdy_4_all_units.csv,4,3,13,39,mango,芒果,Tim likes to eat mangoes in the summer.
+howdy_4_all_units.csv,4,4,1,40,school bus,校車,Ken usually goes to school by school bus.
+howdy_4_all_units.csv,4,4,2,41,car,汽車,Tom goes to work by car.
+howdy_4_all_units.csv,4,4,3,42,scooter,滑板車,I like your scooter.
+howdy_4_all_units.csv,4,4,4,43,train,火車,Lynn sometimes goes home by train.
+howdy_4_all_units.csv,4,4,5,44,bus,公車,I always go to the bookstore by bus.
+howdy_4_all_units.csv,4,4,6,45,motorcycle,機車,My friend likes to ride his motorcycle.
+howdy_4_all_units.csv,4,4,7,46,subway,地鐵,Peggy goes to work by subway.
+howdy_4_all_units.csv,4,4,8,47,walk,走路,My dad walks to work.
+howdy_4_all_units.csv,4,4,9,48,boat,船,That boat is big.
+howdy_4_all_units.csv,4,4,10,49,taxi,計程車,They usually go to the airport by taxi.
+howdy_4_all_units.csv,4,4,11,50,always,總是,I always play tennis with my friends after school.
+howdy_4_all_units.csv,4,4,12,51,never,從不,Mr. Wang never goes to work by bus.
+howdy_4_all_units.csv,4,5,1,52,year,年,My cousin comes to visit us every year.
+howdy_4_all_units.csv,4,5,2,53,month,月,She wears this dress once a month.
+howdy_4_all_units.csv,4,5,3,54,week,週,I go to art class twice a week.
+howdy_4_all_units.csv,4,5,4,55,once,一次,We play soccer once a week.
+howdy_4_all_units.csv,4,5,5,56,twice,兩次,We play badminton twice a month.
+howdy_4_all_units.csv,4,5,6,57,seldom,很少,We seldom play tennis.
+howdy_4_all_units.csv,4,5,7,58,often,經常,We often play tennis in the garden.
+howdy_4_all_units.csv,4,5,8,59,grandparents,祖父母,Stephanie always visits her grandparents in the spring.
+howdy_4_all_units.csv,4,5,9,60,uncle,叔叔,My uncle is a police officer.
+howdy_4_all_units.csv,4,5,10,61,aunt,姑姑,Her aunt is a nurse.
+howdy_4_all_units.csv,4,5,11,62,cousin,表親,I often visit my cousins on Sundays.
+howdy_4_all_units.csv,4,5,12,63,relatives,親戚,I have nice relatives.
+howdy_4_all_units.csv,4,5,13,64,visit,探訪,My uncle will visit me next summer.
+howdy_4_all_units.csv,4,6,1,65,first,首先,First we wash the dog.
+howdy_4_all_units.csv,4,6,2,66,next,接下來,Next we use a towel.
+howdy_4_all_units.csv,4,6,3,67,then,然後,Then we brush his hair.
+howdy_4_all_units.csv,4,6,4,68,finally,最後,Finally we brush his teeth.
+howdy_4_all_units.csv,4,6,5,69,brush,刷,I brush my teeth three times a day.
+howdy_4_all_units.csv,4,6,6,70,comb,梳,Maggie combs her hair every morning.
+howdy_4_all_units.csv,4,6,7,71,wash,洗,Emma washes her face once a day.
+howdy_4_all_units.csv,4,6,8,72,cut,剪,I cut my nails once a week.
+howdy_4_all_units.csv,4,6,9,73,shampoo,洗髮乳,We shampoo our hair every day.
+howdy_4_all_units.csv,4,6,10,74,take a shower,洗澡,I take a shower twice a day.
+howdy_4_all_units.csv,4,7,1,75,sweep the floor,掃地,I love to sweep the floor once a week.
+howdy_4_all_units.csv,4,7,2,76,take out the trash,倒垃圾,He has to take out the trash today.
+howdy_4_all_units.csv,4,7,3,77,clean my room,清理房間,I need to clean my room before dinner.
+howdy_4_all_units.csv,4,7,4,78,set the table,擺餐具,I set the table every day.
+howdy_4_all_units.csv,4,7,5,79,wash the dishes,洗碗,Lucy needs to wash the dishes after dinner.
+howdy_4_all_units.csv,4,7,6,80,feed the dog every day,餵狗,Sam has to feed the dog every day.
+howdy_4_all_units.csv,4,7,7,81,make the bed,整理床鋪,Mom wants us to make the bed every morning.
+howdy_4_all_units.csv,4,7,8,82,mop the floor,拖地,We have to mop the floor tonight.
+howdy_4_all_units.csv,4,8,1,83,on the left of,在左邊,Put the spoon on the left of the plate please.
+howdy_4_all_units.csv,4,8,2,84,on the right of,在右邊,The spoon is on the right of the plate.
+howdy_4_all_units.csv,4,8,3,85,bowl,碗,Put the bowl on the table please.
+howdy_4_all_units.csv,4,8,4,86,chopsticks,筷子,I use chopsticks to eat noodles.
+howdy_4_all_units.csv,4,8,5,87,knife,刀子,Mindy uses a knife and fork to eat.
+howdy_4_all_units.csv,4,8,6,88,glass,杯子,"I want a glass of water, please."
+howdy_4_all_units.csv,4,8,7,89,plate,盤子,Your plate is on the table.
+howdy_4_all_units.csv,4,8,8,90,napkin,餐巾紙,The napkin is on the plate.
+howdy_4_all_units.csv,4,8,9,91,spoon,湯匙,Please put the spoon on the plate.
+howdy_4_all_units.csv,4,8,10,92,fork,叉子,I want a fork thanks.
+howdy_4_all_units.csv,4,8,11,93,in front of,在前面,Jane is in front of Alice.
+howdy_4_all_units.csv,4,8,12,94,between,在之間,Rosa is between Ann and Kobe.
+howdy_5_all_units.csv,5,1,1,1,farm,農場,The farm is very big.
+howdy_5_all_units.csv,5,1,2,2,animal,動物,There are many animals here.
+howdy_5_all_units.csv,5,1,3,3,pig,豬,Look at that pig. It has a big nose.
+howdy_5_all_units.csv,5,1,4,4,goat,山羊,I feed the goat twice a day.
+howdy_5_all_units.csv,5,1,5,5,horse,馬,The horse is running fast.
+howdy_5_all_units.csv,5,1,6,6,cow,乳牛,The cow is eating grass.
+howdy_5_all_units.csv,5,1,7,7,mouse,老鼠,Look! There is a mouse.
+howdy_5_all_units.csv,5,1,8,8,chicken,雞,The chicken is running on the farm.
+howdy_5_all_units.csv,5,1,9,9,duck,鴨,I can see two ducks.
+howdy_5_all_units.csv,5,1,10,10,sheep,羊,There is a sheep on the farm.
+howdy_5_all_units.csv,5,1,11,11,bee,蜜蜂,The bee is yellow and black.
+howdy_5_all_units.csv,5,1,12,12,mosquito,蚊子,The mosquito is very small.
+howdy_5_all_units.csv,5,1,13,13,pond,池塘,There is a pond on the farm.
+howdy_5_all_units.csv,5,1,14,14,fly,飛,Superspider likes to fly.
+howdy_5_all_units.csv,5,1,15,15,hear,聽,I can hear the music.
+howdy_5_all_units.csv,5,1,16,16,fence,柵欄,I can see a tall fence.
+howdy_5_all_units.csv,5,1,17,17,field,田野,Lucy is running in the field.
+howdy_5_all_units.csv,5,1,18,18,grass,草,A dog is sleeping on the grass.
+howdy_5_all_units.csv,5,1,19,19,beautiful,美麗的,Amy is very beautiful.
+howdy_5_all_units.csv,5,2,1,20,pilot,飛行員,My father is a pilot.
+howdy_5_all_units.csv,5,2,2,21,farmer,農夫,Howard's grandpa is a farmer.
+howdy_5_all_units.csv,5,2,3,22,chef,廚師,Matt is a chef. He cooks well.
+howdy_5_all_units.csv,5,2,4,23,monster,怪物,There's a monster behind us!
+howdy_5_all_units.csv,5,2,5,24,clothes,衣服,These are Milly's new clothes.
+howdy_5_all_units.csv,5,2,6,25,uniform,制服,I'm wearing the school uniform.
+howdy_5_all_units.csv,5,2,7,26,jeans,牛仔褲,Look at my new jeans.
+howdy_5_all_units.csv,5,2,8,27,dress,洋裝,Mina's dress is very expensive.
+howdy_5_all_units.csv,5,2,9,28,mask,面具,Look! Lynn is wearing a mask.
+howdy_5_all_units.csv,5,2,10,29,hold,握著,Tim is holding a mug.
+howdy_5_all_units.csv,5,2,11,30,fisherman,漁夫,Is your grandpa a fisherman?
+howdy_5_all_units.csv,5,2,12,31,driver,司機,My father is a taxi driver.
+howdy_5_all_units.csv,5,2,13,32,drive,開車,My mom drives me to school every day.
+howdy_5_all_units.csv,5,2,14,33,cook,烹飪,My grandma cooks great food.
+howdy_5_all_units.csv,5,2,15,34,catch,抓住；接住,I can catch the bug.
+howdy_5_all_units.csv,5,2,16,35,magician,魔術師,There is a magician at the party.
+howdy_5_all_units.csv,5,2,17,36,trick,戲法；特技,My dog knows a few tricks.
+howdy_5_all_units.csv,5,2,18,37,apron,圍裙,Ann washes her apron every day.
+howdy_5_all_units.csv,5,2,19,38,happy,高興的,We are very happy today.
+howdy_5_all_units.csv,5,3,1,39,rock,石頭,Look at those huge rocks!
+howdy_5_all_units.csv,5,3,2,40,tree,樹,These trees are very old.
+howdy_5_all_units.csv,5,3,3,41,woods,樹林,Their house is next to the woods.
+howdy_5_all_units.csv,5,3,4,42,hill,山丘,Let's run to the top of the hill!
+howdy_5_all_units.csv,5,3,5,43,mountains,山,The mountains are so pretty.
+howdy_5_all_units.csv,5,3,6,44,lake,湖,Let's go to the lake!
+howdy_5_all_units.csv,5,3,7,45,river,河,This river is very clean.
+howdy_5_all_units.csv,5,3,8,46,waterfall,瀑布,This waterfall is very high!
+howdy_5_all_units.csv,5,3,9,47,fox,狐狸,There's a fox in the woods.
+howdy_5_all_units.csv,5,3,10,48,deer,鹿,There is a deer next to the lake.
+howdy_5_all_units.csv,5,3,11,49,bridge,橋,Lynn is walking over the bridge.
+howdy_5_all_units.csv,5,3,12,50,map,地圖,We can find the US on the map.
+howdy_5_all_units.csv,5,3,13,51,path,小徑,Sam is walking on the path.
+howdy_5_all_units.csv,5,3,14,52,over,越過,Lucy is jumping over that rock.
+howdy_5_all_units.csv,5,3,15,53,through,穿過,Tim is walking through the park.
+howdy_5_all_units.csv,5,3,16,54,cave,洞穴,Let's go into the cave.
+howdy_5_all_units.csv,5,3,17,55,log,木頭；原木,Let's sit on that log.
+howdy_5_all_units.csv,5,3,18,56,bush,矮樹叢,Is there a fox behind the bush?
+howdy_5_all_units.csv,5,3,19,57,owl,貓頭鷹,I can hear an owl.
+howdy_5_all_units.csv,5,3,20,58,stream,小河；溪流,It's so hot. Let's play in the stream.
+howdy_5_all_units.csv,5,4,1,59,truck,卡車,He is driving his old truck.
+howdy_5_all_units.csv,5,4,2,60,helicopter,直升機,There's a helicopter above the tree.
+howdy_5_all_units.csv,5,4,3,61,race,賽跑；比賽,Do you want to run a race with me?
+howdy_5_all_units.csv,5,4,4,62,win,贏,Frank is winning the race!
+howdy_5_all_units.csv,5,4,5,63,inside,裡面,It's so hot. Let's go inside.
+howdy_5_all_units.csv,5,4,6,64,outside,外面,The dog wants to play outside.
+howdy_5_all_units.csv,5,4,7,65,into,進入...,May is going into the house.
+howdy_5_all_units.csv,5,4,8,66,out of,從...離開,Sam is running out of the house.
+howdy_5_all_units.csv,5,4,9,67,up,往上,Elsa is walking up the hill.
+howdy_5_all_units.csv,5,4,10,68,down,往下,Joe is running down the hill.
+howdy_5_all_units.csv,5,4,11,69,box,盒子,The pens are in the box.
+howdy_5_all_units.csv,5,4,12,70,bucket,桶子,Put some water in the bucket.
+howdy_5_all_units.csv,5,4,13,71,jar,罐子,There is some candy in the jar.
+howdy_5_all_units.csv,5,4,14,72,above,上方,The bee is flying above the flower.
+howdy_5_all_units.csv,5,4,15,73,around,周圍,Mosquitoes are flying around the room.
+howdy_5_all_units.csv,5,4,16,74,house,房子,It's my uncle's house.
+howdy_5_all_units.csv,5,4,17,75,super,超級的；極好的,I like this game. It's super!
+howdy_5_all_units.csv,5,5,1,76,lemon,檸檬,This lemon tastes sour.
+howdy_5_all_units.csv,5,5,2,77,taste,嚐,This soup tastes really good.
+howdy_5_all_units.csv,5,5,3,78,smell,聞,These flowers smell so good!
+howdy_5_all_units.csv,5,5,4,79,feel,感覺,The plant feels really hard.
+howdy_5_all_units.csv,5,5,5,80,sweet,甜的,This lollipop tastes sweet.
+howdy_5_all_units.csv,5,5,6,81,sour,酸的,Does this lemon taste sour?
+howdy_5_all_units.csv,5,5,7,82,soft,柔軟的,The sofa feels soft.
+howdy_5_all_units.csv,5,5,8,83,hard,硬的,The rock is very hard.
+howdy_5_all_units.csv,5,5,9,84,good,好的,This book is really good.
+howdy_5_all_units.csv,5,5,10,85,bad,壞的,Don't eat the soup. It smells bad.
+howdy_5_all_units.csv,5,5,11,86,french fries,薯條,Can I have some French fries?
+howdy_5_all_units.csv,5,5,12,87,jam,果醬,How does the jam taste?
+howdy_5_all_units.csv,5,5,13,88,delicious,美味的,This pizza is delicious.
+howdy_5_all_units.csv,5,5,14,89,terrible,糟糕的,The trash smells terrible.
+howdy_5_all_units.csv,5,5,15,90,sticky,黏的,My fingers are sticky.
+howdy_5_all_units.csv,5,5,16,91,fresh,新鮮的,This fish is really fresh.
+howdy_5_all_units.csv,5,5,17,92,rotten,腐敗的；腐爛的,Those eggs are rotten.
+howdy_5_all_units.csv,5,5,18,93,smooth,（表面）光滑的,This table is really smooth.
+howdy_5_all_units.csv,5,5,19,94,rough,粗糙的,This chair feels rough.
+howdy_5_all_units.csv,5,6,1,95,butter,牛油,Do we have any butter?
+howdy_5_all_units.csv,5,6,2,96,salt,鹽巴,Put some salt on the potatoes.
+howdy_5_all_units.csv,5,6,3,97,sugar,糖,There is some sugar on the table.
+howdy_5_all_units.csv,5,6,4,98,egg,蛋,Put the egg in the pan.
+howdy_5_all_units.csv,5,6,5,99,flour,麵粉,I want some flour to make cookies.
+howdy_5_all_units.csv,5,6,6,100,help,幫助,Can we help?
+howdy_5_all_units.csv,5,6,7,101,move,移動,Don't move. We will help you.
+howdy_5_all_units.csv,5,6,8,102,get,拿取,Can you get the sugar?
+howdy_5_all_units.csv,5,6,9,103,touch,觸；碰,Don't touch the pan. It is hot.
+howdy_5_all_units.csv,5,6,10,104,add,加；增添,Now add some salt.
+howdy_5_all_units.csv,5,6,11,105,refrigerator,冰箱,The eggs are in the refrigerator.
+howdy_5_all_units.csv,5,6,12,106,oven,烤箱,Put the pie in the oven.
+howdy_5_all_units.csv,5,6,13,107,cupboard,碗櫃；櫥櫃,There are cookies in the cupboard.
+howdy_5_all_units.csv,5,6,14,108,open,打開,Please open the door.
+howdy_5_all_units.csv,5,6,15,109,close,關起來,Please close the door.
+howdy_5_all_units.csv,5,6,16,110,peel,削皮,Can you peel the apples please?
+howdy_5_all_units.csv,5,6,17,111,net,網子,Tim has a fish in his net!
+howdy_5_all_units.csv,5,6,18,112,pie pan,派盤,Please put the pie pan here.
+howdy_5_all_units.csv,5,7,1,113,hike,健行,Hiking is fun! I love it.
+howdy_5_all_units.csv,5,7,2,114,camp,露營,Ted likes camping in the woods.
+howdy_5_all_units.csv,5,7,3,115,fish,釣魚,He is fishing by the river.
+howdy_5_all_units.csv,5,7,4,116,sail,航行,Sailing on the lake is fun.
+howdy_5_all_units.csv,5,7,5,117,easy,簡單的,This game is easy.
+howdy_5_all_units.csv,5,7,6,118,difficult,困難的,This game is difficult. I can't do it.
+howdy_5_all_units.csv,5,7,7,119,exciting,刺激的,Is sailing exciting? Yes it is.
+howdy_5_all_units.csv,5,7,8,120,interesting,有趣的,This book is interesting.
+howdy_5_all_units.csv,5,7,9,121,dangerous,危險,It's dangerous to swim here.
+howdy_5_all_units.csv,5,7,10,122,safe,安全的,This path is safe for hiking.
+howdy_5_all_units.csv,5,7,11,123,sailor,水手,There is a sailor on the boat.
+howdy_5_all_units.csv,5,7,12,124,barbecue,烤肉,Let's have a barbecue!
+howdy_5_all_units.csv,5,7,13,125,ready,準備好的,They are ready to run.
+howdy_5_all_units.csv,5,7,14,126,love,愛,I love my doll.
+howdy_5_all_units.csv,5,7,15,127,enjoy,享受,We enjoy hiking in the mountains.
+howdy_5_all_units.csv,5,8,1,128,jobs,工作,Al Ken and Jean have different jobs.
+howdy_5_all_units.csv,5,8,2,129,singer,歌手,My aunt is a great singer.
+howdy_5_all_units.csv,5,8,3,130,reporter,記者,Ian wants to be a reporter.
+howdy_5_all_units.csv,5,8,4,131,scientist,科學家,Tom's father is a scientist.
+howdy_5_all_units.csv,5,8,5,132,musicians,音樂家,Those musicians can play very well.
+howdy_5_all_units.csv,5,8,6,133,cowgirl / cowboy,女 / 男牛仔,Is Peter a cowboy?
+howdy_5_all_units.csv,5,8,7,135,hairdresser,髮型師,Let's go to the hairdresser today.
+howdy_5_all_units.csv,5,8,8,136,teach,教學,My mom teaches at our school.
+howdy_5_all_units.csv,5,8,9,137,say,說,What are you saying? I can't hear you.
+howdy_5_all_units.csv,5,8,10,138,report,播報,Ed's father reports the weather.
+howdy_5_all_units.csv,5,8,11,139,fix,修理,My dad fixes cars.
+howdy_5_all_units.csv,5,8,12,140,mechanic,技工,Let's take the car to the mechanic.
+howdy_5_all_units.csv,5,8,13,141,model,模特兒,Lillian wants to be a model.
+howdy_5_all_units.csv,5,8,14,142,clean,乾淨的,Danny's hands are very clean.
+howdy_5_all_units.csv,5,8,15,143,dirty,髒的,Your hands are dirty. Please wash them.
+howdy_6_all_units.csv,6,1,1,1,comic book,漫畫書,Ed likes to read comic books.
+howdy_6_all_units.csv,6,1,2,2,amusement park,遊樂園,My family is going to an amusement park tomorrow.
+howdy_6_all_units.csv,6,1,3,3,weekend,週末,Emily is going camping with friends this weekend.
+howdy_6_all_units.csv,6,1,4,4,meet,遇見；會面,Let's meet at the zoo tomorrow.
+howdy_6_all_units.csv,6,1,5,5,borrow,借,Can I borrow these books?
+howdy_6_all_units.csv,6,1,6,6,exercise,運動；練習,We love to exercise.
+howdy_6_all_units.csv,6,1,7,7,come,來,Please come with me.
+howdy_6_all_units.csv,6,1,8,8,tell,告訴；說,Please tell your dad to call me.
+howdy_6_all_units.csv,6,1,9,9,tomorrow,明天,Goodbye. See you tomorrow.
+howdy_6_all_units.csv,6,1,10,10,later,較晚地；以後,See you later.
+howdy_6_all_units.csv,6,1,11,11,museum,博物館,They are going to the museum by train.
+howdy_6_all_units.csv,6,1,12,12,sea,海,Sailing on the sea is exciting.
+howdy_6_all_units.csv,6,1,13,13,dinosaur,恐龍,I want to learn about dinosaurs.
+howdy_6_all_units.csv,6,1,14,14,dolphin,海豚,Dolphins are smart animals.
+howdy_6_all_units.csv,6,1,15,15,killer whale,殺人鯨,The killer whale show was cool.
+howdy_6_all_units.csv,6,1,16,16,everyone,每人；人人,Everyone is studying at the library for the final exam.
+howdy_6_all_units.csv,6,1,17,17,field trip,戶外教學,The field trip is on Tuesday.
+howdy_6_all_units.csv,6,1,18,18,wonderful,精彩的,This soccer game is wonderful.
+howdy_6_all_units.csv,6,1,19,19,ferris wheel,摩天輪,There is a huge Ferris wheel at the new amusement park.
+howdy_6_all_units.csv,6,1,20,20,roller coaster,雲霄飛車,My sister doesn't like to go on the roller coaster.
+howdy_6_all_units.csv,6,2,1,21,student,學生,There are 16 students in my English class.
+howdy_6_all_units.csv,6,2,2,22,shark,鯊魚,The toy sharks are so cool!
+howdy_6_all_units.csv,6,2,3,23,whale,鯨魚,That blue whale is huge.
+howdy_6_all_units.csv,6,2,4,24,seal,海豹,We can see seals at Aqua Park.
+howdy_6_all_units.csv,6,2,5,25,sea turtle,海龜,Sea turtles can swim.
+howdy_6_all_units.csv,6,2,6,26,octopus,章魚,What color are the octopuses?
+howdy_6_all_units.csv,6,2,7,27,squid,烏賊,What do squids like to eat?
+howdy_6_all_units.csv,6,2,8,28,penguin,企鵝,Penguins can't fly.
+howdy_6_all_units.csv,6,2,9,29,land,陸地,Some crabs live on the land.
+howdy_6_all_units.csv,6,2,10,30,island,島,Is Aqua Park on an island?
+howdy_6_all_units.csv,6,2,11,31,ticket,票,May I have two tickets please?
+howdy_6_all_units.csv,6,2,12,32,sale,拍賣；出售,Those dresses are on sale.
+howdy_6_all_units.csv,6,2,13,33,sell,賣,Ben is going to sell orange cakes at his restaurant.
+howdy_6_all_units.csv,6,2,14,34,bake,烘焙,Grandma likes to bake cookies.
+howdy_6_all_units.csv,6,2,15,35,more,更多的,Kitty wants more candy.
+howdy_6_all_units.csv,6,3,1,36,dessert,甜點,Eva wants to have strawberry ice cream for dessert.
+howdy_6_all_units.csv,6,3,2,37,doughnuts,甜甜圈,Mom's doughnuts are tasty.
+howdy_6_all_units.csv,6,3,3,38,cream bun,奶油麵包,Ed sometimes has a cream bun for a snack.
+howdy_6_all_units.csv,6,3,4,39,moon cake,月餅,Dad likes to eat moon cakes.
+howdy_6_all_units.csv,6,3,5,40,candy bar,條（塊）狀糖果,Chocolate candy bars are my favorite dessert.
+howdy_6_all_units.csv,6,3,6,41,chocolate,巧克力,May I have some chocolate?
+howdy_6_all_units.csv,6,3,7,42,start,開始,The race is going to start soon.
+howdy_6_all_units.csv,6,3,8,43,finish,完成,When will the game finish?
+howdy_6_all_units.csv,6,3,9,44,large,大的；多數的,Baking a large cake is difficult.
+howdy_6_all_units.csv,6,3,10,45,favorite,最愛的人或物,Which toy is your favorite?
+howdy_6_all_units.csv,6,3,11,46,food,食物,I'll buy some food for dinner.
+howdy_6_all_units.csv,6,3,12,47,drink(s),飲品,Please get some drinks for us.
+howdy_6_all_units.csv,6,3,13,48,price,價格；價錢,I like this hat. What's the price?
+howdy_6_all_units.csv,6,3,14,49,popcorn,爆米花,I like to eat popcorn with Coke.
+howdy_6_all_units.csv,6,3,15,50,toast,吐司,We often eat toast with jam.
+howdy_6_all_units.csv,6,3,16,51,milkshake,奶昔,My favorite drink is a milkshake.
+howdy_6_all_units.csv,6,3,17,52,soda,汽水,Soda is not good for our teeth.
+howdy_6_all_units.csv,6,3,18,53,candy,糖果,The candy is sweet and sour.
+howdy_6_all_units.csv,6,4,1,54,question,問題,Can I ask you a question?
+howdy_6_all_units.csv,6,4,2,55,answer,答案,The answer to this question is not easy.
+howdy_6_all_units.csv,6,4,3,56,hour,小時,We have an hour to play tennis.
+howdy_6_all_units.csv,6,4,4,57,minute,分鐘,There are sixty minutes in an hour.
+howdy_6_all_units.csv,6,4,5,58,second,秒,The movie is going to start in thirty seconds.
+howdy_6_all_units.csv,6,4,6,59,captain,船長,Mike is the captain of this ship.
+howdy_6_all_units.csv,6,4,7,60,sick,生病的,Sean can't go to school because he is sick.
+howdy_6_all_units.csv,6,4,8,61,tired,疲倦的,Ed often feels tired after work.
+howdy_6_all_units.csv,6,4,9,62,hungry,飢餓的,Kevin wants some bread because he is hungry.
+howdy_6_all_units.csv,6,4,10,63,happy,高興的,Kids are happy to see Grandpa.
+howdy_6_all_units.csv,6,4,11,64,wave,波浪,Here comes a big wave!
+howdy_6_all_units.csv,6,4,12,65,beautiful,漂亮的,The red dress is more beautiful.
+howdy_6_all_units.csv,6,4,13,66,beach,海灘,Eric likes to play on the beach.
+howdy_6_all_units.csv,6,4,14,67,seashell,貝殼,This yellow seashell is pretty.
+howdy_6_all_units.csv,6,4,15,68,find,找到,Ian can't find his kite.
+howdy_6_all_units.csv,6,4,16,69,throw up,嘔吐,Ben is going to throw up because he is feeling sick.
+howdy_6_all_units.csv,6,4,17,70,kid,小孩,These kids can dance well.
+howdy_6_all_units.csv,6,4,18,71,seagull,海鷗,Seagulls are flying in the sky.
+howdy_6_all_units.csv,6,4,19,72,shore,岸邊,We're swimming back to shore.
+howdy_6_all_units.csv,6,5,1,73,starfish,海星,The red starfish is small.
+howdy_6_all_units.csv,6,5,2,74,crab,螃蟹,Most crabs live in the water.
+howdy_6_all_units.csv,6,5,3,75,ray,魟魚,Which ray is the smallest?
+howdy_6_all_units.csv,6,5,4,76,sea horse,海馬,That sea horse is the largest.
+howdy_6_all_units.csv,6,5,5,77,bones,骨頭,Octopuses have no bones.
+howdy_6_all_units.csv,6,5,6,78,sign,記號；標誌,"The sign says ""No Feeding."""
+howdy_6_all_units.csv,6,5,7,79,tank,缸,Let's get a fish tank for David.
+howdy_6_all_units.csv,6,5,8,80,world,世界,Greenland is the biggest island in the world.
+howdy_6_all_units.csv,6,5,9,81,tiny,微小的,Ants are tiny.
+howdy_6_all_units.csv,6,5,10,82,live,住,Macy lives next to her parents.
+howdy_6_all_units.csv,6,5,11,83,pool,水池,Many fish are swimming in the pool.
+howdy_6_all_units.csv,6,5,12,84,bumpy,凹凸不平的,We're driving on a bumpy road.
+howdy_6_all_units.csv,6,5,13,85,flat,平的；平坦的,The road is flat.
+howdy_6_all_units.csv,6,5,14,86,rough,粗糙的,Basketballs feel rough.
+howdy_6_all_units.csv,6,5,15,87,smooth,光滑的,The egg feels smooth.
+howdy_6_all_units.csv,6,5,16,88,petting area,撫摸區,There are sheep and rabbits in the petting area.
+howdy_6_all_units.csv,6,5,17,89,pet,寵物,This tiny dog is Arron's pet.
+howdy_6_all_units.csv,6,5,18,90,tail,尾巴,A ray has a long tail.
+howdy_6_all_units.csv,6,5,19,91,look like,看起來像...,Andy and his dad look like each other.
+howdy_6_all_units.csv,6,5,20,92,probably,大概,It will probably rain tomorrow.
+howdy_6_all_units.csv,6,6,1,93,plant,植物,We have many plants at home.
+howdy_6_all_units.csv,6,6,2,94,coral,珊瑚,The red coral is beautiful.
+howdy_6_all_units.csv,6,6,3,95,lobster,龍蝦,I can see two big lobsters.
+howdy_6_all_units.csv,6,6,4,96,eel,鰻魚,How many eels can you see?
+howdy_6_all_units.csv,6,6,5,97,jellyfish,水母,Look at those huge jellyfish!
+howdy_6_all_units.csv,6,6,6,98,change,改變；交換,I want to change my clothes.
+howdy_6_all_units.csv,6,6,7,99,colorful,豐富色彩的；鮮艷的,Nina likes colorful clothes.
+howdy_6_all_units.csv,6,6,8,100,clear,清楚的；清澈的,The water is so clear. I can see the fish.
+howdy_6_all_units.csv,6,6,9,101,dark blue,深藍色的,The dark blue whale is pretty.
+howdy_6_all_units.csv,6,6,10,102,light blue,淺藍色的,My schoolbag is light blue.
+howdy_6_all_units.csv,6,6,11,103,shrimp,蝦子,Which shrimp is the biggest?
+howdy_6_all_units.csv,6,6,12,104,guys,朋友；人們,You guys are so funny.
+howdy_6_all_units.csv,6,6,13,105,fat,胖的,Rex is drawing a big fat cat.
+howdy_6_all_units.csv,6,6,14,106,strange,奇怪的,The colorful fish with big eyes looks strange.
+howdy_6_all_units.csv,6,6,15,107,quick,快的,You finished your homework already—that was quick!
+howdy_6_all_units.csv,6,7,1,108,show,表演,Let's take a picture of the show.
+howdy_6_all_units.csv,6,7,2,109,camera,照相機,I'm going to buy a red camera.
+howdy_6_all_units.csv,6,7,3,110,picture,照片,Dad loves taking pictures.
+howdy_6_all_units.csv,6,7,4,111,earring,耳環；耳飾,The dolphin earrings are cute.
+howdy_6_all_units.csv,6,7,5,112,necklace,項鍊,Ed gave me a pretty necklace.
+howdy_6_all_units.csv,6,7,6,113,postcard(s),明信片,These postcards are from Pitt.
+howdy_6_all_units.csv,6,7,7,114,letter,信,Please send this letter for me.
+howdy_6_all_units.csv,6,7,8,115,give,給；給與,I'll give Ann a birthday gift.
+howdy_6_all_units.csv,6,7,9,116,send,發送；寄,He wants to send a letter to his cousin in Japan.
+howdy_6_all_units.csv,6,7,10,117,take a picture,照相；拍照,Roy is going to take a picture of the dolphins.
+howdy_6_all_units.csv,6,7,11,118,gift,禮物,He is going to get Dora a gift.
+howdy_6_all_units.csv,6,7,12,119,tie,領帶,The tie is red and yellow.
+howdy_6_all_units.csv,6,7,13,120,ring,戒指,Emma's ring is beautiful.
+howdy_6_all_units.csv,6,7,14,121,scary,可怕的；嚇人的,That gray dog is very scary.
+howdy_6_all_units.csv,6,7,15,122,sharp,鋒利的；尖的,The knife is sharp.
+howdy_6_all_units.csv,6,7,16,123,flower,花,These flowers smell good.
+howdy_6_all_units.csv,6,7,17,124,card,卡片,Let's make a card for Mom.
+howdy_6_all_units.csv,6,7,18,125,belt,皮帶,There is a belt on the table.
+howdy_6_all_units.csv,6,7,19,126,something,某事或某物,I have something for you.
+howdy_6_all_units.csv,6,7,20,127,nothing,沒有東西,There is nothing in the box.
+howdy_6_all_units.csv,6,8,1,128,knight,騎士,The knight is tall and strong.
+howdy_6_all_units.csv,6,8,2,129,hero,英雄,Dan is a hero because he saved the monster.
+howdy_6_all_units.csv,6,8,3,130,ghost,鬼；幽靈,Susan will tell a ghost story.
+howdy_6_all_units.csv,6,8,4,131,story,故事,Mom enjoys telling stories.
+howdy_6_all_units.csv,6,8,5,132,joke,玩笑,Sam likes to tell jokes.
+howdy_6_all_units.csv,6,8,6,133,fight,打架,Why did Ben fight with his brother?
+howdy_6_all_units.csv,6,8,7,134,ask,詢問,You can ask me questions.
+howdy_6_all_units.csv,6,8,8,135,strong,強壯的,The man is very strong.
+howdy_6_all_units.csv,6,8,9,136,brave,勇敢的；英勇的,Hans is brave. He fights the huge dragon.
+howdy_6_all_units.csv,6,8,10,137,fantastic,極好的,This is a fantastic story.
+howdy_6_all_units.csv,6,8,11,138,prince,王子,Prince Oscar is handsome.
+howdy_6_all_units.csv,6,8,12,139,princess,公主,The princess is pretty and kind.
+howdy_6_all_units.csv,6,8,13,140,dragon,龍,The bad dragon lives in a cave.
+howdy_6_all_units.csv,6,8,14,141,fire,火,The monster is afraid of fire.
+howdy_6_all_units.csv,6,8,15,142,die,死,The dragon died after a fight.
+howdy_6_all_units.csv,6,8,16,143,kiss,吻；接吻,She doesn't want to kiss a frog.
+howdy_6_all_units.csv,6,8,17,144,wait,等待,Please wait here. I will call him.
+howdy_6_all_units.csv,6,8,18,145,maybe,或許；可能,Maybe it will rain tomorrow.
+howdy_6_all_units.csv,6,8,19,146,end,結束；結局,The end of the show was exciting.
+howdy_7_all_units.csv,7,1,1,1,child,小孩,Jack is the only child. He has no brothers or sisters.
+howdy_7_all_units.csv,7,1,2,2,children,小孩們,Let's take our children to the park.
+howdy_7_all_units.csv,7,1,3,4,night,夜晚,The penguin show was amazing last night.
+howdy_7_all_units.csv,7,1,4,4,amazing,驚人的；令人驚喜的,The penguin show was amazing last night.
+howdy_7_all_units.csv,7,1,5,5,silly,傻的；愚蠢的,Sam is in the shark tank. He is silly.
+howdy_7_all_units.csv,7,1,6,6,funny,有趣的,Tina is very funny. She always makes me laugh.
+howdy_7_all_units.csv,7,1,7,8,great,極好的,Wow! That movie was really great.
+howdy_7_all_units.csv,7,1,8,8,cool,酷的,Wow! That movie was really great.
+howdy_7_all_units.csv,7,1,9,9,lucky,幸運的,I found one hundred dollars. I'm so lucky!
+howdy_7_all_units.csv,7,1,10,10,afraid,害怕,That tiger looks scary. I'm afraid.
+howdy_7_all_units.csv,7,1,11,11,yesterday,昨天,We played football yesterday.
+howdy_7_all_units.csv,7,1,12,12,sun,太陽,Why does the sun rise and set?
+howdy_7_all_units.csv,7,1,13,13,sunny,晴朗的,The weather is nice today. It is sunny.
+howdy_7_all_units.csv,7,1,14,14,cloud,雲,Look at those clouds! They are beautiful.
+howdy_7_all_units.csv,7,1,15,15,rain,雨,We played in the rain this morning.
+howdy_7_all_units.csv,7,1,16,16,storm,暴風雨,There was a big storm last night.
+howdy_7_all_units.csv,7,2,1,17,family,家庭；家人,This is my family in the picture.
+howdy_7_all_units.csv,7,2,2,18,parents,父母親,My parents work at a bank.
+howdy_7_all_units.csv,7,2,3,19,building,建築物,Paul lives on the 23rd floor of this building.
+howdy_7_all_units.csv,7,2,4,20,country,國家,Which country are you from?
+howdy_7_all_units.csv,7,2,5,21,photo,照片,We took this photo last summer.
+howdy_7_all_units.csv,7,2,6,22,classmate,同學,John plays tennis with his classmates every day.
+howdy_7_all_units.csv,7,2,7,23,classroom,教室,There are no students in the classroom.
+howdy_7_all_units.csv,7,2,8,24,remember,記得,I remember you. Were you here last summer?
+howdy_7_all_units.csv,7,2,9,25,travel,旅行,My family loves to travel.
+howdy_7_all_units.csv,7,2,10,26,ancient,古老的,That is an ancient building.
+howdy_7_all_units.csv,7,2,11,27,temple,廟宇,My grandpa and I went to a temple yesterday.
+howdy_7_all_units.csv,7,2,12,28,guide,導遊,Judy's mom is a guide in Taiwan.
+howdy_7_all_units.csv,7,2,13,29,basketball court,籃球場,We were at the basketball court last night.
+howdy_7_all_units.csv,7,2,14,30,copy,拷貝；副本,Can I have a copy of this photo?
+howdy_7_all_units.csv,7,2,15,31,describe,描述,Can you please describe your photo?
+howdy_7_all_units.csv,7,2,16,32,egypt,埃及,Meg was in Egypt two weeks ago.
+howdy_7_all_units.csv,7,2,17,33,greece,希臘,My best friend is from Greece.
+howdy_7_all_units.csv,7,3,1,34,garden,花園,Wow! You have a beautiful garden.
+howdy_7_all_units.csv,7,3,2,35,insect,昆蟲,There are many insects in the park.
+howdy_7_all_units.csv,7,3,3,36,cockroach,蟑螂,Grace saw a cockroach in the kitchen.
+howdy_7_all_units.csv,7,3,4,37,kitten,小貓,The kittens are playing together.
+howdy_7_all_units.csv,7,3,5,38,puppy,小狗,This puppy is so cute.
+howdy_7_all_units.csv,7,3,6,39,seed,種子,It was a seed before. Now it is a flower.
+howdy_7_all_units.csv,7,3,7,40,flower,花,Lynn's mom has many flowers in the garden.
+howdy_7_all_units.csv,7,3,8,41,grow,成長,The trees are growing. They are so tall now.
+howdy_7_all_units.csv,7,3,9,42,take,拿取,You can take one book home.
+howdy_7_all_units.csv,7,3,10,43,sad,難過,Derek is sad. His dog is sick.
+howdy_7_all_units.csv,7,3,11,44,spider,蜘蛛,There's a spider on that tree.
+howdy_7_all_units.csv,7,3,12,45,butterfly,蝴蝶,This butterfly is very pretty.
+howdy_7_all_units.csv,7,3,13,46,ant,螞蟻,There are many ants in the yard.
+howdy_7_all_units.csv,7,3,14,47,snail,蝸牛,There is a snail on Trevor's plant.
+howdy_7_all_units.csv,7,3,15,48,branch,樹枝,Look! There is a butterfly on that branch.
+howdy_7_all_units.csv,7,3,16,49,cocoon,蛹；繭,This butterfly was a cocoon yesterday.
+howdy_7_all_units.csv,7,3,17,50,caterpillar,毛毛蟲,Look! Here is a caterpillar.
+howdy_7_all_units.csv,7,3,18,51,tadpole,蝌蚪,This frog was a tadpole before.
+howdy_7_all_units.csv,7,4,1,52,centimeter / cm,公分,Lynn was 1 meter 30 centimeters tall last year.
+howdy_7_all_units.csv,7,4,2,53,kilogram / kg,公斤,Tim is 34 kilograms now.
+howdy_7_all_units.csv,7,4,3,54,body,身體,They are going to keep your body healthy.
+howdy_7_all_units.csv,7,4,4,55,stomach,腹部；喂,My stomach doesn't feel good. I need to see the doctor.
+howdy_7_all_units.csv,7,4,5,56,tongue,舌頭,Peter is eating too much candy. His tongue is green.
+howdy_7_all_units.csv,7,4,6,57,face,臉；面貌,Is that your face in that picture?
+howdy_7_all_units.csv,7,4,7,58,hair,頭髮,Wendy's hair is longer than Penny's.
+howdy_7_all_units.csv,7,4,8,59,heavy,重的,Sam is very heavy.
+howdy_7_all_units.csv,7,4,9,60,light,輕的,Toby is light.
+howdy_7_all_units.csv,7,4,10,61,healthy,健康的,I like to exercise. I am healthy.
+howdy_7_all_units.csv,7,4,11,62,suit,西裝,This suit looks great on you.
+howdy_7_all_units.csv,7,4,12,64,party,派對,Bob is excited to go to the school party.
+howdy_7_all_units.csv,7,4,13,64,excited,興奮的,Bob is excited to go to the school party.
+howdy_7_all_units.csv,7,4,14,65,surprised,驚喜的,Lynn gave Tim a birthday present. He was surprised.
+howdy_7_all_units.csv,7,4,15,66,handsome,英俊的,Daniel's suit was great. He was very handsome.
+howdy_7_all_units.csv,7,4,16,67,tonight,今晚,Mark is wearing a suit tonight.
+howdy_7_all_units.csv,7,5,1,68,test,考試；測驗,The math test was very hard.
+howdy_7_all_units.csv,7,5,2,69,do / does / did,做,He did his homework last night.
+howdy_7_all_units.csv,7,5,3,70,enjoy / enjoyed,享受；享受,Joe really enjoyed the movie yesterday.
+howdy_7_all_units.csv,7,5,4,71,love / loved,愛；熱愛,Grace loved him when she was young.
+howdy_7_all_units.csv,7,5,5,72,exercise / exercised,運動,They exercised this morning.
+howdy_7_all_units.csv,7,5,6,73,call / called,打電話,Peter called Sam after school.
+howdy_7_all_units.csv,7,5,7,74,study / studied,學習；用功,John studied from 8:30 am to 9:30 am.
+howdy_7_all_units.csv,7,5,8,75,show / showed,展示；顯示,Rick showed Emma his birthday gift.
+howdy_7_all_units.csv,7,5,9,76,clean / cleaned,清理,Lynn cleaned her room last night.
+howdy_7_all_units.csv,7,5,10,77,play / played,玩；打（球）,They played badminton last Saturday.
+howdy_7_all_units.csv,7,5,11,78,like / liked,喜歡,Ann liked soda when she was a child.
+howdy_7_all_units.csv,7,5,12,79,dance / danced,跳舞,We danced for thirty minutes this afternoon.
+howdy_7_all_units.csv,7,5,13,80,wash / washed,洗,My brother washed the car after dinner.
+howdy_7_all_units.csv,7,5,14,81,help / helped,幫忙,Lucy helped her grandma to make cookies.
+howdy_7_all_units.csv,7,5,15,82,visit / visited,拜訪,I visited my relatives last month.
+howdy_7_all_units.csv,7,5,16,83,everyone,每一個人,Everyone is ready for the science test.
+howdy_7_all_units.csv,7,5,17,84,do your best!,盡力去做,Here's the test. Do your best!
+howdy_7_all_units.csv,7,6,1,86,house,房子,We went to Sam's house yesterday.
+howdy_7_all_units.csv,7,6,2,86,envelope,信封,We went to Sam's house yesterday.
+howdy_7_all_units.csv,7,6,3,87,song,歌,Grace sang a song with her mom.
+howdy_7_all_units.csv,7,6,4,88,send / sent,寄送,Tim's dad sent him a letter.
+howdy_7_all_units.csv,7,6,5,89,go / went,去；前往,Lucy went to the bank with her parents.
+howdy_7_all_units.csv,7,6,6,90,buy / bought,買,Mandy bought two books at the bookstore.
+howdy_7_all_units.csv,7,6,7,91,eat / ate,吃,I ate cookies at school last Saturday.
+howdy_7_all_units.csv,7,6,8,92,swim / swam,游泳,Bill swam in a pool yesterday.
+howdy_7_all_units.csv,7,6,9,93,see / saw,看,Lynn saw a dog at the park.
+howdy_7_all_units.csv,7,6,10,94,write / wrote,寫,Al wrote his friend an email.
+howdy_7_all_units.csv,7,6,11,95,meet / met,遇見；碰上,Ben met his friend at the park.
+howdy_7_all_units.csv,7,6,12,96,give / gave,送；給,My boyfriend gave me a ring on my birthday.
+howdy_7_all_units.csv,7,6,13,97,drink / drank,喝,We drank orange juice for breakfast.
+howdy_7_all_units.csv,7,6,14,98,sing / sang,唱歌,Jerry sang for his classmates before lunch.
+howdy_7_all_units.csv,7,6,15,99,wear / wore,穿；戴,Emily wore her new sweater today.
+howdy_7_all_units.csv,7,6,16,100,desk,書桌,My book is on my desk.
+howdy_7_all_units.csv,7,6,17,101,birthday,生日,It's Sam's birthday today.
+howdy_7_all_units.csv,7,6,18,102,put,放,Please put the fork on the table.
+howdy_7_all_units.csv,7,7,1,103,talk / talked,說話,Peter talked with Tim after class.
+howdy_7_all_units.csv,7,7,2,104,pick up / picked up,撿起,Joy picked up the ball.
+howdy_7_all_units.csv,7,7,3,105,throw / threw,丟,Tim threw the ball to Mary.
+howdy_7_all_units.csv,7,7,4,106,hit,打,Janet hit her brother with a ball.
+howdy_7_all_units.csv,7,7,5,107,shout / shouted,喊叫,The game was exciting! We all cheered and shouted.
+howdy_7_all_units.csv,7,7,6,108,hurry / hurried,快,Hurry! We are late.
+howdy_7_all_units.csv,7,7,7,109,quiet,安靜的,Please be quiet in the library.
+howdy_7_all_units.csv,7,7,8,110,loud,大聲的,Annie was loud in the library.
+howdy_7_all_units.csv,7,7,9,111,slow,慢的,He lost the race because he was too slow.
+howdy_7_all_units.csv,7,7,10,112,careful,小心的,Be careful! The oven is hot.
+howdy_7_all_units.csv,7,7,11,113,team,隊伍,Yeah! Our team won.
+howdy_7_all_units.csv,7,7,12,114,walk / walked,走路,We walked to school this morning.
+howdy_7_all_units.csv,7,7,13,115,speak / spoke,說話,I spoke on the phone with my aunt last night.
+howdy_7_all_units.csv,7,7,14,116,cheer / cheered,歡呼,Lynn cheered for her team.
+howdy_7_all_units.csv,7,7,15,117,listen / listened,聽,I listened to a great song.
+howdy_7_all_units.csv,7,7,16,118,man / men,男人,That tall man is my father.
+howdy_7_all_units.csv,7,7,17,119,woman / women,女人,Those two women are my mother and my grandma.
+howdy_7_all_units.csv,7,7,18,120,cheerleader,啦啦隊員,The cheerleaders cheered for our team.
+howdy_7_all_units.csv,7,7,19,121,fence,圍牆,Tommy hit the baseball over the fence.
+howdy_7_all_units.csv,7,8,1,122,wallet,皮夾；錢包,My brother found my wallet on the table.
+howdy_7_all_units.csv,7,8,2,123,purse,錢包；（女用）手提包,My grandma has a family photo in her purse.
+howdy_7_all_units.csv,7,8,3,124,gold,黃金,Lucy's mom has a gold ring.
+howdy_7_all_units.csv,7,8,4,125,silver,銀/銀製成的,These are silver forks.
+howdy_7_all_units.csv,7,8,5,126,bench,長椅,Can you please get the ball? It's on that bench.
+howdy_7_all_units.csv,7,8,6,127,steal / stole,偷；竊取,No one stole her purse. She lost it.
+howdy_7_all_units.csv,7,8,7,128,look for / looked for,尋找,I looked for some answers from the book.
+howdy_7_all_units.csv,7,8,8,129,lose / lost,失去,Alex lost his wallet.
+howdy_7_all_units.csv,7,8,9,130,find / found,找到,I found my teacher in the classroom.
+howdy_7_all_units.csv,7,8,10,131,worried,煩惱；擔心的,Lynn is worried because she didn't study for the test.
+howdy_7_all_units.csv,7,8,11,132,door,門,Please close the door. It's cold outside.
+howdy_7_all_units.csv,7,8,12,133,window,窗戶,Please open the window. It's hot in here.
+howdy_7_all_units.csv,7,8,13,134,bag,提袋；袋子,Grace put her books in her bag.
+howdy_7_all_units.csv,7,8,14,135,knock / knocked,敲打,Someone knocked on the door.
+howdy_7_all_units.csv,7,8,15,136,stop / stopped,停止,Robert stopped because he saw the stop sign.
+howdy_8_all_units.csv,8,1,1,1,fire truck,消防車,A fire truck is here. There is a fire!
+howdy_8_all_units.csv,8,1,2,2,firefighter,消防隊員,The firefighters ran into the house.
+howdy_8_all_units.csv,8,1,3,3,lightning,閃電,Did you see the lightning last night?
+howdy_8_all_units.csv,8,1,4,4,alarm,警鈴,It's the fire alarm. Please leave the building!
+howdy_8_all_units.csv,8,1,5,5,floor,樓層,Which floor do you live on?
+howdy_8_all_units.csv,8,1,6,6,roof,屋頂,Megan has a garden on her roof.
+howdy_8_all_units.csv,8,1,7,7,burn / burned,燃燒；燙傷,John burned his hand but he's OK.
+howdy_8_all_units.csv,8,1,8,8,ring / rang,鈴響,Your phone just rang.
+howdy_8_all_units.csv,8,1,9,9,hurt,受傷,Tim fell and hurt his foot.
+howdy_8_all_units.csv,8,1,10,10,save / saved,拯救；節省,Max saved the dog from the river.
+howdy_8_all_units.csv,8,1,11,11,smoke,煙,Look! There is a lot of smoke from that building.
+howdy_8_all_units.csv,8,1,12,12,noise,噪音,There is a lot of noise. What happened?
+howdy_8_all_units.csv,8,1,13,13,upstairs,樓上,Grandpa is sleeping upstairs.
+howdy_8_all_units.csv,8,1,14,14,downstairs,樓下,Mary is playing downstairs.
+howdy_8_all_units.csv,8,1,15,15,fall / fell,跌倒,I ran home too quickly and fell.
+howdy_8_all_units.csv,8,2,1,16,umbrella,雨傘,It's raining. Do you have an umbrella?
+howdy_8_all_units.csv,8,2,2,17,gate,大門；閘門,Please open the gate for me.
+howdy_8_all_units.csv,8,2,3,18,wall,牆,Let's hang the picture on the wall.
+howdy_8_all_units.csv,8,2,4,19,buffet,自助餐,This buffet restaurant has great food.
+howdy_8_all_units.csv,8,2,5,20,barber shop,理髮廳,Jimmy works in a barber shop.
+howdy_8_all_units.csv,8,2,6,21,neighbor,鄰居,Our neighbor has a big yard.
+howdy_8_all_units.csv,8,2,7,22,mall,購物中心,We went shopping at the mall.
+howdy_8_all_units.csv,8,2,8,23,know / knew,知道,Ed knew the answer to the question.
+howdy_8_all_units.csv,8,2,9,24,wet,濕的,This towel is wet. Please get a dry one.
+howdy_8_all_units.csv,8,2,10,25,dry,乾的,The shirt is dry now. You can wear it.
+howdy_8_all_units.csv,8,2,11,26,paper,紙張,Do you have any paper?
+howdy_8_all_units.csv,8,2,12,27,town,小鎮,My grandpa lives in this town.
+howdy_8_all_units.csv,8,2,13,28,magic,魔術；魔力,Bob did an amazing magic trick yesterday.
+howdy_8_all_units.csv,8,2,14,29,factory,工廠,Stephen's sister works in a factory.
+howdy_8_all_units.csv,8,2,15,30,highway,高速公路,There are many cars on the highway.
+howdy_8_all_units.csv,8,3,1,31,movie,電影,We watched a movie after lunch.
+howdy_8_all_units.csv,8,3,2,32,word,字,The words are too small. I can't read them.
+howdy_8_all_units.csv,8,3,3,33,dragonfly,蜻蜓,There is a dragonfly on my hand.
+howdy_8_all_units.csv,8,3,4,34,cafeteria,（學校或公司）自助餐廳,I eat lunch in the cafeteria every day.
+howdy_8_all_units.csv,8,3,5,35,learn / learned,學習,I learned to play tennis today.
+howdy_8_all_units.csv,8,3,6,36,practice / practiced,練習,I practiced spelling every day.
+howdy_8_all_units.csv,8,3,7,37,spell / spelled,拼字,Lisa can spell dog.
+howdy_8_all_units.csv,8,3,8,38,smart,聰明的,John is smart. He is good at math.
+howdy_8_all_units.csv,8,3,9,39,stupid,笨的,Ed is not stupid. He is very smart.
+howdy_8_all_units.csv,8,3,10,40,terrific,很棒的,That movie was terrific!
+howdy_8_all_units.csv,8,3,11,41,key,鑰匙,Oh no! I can't find my keys.
+howdy_8_all_units.csv,8,3,12,42,newspaper,報紙,Dad reads the newspaper every day.
+howdy_8_all_units.csv,8,3,13,43,mirror,鏡子,Lisa looked in the mirror and smiled.
+howdy_8_all_units.csv,8,3,14,44,freezer,冷凍庫,Please put the meat in the freezer.
+howdy_8_all_units.csv,8,3,15,45,shelf,架子,I keep my favorite food on this shelf.
+howdy_8_all_units.csv,8,4,1,46,thunder,雷；雷聲,That thunder was very loud!
+howdy_8_all_units.csv,8,4,2,47,wind,風,The wind is so strong today!
+howdy_8_all_units.csv,8,4,3,48,blanket,毯子,Please put this blanket on the bed.
+howdy_8_all_units.csv,8,4,4,49,rain / rained,下雨,It rained all night.
+howdy_8_all_units.csv,8,4,5,50,snow / snowed,下雪,We don't have school today because it snowed all night.
+howdy_8_all_units.csv,8,4,6,51,stay / stayed,停留,Emily's dog stayed inside yesterday.
+howdy_8_all_units.csv,8,4,7,52,blow / blew,吹,The wind blew a tree down last night.
+howdy_8_all_units.csv,8,4,8,53,shake / shook,搖晃,The windows shook hard because there was a storm.
+howdy_8_all_units.csv,8,4,9,54,sleep / slept,睡覺,Brian slept for eight hours last night.
+howdy_8_all_units.csv,8,4,10,55,noisy,嘈雜的；喧鬧的,It's noisy at Kate's house because they're having a party.
+howdy_8_all_units.csv,8,4,11,56,dentist,牙醫,Sam went to the dentist last night.
+howdy_8_all_units.csv,8,4,12,57,wedding,婚禮,I'm going to Sue's wedding tonight.
+howdy_8_all_units.csv,8,4,13,58,fancy,花俏的,This is a very fancy dress.
+howdy_8_all_units.csv,8,4,14,59,shine / shone,發光；閃耀,The sun was shining. It was a great day.
+howdy_8_all_units.csv,8,4,15,60,marry / married,結婚,Joe married Helen last week.
+howdy_8_all_units.csv,8,5,1,61,chinese,中文,I speak Chinese.
+howdy_8_all_units.csv,8,5,2,62,chinese chess,象棋,We are playing Chinese chess.
+howdy_8_all_units.csv,8,5,3,63,basement,地下室,There are spiders in the basement.
+howdy_8_all_units.csv,8,5,4,64,garage,車庫,Dad's new car is in the garage.
+howdy_8_all_units.csv,8,5,5,65,sailboat,帆船,April is on her sailboat now.
+howdy_8_all_units.csv,8,5,6,66,radio,收音機,I listened to the radio yesterday.
+howdy_8_all_units.csv,8,5,7,67,build / built,建造,Steve built a house last year.
+howdy_8_all_units.csv,8,5,8,68,try / tried,嘗試,Jerry tried to build a robot yesterday.
+howdy_8_all_units.csv,8,5,9,69,noon,正午,Tim ate lunch at noon.
+howdy_8_all_units.csv,8,5,10,70,midnight,半夜,I didn't go to bed until midnight.
+howdy_8_all_units.csv,8,5,11,71,forest,森林,There are many birds in the forest.
+howdy_8_all_units.csv,8,5,12,72,dream,夢,I had a dream about flying last night.
+howdy_8_all_units.csv,8,5,13,73,wake up / woke up,醒來,I woke up because my alarm rang.
+howdy_8_all_units.csv,8,5,14,74,leave / left,離開,We left home at 7:30.
+howdy_8_all_units.csv,8,5,15,75,horrible,可怕的,Ken had a horrible dream last night.
+howdy_8_all_units.csv,8,6,1,76,theater,戲院,We were in the theater when the storm started.
+howdy_8_all_units.csv,8,6,2,77,play,戲劇；話劇,The school play was great!
+howdy_8_all_units.csv,8,6,3,78,curtain,窗簾；布簾,Sam closed the curtain when the play started.
+howdy_8_all_units.csv,8,6,4,79,castle,城堡,The king lived in a big castle.
+howdy_8_all_units.csv,8,6,5,80,tower,塔,The castle has a huge tower on it.
+howdy_8_all_units.csv,8,6,6,81,balcony,陽台,Lynn put some plants on the balcony.
+howdy_8_all_units.csv,8,6,7,82,stairs,樓梯,These stairs are old. Be careful!
+howdy_8_all_units.csv,8,6,8,83,hammer,槌子,I was using a hammer when you called.
+howdy_8_all_units.csv,8,6,9,84,climb / climbed,攀爬,Tim was climbing stairs when he fell.
+howdy_8_all_units.csv,8,6,10,85,paint / painted,粉刷；著色,Wow! You painted your room. It looks great!
+howdy_8_all_units.csv,8,6,11,86,present,禮物,Don't open your presents now.
+howdy_8_all_units.csv,8,6,12,87,balloons,氣球,There were balloons at the mall yesterday.
+howdy_8_all_units.csv,8,6,13,88,surprise,驚喜,Surprise! Happy birthday Amy!
+howdy_8_all_units.csv,8,6,14,89,thank / thanked,感謝,Thank you for the birthday present.
+howdy_8_all_units.csv,8,6,15,90,miss / missed,錯過；未擊中,Sam threw the ball but Max missed it.
+howdy_8_all_units.csv,8,7,1,91,goal,球門；進球得分,Eric kicked the ball into the goal.
+howdy_8_all_units.csv,8,7,2,92,player,選手；演奏者,There are fifteen players on our team.
+howdy_8_all_units.csv,8,7,3,93,score / scored,得分,Eddie almost scored a goal in the game.
+howdy_8_all_units.csv,8,7,4,94,cry / cried,哭泣,I cried when I hurt my knee.
+howdy_8_all_units.csv,8,7,5,95,clap / clapped,拍手,I clapped hard when Ann scored a goal.
+howdy_8_all_units.csv,8,7,6,96,kick / kicked,踢,Hsiao-Ming kicked the ball to Sam.
+howdy_8_all_units.csv,8,7,7,97,push / pushed,推,He was angry when Ben pushed him.
+howdy_8_all_units.csv,8,7,8,98,embarrassed,感到害羞,Peter was embarrassed because he forgot to wear his shoes.
+howdy_8_all_units.csv,8,7,9,99,angry,生氣,I was angry when I didn't score.
+howdy_8_all_units.csv,8,7,10,100,almost,幾乎,We almost won the game.
+howdy_8_all_units.csv,8,7,11,101,person / people,人,There are ten people in the room.
+howdy_8_all_units.csv,8,7,12,102,actress / actor,女演員；男演員,That actress is great. I cried when I saw the play.
+howdy_8_all_units.csv,8,7,13,103,act / acted,演戲,Erin acted well in the school play.
+howdy_8_all_units.csv,8,7,14,104,laugh / laughed,笑,The movie was funny. I laughed a lot.
+howdy_8_all_units.csv,8,7,15,105,nervous,緊張的,Please don't be nervous before the test.
+howdy_8_all_units.csv,8,8,1,106,spaceship,太空船,The spaceship is flying fast.
+howdy_8_all_units.csv,8,8,2,107,space,太空,Who was the first man in space?
+howdy_8_all_units.csv,8,8,3,108,universe,宇宙,There are many planets in the universe.
+howdy_8_all_units.csv,8,8,4,109,planet,星球,The spaceship flies around the planet.
+howdy_8_all_units.csv,8,8,5,110,computer,電腦,Sam is working hard on his computer.
+howdy_8_all_units.csv,8,8,6,111,screen,螢幕,Al was looking at his pictures on the computer screen.
+howdy_8_all_units.csv,8,8,7,112,hall,走廊,Tim is waiting in the hall.
+howdy_8_all_units.csv,8,8,8,113,entrance,入口,Let's meet at the school entrance.
+howdy_8_all_units.csv,8,8,9,114,exit,出口,The exit is at the end of the hall.
+howdy_8_all_units.csv,8,8,10,115,search for / searched for,找尋,They searched for Tim's wallet but they didn't find it.
+howdy_8_all_units.csv,8,8,11,116,visitor,來賓；訪客,Someone is knocking on the door. We have a visitor.
+howdy_8_all_units.csv,8,8,12,117,alien,外星人,An alien is on the spaceship!
+howdy_8_all_units.csv,8,8,13,118,understand / understood,瞭解,Max was happy because he understood the math question.
+howdy_8_all_units.csv,8,8,14,119,follow / followed,跟隨,The dog followed Daniel to the store.
+howdy_8_all_units.csv,8,8,15,120,nice,好心的,Andy is nice. He always helps me.

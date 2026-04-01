@@ -1,0 +1,17 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+1,1,1,left,- Peter (1,peter,0.9,234,141,122,43,My friend Peter is very nice.,人名 P_ _ _ _,answer-01.png
+1,1,2,left,Lucy (,lucy,1,236,373,111,49,Lucy has a beautiful smile.,人名 L_ _ _ y,answer-02.png
+1,1,3,left,~ Steve (r,steve,0.9,230,603,135,43,Steve plays basketball very well.,人名 S_ _ _ _,answer-03.png
+1,1,4,left,Jennifer (n.,jennifer,0.9,219,835,189,43,Jennifer is our English teacher.,人名 J_ _ _ _ _ _ _,answer-04.png
+1,1,5,left,77 iee,jennifer,0.25,123,938,103,51,Jennifer is our English teacher.,人名 J_ _ _ _ _ _ _,answer-05.png
+1,1,6,left,~ Yuma (r,yuma,0.9,230,1066,136,43,Yuma comes from Japan.,人名 Y_ _ _ _,answer-06.png
+1,1,7,left,Mr. Clark (n.,mr. clark,0.9,216,1297,210,43,Mr. Clark teaches us math.,人名 Mr. _ _ _ _ _,answer-07.png
+1,1,8,right,Tim (,tim,1,783,140,91,42,Tim is my little brother.,人名 T_ _,answer-08.png
+1,1,9,right,Sam (,sam,1,780,334,106,44,Sam likes to play soccer.,人名 S_ _,answer-09.png
+1,1,10,right,~ Grace (r,grace,0.9,773,490,140,44,Grace likes to read books.,人名 G_ _ _ _,answer-10.png
+1,1,11,right,Lynn (,lynn,1,780,646,112,50,Lynn is my classmate.,人名 L_ _ _ n,answer-11.png
+1,1,12,right,Good morning. #,good morning,1,731,831,326,50,Good morning! How are you today?,早安,answer-12.png
+1,1,13,right,Good afternoon.,good afternoon,1,724,988,360,43,Good afternoon! Nice to see you.,午安,answer-13.png
+1,1,14,right,Good evening. HR,good evening,0.9,733,1144,317,50,Good evening! Have a great night.,晚安,answer-14.png
+1,1,15,right,Good-bye.,good-bye,1,751,1338,227,50,Good-bye! See you tomorrow.,再見,answer-15.png
+1,1,16,right,Bye.,good-bye,0.5,779,1494,91,50,Good-bye! See you tomorrow.,再見,answer-16.png

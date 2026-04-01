@@ -962,6 +962,29 @@ Reviewed all pages of NH1 WB A (U1–U8 + Review 1) and NH1 WB B (U1–U8, first
 
 ---
 
+## 2026-04-01 - Howdy 1 Unit 1 Added, Full Howdy 1-8 Vocab Rollout Completed
+
+**Work Done**:
+- Imported the newly added answer sheet `VOCs/掃描檔/H1/H1U1.jpg` and created `Howdy 1 Unit 1 Vocabulary` on Railway
+- Re-ran vocab review extraction for `Howdy 1 Unit 1` until it reached `14/14` detected answers
+- Synced and published:
+  - `Howdy 1 Unit 1 Vocabulary` (`id=79`, `14` questions)
+  - `Howdy 1 Review 1 Vocabulary` (`id=80`, `4` pages, `55` questions)
+- Re-checked the full rollout with dry runs:
+  - all `64/64` Howdy 1-8 single-unit vocab exams are now complete
+  - all `Review 1 / Review 2` composite vocab exams for `Howdy 1-8` are now ready and published
+
+**Current Production State**:
+- `Howdy 1-8` single-unit vocab exams: fully published
+- `Howdy 1-8` `Review 1 / Review 2` vocab exams: fully published
+- `NH9` remains intentionally out of scope for the current vocab rollout
+
+**Operational Conclusion**:
+- The vocab rollout is no longer blocked by missing Howdy 1 material
+- Remaining work should now shift away from rollout completion and back to product refinement / future content
+
+---
+
 ## Pending / Future Work
 
 - [ ] Supplemental notes preview/edit when reopening an existing assignment from the teacher list

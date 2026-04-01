@@ -1,6 +1,13 @@
 [
   {
     "howdy_level": 1,
+    "unit": 1,
+    "expected_count": 14,
+    "detected_count": 14,
+    "outputDir": "data/vocab-review-batch-v2/howdy-1-unit-1"
+  },
+  {
+    "howdy_level": 1,
     "unit": 2,
     "expected_count": 14,
     "detected_count": 14,

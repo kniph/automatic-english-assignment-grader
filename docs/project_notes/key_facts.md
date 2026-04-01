@@ -162,15 +162,15 @@ Essential project configuration, constants, and quick reference information.
   - `data/vocab-review-batch-v2/summary.json`
   - per-unit folders under `data/vocab-review-batch-v2/howdy-<level>-unit-<unit>/`
   - each folder includes `review.csv`, `review-raw.csv`, crop PNGs, and `review.json`
-- Current batch quality for the 63 matched exams:
-  - 63 units perfect
+- Current batch quality for the 64 matched exams:
+  - 64 units perfect
   - 0 units near-complete
   - 0 harder units remaining in the matched set
 - `scripts/lib/vocab-review-sync.js` now uses a `90s` request timeout so 4-page `Review 1 / Review 2` upserts can finish on Railway without false timeouts.
 - Railway rollout status as of 2026-04-01:
-  - all 63 matched single-unit vocab exams are published
-  - `Howdy 1 Review 2` and `Howdy 2-8 Review 1/2` are published
-  - the only remaining vocab blocker is `Howdy 1 Unit 1`, which still has no answer-sheet image and therefore still blocks `Howdy 1 Review 1`
+  - all 64 single-unit vocab exams for `Howdy 1-8` are published
+  - all `Review 1 / Review 2` vocab exams for `Howdy 1-8` are published
+  - `NH9` remains intentionally out of scope for this rollout
 
 ---
 

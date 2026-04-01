@@ -28,6 +28,15 @@ body {
   color: var(--vocab-ink);
 }
 
+body.vocab-exam-page {
+  min-height: 100vh;
+  background: linear-gradient(155deg, #1a73e8 0%, #0d47a1 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1rem 4rem;
+}
+
 html.selection-smooth-scroll {
   scroll-behavior: smooth;
 }
@@ -56,6 +65,21 @@ a {
   box-shadow: 0 10px 30px rgba(17, 45, 79, 0.15);
 }
 
+.vocab-exam-page .vocab-header {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: auto;
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+  justify-content: flex-end;
+}
+
+.vocab-exam-page .vocab-header h1 {
+  display: none;
+}
+
 .vocab-header h1 {
   margin: 0;
   font-size: 1.3rem;
@@ -75,14 +99,58 @@ a {
   font-size: 0.92rem;
 }
 
+.vocab-exam-page .vocab-header nav {
+  gap: 0.5rem;
+}
+
+.vocab-exam-page .vocab-header nav a {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.78rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+}
+
 .vocab-header nav a:hover {
   color: #ffffff;
+}
+
+.vocab-exam-page .vocab-header nav a:hover {
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .vocab-shell {
   max-width: 1360px;
   margin: 0 auto;
   padding: 1.1rem;
+}
+
+.vocab-exam-page .vocab-shell {
+  width: 100%;
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.vocab-app-hero {
+  text-align: center;
+  margin-bottom: 1.2rem;
+}
+
+.vocab-app-title {
+  margin: 0 0 0.18rem;
+  color: #ffffff;
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  text-align: center;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.vocab-app-subtitle {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.88rem;
+  margin-bottom: 1.4rem;
+  text-align: center;
 }
 
 #selectionSection {
@@ -105,6 +173,13 @@ a {
   padding: 1rem;
 }
 
+.vocab-exam-page .vocab-card,
+.vocab-exam-page .vocab-step-card,
+.vocab-exam-page .vocab-page-card {
+  border: none;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+}
+
 .vocab-card + .vocab-card {
   margin-top: 1rem;
 }
@@ -123,6 +198,14 @@ a {
   box-shadow: 0 8px 24px rgba(15, 33, 56, 0.08);
 }
 
+.vocab-exam-page .vocab-summary-bar {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  border: none;
+  box-shadow: none;
+  backdrop-filter: blur(4px);
+}
+
 .vocab-card h2,
 .vocab-card h3 {
   margin: 0 0 0.8rem;
@@ -135,6 +218,11 @@ a {
   border-radius: 20px;
   box-shadow: 0 12px 36px rgba(15, 33, 56, 0.12);
   padding: 1.5rem;
+}
+
+.vocab-exam-page .vocab-step-card {
+  margin-bottom: 0.85rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
 }
 
 .vocab-step-label {
@@ -186,6 +274,11 @@ a {
   transition: all 0.15s ease;
 }
 
+.vocab-exam-page .vocab-select-btn {
+  background: #f0f4ff;
+  color: #1a73e8;
+}
+
 .vocab-select-btn:active {
   transform: scale(0.95);
 }
@@ -195,6 +288,12 @@ a {
   border-color: var(--vocab-blue);
   color: #ffffff;
   box-shadow: 0 3px 12px rgba(31, 122, 224, 0.4);
+}
+
+.vocab-exam-page .vocab-select-btn.selected {
+  background: #1a73e8;
+  border-color: #1a73e8;
+  box-shadow: 0 2px 8px rgba(26, 115, 232, 0.4);
 }
 
 .vocab-select-btn.unavail {
@@ -225,6 +324,10 @@ a {
 .vocab-name-input:focus {
   border-color: var(--vocab-blue) !important;
   box-shadow: none !important;
+}
+
+.vocab-exam-page .vocab-name-input:focus {
+  border-color: #1a73e8 !important;
 }
 
 .vocab-grid {
@@ -339,6 +442,10 @@ a {
   color: #ffffff;
 }
 
+.vocab-exam-page .vocab-btn.primary {
+  background: #1a73e8;
+}
+
 .vocab-btn.primary:hover {
   background: var(--vocab-blue-dark);
 }
@@ -346,6 +453,10 @@ a {
 .vocab-btn.secondary {
   background: #eef4fb;
   color: var(--vocab-ink);
+}
+
+.vocab-exam-page .vocab-btn.secondary {
+  background: #f0f4ff;
 }
 
 .vocab-btn.secondary:hover {
@@ -727,6 +838,19 @@ a {
   line-height: 1.5;
 }
 
+.vocab-exam-page .vocab-note {
+  background: #f8fbfe;
+  border: 1px solid #e6edf7;
+  color: #6f8090;
+}
+
+.vocab-exam-page #workspaceSection .vocab-card,
+.vocab-exam-page #workspaceSection .vocab-page-card {
+  width: min(100%, 1180px);
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .vocab-hidden {
   display: none !important;
 }
@@ -877,6 +1001,21 @@ a {
 }
 
 @media (max-width: 640px) {
+  body.vocab-exam-page {
+    padding-top: 4rem;
+  }
+
+  .vocab-app-title {
+    font-size: 1.72rem;
+  }
+
+  .vocab-exam-page .vocab-header {
+    top: 0.8rem;
+    right: 0.8rem;
+    left: 0.8rem;
+    justify-content: flex-end;
+  }
+
   .vocab-zoom-group {
     width: 100%;
     justify-content: center;

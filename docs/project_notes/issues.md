@@ -985,6 +985,25 @@ Reviewed all pages of NH1 WB A (U1–U8 + Review 1) and NH1 WB B (U1–U8, first
 
 ---
 
+## 2026-04-01 - Vocab Student Exam UI Aligned with Main Index Visual Language
+
+**Work Done**:
+- Updated `public/vocab-exam.html` to add the same centered app hero pattern used on the main student entry page
+- Updated `public/css/vocab.css` so the vocab student exam page now follows the same visual system as `public/index.html`:
+  - blue gradient page background
+  - floating top-right teacher links
+  - centered title/subtitle hero
+  - matching summary bar treatment
+  - matching step-card width and shadow rhythm
+  - tighter visual alignment for selection buttons and primary actions
+- Kept the workspace tools and grading flow intact while making the selection / exam shell feel like the same product
+
+**Design Terminology**:
+- This change aligns the vocab page with the main index page's **visual language**
+- It also improves **interaction pattern parity** across the student flows
+
+---
+
 ## Pending / Future Work
 
 - [ ] Supplemental notes preview/edit when reopening an existing assignment from the teacher list

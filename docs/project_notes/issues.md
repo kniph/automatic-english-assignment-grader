@@ -997,6 +997,10 @@ Reviewed all pages of NH1 WB A (U1–U8 + Review 1) and NH1 WB B (U1–U8, first
   - matching step-card width and shadow rhythm
   - tighter visual alignment for selection buttons and primary actions
 - Kept the workspace tools and grading flow intact while making the selection / exam shell feel like the same product
+- Extended the same student-facing visual alignment to:
+  - `public/vocab-result.html`
+  - `public/vocab-retest.html`
+  so the exam, result, and retest pages now read as one consistent flow instead of three separate modules
 
 **Design Terminology**:
 - This change aligns the vocab page with the main index page's **visual language**

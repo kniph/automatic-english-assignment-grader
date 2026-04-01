@@ -28,7 +28,7 @@ body {
   color: var(--vocab-ink);
 }
 
-body.vocab-exam-page {
+body.vocab-student-page {
   min-height: 100vh;
   background: linear-gradient(155deg, #1a73e8 0%, #0d47a1 100%);
   display: flex;
@@ -65,7 +65,7 @@ a {
   box-shadow: 0 10px 30px rgba(17, 45, 79, 0.15);
 }
 
-.vocab-exam-page .vocab-header {
+.vocab-student-page .vocab-header {
   position: absolute;
   top: 1rem;
   right: 1rem;
@@ -76,7 +76,7 @@ a {
   justify-content: flex-end;
 }
 
-.vocab-exam-page .vocab-header h1 {
+.vocab-student-page .vocab-header h1 {
   display: none;
 }
 
@@ -99,11 +99,11 @@ a {
   font-size: 0.92rem;
 }
 
-.vocab-exam-page .vocab-header nav {
+.vocab-student-page .vocab-header nav {
   gap: 0.5rem;
 }
 
-.vocab-exam-page .vocab-header nav a {
+.vocab-student-page .vocab-header nav a {
   color: rgba(255, 255, 255, 0.6);
   font-size: 0.78rem;
   padding: 0.3rem 0.6rem;
@@ -114,7 +114,7 @@ a {
   color: #ffffff;
 }
 
-.vocab-exam-page .vocab-header nav a:hover {
+.vocab-student-page .vocab-header nav a:hover {
   background: rgba(255, 255, 255, 0.1);
 }
 
@@ -124,7 +124,7 @@ a {
   padding: 1.1rem;
 }
 
-.vocab-exam-page .vocab-shell {
+body.vocab-student-page .vocab-shell {
   width: 100%;
   max-width: 1360px;
   margin: 0 auto;
@@ -173,9 +173,9 @@ a {
   padding: 1rem;
 }
 
-.vocab-exam-page .vocab-card,
-.vocab-exam-page .vocab-step-card,
-.vocab-exam-page .vocab-page-card {
+.vocab-student-page .vocab-card,
+.vocab-student-page .vocab-step-card,
+.vocab-student-page .vocab-page-card {
   border: none;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
 }
@@ -838,17 +838,34 @@ a {
   line-height: 1.5;
 }
 
-.vocab-exam-page .vocab-note {
+.vocab-student-page .vocab-note {
   background: #f8fbfe;
   border: 1px solid #e6edf7;
   color: #6f8090;
 }
 
-.vocab-exam-page #workspaceSection .vocab-card,
-.vocab-exam-page #workspaceSection .vocab-page-card {
+.vocab-student-page #workspaceSection .vocab-card,
+.vocab-student-page #workspaceSection .vocab-page-card,
+.vocab-result-page .vocab-card,
+.vocab-retest-page .vocab-card,
+.vocab-retest-page .vocab-question-card {
   width: min(100%, 1180px);
   margin-left: auto;
   margin-right: auto;
+}
+
+.vocab-result-page .vocab-result-hero {
+  padding: 1.5rem 1.2rem;
+}
+
+.vocab-result-page .vocab-result-hero #resultTitle {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.vocab-retest-page .vocab-question-cards {
+  width: min(100%, 1180px);
+  margin: 0 auto;
 }
 
 .vocab-hidden {
@@ -1001,7 +1018,7 @@ a {
 }
 
 @media (max-width: 640px) {
-  body.vocab-exam-page {
+  body.vocab-student-page {
     padding-top: 4rem;
   }
 
@@ -1009,7 +1026,7 @@ a {
     font-size: 1.72rem;
   }
 
-  .vocab-exam-page .vocab-header {
+  .vocab-student-page .vocab-header {
     top: 0.8rem;
     right: 0.8rem;
     left: 0.8rem;

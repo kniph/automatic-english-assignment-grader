@@ -1,0 +1,16 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+6,6,1,left,plant (1,plant,0.9,344,290,175,67,We have many plants at home.,植物,answer-01.png
+6,6,2,left,~ coral (,coral,1,344,578,169,54,The red coral is beautiful.,珊瑚,answer-02.png
+6,6,3,left,— lobster (r,lobster,0.9,347,808,215,54,I can see two big lobsters.,龍蝦,answer-03.png
+6,6,4,left,eel,eel,1,361,1046,82,45,How many eels can you see?,鰻魚,answer-04.png
+6,6,5,left,__ jellyfish (n,jellyfish,0.9,323,1263,271,71,Look at those huge jellyfish!,水母,answer-05.png
+6,6,6,left,” change (v,change,0.9,327,1494,247,68,I want to change my clothes.,改變；交換,answer-06.png
+6,6,7,left,. colorful (a,colorful,0.9,325,1724,258,55,Nina likes colorful clothes.,豐富色彩的；鮮艷的,answer-07.png
+6,6,8,left,~ clear (,clear,1,343,2011,169,54,The water is so clear. I can see the fish.,清楚的；清澈的,answer-08.png
+6,6,9,right,dark £,dark blue,0.9,1205,293,156,54,The dark blue whale is pretty.,深藍色的,answer-09.png
+6,6,10,right,- light b,light blue,0.9,1207,520,150,68,My schoolbag is light blue.,淺藍色的,answer-10.png
+6,6,11,right,shrimp (n,shrimp,0.9,1189,747,233,71,Which shrimp is the biggest?,蝦子,answer-11.png
+6,6,12,right,", guy(s) (r",guys,0.6,1191,977,223,71,You guys are so funny.,朋友；人們,answer-12.png
+6,6,13,right,‘fat |,fat,1,1216,1209,97,55,Rex is drawing a big fat cat.,胖的,answer-13.png
+6,6,14,right,_ strange (a,strange,0.9,1183,1441,261,63,The colorful fish with big eyes looks strange.,奇怪的,answer-14.png
+6,6,15,right,- quick (,quick,1,1198,1781,188,67,You finished your homework already—that was quick!,快的,answer-15.png

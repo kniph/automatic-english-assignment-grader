@@ -150,7 +150,7 @@ Essential project configuration, constants, and quick reference information.
   - current overrides fix `Howdy 3 Unit 7` (`snack`), remove the bogus extra item in `Howdy 4 Unit 3`, and change `Howdy 4 Unit 8` from `glass of water` to `glass`
   - current overrides also collapse `Howdy 5 Unit 8` `cowgirl` + `cowboy` into the single combined sheet answer `cowgirl / cowboy`
 - `data/vocab-prompts/manual-review-overrides.json` patches review-extraction edge cases after OCR candidate generation
-  - current override promotes `Howdy 4 Unit 6` `cut` from a low-score raw OCR candidate into the selected review set
+  - current overrides now cover `Howdy 4 Unit 6`, dense lower-right / lower-left misses in `Howdy 5-7`, and the left-column recovery for `Howdy 1 Unit 7`
 - The normalized bank contains 941 records across 64 units.
 - Known source anomaly: `VOCs/CSVs/howdy_1_all_units.csv` also contains Howdy 10 rows; the normalizer filters them out and records this in the issues file.
 - The CSV order is reliable as a per-unit vocabulary set, but does not always match the visual top-to-bottom order on the vocab exam page, so template generation still needs page-order / answer-box reconciliation.
@@ -163,10 +163,14 @@ Essential project configuration, constants, and quick reference information.
   - per-unit folders under `data/vocab-review-batch-v2/howdy-<level>-unit-<unit>/`
   - each folder includes `review.csv`, `review-raw.csv`, crop PNGs, and `review.json`
 - Current batch quality for the 63 matched exams:
-  - 35 units perfect
-  - 13 units near-complete (missing 1–2 answers)
-  - 15 harder units still missing 3+ answers and need extra heuristics or manual review
+  - 63 units perfect
+  - 0 units near-complete
+  - 0 harder units remaining in the matched set
 - `scripts/lib/vocab-review-sync.js` now uses a `90s` request timeout so 4-page `Review 1 / Review 2` upserts can finish on Railway without false timeouts.
+- Railway rollout status as of 2026-04-01:
+  - all 63 matched single-unit vocab exams are published
+  - `Howdy 1 Review 2` and `Howdy 2-8 Review 1/2` are published
+  - the only remaining vocab blocker is `Howdy 1 Unit 1`, which still has no answer-sheet image and therefore still blocks `Howdy 1 Review 1`
 
 ---
 

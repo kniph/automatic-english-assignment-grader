@@ -1,0 +1,11 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+3,4,1,left,twenty-first (n.),twenty-first,1,299,325,436,73,The music show is on May twenty-first.,二十一,answer-01.png
+3,4,2,left,_ twenty-second (n.)(¢,twenty-second,1,278,831,548,73,I have a math test on the twenty-second.,二十二,answer-02.png
+3,4,3,left,_ twenty-third (n.)(,twenty-third,1,297,1276,457,73,Today is August twenty-third.,二十三,answer-03.png
+3,4,4,left,twenty-fourth (n.)(,twenty-fourth,1,288,1660,510,74,Tomorrow is April twenty-fourth.,二十四,answer-04.png
+3,4,5,left,twenty-fifth (n.),twenty-fifth,1,305,2044,436,74,Matt's birthday is on March twenty-fifth.,二十五,answer-05.png
+3,4,6,right,twenty-sixth (n.)(,twenty-sixth,1,1184,323,467,73,The play is on October twenty-sixth.,二十六,answer-06.png
+3,4,7,right,_ twenty-seventh (n.)(c,twenty-seventh,0.9,1160,707,589,74,Today is April twenty-seventh.,二十七,answer-07.png
+3,4,8,right,_ twenty-eighth (n.)(,twenty-eighth,1,1175,1091,515,73,They don't have school on the twenty-eighth.,二十八,answer-08.png
+3,4,9,right,twenty-ninth (n.)(,twenty-ninth,1,1187,1536,471,74,He has art class on July twenty-ninth.,二十九,answer-09.png
+3,4,10,right,thirtieth (n.,thirtieth,0.9,1226,1924,288,56,Tom's birthday is on May thirtieth.,三十,answer-10.png

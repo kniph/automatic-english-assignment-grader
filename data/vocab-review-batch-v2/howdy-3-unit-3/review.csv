@@ -1,0 +1,13 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+3,3,1,left,§ Taiwan (n,taiwan,0.9,348,339,281,56,They are from Taiwan.,台灣,answer-01.png
+3,3,2,left,| China (r,china,0.9,364,653,213,57,Hsiao-Ming is from China.,中國,answer-02.png
+3,3,3,left,| Korea (r,korea,0.9,363,967,222,56,Korea is next to China.,韓國,answer-03.png
+3,3,4,left,| Japan (r,japan,0.9,364,1278,224,72,Japan is a beautiful country.,日本,answer-04.png
+3,3,5,left,| the US (n,the us,0.9,360,1655,249,57,My new friend is from the US.,美國,answer-05.png
+3,3,6,left,| the UK (n,the uk,0.9,361,2029,252,57,Her teacher is from the UK.,英國,answer-06.png
+3,3,7,right,® France (n,france,0.9,1213,333,247,55,My favorite country is France.,法國,answer-07.png
+3,3,8,right,M Australia (n.,australia,0.9,1196,708,341,56,It's cold in July in Australia.,澳洲,answer-08.png
+3,3,9,right,telephone (n.),telephone,1,1193,1018,359,73,What is your telephone number?,電話,answer-09.png
+3,3,10,right,cell phone (n.),cell phone,1,1191,1392,374,73,I want a cell phone for my birthday.,手機,answer-10.png
+3,3,11,right,. number(s) (n.),number,1,1194,1768,375,66,What's your room number?,號碼,answer-11.png
+3,3,12,right,Mi friend(s) (n.,friend,0.9,1207,2081,311,66,They are good friends.,朋友,answer-12.png

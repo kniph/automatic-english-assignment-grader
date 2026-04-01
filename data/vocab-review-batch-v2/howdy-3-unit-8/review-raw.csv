@@ -1,0 +1,13 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+3,8,1,left,ride (,ride,1,362,332,135,60,Ben rides his bike to school.,騎,answer-01.png
+3,8,2,left,do:,do,1,372,648,87,55,It's time to do your homework.,做,answer-02.png
+3,8,3,left,call (,call,1,363,1022,127,56,I want to call my friend.,打電話,answer-03.png
+3,8,4,left,~ drink (,drink,1,352,1335,185,56,I like to drink water.,喝,answer-04.png
+3,8,5,left,~ wash (\,wash,1,351,1649,193,56,Dad washes his car on Sundays.,洗,answer-05.png
+3,8,6,left,- play (,play,1,358,2020,159,73,We like to play in the park.,玩,answer-06.png
+3,8,7,right,read (,read,1,1247,334,161,56,Ken likes to read books.,讀,answer-07.png
+3,8,8,right,_ study (\,study,1,1239,645,204,74,Mia and Ann are studying at the library.,讀書,answer-08.png
+3,8,9,right,— draw (\,draw,1,1241,1022,188,56,Jenny can draw very well.,畫,answer-09.png
+3,8,10,right,— color (',color,1,1243,1345,180,47,I want to color some pictures.,顏色,answer-10.png
+3,8,11,right,— write (\,write,1,1242,1714,190,52,Kate likes to write stories.,寫,answer-11.png
+3,8,12,right,~ make (\,make,1,1239,2023,204,56,My sister can make sandwiches.,做,answer-12.png

@@ -1,0 +1,18 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+8,7,1,left,goal (,goal,1,389,325,145,67,Eric kicked the ball into the goal.,球門；進球得分,answer-01.png
+8,7,2,left,_ player (r,player,0.9,373,610,218,68,There are fifteen players on our team.,選手；演奏者,answer-02.png
+8,7,3,left,score / scored (v.) 4,score / scored,0.9,319,898,472,54,Eddie almost scored a goal in the game.,得分,answer-03.png
+8,7,4,left,cry /cried (v.),cry / cried,1,344,1182,339,68,I cried when I hurt my knee.,哭泣,answer-04.png
+8,7,5,left,§ clap/ clapped (v.) 3,clap / clapped,0.9,315,1410,477,71,I clapped hard when Ann scored a goal.,拍手,answer-05.png
+8,7,6,left,kick / kicked (v.) |,kick / kicked,1,323,1699,437,55,Hsiao-Ming kicked the ball to Sam.,踢,answer-06.png
+8,7,7,left,-¢ push / pushed (v.),push / pushed,1,314,1984,470,67,He was angry when Ben pushed him.,推,answer-07.png
+8,7,9,left,embarrassed (adj.,embarrassed,0.9,315,2274,448,53,Peter was embarrassed because he forgot to wear his shoes.,感到害羞,answer-09.png
+8,7,8,left,abe,act / acted,0.4,452,2274,59,53,Erin acted well in the school play.,演戲,answer-08.png
+8,7,10,right,— angry (<,angry,1,1262,336,199,56,I was angry when I didn't score.,生氣,answer-10.png
+8,7,11,right,~ almost (a,almost,0.9,1255,613,233,55,We almost won the game.,幾乎,answer-11.png
+8,7,12,right,__~ person / people (n.) J,person / people,0.9,1195,841,521,68,There are ten people in the room.,人,answer-12.png
+8,7,13,right,actress /actor (n.),actress / actor,1,1200,1132,486,51,That actress is great. I cried when I saw the play.,女演員；男演員,answer-13.png
+8,7,14,right,» act/acted (v.),act / acted,1,1225,1530,354,54,Erin acted well in the school play.,演戲,answer-14.png
+8,7,16,right,laugh / laughed (v.) 5,laugh / laughed,0.9,1205,1815,499,68,The movie was funny. I laughed a lot.,笑,answer-16.png
+8,7,15,right,~ laugh/,laugh / laughed,1,1260,1816,184,53,The movie was funny. I laughed a lot.,笑,answer-15.png
+8,7,17,right,_ nervous (a,nervous,0.9,1240,2111,272,46,Please don't be nervous before the test.,緊張的,answer-17.png

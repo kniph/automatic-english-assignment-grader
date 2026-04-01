@@ -1,0 +1,20 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+6,8,1,left,~ knight (1,knight,0.9,333,302,215,68,The knight is tall and strong.,騎士,answer-01.png
+6,8,2,left,hero (,hero,1,348,534,147,53,Dan is a hero because he saved the monster.,英雄,answer-02.png
+6,8,3,left,— ghost (r,ghost,0.9,339,818,189,68,Susan will tell a ghost story.,鬼；幽靈,answer-03.png
+6,8,4,left,) story (',story,1,343,1052,176,62,Mom enjoys telling stories.,故事,answer-04.png
+6,8,5,left,joke (,joke,1,350,1277,147,67,Sam likes to tell jokes.,玩笑,answer-05.png
+6,8,6,left,- fight (,fight,1,348,1506,155,68,Why did Ben fight with his brother?,打架,answer-06.png
+6,8,7,left,ask (,ask,1,356,1794,121,54,You can ask me questions.,詢問,answer-07.png
+6,8,8,left,", strong (c",strong,0.9,340,2026,214,62,The man is very strong.,強壯的,answer-08.png
+6,8,9,left,_ brave (c,brave,0.9,344,2252,194,54,Hans is brave. He fights the huge dragon.,勇敢的；英勇的,answer-09.png
+6,8,10,right,— fantastic (a,fantastic,0.9,1193,301,278,55,This is a fantastic story.,極好的,answer-10.png
+6,8,12,right,princess (n.),princess,1,1185,598,280,60,The princess is pretty and kind.,公主,manual-answer-12.png
+6,8,12,right,_ princess (n.,prince,0.9,1178,827,287,54,Prince Oscar is handsome.,王子,answer-12.png
+6,8,13,right,— dragon (n,dragon,0.9,1188,1045,238,68,The bad dragon lives in a cave.,龍,answer-13.png
+6,8,14,right,fire (,fire,1,1214,1276,113,54,The monster is afraid of fire.,火,answer-14.png
+6,8,15,right,‘die |,die,1,1218,1505,101,54,The dragon died after a fight.,死,answer-15.png
+6,8,16,right,kiss (v.),kiss,1,1220,1734,150,60,She doesn't want to kiss a frog.,吻；接吻,manual-answer-16.png
+6,8,17,right,wait (v.),wait,1,1220,1963,160,60,Please wait here. I will call him.,等待,manual-answer-17.png
+6,8,18,right,maybe (adv.),maybe,1,1210,2192,185,60,Maybe it will rain tomorrow.,或許；可能,manual-answer-18.png
+6,8,19,right,end (n.),end,1,1230,2421,130,60,The end of the show was exciting.,結束；結局,manual-answer-19.png

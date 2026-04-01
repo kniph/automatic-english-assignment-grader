@@ -381,3 +381,22 @@ The normalized answer bank assumed one CSV row equals one sheet item. That faile
 When a sheet visually shows one colored answer but the CSV contains two related rows, trust the sheet layout over the CSV row count. Treat it as a source-structure override, not an OCR miss.
 
 ---
+
+## 2026-04-01 - BUG-024: Dense Vocab Pages Under-Detect the Lower Rows Even When OCR Is Fine
+
+**Issue**: Multiple Howdy 5-7 vocab units stalled in `draft` because review extraction stopped around the upper or middle rows. The missing answers were often clustered in the lower-right portion of the page, despite the answer-sheet text itself being clean and legible.
+
+**Root Cause**:
+The current connected-component pass in `scripts/extract-vocab-review.js` is good at recovering isolated colored answer words, but dense lower-page layouts can still fall below the detector's practical sensitivity. This was especially visible on:
+- dense right-column tails in `Howdy 5`, `Howdy 6`, and `Howdy 7`
+- the irregular left-column gaps in `Howdy 1 Unit 7`
+
+**Solution**:
+- keep the source bank as the answer authority when it matches the answer sheet
+- add targeted `manual-review-overrides.json` `append_rows` entries for the missing visual answer regions
+- rerun review extraction and publish only after `detected_count == expected_count`
+
+**Prevention**:
+When a vocab unit repeatedly stalls with a perfect-looking answer bank and the misses cluster near the page tail, do not keep tuning OCR first. Treat it as a review-box coverage problem and patch the missing regions explicitly in `manual-review-overrides.json`.
+
+---

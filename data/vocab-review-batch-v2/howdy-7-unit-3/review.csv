@@ -1,0 +1,19 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+7,3,1,left,~ garden (n,garden,0.9,382,309,234,68,Wow! You have a beautiful garden.,花園,answer-01.png
+7,3,2,left,~ insect(s) (n.,insect,0.9,370,589,295,63,There are many insects in the park.,昆蟲,answer-02.png
+7,3,3,left,cockroach (n.),cockroach,1,356,871,355,54,Grace saw a cockroach in the kitchen.,蟑螂,answer-03.png
+7,3,4,left,_ kitten (r,kitten,0.9,389,1151,198,54,The kittens are playing together.,小貓,answer-04.png
+7,3,5,left,— puppy (n,puppy,0.9,385,1383,218,55,This puppy is so cute.,小狗,answer-05.png
+7,3,6,left,~ seed (1,seed,0.9,396,1596,159,54,It was a seed before. Now it is a flower.,種子,answer-06.png
+7,3,7,left,flower (n,flower,0.9,382,1933,222,54,Lynn's mom has many flowers in the garden.,花,answer-07.png
+7,3,8,left,- grow (\,grow,1,393,2222,174,55,The trees are growing. They are so tall now.,成長,answer-08.png
+7,3,9,left,— take (,take,1,398,2492,152,54,You can take one book home.,拿取,answer-09.png
+7,3,10,right,sad (,sad,1,1272,312,121,54,Derek is sad. His dog is sick.,難過,answer-10.png
+7,3,11,right,_ spider (n,spider,0.9,1254,532,209,68,There's a spider on that tree.,蜘蛛,answer-11.png
+7,3,12,right,__ butterfly (n.,butterfly,0.9,1235,754,300,71,This butterfly is very pretty.,蝴蝶,answer-12.png
+7,3,13,right,ant (,ant,1,1273,983,111,51,There are many ants in the yard.,螞蟻,answer-13.png
+7,3,14,right,~ snail (,snail,1,1263,1203,160,54,There is a snail on Trevor's plant.,蝸牛,answer-14.png
+7,3,15,right,~ branch (n,branch,0.9,1248,1426,233,54,Look! There is a butterfly on that branch.,樹枝,answer-15.png
+7,3,16,right,cocoon (n.),cocoon,1,1240,1648,205,60,This butterfly was a cocoon yesterday.,蛹；繭,manual-answer-16.png
+7,3,17,right,caterpillar (n.),caterpillar,1,1195,1870,320,60,Look! Here is a caterpillar.,毛毛蟲,manual-answer-17.png
+7,3,18,right,tadpole (n.),tadpole,1,1225,2092,240,60,This frog was a tadpole before.,蝌蚪,manual-answer-18.png

@@ -1,0 +1,14 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+2,3,1,left,school (r,school,0.9,374,246,232,60,Jenny likes to go to school.,學校,answer-01.png
+2,3,2,left,library (n,library,0.9,375,579,242,73,Where is the library?,圖書館,answer-02.png
+2,3,3,left,~ bank (1,bank,0.9,389,916,184,57,My brother is in the bank.,銀行,answer-03.png
+2,3,4,left,", post office (n.)",post office,1,350,1244,389,77,There are two post offices in the city.,郵局,answer-04.png
+2,3,5,left,park (,park,1,400,1641,165,73,There is a park near the post office.,公園,answer-05.png
+2,3,6,left,across from (phr,across from,0.9,345,2037,438,57,The park is across from the bank.,對面,answer-06.png
+2,3,7,right,next to (p,next to,0.9,1245,241,257,53,Lucy's house is next to Sam's house.,隔壁,answer-07.png
+2,3,8,right,- near (|,near,1,1268,621,160,47,The library is near the park.,附近,answer-08.png
+2,3,9,right,bookstore (n.),bookstore,1,1227,1006,374,57,Let's go to the new bookstore.,書店,answer-09.png
+2,3,11,right,_ department store (n.) —,department store,1,1210,1380,598,71,There is a sale at the department store.,百貨公司,answer-11.png
+2,3,10,right,de,near,0.25,1288,1382,61,55,The library is near the park.,附近,answer-10.png
+2,3,12,right,"we, supermarket (n.)",supermarket,0.9,1213,1822,471,74,Mom is in the supermarket.,超市,answer-12.png
+2,3,13,right,= train station (n.),train station,1,1221,2197,446,60,Where is the train station?,火車站,answer-13.png

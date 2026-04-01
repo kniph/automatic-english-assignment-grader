@@ -1,0 +1,16 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+1,7,1,left,skateboard (n.),skateboard,1,334,231,419,60,He rides his skateboard to school.,滑板,answer-01.png
+1,7,2,left,rollerblades (n.),rollerblades,1,331,545,437,60,She wears rollerblades in the park.,直排輪,answer-02.png
+1,7,12,left,bicycle (bike) (n.),bicycle (bike),1,332,890,335,60,I ride my bicycle to school.,腳踏車,manual-answer-12.png
+1,7,4,left,~ helmet (n,helmet,0.9,374,1236,249,56,Always wear a helmet when cycling.,頭盔、安全帽,answer-04.png
+1,7,5,left,~ yellow (n,yellow,0.9,375,1607,247,74,The sun is bright yellow.,黃,answer-05.png
+1,7,13,left,pink (adj.),pink,1,390,1801,150,60,She likes the pink flowers.,粉紅,manual-answer-13.png
+1,7,6,left,red (,red,1,405,1995,111,56,The apple is red and sweet.,紅,answer-06.png
+1,7,14,left,green (adj.),green,1,385,2383,180,60,The grass is green in spring.,綠,manual-answer-14.png
+1,7,15,left,white (adj.),white,1,390,2670,170,60,Snow is pure white.,白,manual-answer-15.png
+1,7,7,right,- blue (,blue,1,1263,229,156,57,The sky is clear blue today.,藍,answer-07.png
+1,7,8,right,_ orange (n,orange,0.9,1243,683,258,60,The orange sunset is beautiful.,橘色,answer-08.png
+1,7,9,right,- shirt (1,shirt,0.9,1265,1121,164,56,He wears a white shirt to work.,襯衫(男式),answer-09.png
+1,7,10,right,~ shorts (r,shorts,0.9,1257,1557,224,56,Wear shorts in hot weather.,短褲(兩腿褲),answer-10.png
+1,7,11,right,~ socks (r,socks,0.9,1259,1870,214,56,Put on clean socks every day.,襪子(雙),answer-11.png
+1,7,12,right,sneakers (n.,sneakers,0.9,1236,2183,335,57,These sneakers are comfortable.,運動鞋(雙),answer-12.png

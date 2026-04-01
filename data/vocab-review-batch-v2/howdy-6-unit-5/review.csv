@@ -1,0 +1,21 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+6,5,1,left,starfish (n,starfish,0.9,394,299,257,55,The red starfish is small.,海星,answer-01.png
+6,5,2,left,~ crab (,crab,1,416,529,151,54,Most crabs live in the water.,螃蟹,answer-02.png
+6,5,3,left,ray (,ray,1,427,768,112,55,Which ray is the smallest?,魟魚,answer-03.png
+6,5,4,left,sea horse (n.),sea horse,1,384,988,326,54,That sea horse is the largest.,海馬,answer-04.png
+6,5,5,left,~ bone(s) (n,bones,0.6666666666666667,400,1216,258,62,Octopuses have no bones.,骨頭,answer-05.png
+6,5,6,left,_ Sign (,sign,1,426,1456,137,55,"The sign says ""No Feeding.""",記號；標誌,answer-06.png
+6,5,7,left,~ tank (,tank,1,423,1676,155,54,Let's get a fish tank for David.,缸,answer-07.png
+6,5,8,left,~ world (r,world,0.9,417,1905,195,53,Greenland is the biggest island in the world.,世界,answer-08.png
+6,5,9,left,_tiny (,tiny,1,432,2187,131,71,Ants are tiny.,微小的,answer-09.png
+6,5,10,left,- live (,live,1,437,2419,120,54,Macy lives next to her parents.,住,answer-10.png
+6,5,11,right,pool (,pool,1,1276,293,145,68,Many fish are swimming in the pool.,水池,answer-11.png
+6,5,12,right,_ bumpy (0,bumpy,0.9,1259,580,237,68,We're driving on a bumpy road.,凹凸不平的,answer-12.png
+6,5,13,right,+ flat (,flat,1,1284,810,116,55,The road is flat.,平的；平坦的,answer-13.png
+6,5,14,right,rough (,rough,1,1270,1038,194,68,Basketballs feel rough.,粗糙的,answer-14.png
+6,5,15,right,~ smooth (a,smooth,0.9,1260,1269,252,55,The egg feels smooth.,光滑的,answer-15.png
+6,5,16,right,petting area (n.),petting area,1,1165,1500,340,60,There are sheep and rabbits in the petting area.,撫摸區,manual-answer-16.png
+6,5,17,right,pet (n.),pet,1,1250,1731,120,60,This tiny dog is Arron's pet.,寵物,manual-answer-17.png
+6,5,18,right,tail (n.),tail,1,1245,1962,150,60,A ray has a long tail.,尾巴,manual-answer-18.png
+6,5,19,right,look like (phr.),look like,1,1200,2193,235,60,Andy and his dad look like each other.,看起來像...,manual-answer-19.png
+6,5,20,right,probably (adv.),probably,1,1210,2424,225,60,It will probably rain tomorrow.,大概,manual-answer-20.png

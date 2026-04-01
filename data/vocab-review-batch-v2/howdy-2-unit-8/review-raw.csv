@@ -1,0 +1,14 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+2,8,1,left,| Monday (n.,monday,0.9,318,237,292,73,I dance on Mondays.,星期一,answer-01.png
+2,8,2,left,>] Tuesday (n.,tuesday,0.9,313,551,324,72,Lynn swims on Tuesdays.,星期二,answer-02.png
+2,8,3,left,__ Wednesday (n.),wednesday,1,295,863,433,74,What do you do on Wednesday?,星期三,answer-03.png
+2,8,4,left,5] Thursday (n.,thursday,0.9,312,1239,355,73,Grace plays the piano on Thursdays.,星期四,answer-04.png
+2,8,5,left,| Friday (r,friday,0.9,340,1613,232,74,Lynn has music class on Fridays.,星期五,answer-05.png
+2,8,6,left,| Saturday (n.,saturday,0.9,323,1987,341,74,Today is Saturday.,星期六,answer-06.png
+2,8,7,left,| Sunday (n,sunday,0.9,337,2300,283,74,I swim on Sundays.,星期日,answer-07.png
+2,8,8,right,~ math (1,math,0.9,1231,234,185,56,I like math class.,數學,answer-08.png
+2,8,9,right,Chinese (n.,chinese,0.9,1210,547,296,57,Tim is in Chinese class now.,中文,answer-09.png
+2,8,10,right,~ music (r,music,0.9,1230,921,214,57,Peter does not like music class.,音樂,answer-10.png
+2,8,11,right,~ English (n,english,0.9,1223,1293,263,74,Do you have English class today?,英文,answer-11.png
+2,8,12,right,art |,art,1,1259,1674,103,53,Music and art are fun.,美術,answer-12.png
+2,8,13,right,science (n,science,0.9,1228,1983,272,57,Science class is cool.,科學,answer-13.png

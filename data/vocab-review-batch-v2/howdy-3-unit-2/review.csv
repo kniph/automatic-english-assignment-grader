@@ -1,0 +1,12 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+3,2,1,left,thirty (,thirty,1,318,248,199,73,The pants are thirty dollars.,三十,answer-01.png
+3,2,2,left,forty (,forty,1,322,553,180,77,There are forty students in the classroom.,四十,answer-02.png
+3,2,3,left,_ fifty (,fifty,1,329,921,152,74,We only have fifty dollars.,五十,answer-03.png
+3,2,4,left,sixty (,sixty,1,326,1228,180,73,The game is sixty dollars.,六十,answer-04.png
+3,2,5,left,seventy (a,seventy,0.9,304,1538,291,71,Grandma is seventy years old.,七十,answer-05.png
+3,2,6,left,_ eighty (c,eighty,0.9,317,1901,228,73,The robot is eighty colors.,八十,answer-06.png
+3,2,7,left,_ ninety (c,ninety,0.9,320,2212,228,68,Grandpa is ninety years old.,九十,answer-07.png
+3,2,8,right,one hundred (adj,one hundred,0.9,1147,254,496,56,I can count to one hundred.,一百,answer-08.png
+3,2,9,right,", dollar (r",dollar,0.9,1208,691,210,57,This is one dollar.,一元,answer-09.png
+3,2,10,right,expensive (ad,expensive,0.9,1175,994,375,74,The cake is too expensive.,昂貴的,answer-10.png
+3,2,11,right,_ cheap (c,cheap,0.9,1208,1303,219,72,This red sweater is cheap.,便宜的,answer-11.png

@@ -1,0 +1,16 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+8,4,1,left,thunder (n.,thunder,0.9,341,360,262,54,That thunder was very loud!,雷；雷聲,answer-01.png
+8,4,2,left,~ wind (1,wind,0.9,359,589,169,54,The wind is so strong today!,風,answer-02.png
+8,4,3,left,blanket (n.,blanket,0.9,340,818,262,55,Please put this blanket on the bed.,毯子,answer-03.png
+8,4,4,left,~ rain/ rained (v.),rain / rained,1,309,1105,407,54,It rained all night.,下雨,answer-04.png
+8,4,5,left,snow / snowed (v.) |,snow / snowed,1,286,1333,514,55,We don't have school today because it snowed all night.,下雪,answer-05.png
+8,4,6,left,| _ stay / stayed (v.) 1,stay / stayed,0.9,301,1674,443,71,Emily's dog stayed inside yesterday.,停留,answer-06.png
+8,4,7,left,) blow / blew (v.).,blow / blew,1,311,1962,394,55,The wind blew a tree down last night.,吹,answer-07.png
+8,4,8,left,shake,shake / shook,1,387,2249,125,55,The windows shook hard because there was a storm.,搖晃,answer-08.png
+8,4,10,right,__ Sleep / slept (v.).,sleep / slept,1,1196,363,408,62,Brian slept for eight hours last night.,睡覺,answer-10.png
+8,4,11,right,noisy (¢,noisy,1,1242,643,184,71,It's noisy at Kate's house because they're having a party.,嘈雜的；喧鬧的,answer-11.png
+8,4,12,right,_ dentist (n,dentist,0.9,1230,990,234,54,Sam went to the dentist last night.,牙醫,answer-12.png
+8,4,13,right,» wedding (n.,wedding,0.9,1218,1272,291,72,I'm going to Sue's wedding tonight.,婚禮,answer-13.png
+8,4,14,right,~ fancy (,fancy,1,1236,1559,194,71,This is a very fancy dress.,花俏的,answer-14.png
+8,4,15,right,.»» shine / shone (v.) :,shine / shone,1,1187,1791,438,55,The sun was shining. It was a great day.,發光；閃耀,answer-15.png
+8,4,16,right,= marry / married (v.) 4,marry / married,0.9,1167,2074,529,71,Joe married Helen last week.,結婚,answer-16.png

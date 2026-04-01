@@ -1,0 +1,13 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+1,5,1,left,_ tiger (,tiger,1,350,231,165,77,The tiger is very strong.,虎,answer-01.png
+1,5,2,left,lion (,lion,1,360,551,130,55,The lion roars loudly.,獅,answer-02.png
+1,5,3,left,monkey (Nn.,monkey,0.9,329,921,297,73,The monkey climbs the tree.,猴,answer-03.png
+1,5,4,left,~ snake (r,snake,0.9,348,1298,222,57,The snake moves slowly.,蛇,answer-04.png
+1,5,5,left,hippo (r,hippo,0.9,356,1670,205,74,The hippo lives in the river.,河馬,answer-05.png
+1,5,6,left,. elephant (n.,elephant,0.9,335,1981,320,77,The elephant has a long trunk.,象,answer-06.png
+1,5,7,right,giraffe (n,giraffe,0.9,1208,221,242,78,The giraffe has a long neck.,長頸鹿,answer-07.png
+1,5,8,right,~ zebra (r,zebra,0.9,1218,541,205,56,The zebra has black and white stripes.,斑馬,answer-08.png
+1,5,9,right,long (,long,1,1234,912,156,73,This snake is very long.,長的,answer-09.png
+1,5,10,right,~ short (,short,1,1229,1229,189,57,My hair is short and neat.,短的、矮的,answer-10.png
+1,5,11,right,_ huge (,huge,1,1236,1540,176,73,The elephant is huge.,非常巨大的,answer-11.png
+1,5,12,right,~ small («,small,1,1236,1856,195,57,This ant is very small.,小的,answer-12.png

@@ -1,0 +1,21 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+5,3,1,left,rock (,rock,1,378,335,150,54,Look at those huge rocks!,石頭,answer-01.png
+5,3,2,left,— tree (,tree,1,381,558,135,50,These trees are very old.,樹,answer-02.png
+5,3,3,left,~ woods (n,woods,0.9,363,773,227,55,Their house is next to the woods.,樹林,answer-03.png
+5,3,4,left,hill |,hill,1,391,1050,97,53,Let's run to the top of the hill!,山丘,answer-04.png
+5,3,5,left,mountains (n.),mountains,1,338,1273,359,50,The mountains are so pretty.,山,answer-05.png
+5,3,6,left,lake (,lake,1,383,1489,145,54,Let's go to the lake!,湖,answer-06.png
+5,3,7,left,river (,river,1,380,1707,155,54,This river is very clean.,河,answer-07.png
+5,3,8,left,waterfall (n.,waterfall,0.9,350,1926,307,55,This waterfall is very high!,瀑布,answer-08.png
+5,3,9,left,fox (,fox,1,390,2145,111,55,There's a fox in the woods.,狐狸,answer-09.png
+5,3,10,left,- deer (,deer,1,384,2364,146,54,There is a deer next to the lake.,鹿,answer-10.png
+5,3,11,right,bridge (n,bridge,0.9,1224,332,214,67,Lynn is walking over the bridge.,橋,answer-11.png
+5,3,12,right,_ map (,map,1,1238,562,147,55,We can find the US on the map.,地圖,answer-12.png
+5,3,13,right,path (,path,1,1238,770,151,68,Sam is walking on the path.,小徑,answer-13.png
+5,3,14,right,- over (|,over,1,1237,1001,151,44,Lucy is jumping over that rock.,越過,answer-14.png
+5,3,15,right,through (p,through,0.9,1215,1209,262,68,Tim is walking through the park.,穿過,answer-15.png
+5,3,16,right,cave (n.),cave,1,1215,1438,165,60,Let's go into the cave.,洞穴,manual-answer-16.png
+5,3,17,right,log (n.),log,1,1230,1668,140,60,Let's sit on that log.,木頭；原木,manual-answer-17.png
+5,3,18,right,bush (n.),bush,1,1220,1898,160,60,Is there a fox behind the bush?,矮樹叢,manual-answer-18.png
+5,3,19,right,owl (n.),owl,1,1230,2128,135,60,I can hear an owl.,貓頭鷹,manual-answer-19.png
+5,3,20,right,stream (n.),stream,1,1210,2358,215,60,It's so hot. Let's play in the stream.,小河；溪流,manual-answer-20.png

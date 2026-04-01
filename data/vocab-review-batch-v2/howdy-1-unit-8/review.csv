@@ -1,0 +1,15 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+1,8,1,left,| closet (r,closet,0.9,334,224,219,60,Hang your clothes in the closet.,衣櫥,answer-01.png
+1,8,2,left,chair (,chair,1,344,539,181,57,Sit down on this comfortable chair.,椅子,answer-02.png
+1,8,3,left,~ table (r,table,0.9,346,914,185,57,Put the books on the table.,桌子,answer-03.png
+1,8,4,left,- sofa (,sofa,1,355,1228,156,57,We watch TV on the sofa.,沙發,answer-04.png
+1,8,5,left,TV,tv,1,365,1542,117,55,We watch cartoons on TV.,電視,answer-05.png
+1,8,6,left,in.,in,1,375,1855,72,56,The cat is sleeping in the box.,在…裡面,answer-06.png
+1,8,7,left,on!,on,1,376,2179,88,46,The book is on the desk.,在…上面,answer-07.png
+1,8,8,right,under (,under,1,1228,225,205,56,The dog is under the table.,在…下面,answer-08.png
+1,8,9,right,— behind (p,behind,0.9,1224,594,244,56,The cat is hiding behind the tree.,在…下面,answer-09.png
+1,8,10,right,yard (,yard,1,1240,905,169,74,Children play in the yard.,院子,answer-10.png
+1,8,11,right,kitchen (n,kitchen,0.9,1224,1282,268,57,Mom cooks dinner in the kitchen.,廚房,answer-11.png
+1,8,13,right,} living room (n.),living room,1,1219,1604,373,60,The family gathers in the living room.,客廳,answer-13.png
+1,8,14,right,1 bedroom (n.,bedroom,0.9,1218,1909,321,56,I sleep in my cozy bedroom.,臥室,answer-14.png
+1,8,15,right,bathroom (n.),bathroom,1,1213,2222,354,57,Brush your teeth in the bathroom.,浴室,answer-15.png

@@ -1,0 +1,14 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+1,4,1,left,book (,book,1,337,244,181,57,I love reading this book.,書,answer-01.png
+1,4,2,left,~ pencil (',pencil,1,333,554,214,74,Please give me a pencil.,鉛筆,answer-02.png
+1,4,3,left,pen |,pen,1,351,882,131,57,I write with a blue pen.,筆、鋼筆,answer-03.png
+1,4,4,left,— eraser (n,eraser,0.9,332,1195,232,48,Use the eraser to fix mistakes.,橡皮擦、板擦,answer-04.png
+1,4,5,left,_ crayon (n,crayon,0.9,329,1508,256,60,Color the picture with crayons.,蠟筆,answer-05.png
+1,4,6,left,ruler (,ruler,1,352,1813,166,57,Measure the line with a ruler.,尺,answer-06.png
+1,4,7,left,pencil case (n.),pencil case,1,305,2122,408,77,Put your pencils in the pencil case.,鉛筆盒,answer-07.png
+1,4,8,right,_ schoolbag (n.),schoolbag,1,1186,235,379,74,Pack your books in the schoolbag.,書包,answer-08.png
+1,4,9,right,~ circle (r,circle,0.9,1226,694,199,57,Draw a perfect circle here.,圓圈,answer-09.png
+1,4,10,right,_ square (n,square,0.9,1217,1037,256,57,This square is very neat.,正方形,answer-10.png
+1,4,11,right,triangle (n.,triangle,0.9,1214,1338,283,74,Can you draw a triangle?,三角形,answer-11.png
+1,4,12,right,~ heart (1,heart,0.9,1235,1656,193,57,I drew a red heart.,心型,answer-12.png
+1,4,13,right,diamond (n.,diamond,0.9,1212,1966,317,61,The diamond shape is beautiful.,菱形、鑽石,answer-13.png

@@ -1,0 +1,14 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+2,4,1,left,_ sing (,sing,1,354,246,150,73,Jackie can sing very well.,唱（歌）,answer-01.png
+2,4,2,left,~ dance (v,dance,0.9,342,563,218,56,Can Grace dance?,跳舞,answer-02.png
+2,4,3,left,run (,run,1,366,886,116,47,My brother can run very fast.,跑,answer-03.png
+2,4,4,left,— swim (\,swim,1,353,1250,194,57,Sam swims very well.,游泳,answer-04.png
+2,4,5,left,hop (,hop,1,368,1561,131,73,He can hop.,單腳跳或雙腳跳,answer-05.png
+2,4,6,left,_ jump (,jump,1,360,1875,181,73,She can jump high.,跳；跳躍,answer-06.png
+2,4,7,left,high (,high,1,368,2188,151,74,Can you jump high?,高,answer-07.png
+2,4,8,right,- fast (,fast,1,1246,243,142,57,Brian can run fast.,快地；迅速地,answer-08.png
+2,4,9,right,well (,well,1,1247,577,152,57,I can dance very well.,很好地,answer-09.png
+2,4,10,right,piano (r,piano,0.9,1239,921,204,57,Jenny has a piano lesson today.,鋼琴,answer-10.png
+2,4,11,right,— drums (n,drums,0.9,1236,1286,229,56,Can you play the drums?,鼓,answer-11.png
+2,4,12,right,— violin (1,violin,0.9,1245,1599,198,56,Ken can play the violin.,小提琴,answer-12.png
+2,4,13,right,- flute (1,flute,0.9,1252,1913,170,56,Serena can play the flute very well.,長笛；橫笛,answer-13.png

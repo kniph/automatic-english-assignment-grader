@@ -1,0 +1,17 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+6,2,1,left,student (n.,student,0.9,327,292,258,54,There are 16 students in my English class.,學生,answer-01.png
+6,2,2,left,~ shark (r,shark,0.9,342,578,190,54,The toy sharks are so cool!,鯊魚,answer-02.png
+6,2,3,left,~ whale (r,whale,0.9,339,808,205,54,That blue whale is huge.,鯨魚,answer-03.png
+6,2,4,left,— seal (,seal,1,353,1037,136,54,We can see seals at Aqua Park.,海豹,answer-04.png
+6,2,5,left,@ sea turtle (n.),sea turtle,1,314,1327,324,51,Sea turtles can swim.,海龜,answer-05.png
+6,2,6,left,octopus (Nn.,octopus,0.9,325,1556,273,62,What color are the octopuses?,章魚,answer-06.png
+6,2,7,left,_ squid (r,squid,0.9,344,1781,184,67,What do squids like to eat?,烏賊,answer-07.png
+6,2,8,left,penguin (n.,penguin,0.9,328,2021,268,55,Penguins can't fly.,企鵝,answer-08.png
+6,2,9,left,land (,land,1,354,2241,145,53,Some crabs live on the land.,陸地,answer-09.png
+6,2,10,right,~ island (r,land,0.9,1197,291,204,54,Some crabs live on the land.,陸地,answer-10.png
+6,2,10,right,island (n.),island,1,1205,292,190,60,Is Aqua Park on an island?,島,manual-answer-10.png
+6,2,11,right,ticket (r,ticket,0.9,1197,521,199,53,May I have two tickets please?,票,answer-11.png
+6,2,12,right,sale (,sale,1,1210,807,140,54,Those dresses are on sale.,拍賣；出售,answer-12.png
+6,2,13,right,sell,sell,1,1221,1046,81,45,Ben is going to sell orange cakes at his restaurant.,賣,answer-13.png
+6,2,14,right,- bake (,bake,1,1205,1324,170,53,Grandma likes to bake cookies.,烘焙,answer-14.png
+6,2,15,right,- more ((,more,1,1206,1619,171,45,Kitty wants more candy.,更多的,answer-15.png

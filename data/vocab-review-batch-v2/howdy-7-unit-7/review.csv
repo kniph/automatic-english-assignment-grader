@@ -1,0 +1,20 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+7,7,1,left,» talk / talked (v.),talk / talked,1,319,328,412,54,Peter talked with Tim after class.,說話,answer-01.png
+7,7,3,left,4 pick up / picked up (phr.),pick up / picked up,0.9,274,549,632,68,Joy picked up the ball.,撿起,answer-03.png
+7,7,5,left,— throw / threw (v.) ;,throw / threw,1,310,774,457,54,Tim threw the ball to Mary.,丟,answer-05.png
+7,7,8,left,shout / shouted (v.) 4,shout / shouted,0.9,297,1219,519,54,The game was exciting! We all cheered and shouted.,喊叫,answer-08.png
+7,7,10,left,= hurry / hurried (v.) ',hurry / hurried,1,339,1555,438,68,Hurry! We are late.,快,answer-10.png
+7,7,9,left,ht,hit,0.6666666666666667,386,1557,58,52,Janet hit her brother with a ball.,打,answer-09.png
+7,7,11,left,~ quiet («,quiet,1,369,1781,171,62,Please be quiet in the library.,安靜的,answer-11.png
+7,7,12,left,loud (,loud,1,390,2002,126,53,Annie was loud in the library.,大聲的,answer-12.png
+7,7,13,left,slow (,slow,1,370,2224,164,53,He lost the race because he was too slow.,慢的,answer-13.png
+7,7,14,left,— careful (0,careful,0.9,355,2502,237,55,Be careful! The oven is hot.,小心的,answer-14.png
+7,7,15,right,~ team (|,team,1,1239,332,170,50,Yeah! Our team won.,隊伍,answer-15.png
+7,7,16,right,. walk / walked (v.) z,walk / walked,0.9,1174,551,485,54,We walked to school this morning.,走路,answer-16.png
+7,7,17,right,_ speak / spoke (v.) 4,speak / spoke,0.9,1176,829,476,68,I spoke on the phone with my aunt last night.,說話,answer-17.png
+7,7,19,right,_~ _-cheer / cheered (v.) =,cheer / cheered,1,1167,1112,514,53,Lynn cheered for her team.,歡呼,answer-19.png
+7,7,20,right,‘> listen / listened (v.) #,listen / listened,1,1186,1334,491,54,I listened to a great song.,聽,answer-20.png
+7,7,16,right,man / men,man / men,1,1225,1556,210,60,That tall man is my father.,男人,manual-answer-16.png
+7,7,17,right,woman / women,woman / women,1,1200,1778,260,60,Those two women are my mother and my grandma.,女人,manual-answer-17.png
+7,7,18,right,cheerleader (n.),cheerleader,1,1185,2000,300,60,The cheerleaders cheered for our team.,啦啦隊員,manual-answer-18.png
+7,7,19,right,fence (n.),fence,1,1235,2222,165,60,Tommy hit the baseball over the fence.,圍牆,manual-answer-19.png

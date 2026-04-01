@@ -1,0 +1,16 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+4,2,1,left,waiter (n,waiter,0.9,348,216,237,51,The man is a waiter.,男服務生,answer-01.png
+4,2,2,left,waitress (n.,waitress,0.9,333,520,315,56,That girl is a waitress.,女服務生,answer-02.png
+4,2,3,left,— nurse (r,nurse,0.9,358,838,200,47,My mom is a nurse.,護士,answer-03.png
+4,2,4,left,_ police officer (n.),police officer,1,301,1134,476,73,He is a nice police officer.,警察,answer-04.png
+4,2,5,left,mail carrier (n.),mail carrier,1,313,1446,418,57,My uncle is a mail carrier.,郵差,answer-05.png
+4,2,6,left,- teacher (n,teacher,0.9,343,1753,272,57,I like my teacher.,老師,answer-06.png
+4,2,7,left,bank clerk (n.),bank clerk,1,318,2060,392,57,I am a bank clerk.,銀行行員,answer-07.png
+4,2,8,right,f shopkeeper (n.),shopkeeper,0.9,1199,214,432,74,The shopkeeper is cool.,店長,answer-08.png
+4,2,9,right,salesperson (n.),salesperson,1,1198,528,441,72,Danny is a salesperson.,業務員,answer-09.png
+4,2,10,right,. restaurant (n.),restaurant,1,1209,848,384,52,Emily's sister works in a restaurant.,餐廳,answer-10.png
+4,2,11,right,_ shop (,shop,1,1253,1216,174,72,My brother works in a shop.,商店,answer-11.png
+4,2,13,right,hospital (n,hospital,0.9,1264,1590,248,74,My grandpa is in the hospital.,醫院,answer-13.png
+4,2,12,right,he,teacher,0.2857142857142857,1272,1593,59,56,I like my teacher.,老師,answer-12.png
+4,2,15,right,% police station (n.) ’,police station,1,1188,1962,495,77,The police station is next to the bank.,警察局,answer-15.png
+4,2,14,right,ylic,police officer,0.2142857142857143,1329,1966,57,57,He is a nice police officer.,警察,answer-14.png

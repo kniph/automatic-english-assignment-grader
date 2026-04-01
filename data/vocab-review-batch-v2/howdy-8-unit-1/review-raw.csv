@@ -1,0 +1,17 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+8,1,1,left,fir,floor,0.4,418,340,62,55,Which floor do you live on?,樓層,answer-01.png
+8,1,2,left,~ fire truck (n.,fire truck,0.9,395,342,283,54,A fire truck is here. There is a fire!,消防車,answer-02.png
+8,1,3,left,firefighter (n.),firefighter,1,365,623,340,71,The firefighters ran into the house.,消防隊員,answer-03.png
+8,1,4,left,lightning (0.,lightning,0.9,376,908,297,73,Did you see the lightning last night?,閃電,answer-04.png
+8,1,5,left,alarm (r,alarm,0.9,394,1199,198,56,It's the fire alarm. Please leave the building!,警鈴,answer-05.png
+8,1,6,left,~ floor (,floor,1,401,1543,160,54,Which floor do you live on?,樓層,answer-06.png
+8,1,7,left,_ roof (,roof,1,405,1772,140,54,Megan has a garden on her roof.,屋頂,answer-07.png
+8,1,8,left,- burn/burned (v.) #,burn / burned,1,346,2058,428,54,John burned his hand but he's OK.,燃燒；燙傷,answer-08.png
+8,1,9,left,ring / rang (v.),ring / rang,1,363,2397,345,73,Your phone just rang.,鈴響,answer-09.png
+8,1,10,right,hurt / hurt (v.),hurt,0.9,1266,339,324,54,Tim fell and hurt his foot.,受傷,answer-10.png
+8,1,11,right,_ save / saved (v.) :,save / saved,1,1244,568,427,54,Max saved the dog from the river.,拯救；節省,answer-11.png
+8,1,12,right,. smoke (n,smoke,0.9,1286,854,227,56,Look! There is a lot of smoke from that building.,煙,answer-12.png
+8,1,13,right,~ noise (1,noise,0.9,1296,1151,179,44,There is a lot of noise. What happened?,噪音,answer-13.png
+8,1,14,right,» upstairs (a,upstairs,0.9,1275,1425,278,68,Grandpa is sleeping upstairs.,樓上,answer-14.png
+8,1,15,right,‘+ downstairs (ad,downstairs,0.9,1252,1657,384,54,Mary is playing downstairs.,樓下,answer-15.png
+8,1,16,right,fall / fell (v.,fall / fell,0.9,1274,1885,273,55,I ran home too quickly and fell.,跌倒,answer-16.png

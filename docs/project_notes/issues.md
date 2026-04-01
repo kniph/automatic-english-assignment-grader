@@ -925,6 +925,43 @@ Reviewed all pages of NH1 WB A (U1–U8 + Review 1) and NH1 WB B (U1–U8, first
 
 ---
 
+## 2026-04-01 - Howdy 5/6/7 Rollout Completed, Howdy 1 Reduced to a Single Source Blocker
+
+**Work Done**:
+- Extended `data/vocab-prompts/manual-review-overrides.json` to recover the remaining dense-layout misses in:
+  - `Howdy 5 Unit 1 / 2 / 3 / 5 / 6`
+  - `Howdy 6 Unit 1 / 2 / 3 / 4 / 5 / 7 / 8`
+  - `Howdy 7 Unit 1 / 2 / 3 / 4 / 5 / 6 / 7`
+  - `Howdy 1 Unit 7`
+- Re-ran `scripts/extract-vocab-review.js` until all 63 matched unit exams reached `detected_count == expected_count`
+- Published the remaining single-unit vocab exams on Railway:
+  - completed all of `Howdy 5`
+  - completed all of `Howdy 6`
+  - completed all of `Howdy 7`
+  - completed `Howdy 1 Unit 7`
+- Published the newly unblocked composite review exams:
+  - `Howdy 5 Review 1 Vocabulary` (`id=72`)
+  - `Howdy 5 Review 2 Vocabulary` (`id=73`)
+  - `Howdy 6 Review 1 Vocabulary` (`id=74`)
+  - `Howdy 6 Review 2 Vocabulary` (`id=75`)
+  - `Howdy 7 Review 1 Vocabulary` (`id=76`)
+  - `Howdy 7 Review 2 Vocabulary` (`id=77`)
+  - `Howdy 1 Review 2 Vocabulary` (`id=78`)
+
+**Current Production State**:
+- All 63 matched single-unit vocab exams are now published
+- `Howdy 2-8` now have both `Review 1` and `Review 2` published
+- `Howdy 1 Review 2` is published after repairing `Howdy 1 Unit 7`
+- The only remaining vocab gap is:
+  - `Howdy 1 Unit 1 Vocabulary` has no answer-sheet image
+  - therefore `Howdy 1 Review 1 Vocabulary` is still blocked
+
+**Operational Conclusion**:
+- The remaining rollout risk is no longer OCR/extraction quality for Howdy 2-8
+- The only unresolved blocker is missing source material for `Howdy 1 Unit 1`
+
+---
+
 ## Pending / Future Work
 
 - [ ] Supplemental notes preview/edit when reopening an existing assignment from the teacher list

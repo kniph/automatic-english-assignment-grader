@@ -1,0 +1,18 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+7,2,1,left,— family (n,family,0.9,349,331,219,71,This is my family in the picture.,家庭；家人,answer-01.png
+7,2,2,left,\ parent(s) (n.,parents,0.75,330,562,315,68,My parents work at a bank.,父母親,answer-02.png
+7,2,3,left,building (n.,building,0.9,338,791,272,71,Paul lives on the 23rd floor of this building.,建築物,answer-03.png
+7,2,4,left,y/ country (n.,country,0.9,338,1082,266,66,Which country are you from?,國家,answer-04.png
+7,2,5,left,- photo (r,photo,0.9,354,1308,195,68,We took this photo last summer.,照片,answer-05.png
+7,2,6,left,_. classmate(s) (n.)_,classmate,1,302,1539,443,62,John plays tennis with his classmates every day.,同學,answer-06.png
+7,2,7,left,classroom (n.),classroom,1,321,1827,351,54,There are no students in the classroom.,教室,answer-07.png
+7,2,8,left,remember (v.),remember,1,322,2114,346,53,I remember you. Were you here last summer?,記得,answer-08.png
+7,2,9,left,travel (\v,travel,0.9,352,2457,198,54,My family loves to travel.,旅行,answer-09.png
+7,2,10,right,_ ancient (a,ancient,0.9,1221,340,253,51,That is an ancient building.,古老的,answer-10.png
+7,2,11,right,_ temple (n,temple,0.9,1226,564,234,68,My grandpa and I went to a temple yesterday.,廟宇,answer-11.png
+7,2,12,right,- guide (1,guide,0.9,1235,851,185,68,Judy's mom is a guide in Taiwan.,導遊,answer-12.png
+7,2,13,right,_.. basketball court (n.) &,basketball court,1,1157,1083,563,54,We were at the basketball court last night.,籃球場,answer-13.png
+7,2,14,right,_ copy (I,copy,0.9,1237,1379,169,55,Can I have a copy of this photo?,拷貝；副本,answer-14.png
+7,2,15,right,_ describe (v.,describe,0.9,1213,1599,288,54,Can you please describe your photo?,描述,answer-15.png
+7,2,16,right,Egypt (n.),egypt,1,1220,1886,185,60,Meg was in Egypt two weeks ago.,埃及,manual-answer-16.png
+7,2,17,right,Greece (n.),greece,1,1210,2173,200,60,My best friend is from Greece.,希臘,manual-answer-17.png

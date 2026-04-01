@@ -1,0 +1,13 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+4,1,1,left,_ sports (r,sports,0.9,342,224,229,68,I like to play sports with my friends.,運動,answer-01.png
+4,1,2,left,- golf (,golf,1,361,614,141,74,Sue likes to play golf.,高爾夫球,answer-02.png
+4,1,3,left,— football (n,football,0.9,354,951,256,56,My brother likes to play football with his friends.,美式足球,answer-03.png
+4,1,4,left,table tennis (n.),table tennis,1,304,1405,432,60,My sister likes to play table tennis.,桌球,answer-04.png
+4,1,5,left,2) badminton (n.),badminton,0.9,314,1802,392,56,I want to play badminton with my brother.,羽球,answer-05.png
+4,1,6,left,~ tennis (n,tennis,0.9,350,2196,223,57,I want to play tennis on Sunday.,網球,answer-06.png
+4,1,7,right,", dodge ball (n.)",dodge ball,1,1222,213,379,74,We play dodge ball with our school friends.,躲避球,answer-07.png
+4,1,8,right,softball (n,softball,0.9,1246,590,276,57,I like to play softball.,壘球,answer-08.png
+4,1,9,right,— swing (r,swing,0.9,1259,933,218,60,Ivy wants to play on the swings with me.,鞦韆,answer-09.png
+4,1,10,right,seesaw (n,seesaw,0.9,1247,1309,278,46,I don't like to play on the seesaw.,蹺蹺板,answer-10.png
+4,1,11,right,- slide (,slide,1,1272,1673,169,57,Let's play on the slide.,溜滑梯,answer-11.png
+4,1,12,right,. jungle gym (n.),jungle gym,1,1223,1984,407,74,They like to play on the jungle gym.,攀爬架,answer-12.png

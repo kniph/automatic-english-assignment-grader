@@ -1,0 +1,19 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+5,6,1,left,~ butter (r,butter,0.9,339,345,205,54,Do we have any butter?,牛油,answer-01.png
+5,6,2,left,salt (,salt,1,356,575,126,54,Put some salt on the potatoes.,鹽巴,answer-02.png
+5,6,3,left,— sugar (r,sugar,0.9,343,813,190,55,There is some sugar on the table.,糖,answer-03.png
+5,6,4,left,egg |,egg,1,357,1100,122,55,Put the egg in the pan.,蛋,answer-04.png
+5,6,5,left,~ flour (,flour,1,349,1320,159,54,I want some flour to make cookies.,麵粉,answer-05.png
+5,6,6,left,help (,help,1,355,1605,141,67,Can we help?,幫助,answer-06.png
+5,6,7,left,move (\,move,1,345,1845,188,45,Don't move. We will help you.,移動,answer-07.png
+5,6,8,left,get |,get,1,362,2068,107,62,Can you get the sugar?,拿取,answer-08.png
+5,6,9,left,~ touch (\,touch,1,345,2294,189,54,Don't touch the pan. It is hot.,觸；碰,answer-09.png
+5,6,10,right,add (,add,1,1212,344,127,55,Now add some salt.,加；增添,answer-10.png
+5,6,11,right,refrigerator (n.),refrigerator,1,1158,576,393,63,The eggs are in the refrigerator.,冰箱,answer-11.png
+5,6,12,right,— oven (1,oven,0.9,1205,813,165,45,Put the pie in the oven.,烤箱,answer-12.png
+5,6,13,right,r cupboard (n.),cupboard,0.9,1172,1031,326,67,There are cookies in the cupboard.,碗櫃；櫥櫃,answer-13.png
+5,6,14,right,— open (,open,1,1206,1328,166,55,Please open the door.,打開,answer-14.png
+5,6,15,right,close (\,close,1,1203,1549,180,53,Please close the door.,關起來,answer-15.png
+5,6,16,right,peel (v.),peel,1,1210,1769,165,60,Can you peel the apples please?,削皮,manual-answer-16.png
+5,6,17,right,net (n.),net,1,1220,1989,145,60,Tim has a fish in his net!,網子,manual-answer-17.png
+5,6,18,right,pie pan (n.),pie pan,1,1195,2209,220,60,Please put the pie pan here.,派盤,manual-answer-18.png

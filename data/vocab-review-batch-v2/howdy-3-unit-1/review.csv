@@ -1,0 +1,17 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+3,1,1,left,January (n.,january,0.9,350,221,305,73,The weather in January is freezing.,一月,answer-01.png
+3,1,2,left,February (n.,february,0.9,345,534,330,74,February is the second month of the year.,二月,answer-02.png
+3,1,3,left,~ March (r,march,0.9,369,851,223,56,It's windy in March here.,三月,answer-03.png
+3,1,4,left,- April (,april,1,378,1101,179,73,In Taiwan it rains in April.,四月,answer-04.png
+3,1,5,left,May (,may,1,384,1354,155,74,May is a warm month.,五月,answer-05.png
+3,1,6,left,— June (1,june,0.9,380,1610,176,57,It's hot in June.,六月,answer-06.png
+3,1,7,left,hot (,hot,1,393,1863,117,57,It's hot today.,熱的,answer-07.png
+3,1,8,left,_ warm (c,warm,0.9,375,2125,210,47,It's warm today.,溫暖的,answer-08.png
+3,1,9,right,cold (,cold,1,1257,220,152,56,It's cold today.,冷的,answer-09.png
+3,1,10,right,» freezing (a,freezing,0.9,1228,470,295,73,It is freezing cold today.,冰凍的,answer-10.png
+3,1,11,right,July (,july,1,1257,784,159,74,The seventh month of the year is July.,七月,answer-11.png
+3,1,12,right,— August (n,august,0.9,1236,1099,267,72,The weather in August is hot.,八月,answer-12.png
+3,1,14,right,_ September (n.,september,0.9,1254,1411,346,73,It's cool in September.,九月,answer-14.png
+3,1,15,right,October (n.,october,0.9,1232,1667,295,57,October is my favorite month.,十月,answer-15.png
+3,1,16,right,~ November (n.),november,1,1216,1980,378,60,My birthday is in November.,十一月,answer-16.png
+3,1,17,right,December (n.),december,1,1218,2294,370,57,Christmas is in December.,十二月,answer-17.png

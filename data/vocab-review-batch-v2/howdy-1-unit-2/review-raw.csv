@@ -1,0 +1,18 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+1,2,1,left,one (,one,1,364,232,132,47,There is one cat on the table.,1,answer-01.png
+1,2,2,left,— two (,two,1,362,522,141,52,There are two dogs in the yard.,2,answer-02.png
+1,2,3,left,~ three (,three,1,351,870,188,60,There are three apples in the bowl.,3,answer-03.png
+1,2,4,left,- four (,four,1,359,1226,146,57,There are four places on the table.,4,answer-04.png
+1,2,5,left,a,cat,0.33333333333333337,103,1250,262,201,Kelly has a brown cat.,貓,answer-05.png
+1,2,6,left,five (,five,1,360,1580,137,57,I have five fingers.,5,answer-06.png
+1,2,7,left,six |,six,1,367,1876,106,56,There are six fish in the pond.,6,answer-07.png
+1,2,8,left,6,one,0,129,1906,242,210,There is one cat on the table.,1,answer-08.png
+1,2,9,left,Nite,nine,0.75,176,2062,142,73,There are nine dogs in the yard.,9,answer-09.png
+1,2,10,left,— seven (c,seven,0.9,344,2239,213,47,There are seven days in a week.,7,answer-10.png
+1,2,11,right,_ eight (,eight,1,1243,228,185,73,There are eight children in the yard.,8,answer-11.png
+1,2,12,right,nine (,nine,1,1251,603,151,60,There are nine dogs in the yard.,9,answer-12.png
+1,2,13,right,ten,ten,1,1257,983,113,53,I have ten fingers.,10,answer-13.png
+1,2,14,right,~ rabbit (r,rabbit,0.9,1234,1293,222,57,Rabbits like carrots.,兔子,answer-14.png
+1,2,15,right,cat (,cat,1,1255,1610,116,53,Kelly has a brown cat.,貓,answer-15.png
+1,2,16,right,dog (,dog,1,1251,1917,135,73,Jokes dog is very big.,狗,answer-16.png
+1,2,17,right,bird (,bird,1,1250,2232,141,57,This bird is very pretty.,小鳥,answer-17.png

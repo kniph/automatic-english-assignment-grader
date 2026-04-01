@@ -1,0 +1,14 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+2,6,1,left,_ watermelon (n.),watermelon,1,287,234,438,57,There is a watermelon on the table.,西瓜,answer-01.png
+2,6,2,left,~ banana (n,banana,0.9,321,609,273,57,She wants a banana.,香蕉,answer-02.png
+2,6,3,left,— guava (n,guava,0.9,330,932,227,60,There is a guava on the table.,芭樂,answer-03.png
+2,6,4,left,~ apple (r,apple,0.9,335,1294,205,74,Sally wants two apples for lunch.,蘋果,answer-04.png
+2,6,5,left,_ orange (n,orange,0.9,325,1683,257,57,There are some oranges in the box.,柳橙,answer-05.png
+2,6,6,left,- pear (,pear,1,345,2056,164,57,Do you want a pear or a guava?,梨子,answer-06.png
+2,6,7,right,_ papaya (n,papaya,0.9,1211,244,278,60,There are two papayas on the chair.,木瓜,answer-07.png
+2,6,8,right,pineapple (n.),pineapple,1,1193,606,364,73,I want a pineapple for lunch.,鳳梨,answer-08.png
+2,6,9,right,_ vegetable(s) (n.),vegetables,0.9,1172,919,465,74,I don't like vegetables.,蔬菜,answer-09.png
+2,6,10,right,¥ carrot (n,carrot,0.9,1222,1240,224,53,My rabbit wants some carrots.,胡蘿蔔,answer-10.png
+2,6,11,right,~ onion (*,onion,1,1228,1611,200,57,Onions are good for us.,洋蔥,answer-11.png
+2,6,12,right,cabbage (n.,cabbage,0.9,1204,1922,317,73,Hi! I want a cabbage and two carrots.,高麗菜,answer-12.png
+2,6,13,right,pumpkin (n.,pumpkin,0.9,1203,2353,325,78,There are two pumpkins on the table.,南瓜,answer-13.png

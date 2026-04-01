@@ -1,0 +1,16 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+7,8,1,left,~ wallet (r,wallet,0.9,341,331,215,54,My brother found my wallet on the table.,皮夾；錢包,answer-01.png
+7,8,2,left,_ purse (r,purse,0.9,347,620,190,55,My grandma has a family photo in her purse.,錢包；（女用）手提包,answer-02.png
+7,8,3,left,gold (,gold,1,356,947,146,68,Lucy's mom has a gold ring.,黃金,answer-03.png
+7,8,4,left,~ silver (r,silver,0.9,347,1229,188,54,These are silver forks.,銀/銀製成的,answer-04.png
+7,8,5,left,~ bench (r,bench,0.9,344,1452,203,54,Can you please get the ball? It's on that bench.,長椅,answer-05.png
+7,8,6,left,steal / stole (v.),steal / stole,1,305,1793,393,50,No one stole her purse. She lost it.,偷；竊取,answer-06.png
+7,8,7,left,look for/looked for =,look for / looked for,1,250,2069,670,54,I looked for some answers from the book.,尋找,answer-07.png
+7,8,8,left,y lose /lost (v.,lose / lost,0.9,336,2406,305,54,Alex lost his wallet.,失去,answer-08.png
+7,8,9,right,find / found (v.),find / found,1,1205,331,385,55,I found my teacher in the classroom.,找到,answer-09.png
+7,8,10,right,worried (a,worried,0.9,1232,612,263,53,Lynn is worried because she didn't study for the test.,煩惱；擔心的,answer-10.png
+7,8,11,right,~ door (,door,1,1255,949,151,54,Please close the door. It's cold outside.,門,answer-11.png
+7,8,12,right,_ window (n.,window,0.9,1230,1229,272,54,Please open the window. It's hot in here.,窗戶,answer-12.png
+7,8,13,right,bag (,bag,1,1260,1506,127,71,Grace put her books in her bag.,提袋；袋子,answer-13.png
+7,8,14,right,>) knock / knocked (v.) &,knock / knocked,1,1170,1789,567,55,Someone knocked on the door.,敲打,answer-14.png
+7,8,15,right,stop / stopped (v.) {,stop / stopped,1,1187,2009,485,68,Robert stopped because he saw the stop sign.,停止,answer-15.png

@@ -1,0 +1,13 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+2,5,1,left,T-shirt (r,t-shirt,0.9,395,236,248,60,Ben's T-shirt is gray.,短袖圓領運動衫；T恤,answer-01.png
+2,5,2,left,~ shoes (r,shoes,0.9,404,621,210,57,I like your new shoes.,鞋子,answer-02.png
+2,5,3,left,- pants (1,pants,0.9,405,938,204,67,Your pants are cool.,褲子；長褲,answer-03.png
+2,5,4,left,_ jacket (r,jacket,0.9,399,1246,229,73,My brother likes your jacket.,夾克,answer-04.png
+2,5,5,left,slippers (n,slippers,0.9,387,1620,288,74,Peter's slippers are orange.,拖鞋,answer-05.png
+2,5,6,left,raincoat (n.,raincoat,0.9,382,1935,306,60,Do you like his new raincoat?,雨衣,answer-06.png
+2,5,7,right,“hat (,hat,1,1299,238,116,57,Lucy's hat is pretty.,帽子,answer-07.png
+2,5,8,right,. sweater (n.,sweater,0.9,1262,556,297,53,Do you like my sweater?,毛衣,answer-08.png
+2,5,9,right,| gray (,gray,1,1288,875,166,60,That snake is gray.,灰色的,answer-09.png
+2,5,10,right,~ brown (c,brown,0.9,1274,1180,233,56,I like your brown hat.,棕色的,answer-10.png
+2,5,11,right,cute (,cute,1,1288,1497,159,52,That baby is cute.,可愛的,answer-11.png
+2,5,12,right,ugly (,ugly,1,1289,1805,159,73,Her hair is ugly.,難看的,answer-12.png

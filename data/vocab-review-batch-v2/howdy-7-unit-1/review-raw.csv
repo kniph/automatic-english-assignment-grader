@@ -1,0 +1,17 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+7,1,1,left,child/children (n.),child,0.9,364,341,487,55,Jack is the only child. He has no brothers or sisters.,小孩,answer-01.png
+7,1,16,left,child / children (n.),children,1,364,571,315,68,Let's take our children to the park.,小孩們,manual-answer-16.png
+7,1,2,left,night (!,night,1,431,683,169,71,The penguin show was amazing last night.,夜晚,answer-02.png
+7,1,3,left,"4, amazing (a",amazing,0.9,406,913,288,71,The penguin show was amazing last night.,驚人的；令人驚喜的,answer-03.png
+7,1,4,left,"""silly (",silly,1,437,1200,141,71,Sam is in the shark tank. He is silly.,傻的；愚蠢的,answer-04.png
+7,1,5,left,_ funny (.,funny,1,424,1487,199,71,Tina is very funny. She always makes me laugh.,有趣的,answer-05.png
+7,1,6,left,| great (,great,1,430,1780,179,63,Wow! That movie was really great.,極好的,answer-06.png
+7,1,7,left,— cool,cool,1,442,2073,122,45,Wow! That movie was really great.,酷的,answer-07.png
+7,1,8,left,_ lucky (,lucky,1,431,2290,188,71,I found one hundred dollars. I'm so lucky!,幸運的,answer-08.png
+7,1,9,right,afraid (c,afraid,0.9,1300,340,203,54,That tiger looks scary. I'm afraid.,害怕,answer-09.png
+7,1,10,right,"yj, yesterday (ad",yesterday,0.9,1272,626,346,68,We played football yesterday.,昨天,answer-10.png
+7,1,11,right,— sun (,sun,1,1319,866,120,45,Why does the sun rise and set?,太陽,answer-11.png
+7,1,12,right,_ sunny (c,sunny,0.9,1301,1096,209,55,The weather is nice today. It is sunny.,晴朗的,answer-12.png
+7,1,13,right,~ cloud (r,cloud,0.9,1306,1374,185,54,Look at those clouds! They are beautiful.,雲,answer-13.png
+7,1,14,right,rain (,rain,1,1319,1670,130,45,We played in the rain this morning.,雨,answer-14.png
+7,1,15,right,> storm (r,storm,0.9,1306,1951,195,51,There was a big storm last night.,暴風雨,answer-15.png

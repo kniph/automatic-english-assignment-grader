@@ -1,0 +1,16 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+8,6,1,left,theater (n,theater,0.9,295,330,244,54,We were in the theater when the storm started.,戲院,answer-01.png
+8,6,2,left,"""play (",play,1,317,672,150,68,The school play was great!,戲劇；話劇,answer-02.png
+8,6,3,left,curtain (n,curtain,0.9,300,906,238,51,Sam closed the curtain when the play started.,窗簾；布簾,answer-03.png
+8,6,4,left,castle (r,castle,0.9,308,1190,205,54,The king lived in a big castle.,城堡,answer-04.png
+8,6,5,left,~ tower (r,tower,0.9,311,1422,200,51,The castle has a huge tower on it.,塔,answer-05.png
+8,6,6,left,", balcony (n.",balcony,0.9,299,1703,273,68,Lynn put some plants on the balcony.,陽台,answer-06.png
+8,6,7,left,~ stairs (r,stairs,0.9,317,1990,193,56,These stairs are old. Be careful!,樓梯,answer-07.png
+8,6,8,left,hammer (n.,hammer,0.9,301,2277,278,55,I was using a hammer when you called.,槌子,answer-08.png
+8,6,9,right,climb / climbed (v.) 2,climb / climbed,0.9,1126,321,515,55,Tim was climbing stairs when he fell.,攀爬,answer-09.png
+8,6,10,right,paint / painted (v.) 4,paint / painted,0.9,1134,602,490,73,Wow! You painted your room. It looks great!,粉刷；著色,answer-10.png
+8,6,11,right,_ present (n,present,0.9,1184,952,257,66,Don't open your presents now.,禮物,answer-11.png
+8,6,12,right,balloons (n.,balloons,0.9,1179,1181,291,54,There were balloons at the mall yesterday.,氣球,answer-12.png
+8,6,13,right,¢ surprise (n.,surprise,0.9,1183,1475,277,56,Surprise! Happy birthday Amy!,驚喜,answer-13.png
+8,6,14,right,thank / thanked (v.) #,thank / thanked,1,1131,1694,538,57,Thank you for the birthday present.,感謝,answer-14.png
+8,6,15,right,miss / missed (v.) _,miss / missed,1,1150,1980,457,56,Sam threw the ball but Max missed it.,錯過；未擊中,answer-15.png

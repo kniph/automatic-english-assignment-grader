@@ -1,0 +1,9 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+4,7,1,left,____ sweep the floor (phr,sweep the floor,0.9,574,213,540,71,I love to sweep the floor once a week.,掃地,answer-01.png
+4,7,3,left,| take out the trash (,take out the trash,1,576,522,524,56,He has to take out the trash today.,倒垃圾,answer-03.png
+4,7,4,left,| clean (my) room (pr,clean my room,0.6666666666666666,575,825,528,73,I need to clean my room before dinner.,清理房間,answer-04.png
+4,7,5,left,. set the table (phr,set the table,0.9,590,1135,456,56,I set the table every day.,擺餐具,answer-05.png
+4,7,6,left,©» wash the dishes (phr,wash the dishes,0.9,572,1442,548,56,Lucy needs to wash the dishes after dinner.,洗碗,answer-06.png
+4,7,7,left,"(, _ feed the dog / cat (phr.",feed the dog every day,0.6363636363636364,567,1745,569,74,Sam has to feed the dog every day.,餵狗,answer-07.png
+4,7,8,left,make the bed (phr.,make the bed,0.9,583,2054,496,60,Mom wants us to make the bed every morning.,整理床鋪,answer-08.png
+4,7,9,left,~ mop the floor (phr.,mop the floor,0.9,583,2358,490,72,We have to mop the floor tonight.,拖地,answer-09.png

@@ -1,0 +1,19 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+6,3,1,left,dessert (n,dessert,0.9,385,289,248,54,Eva wants to have strawberry ice cream for dessert.,甜點,answer-01.png
+6,3,2,left,~ doughnut(s) (n.).,doughnuts,0.9,350,574,413,68,Mom's doughnuts are tasty.,甜甜圈,answer-02.png
+6,3,3,left,cream bun (n.),cream bun,1,359,806,359,54,Ed sometimes has a cream bun for a snack.,奶油麵包,answer-03.png
+6,3,4,left,moon cake (n.),moon cake,1,356,1093,375,53,Dad likes to eat moon cakes.,月餅,answer-04.png
+6,3,5,left,» candy bar (n.),candy bar,1,362,1318,336,71,Chocolate candy bars are my favorite dessert.,條（塊）狀糖果,answer-05.png
+6,3,6,left,Y chocolate (n.),chocolate,0.9,362,1607,331,55,May I have some chocolate?,巧克力,answer-06.png
+6,3,7,left,— start (,start,1,397,1840,160,51,The race is going to start soon.,開始,answer-07.png
+6,3,8,left,- finish (,finish,1,390,2122,185,54,When will the game finish?,完成,answer-08.png
+6,3,9,left,large (,large,1,395,2349,169,68,Baking a large cake is difficult.,大的；多數的,answer-09.png
+6,3,10,right,favorite (n.,favorite,0.9,1237,292,271,55,Which toy is your favorite?,最愛的人或物,answer-10.png
+6,3,11,right,- food (,food,1,1261,521,152,55,I'll buy some food for dinner.,食物,answer-11.png
+6,3,12,right,—— drink(s) (n.,drink(s),0.9,1236,750,271,62,Please get some drinks for us.,飲品,answer-12.png
+6,3,13,right,_ price (1,price,0.9,1257,990,169,54,I like this hat. What's the price?,價格；價錢,answer-13.png
+6,3,14,right,popcorn (n.),popcorn,1,1210,1220,220,60,I like to eat popcorn with Coke.,爆米花,manual-answer-14.png
+6,3,15,right,toast (n.),toast,1,1230,1450,160,60,We often eat toast with jam.,吐司,manual-answer-15.png
+6,3,16,right,milkshake (n.),milkshake,1,1205,1680,270,60,My favorite drink is a milkshake.,奶昔,manual-answer-16.png
+6,3,17,right,soda (n.),soda,1,1230,1910,150,60,Soda is not good for our teeth.,汽水,manual-answer-17.png
+6,3,18,right,candy (n.),candy,1,1225,2140,185,60,The candy is sweet and sour.,糖果,manual-answer-18.png

@@ -1,0 +1,19 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+7,5,1,left,test (,test,1,333,320,131,51,The math test was very hard.,考試；測驗,answer-01.png
+7,5,2,left,» do/does/ did (v.) {,do / does / did,1,264,546,465,55,He did his homework last night.,做,answer-02.png
+7,5,3,left,___ enjoy / enjoyed (v.) _,enjoy / enjoyed,1,252,773,524,71,Joe really enjoyed the movie yesterday.,享受；享受,answer-03.png
+7,5,4,left,love / loved (v.),love / loved,1,296,1121,370,54,Grace loved him when she was young.,愛；熱愛,answer-04.png
+7,5,5,left,s exercise / exercised (v.) =!,exercise / exercised,0.9,224,1408,660,54,They exercised this morning.,運動,answer-05.png
+7,5,6,left,call / called (v.),call / called,1,281,1637,385,54,Peter called Sam after school.,打電話,answer-06.png
+7,5,7,left,study / studied (v.),study / studied,1,261,1865,482,68,John studied from 8:30 am to 9:30 am.,學習；用功,answer-07.png
+7,5,8,left,Show / showed \v.) E,show / showed,0.9,258,2153,494,54,Rick showed Emma his birthday gift.,展示；顯示,answer-08.png
+7,5,9,left,~ elean / cleaned (v.) 3,clean / cleaned,0.9,255,2439,510,54,Lynn cleaned her room last night.,清理,answer-09.png
+7,5,10,right,5@ Play / played (v.) :,play / played,0.9,1160,314,443,71,They played badminton last Saturday.,玩；打（球）,answer-10.png
+7,5,11,right,like / liked (v.,like / liked,0.9,1211,604,310,54,Ann liked soda when she was a child.,喜歡,answer-11.png
+7,5,12,right,. dance / danced (v.) &,dance / danced,1,1145,891,511,54,We danced for thirty minutes this afternoon.,跳舞,answer-12.png
+7,5,14,right,wash / washed (v.) %,wash / washed,1,1146,1178,509,54,My brother washed the car after dinner.,洗,answer-14.png
+7,5,13,right,shi,show / showed,0.5,1318,1178,58,53,Rick showed Emma his birthday gift.,展示；顯示,answer-13.png
+7,5,15,right,help / helped (v.) ',help / helped,1,1162,1463,431,68,Lucy helped her grandma to make cookies.,幫忙,answer-15.png
+7,5,16,right,~ visit / visited (v.) :,visit / visited,1,1161,1752,433,54,I visited my relatives last month.,拜訪,answer-16.png
+7,5,17,right,everyone,everyone,1,1160,2037,270,60,Everyone is ready for the science test.,每一個人,manual-answer-17.png
+7,5,18,right,do your best!,do your best!,1,1145,2322,360,60,Here's the test. Do your best!,盡力去做,manual-answer-18.png

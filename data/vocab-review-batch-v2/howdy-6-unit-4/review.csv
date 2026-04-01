@@ -1,0 +1,20 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+6,4,1,left,— question (n.,question,0.9,334,298,288,61,Can I ask you a question?,問題,answer-01.png
+6,4,2,left,answer (n,answer,0.9,339,528,253,45,The answer to this question is not easy.,答案,answer-02.png
+6,4,3,left,~ hour (,hour,1,361,799,150,54,We have an hour to play tennis.,小時,answer-03.png
+6,4,4,left,minute (n,minute,0.9,344,1083,234,50,There are sixty minutes in an hour.,分鐘,answer-04.png
+6,4,5,left,~ second (n,second,0.9,343,1359,239,54,The movie is going to start in thirty seconds.,秒,answer-05.png
+6,4,6,left,captain (n,captain,0.9,338,1641,256,62,Mike is the captain of this ship.,船長,answer-06.png
+6,4,7,left,sick (,sick,1,364,1863,136,54,Sean can't go to school because he is sick.,生病的,answer-07.png
+6,4,8,left,tired (,tired,1,360,2198,155,54,Ed often feels tired after work.,疲倦的,answer-08.png
+6,4,9,left,~ hungry (a,hungry,0.9,343,2418,238,68,Kevin wants some bread because he is hungry.,飢餓的,answer-09.png
+6,4,10,right,", happy (c",happy,0.9,1206,293,215,71,Kids are happy to see Grandpa.,高興的,answer-10.png
+6,4,11,right,wave (r,wave,0.9,1211,529,189,45,Here comes a big wave!,波浪,answer-11.png
+6,4,12,right,beautiful (ac,beautiful,0.9,1188,744,302,54,The red dress is more beautiful.,漂亮的,answer-12.png
+6,4,13,right,~ beach (r,beach,0.9,1208,968,203,54,Eric likes to play on the beach.,海灘,answer-13.png
+6,4,14,right,seashell (n.,seashell,0.9,1193,1193,277,54,This yellow seashell is pretty.,貝殼,answer-14.png
+6,4,15,right,find (,find,1,1222,1416,131,55,Ian can't find his kite.,找到,answer-15.png
+6,4,16,right,throw up (phr.),throw up,1,1180,1641,230,60,Ben is going to throw up because he is feeling sick.,嘔吐,manual-answer-16.png
+6,4,17,right,kid (n.),kid,1,1235,1866,125,60,These kids can dance well.,小孩,manual-answer-17.png
+6,4,18,right,seagull (n.),seagull,1,1205,2091,230,60,Seagulls are flying in the sky.,海鷗,manual-answer-18.png
+6,4,19,right,shore (n.),shore,1,1220,2316,175,60,We're swimming back to shore.,岸邊,manual-answer-19.png

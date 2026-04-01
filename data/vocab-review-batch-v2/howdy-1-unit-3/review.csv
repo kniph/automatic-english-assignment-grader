@@ -1,0 +1,15 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+1,3,1,left,~ father (r,father,0.9,351,228,219,57,My father is very tall.,父親,answer-01.png
+1,3,2,left,~ mother (n,mother,0.9,345,614,257,56,My mother cooks delicious food.,母親,answer-02.png
+1,3,3,left,) brother (n,brother,0.9,344,999,266,56,My brother plays guitar.,哥哥/弟弟,answer-03.png
+1,3,4,left,~ sister (r,sister,0.9,358,1262,200,57,My sister loves dancing.,姊姊/妹妹,answer-04.png
+1,3,5,left,baby (',baby,1,362,1522,185,74,The baby is sleeping quietly.,寶寶,answer-05.png
+1,3,6,left,_ chubby (a,chubby,0.9,344,1907,271,74,The chubby cat is very cute.,圓胖的,answer-06.png
+1,3,7,right,thin (,thin,1,1244,224,136,57,The thin man runs very fast.,瘦的,answer-07.png
+1,3,8,right,tall |,tall,1,1248,538,117,57,The tall building has many floors.,高的,answer-08.png
+1,3,9,right,~ short (,short,1,1235,792,188,56,Tom is short but strong.,矮的、短的,answer-09.png
+1,3,10,right,_ grandpa (n.,grandpa,0.9,1211,1163,305,73,Grandpa tells funny stories.,爺爺、外公,answer-10.png
+1,3,11,right,grandma (n.,grandma,0.9,1206,1477,329,73,Grandma makes the best cookies.,奶奶、外婆,answer-11.png
+1,3,12,right,_ young (c,young,0.9,1228,1802,229,61,The young boy is very smart.,幼小的,answer-12.png
+1,3,13,right,old (,old,1,1253,2107,112,56,This old tree is very big.,老的、舊的,answer-13.png
+1,3,14,right,_ pretty (c,pretty,0.9,1231,2361,224,68,She wears a pretty dress.,漂亮的,answer-14.png

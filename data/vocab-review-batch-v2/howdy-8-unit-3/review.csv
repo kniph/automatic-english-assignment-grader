@@ -1,0 +1,16 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+8,3,1,left,— movie (n,movie,0.9,391,351,208,45,We watched a movie after lunch.,電影,answer-01.png
+8,3,2,left,— word (1,word,0.9,398,627,175,54,The words are too small. I can't read them.,字,answer-02.png
+8,3,3,left,_ dragonfly (n.),dragonfly,1,366,910,331,71,There is a dragonfly on my hand.,蜻蜓,answer-03.png
+8,3,4,left,cafeteria (n.,cafeteria,0.9,371,1199,305,55,I eat lunch in the cafeteria every day.,（學校或公司）自助餐廳,answer-04.png
+8,3,5,left,"=, learn/learned (v.) §",learn / learned,1,350,1600,467,54,I learned to play tennis today.,學習,answer-05.png
+8,3,6,left,“practice / practiced (v.) #,practice / practiced,1,300,1825,655,71,I practiced spelling every day.,練習,answer-06.png
+8,3,7,left,| spell / spelled (v.) 4,spell / spelled,0.9,338,2056,466,68,Lisa can spell dog.,拼字,answer-07.png
+8,3,8,left,smart (c,smart,0.9,393,2290,199,51,John is smart. He is good at math.,聰明的,answer-08.png
+8,3,9,right,_ stupid (c,stupid,0.9,1279,336,213,68,Ed is not stupid. He is very smart.,笨的,answer-09.png
+8,3,10,right,terrific (0,terrific,0.9,1277,623,227,56,That movie was terrific!,很棒的,answer-10.png
+8,3,11,right,key (,key,1,1298,852,127,68,Oh no! I can't find my keys.,鑰匙,answer-11.png
+8,3,12,right,. newspaper (n.),newspaper,1,1247,1091,380,55,Dad reads the newspaper every day.,報紙,answer-12.png
+8,3,13,right,— mirror (n,mirror,0.9,1282,1378,208,45,Lisa looked in the mirror and smiled.,鏡子,answer-13.png
+8,3,14,right,freezer (n,freezer,0.9,1274,1655,238,54,Please put the meat in the freezer.,冷凍庫,answer-14.png
+8,3,15,right,- shelf (1,shelf,0.9,1288,1941,169,55,I keep my favorite food on this shelf.,架子,answer-15.png

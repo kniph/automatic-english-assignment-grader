@@ -1,0 +1,14 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+4,5,2,left,_ grandparent(s) (n.) _,grandparents,0.9166666666666666,294,214,553,66,Stephanie always visits her grandparents in the spring.,祖父母,answer-02.png
+4,5,3,left,~ uncle(s) (n.,uncle,0.9,349,715,292,66,My uncle is a police officer.,叔叔,answer-03.png
+4,5,4,left,~ aunt(s) (n,aunt,0.9,352,1028,266,66,Her aunt is a nurse.,姑姑,answer-04.png
+4,5,5,left,~ cousin(s) (n.,cousin,0.9,338,1342,339,67,I often visit my cousins on Sundays.,表親,answer-05.png
+4,5,6,left,) relatives (n.,relatives,0.9,344,1850,317,56,I have nice relatives.,親戚,answer-06.png
+4,5,7,left,visit (,visit,1,377,2163,155,56,My uncle will visit me next summer.,探訪,answer-07.png
+4,5,8,right,year (|,year,1,1228,219,165,60,My cousin comes to visit us every year.,年,answer-08.png
+4,5,9,right,~ month (n,month,0.9,1215,585,232,57,She wears this dress once a month.,月,answer-09.png
+4,5,10,right,~ week (1,week,0.9,1223,959,198,57,I go to art class twice a week.,週,answer-10.png
+4,5,11,right,— once (,once,1,1226,1283,175,46,We play soccer once a week.,一次,answer-11.png
+4,5,12,right,— twice (,twice,1,1223,1590,199,53,We play badminton twice a month.,兩次,answer-12.png
+4,5,13,right,*& seldom (a,seldom,0.9,1210,1961,263,56,We seldom play tennis.,很少,answer-13.png
+4,5,14,right,c often (,often,0.9,1225,2334,189,56,We often play tennis in the garden.,經常,answer-14.png

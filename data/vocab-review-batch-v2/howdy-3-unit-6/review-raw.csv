@@ -1,0 +1,13 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+3,6,1,left,rice (,rice,1,360,343,132,46,Do you want some rice?,米飯,answer-01.png
+3,6,2,left,fish (,fish,1,360,646,131,57,May I have some fish?,魚,answer-02.png
+3,6,3,left,— soup (,soup,1,354,970,171,56,I want some soup for dinner.,湯,answer-03.png
+3,6,4,left,_ bread (r,bread,0.9,347,1335,205,56,Do they want some bread?,麵包,answer-04.png
+3,6,5,left,tea |,tea,1,365,1651,113,53,Can I have some tea too?,茶,answer-05.png
+3,6,6,left,juice (,juice,1,355,1973,170,56,Do you want some juice?,果汁,answer-06.png
+3,6,7,right,milk (,milk,1,1247,333,156,55,Yuma wants some milk.,牛奶,answer-07.png
+3,6,8,right,water (r,water,0.9,1235,650,214,53,I'm thirsty. I want some water.,水,answer-08.png
+3,6,9,right,cake (!,cake,1,1241,1021,179,57,We have an orange cake.,蛋糕,answer-09.png
+3,6,10,right,pizza (',pizza,1,1241,1344,188,57,Do you want some pizza?,披薩,answer-10.png
+3,6,11,right,— cereal (,cereal,1,1238,1657,200,47,Joe wants some cereal.,麥片,answer-11.png
+3,6,12,right,meat (',meat,1,1243,1965,184,53,Linda likes to eat meat.,肉,answer-12.png

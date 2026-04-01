@@ -1,0 +1,19 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+7,6,1,left,envelope (n.,envelope,0.9,289,328,312,54,We went to Sam's house yesterday.,信封,answer-01.png
+7,6,2,left,~ house (r,house,0.9,313,606,200,53,We went to Sam's house yesterday.,房子,answer-02.png
+7,6,3,left,song (|,song,1,320,902,164,55,Grace sang a song with her mom.,歌,answer-03.png
+7,6,4,left,send / sent (v.),send / sent,1,279,1180,363,54,Tim's dad sent him a letter.,寄送,answer-04.png
+7,6,5,left,— go/ went (v.),go / went,1,290,1412,312,63,Lucy went to the bank with her parents.,去；前往,answer-05.png
+7,6,6,left,_ buy /bought (v.),buy / bought,1,267,1693,426,71,Mandy bought two books at the bookstore.,買,answer-06.png
+7,6,7,left,eat /ate (v.,eat / ate,0.9,297,1986,277,51,I ate cookies at school last Saturday.,吃,answer-07.png
+7,6,8,left,‘+ Swim/swam (v.) 7,swim / swam,0.9,263,2279,447,44,Bill swam in a pool yesterday.,游泳,answer-08.png
+7,6,9,left,see / saw (V.),see / saw,1,290,2508,317,44,Lynn saw a dog at the park.,看,answer-09.png
+7,6,10,right,write / wrote (v.) !,write / wrote,1,1136,322,433,51,Al wrote his friend an email.,寫,answer-10.png
+7,6,11,right,¥ meet / met (v.),meet / met,1,1151,552,359,51,Ben met his friend at the park.,遇見；碰上,answer-11.png
+7,6,12,right,Q give/gave (v.),give / gave,0.9,1150,788,365,55,My boyfriend gave me a ring on my birthday.,送；給,answer-12.png
+7,6,13,right,drink / drank (v.) |,drink / drank,1,1136,1065,432,54,We drank orange juice for breakfast.,喝,answer-13.png
+7,6,14,right,", sing/ sang (v.)",sing / sang,1,1150,1361,364,56,Jerry sang for his classmates before lunch.,唱歌,answer-14.png
+7,6,15,right,wear / wore (v.),wear / wore,1,1143,1705,404,45,Emily wore her new sweater today.,穿；戴,answer-15.png
+7,6,16,right,desk (n.),desk,1,1260,1940,140,60,My book is on my desk.,書桌,manual-answer-16.png
+7,6,17,right,birthday (n.),birthday,1,1210,2175,225,60,It's Sam's birthday today.,生日,manual-answer-17.png
+7,6,18,right,put (v.),put,1,1270,2410,110,60,Please put the fork on the table.,放,manual-answer-18.png

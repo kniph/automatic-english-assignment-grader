@@ -1,0 +1,13 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+3,5,1,left,& hamburger (n.),hamburger,1,317,327,397,73,Can I have a hamburger?,漢堡,answer-01.png
+3,5,2,left,chicken nugget(s) (n.) ¥,chicken nuggets,0.9333333333333333,262,640,661,74,May I have some chicken nuggets please?,雞塊,answer-02.png
+3,5,3,left,. hot dog (n,hot dog,0.9,343,1015,271,74,We have hot dogs for lunch.,熱狗,answer-03.png
+3,5,4,left,~ salad (r,salad,0.9,358,1332,198,56,Mom makes a fresh salad every day.,沙拉,answer-04.png
+3,5,5,left,4% sandwich(es) (n.) :,sandwiches,0.6,297,1643,495,66,May I have two sandwiches?,三明治,answer-05.png
+3,5,6,left,pancake(s) (n.),pancakes,0.9,313,1955,417,73,Ted likes to eat pancakes.,鬆餅,answer-06.png
+3,5,7,right,apple pie (n.,apple pie,0.9,1203,327,339,73,May we have two apple pie?,蘋果派,answer-07.png
+3,5,8,right,~ cookie(s) (n.,cookie,0.9,1202,704,345,62,You may eat a cookie now.,餅乾,answer-08.png
+3,5,9,right,eat |,eat,1,1250,1022,116,52,I want to eat a sandwich.,吃,answer-09.png
+3,5,10,right,_ watch (v,watch,0.9,1227,1332,227,56,Johnny wants to watch TV.,看,answer-10.png
+3,5,11,right,buy (,buy,1,1247,1642,136,74,Amy wants to buy a book.,買,answer-11.png
+3,5,12,right,go,go,1,1256,1969,88,57,They go to the bank every morning.,去,answer-12.png

@@ -1,0 +1,20 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+5,5,1,left,~ lemon (r,lemon,0.9,375,354,204,53,This lemon tastes sour.,檸檬,answer-01.png
+5,5,2,left,taste (\,taste,1,383,586,171,51,This soup tastes really good.,嚐,answer-02.png
+5,5,3,left,smell (\,smell,1,382,812,179,54,These flowers smell so good!,聞,answer-03.png
+5,5,4,left,feel (,feel,1,393,1041,126,55,The plant feels really hard.,感覺,answer-04.png
+5,5,5,left,/ sweet (c,sweet,0.9,381,1274,205,51,This lollipop tastes sweet.,甜的,answer-05.png
+5,5,6,left,— sour (',sour,1,394,1510,147,44,Does this lemon taste sour?,酸的,answer-06.png
+5,5,7,left,soft (,soft,1,399,1729,131,55,The sofa feels soft.,柔軟的,answer-07.png
+5,5,8,left,- hard (,hard,1,397,1958,151,54,The rock is very hard.,硬的,answer-08.png
+5,5,9,left,_ good (,good,1,396,2184,166,71,This book is really good.,好的,answer-09.png
+5,5,10,left,bad (,bad,1,406,2416,125,54,Don't eat the soup. It smells bad.,壞的,answer-10.png
+5,5,11,right,z French fries (n.).,french fries,0.9,1190,346,403,55,Can I have some French fries?,薯條,answer-11.png
+5,5,12,right,_ jam (,jam,1,1250,586,126,55,How does the jam taste?,果醬,answer-12.png
+5,5,13,right,delicious (ac,delicious,0.9,1214,807,305,53,This pizza is delicious.,美味的,answer-13.png
+5,5,14,right,terrible (a,terrible,0.9,1228,1036,248,54,The trash smells terrible.,糟糕的,answer-14.png
+5,5,15,right,_ sticky (c,sticky,0.9,1237,1263,213,68,My fingers are sticky.,黏的,answer-15.png
+5,5,16,right,fresh (adj.),fresh,1,1215,1490,180,60,This fish is really fresh.,新鮮的,manual-answer-16.png
+5,5,17,right,rotten (adj.),rotten,1,1210,1717,200,60,Those eggs are rotten.,腐敗的；腐爛的,manual-answer-17.png
+5,5,18,right,smooth (adj.),smooth,1,1205,1944,220,60,This table is really smooth.,（表面）光滑的,manual-answer-18.png
+5,5,19,right,rough (adj.),rough,1,1215,2171,180,60,This chair feels rough.,粗糙的,manual-answer-19.png

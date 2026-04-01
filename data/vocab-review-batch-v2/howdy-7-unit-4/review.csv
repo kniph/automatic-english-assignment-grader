@@ -1,0 +1,17 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+7,4,1,left,—__ centimeter(cm) (n.) 2,centimeter / cm,0.9,293,311,525,62,Lynn was 1 meter 30 centimeters tall last year.,公分,answer-01.png
+7,4,3,left,. kilogram(kg) (n.),kilogram / kg,1,346,589,402,71,Tim is 34 kilograms now.,公斤,answer-03.png
+7,4,4,left,_ body (,body,1,366,811,169,71,They are going to keep your body healthy.,身體,answer-04.png
+7,4,5,left,stomach (n.,stomach,0.9,341,1096,288,53,My stomach doesn't feel good. I need to see the doctor.,腹部；喂,answer-05.png
+7,4,6,left,tongue (n,tongue,0.9,350,1378,237,63,Peter is eating too much candy. His tongue is green.,舌頭,answer-06.png
+7,4,7,left,— face (,face,1,367,1712,147,55,Is that your face in that picture?,臉；面貌,answer-07.png
+7,4,8,left,hair (,hair,1,372,1935,127,54,Wendy's hair is longer than Penny's.,頭髮,answer-08.png
+7,4,9,left,", heavy (c",heavy,0.9,355,2212,208,71,Sam is very heavy.,重的,answer-09.png
+7,4,10,left,light (,light,1,368,2435,147,68,Toby is light.,輕的,answer-10.png
+7,4,11,right,~ healthy (a,healthy,0.9,1229,312,256,71,I like to exercise. I am healthy.,健康的,answer-11.png
+7,4,12,right,~ suit (,suit,1,1255,541,125,50,This suit looks great on you.,西裝,answer-12.png
+7,4,13,right,_ party (r,party,0.9,1243,763,185,63,Bob is excited to go to the school party.,派對,answer-13.png
+7,4,14,right,excited (a,excited,0.9,1228,1041,249,53,Bob is excited to go to the school party.,興奮的,answer-14.png
+7,4,15,right,surprised (ac,surprised,0.9,1214,1377,317,67,Lynn gave Tim a birthday present. He was surprised.,驚喜的,answer-15.png
+7,4,16,right,handsome (ad,handsome,0.9,1207,1715,350,54,Daniel's suit was great. He was very handsome.,英俊的,answer-16.png
+7,4,17,right,tonight (adv.),tonight,1,1215,1994,220,60,Mark is wearing a suit tonight.,今晚,manual-answer-17.png

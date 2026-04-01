@@ -1,0 +1,13 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+4,4,1,left,~ school bus (n.),school bus,1,336,216,389,51,Ken usually goes to school by school bus.,校車,answer-01.png
+4,4,2,left,car |,car,1,389,594,116,46,Tom goes to work by car.,汽車,answer-02.png
+4,4,3,left,scooter (n,scooter,0.9,357,902,271,53,I like your scooter.,滑板車,answer-03.png
+4,4,4,left,— train (,train,1,378,1215,166,53,Lynn sometimes goes home by train.,火車,answer-04.png
+4,4,5,left,bus (,bus,1,384,1586,130,56,I always go to the bookstore by bus.,公車,answer-05.png
+4,4,6,left,motorcycle (n.),motorcycle,1,325,1958,413,74,My friend likes to ride his motorcycle.,機車,answer-06.png
+4,4,7,right,subway (n.,subway,0.9,1222,213,295,74,Peggy goes to work by subway.,地鐵,answer-07.png
+4,4,8,right,walk (,walk,1,1245,589,181,55,My dad walks to work.,走路,answer-08.png
+4,4,9,right,— boat (,boat,1,1246,922,166,56,That boat is big.,船,answer-09.png
+4,4,10,right,— taxi (,taxi,1,1250,1259,140,53,They usually go to the airport by taxi.,計程車,answer-10.png
+4,4,11,right,* always (a,always,0.9,1222,1627,271,74,I always play tennis with my friends after school.,總是,answer-11.png
+4,4,12,right,k never (c,never,0.9,1236,2075,204,46,Mr. Wang never goes to work by bus.,從不,answer-12.png

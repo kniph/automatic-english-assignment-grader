@@ -1,0 +1,17 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+8,2,1,left,umbrella (n.,umbrella,0.9,334,333,301,54,It's raining. Do you have an umbrella?,雨傘,answer-01.png
+8,2,2,left,gate (,gate,1,363,620,151,66,Please open the gate for me.,大門；閘門,answer-02.png
+8,2,3,left,wall (,wall,1,364,848,145,54,Let's hang the picture on the wall.,牆,answer-03.png
+8,2,4,left,— buffet (r,buffet,0.9,352,1135,204,54,This buffet restaurant has great food.,自助餐,answer-04.png
+8,2,5,left,barber shop (n.),barber shop,1,310,1420,407,67,Jimmy works in a barber shop.,理髮廳,answer-05.png
+8,2,6,left,; neighbor (n.,neighbor,0.9,333,1704,296,71,Our neighbor has a big yard.,鄰居,answer-06.png
+8,2,7,left,mall (,mall,1,363,1937,145,54,We went shopping at the mall.,購物中心,answer-07.png
+8,2,9,left,~ know /knew \v.),know / knew,0.9,339,2166,394,55,Ed knew the answer to the question.,知道,answer-09.png
+8,2,8,left,Ar,paper,0.4,374,2166,60,53,Do you have any paper?,紙張,answer-08.png
+8,2,10,right,wet (,wet,1,1246,335,131,50,This towel is wet. Please get a dry one.,濕的,answer-10.png
+8,2,11,right,dry |,dry,1,1251,674,111,68,The shirt is dry now. You can wear it.,乾的,answer-11.png
+8,2,12,right,_ paper (r,paper,0.9,1234,971,195,56,Do you have any paper?,紙張,answer-12.png
+8,2,13,right,- town (1,town,0.9,1236,1195,174,50,My grandpa lives in this town.,小鎮,answer-13.png
+8,2,14,right,_ magic (,magic,1,1231,1430,205,55,Bob did an amazing magic trick yesterday.,魔術；魔力,answer-14.png
+8,2,15,right,_ factory (n,factory,0.9,1221,1705,248,68,Stephen's sister works in a factory.,工廠,answer-15.png
+8,2,16,right,highway (n.,highway,0.9,1209,2048,296,68,There are many cars on the highway.,高速公路,answer-16.png

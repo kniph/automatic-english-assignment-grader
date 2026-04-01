@@ -1,0 +1,20 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+5,1,1,left,- farm (,farm,1,398,357,159,54,The farm is very big.,農場,answer-01.png
+5,1,2,left,» animal(s) (n.,animal,0.9,367,583,325,63,There are many animals here.,動物,answer-02.png
+5,1,3,left,Pig |,pig,1,417,826,103,54,Look at that pig. It has a big nose.,豬,answer-03.png
+5,1,4,left,goat (,goat,1,411,1104,151,66,I feed the goat twice a day.,山羊,answer-04.png
+5,1,5,left,horse (r,horse,0.9,407,1334,185,53,The horse is running fast.,馬,answer-05.png
+5,1,6,left,— cow (,cow,1,418,1572,141,44,The cow is eating grass.,乳牛,answer-06.png
+5,1,7,left,- mouse (n,mouse,0.9,405,1800,224,46,Look! There is a mouse.,老鼠,answer-07.png
+5,1,8,left,chicken (n,chicken,0.9,400,2078,262,55,The chicken is running on the farm.,雞,answer-08.png
+5,1,9,left,— duck (,duck,1,425,2364,164,55,I can see two ducks.,鴨,answer-09.png
+5,1,10,right,_ sheep (r,sheep,0.9,1250,344,199,67,There is a sheep on the farm.,羊,answer-10.png
+5,1,11,right,bee (,bee,1,1268,576,122,53,The bee is yellow and black.,蜜蜂,answer-11.png
+5,1,12,right,~ mosquito (n.,mosquito,0.9,1232,806,317,62,The mosquito is very small.,蚊子,answer-12.png
+5,1,13,right,pond (,pond,1,1265,1032,169,68,There is a pond on the farm.,池塘,answer-13.png
+5,1,14,right,fly |,fly,1,1283,1262,91,68,Superspider likes to fly.,飛,answer-14.png
+5,1,15,right,- hear (,hear,1,1276,1494,147,54,I can hear the music.,聽,answer-15.png
+5,1,16,right,fence (n.),fence,1,1215,1724,185,60,I can see a tall fence.,柵欄,manual-answer-16.png
+5,1,17,right,field (n.),field,1,1215,1956,175,60,Lucy is running in the field.,田野,manual-answer-17.png
+5,1,18,right,grass (n.),grass,1,1215,2186,175,60,A dog is sleeping on the grass.,草,manual-answer-18.png
+5,1,19,right,beautiful (adj.),beautiful,1,1185,2418,285,60,Amy is very beautiful.,美麗的,manual-answer-19.png

@@ -1,0 +1,15 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+2,7,1,left,head (,head,1,377,235,174,60,Judy's head is big.,頭,answer-01.png
+2,7,2,left,— hand (,hand,1,377,550,175,56,They have small hands.,手,answer-02.png
+2,7,3,left,arm (,arm,1,382,873,141,47,Kelly's arms are not short.,手臂,answer-03.png
+2,7,4,left,leg |,leg,1,391,1174,106,74,I have long legs.,腿,answer-04.png
+2,7,5,left,ear (,ear,1,385,1500,120,47,Tim has big ears.,耳朵,answer-05.png
+2,7,6,left,— nose (t,nose,0.9,378,1814,164,47,This monster has two noses.,鼻子,answer-06.png
+2,7,7,left,~ mouth (n,mouth,0.9,364,2177,229,57,Sam's mouth is big.,嘴巴,answer-07.png
+2,7,8,right,eye |,eye,1,1260,247,132,57,Ruby has pretty eyes.,眼,answer-08.png
+2,7,9,right,shoulder (n.,shoulder,0.9,1222,611,315,57,My dad has big shoulders.,肩膀,answer-09.png
+2,7,10,right,knee (,knee,1,1250,925,179,57,Is your knee hurt?,膝蓋,answer-10.png
+2,7,11,right,toe (,toe,1,1262,1242,117,53,My doll has ten toes.,腳趾,answer-11.png
+2,7,12,right,finger (r,finger,0.9,1241,1547,213,77,Do you have five fingers?,手指,answer-12.png
+2,7,13,right,__ strong (c,strong,0.9,1238,1868,234,68,That boy is very strong.,強壯的,answer-13.png
+2,7,14,right,~ weak (<,weak,1,1244,2179,203,56,That boy is weak.,虛弱的,answer-14.png

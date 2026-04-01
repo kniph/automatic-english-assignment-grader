@@ -1,0 +1,13 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+1,6,1,left,we «Computer game (n.) ',computer game,0.9,269,239,568,68,I play computer games on weekends.,電腦遊戲,answer-01.png
+1,6,2,left,teddy bear (n.),teddy bear,1,308,680,383,73,My teddy bear is very soft.,玩具熊,answer-02.png
+1,6,3,left,— toy car (n,toy car,0.9,337,998,249,68,The red toy car is fast.,玩具車,answer-03.png
+1,6,4,left,~ robot (r,robot,0.9,350,1432,195,56,The robot can walk and talk.,機器人,answer-04.png
+1,6,5,left,doll (,doll,1,364,1746,132,57,She plays with her favorite doll.,洋娃娃,answer-05.png
+1,6,6,left,_ puzzle (n,puzzle,0.9,345,2057,233,73,Complete this 1000-piece puzzle.,拼圖,answer-06.png
+1,6,7,right,_ board game (n.),board game,1,1193,233,407,71,We play board games on rainy days.,棋盤遊戲,answer-07.png
+1,6,8,right,~ blocks (n,blocks,0.9,1228,659,244,57,Build a castle with blocks.,積木,answer-08.png
+1,6,9,right,new (,new,1,1248,1044,155,47,I got a new bicycle.,新的,answer-09.png
+1,6,10,right,old (,old,1,1258,1409,111,57,This old book is interesting.,舊的、老的,answer-10.png
+1,6,11,right,fun (,fun,1,1255,1722,120,57,The game is very fun.,有趣的,answer-11.png
+1,6,12,right,~ boring (c,boring,0.9,1236,2154,234,73,The movie was boring.,無聊的,answer-12.png

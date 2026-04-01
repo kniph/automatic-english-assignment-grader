@@ -38,7 +38,7 @@
     "howdy_level": 1,
     "unit": 7,
     "expected_count": 15,
-    "detected_count": 11,
+    "detected_count": 15,
     "outputDir": "data/vocab-review-batch-v2/howdy-1-unit-7"
   },
   {
@@ -220,21 +220,21 @@
     "howdy_level": 5,
     "unit": 1,
     "expected_count": 19,
-    "detected_count": 15,
+    "detected_count": 19,
     "outputDir": "data/vocab-review-batch-v2/howdy-5-unit-1"
   },
   {
     "howdy_level": 5,
     "unit": 2,
     "expected_count": 19,
-    "detected_count": 15,
+    "detected_count": 19,
     "outputDir": "data/vocab-review-batch-v2/howdy-5-unit-2"
   },
   {
     "howdy_level": 5,
     "unit": 3,
     "expected_count": 20,
-    "detected_count": 15,
+    "detected_count": 20,
     "outputDir": "data/vocab-review-batch-v2/howdy-5-unit-3"
   },
   {
@@ -248,14 +248,14 @@
     "howdy_level": 5,
     "unit": 5,
     "expected_count": 19,
-    "detected_count": 15,
+    "detected_count": 19,
     "outputDir": "data/vocab-review-batch-v2/howdy-5-unit-5"
   },
   {
     "howdy_level": 5,
     "unit": 6,
     "expected_count": 18,
-    "detected_count": 15,
+    "detected_count": 18,
     "outputDir": "data/vocab-review-batch-v2/howdy-5-unit-6"
   },
   {
@@ -276,35 +276,35 @@
     "howdy_level": 6,
     "unit": 1,
     "expected_count": 20,
-    "detected_count": 15,
+    "detected_count": 20,
     "outputDir": "data/vocab-review-batch-v2/howdy-6-unit-1"
   },
   {
     "howdy_level": 6,
     "unit": 2,
     "expected_count": 15,
-    "detected_count": 14,
+    "detected_count": 15,
     "outputDir": "data/vocab-review-batch-v2/howdy-6-unit-2"
   },
   {
     "howdy_level": 6,
     "unit": 3,
     "expected_count": 18,
-    "detected_count": 13,
+    "detected_count": 18,
     "outputDir": "data/vocab-review-batch-v2/howdy-6-unit-3"
   },
   {
     "howdy_level": 6,
     "unit": 4,
     "expected_count": 19,
-    "detected_count": 15,
+    "detected_count": 19,
     "outputDir": "data/vocab-review-batch-v2/howdy-6-unit-4"
   },
   {
     "howdy_level": 6,
     "unit": 5,
     "expected_count": 20,
-    "detected_count": 15,
+    "detected_count": 20,
     "outputDir": "data/vocab-review-batch-v2/howdy-6-unit-5"
   },
   {
@@ -318,63 +318,63 @@
     "howdy_level": 6,
     "unit": 7,
     "expected_count": 20,
-    "detected_count": 15,
+    "detected_count": 20,
     "outputDir": "data/vocab-review-batch-v2/howdy-6-unit-7"
   },
   {
     "howdy_level": 6,
     "unit": 8,
     "expected_count": 19,
-    "detected_count": 14,
+    "detected_count": 19,
     "outputDir": "data/vocab-review-batch-v2/howdy-6-unit-8"
   },
   {
     "howdy_level": 7,
     "unit": 1,
     "expected_count": 16,
-    "detected_count": 15,
+    "detected_count": 16,
     "outputDir": "data/vocab-review-batch-v2/howdy-7-unit-1"
   },
   {
     "howdy_level": 7,
     "unit": 2,
     "expected_count": 17,
-    "detected_count": 15,
+    "detected_count": 17,
     "outputDir": "data/vocab-review-batch-v2/howdy-7-unit-2"
   },
   {
     "howdy_level": 7,
     "unit": 3,
     "expected_count": 18,
-    "detected_count": 15,
+    "detected_count": 18,
     "outputDir": "data/vocab-review-batch-v2/howdy-7-unit-3"
   },
   {
     "howdy_level": 7,
     "unit": 4,
     "expected_count": 16,
-    "detected_count": 15,
+    "detected_count": 16,
     "outputDir": "data/vocab-review-batch-v2/howdy-7-unit-4"
   },
   {
     "howdy_level": 7,
     "unit": 5,
     "expected_count": 17,
-    "detected_count": 15,
+    "detected_count": 17,
     "outputDir": "data/vocab-review-batch-v2/howdy-7-unit-5"
   },
   {
     "howdy_level": 7,
     "unit": 6,
     "expected_count": 18,
-    "detected_count": 15,
+    "detected_count": 18,
     "outputDir": "data/vocab-review-batch-v2/howdy-7-unit-6"
   },
   {
     "howdy_level": 7,
     "unit": 7,
     "expected_count": 19,
-    "detected_count": 15,
+    "detected_count": 19,
     "outputDir": "data/vocab-review-batch-v2/howdy-7-unit-7"
   },
   {

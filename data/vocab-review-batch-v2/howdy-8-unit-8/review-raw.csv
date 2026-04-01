@@ -1,0 +1,17 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+8,8,1,left,spaceship (n.),spaceship,1,293,325,344,71,The spaceship is flying fast.,太空船,answer-01.png
+8,8,2,left,_ space (r,space,0.9,323,566,200,55,Who was the first man in space?,太空,answer-02.png
+8,8,3,left,universe (n.,universe,0.9,304,843,291,55,There are many planets in the universe.,宇宙,answer-03.png
+8,8,4,left,_ planet (n,planet,0.9,319,1128,215,68,The spaceship flies around the planet.,星球,answer-04.png
+8,8,5,left,- computer (n.),computer,1,294,1418,326,63,Sam is working hard on his computer.,電腦,answer-05.png
+8,8,6,left,~ screen (n,screen,0.9,316,1711,222,45,Al was looking at his pictures on the computer screen.,螢幕,answer-06.png
+8,8,7,left,hall (,hall,1,336,1988,121,54,Tim is waiting in the hall.,走廊,answer-07.png
+8,8,8,left,_ entrance (n.,entrance,0.9,298,2221,301,51,Let's meet at the school entrance.,入口,answer-08.png
+8,8,9,right,exit (,exit,1,1225,331,130,51,The exit is at the end of the hall.,出口,answer-09.png
+8,8,11,right,search for / searched for,search for / searched for,1,1082,614,827,55,They searched for Tim's wallet but they didn't find it.,找尋,answer-11.png
+8,8,10,right,ch fc,search for / searched for,0.4,1345,614,85,54,They searched for Tim's wallet but they didn't find it.,找尋,answer-10.png
+8,8,12,right,visitor (n,visitor,0.9,1207,1014,215,55,Someone is knocking on the door. We have a visitor.,來賓；訪客,answer-12.png
+8,8,13,right,alien (,alien,1,1216,1301,164,56,An alien is on the spaceship!,外星人,answer-13.png
+8,8,14,right,understand / understood {im,understand / understood,0.9,1058,1529,937,55,Max was happy because he understood the math question.,瞭解,answer-14.png
+8,8,15,right,ven follow / followed (v.) Ei,follow / followed,0.9,1151,1930,548,55,The dog followed Daniel to the store.,跟隨,answer-15.png
+8,8,16,right,nice (,nice,1,1221,2226,137,45,Andy is nice. He always helps me.,好心的,answer-16.png

@@ -46,6 +46,306 @@
       }
     ]
   },
+  "5-1": {
+    "append_rows": [
+      {
+        "candidate_index": 16,
+        "column": "right",
+        "detected_text": "fence (n.)",
+        "suggested_answer": "fence",
+        "match_score": 1,
+        "left": 1215,
+        "top": 1724,
+        "width": 185,
+        "height": 60,
+        "prompt_en": "I can see a tall fence.",
+        "definition_zh": "柵欄",
+        "crop_file": "manual-answer-16.png"
+      },
+      {
+        "candidate_index": 17,
+        "column": "right",
+        "detected_text": "field (n.)",
+        "suggested_answer": "field",
+        "match_score": 1,
+        "left": 1215,
+        "top": 1956,
+        "width": 175,
+        "height": 60,
+        "prompt_en": "Lucy is running in the field.",
+        "definition_zh": "田野",
+        "crop_file": "manual-answer-17.png"
+      },
+      {
+        "candidate_index": 18,
+        "column": "right",
+        "detected_text": "grass (n.)",
+        "suggested_answer": "grass",
+        "match_score": 1,
+        "left": 1215,
+        "top": 2186,
+        "width": 175,
+        "height": 60,
+        "prompt_en": "A dog is sleeping on the grass.",
+        "definition_zh": "草",
+        "crop_file": "manual-answer-18.png"
+      },
+      {
+        "candidate_index": 19,
+        "column": "right",
+        "detected_text": "beautiful (adj.)",
+        "suggested_answer": "beautiful",
+        "match_score": 1,
+        "left": 1185,
+        "top": 2418,
+        "width": 285,
+        "height": 60,
+        "prompt_en": "Amy is very beautiful.",
+        "definition_zh": "美麗的",
+        "crop_file": "manual-answer-19.png"
+      }
+    ]
+  },
+  "5-2": {
+    "append_rows": [
+      {
+        "candidate_index": 16,
+        "column": "right",
+        "detected_text": "magician (n.)",
+        "suggested_answer": "magician",
+        "match_score": 1,
+        "left": 1160,
+        "top": 1537,
+        "width": 255,
+        "height": 60,
+        "prompt_en": "There is a magician at the party.",
+        "definition_zh": "魔術師",
+        "crop_file": "manual-answer-16.png"
+      },
+      {
+        "candidate_index": 17,
+        "column": "right",
+        "detected_text": "trick (n.)",
+        "suggested_answer": "trick",
+        "match_score": 1,
+        "left": 1180,
+        "top": 1767,
+        "width": 175,
+        "height": 60,
+        "prompt_en": "My dog knows a few tricks.",
+        "definition_zh": "戲法；特技",
+        "crop_file": "manual-answer-17.png"
+      },
+      {
+        "candidate_index": 18,
+        "column": "right",
+        "detected_text": "apron (n.)",
+        "suggested_answer": "apron",
+        "match_score": 1,
+        "left": 1180,
+        "top": 1997,
+        "width": 175,
+        "height": 60,
+        "prompt_en": "Ann washes her apron every day.",
+        "definition_zh": "圍裙",
+        "crop_file": "manual-answer-18.png"
+      },
+      {
+        "candidate_index": 19,
+        "column": "right",
+        "detected_text": "happy (adj.)",
+        "suggested_answer": "happy",
+        "match_score": 1,
+        "left": 1180,
+        "top": 2227,
+        "width": 175,
+        "height": 60,
+        "prompt_en": "We are very happy today.",
+        "definition_zh": "高興的",
+        "crop_file": "manual-answer-19.png"
+      }
+    ]
+  },
+  "5-3": {
+    "append_rows": [
+      {
+        "candidate_index": 16,
+        "column": "right",
+        "detected_text": "cave (n.)",
+        "suggested_answer": "cave",
+        "match_score": 1,
+        "left": 1215,
+        "top": 1438,
+        "width": 165,
+        "height": 60,
+        "prompt_en": "Let's go into the cave.",
+        "definition_zh": "洞穴",
+        "crop_file": "manual-answer-16.png"
+      },
+      {
+        "candidate_index": 17,
+        "column": "right",
+        "detected_text": "log (n.)",
+        "suggested_answer": "log",
+        "match_score": 1,
+        "left": 1230,
+        "top": 1668,
+        "width": 140,
+        "height": 60,
+        "prompt_en": "Let's sit on that log.",
+        "definition_zh": "木頭；原木",
+        "crop_file": "manual-answer-17.png"
+      },
+      {
+        "candidate_index": 18,
+        "column": "right",
+        "detected_text": "bush (n.)",
+        "suggested_answer": "bush",
+        "match_score": 1,
+        "left": 1220,
+        "top": 1898,
+        "width": 160,
+        "height": 60,
+        "prompt_en": "Is there a fox behind the bush?",
+        "definition_zh": "矮樹叢",
+        "crop_file": "manual-answer-18.png"
+      },
+      {
+        "candidate_index": 19,
+        "column": "right",
+        "detected_text": "owl (n.)",
+        "suggested_answer": "owl",
+        "match_score": 1,
+        "left": 1230,
+        "top": 2128,
+        "width": 135,
+        "height": 60,
+        "prompt_en": "I can hear an owl.",
+        "definition_zh": "貓頭鷹",
+        "crop_file": "manual-answer-19.png"
+      },
+      {
+        "candidate_index": 20,
+        "column": "right",
+        "detected_text": "stream (n.)",
+        "suggested_answer": "stream",
+        "match_score": 1,
+        "left": 1210,
+        "top": 2358,
+        "width": 215,
+        "height": 60,
+        "prompt_en": "It's so hot. Let's play in the stream.",
+        "definition_zh": "小河；溪流",
+        "crop_file": "manual-answer-20.png"
+      }
+    ]
+  },
+  "5-5": {
+    "append_rows": [
+      {
+        "candidate_index": 16,
+        "column": "right",
+        "detected_text": "fresh (adj.)",
+        "suggested_answer": "fresh",
+        "match_score": 1,
+        "left": 1215,
+        "top": 1490,
+        "width": 180,
+        "height": 60,
+        "prompt_en": "This fish is really fresh.",
+        "definition_zh": "新鮮的",
+        "crop_file": "manual-answer-16.png"
+      },
+      {
+        "candidate_index": 17,
+        "column": "right",
+        "detected_text": "rotten (adj.)",
+        "suggested_answer": "rotten",
+        "match_score": 1,
+        "left": 1210,
+        "top": 1717,
+        "width": 200,
+        "height": 60,
+        "prompt_en": "Those eggs are rotten.",
+        "definition_zh": "腐敗的；腐爛的",
+        "crop_file": "manual-answer-17.png"
+      },
+      {
+        "candidate_index": 18,
+        "column": "right",
+        "detected_text": "smooth (adj.)",
+        "suggested_answer": "smooth",
+        "match_score": 1,
+        "left": 1205,
+        "top": 1944,
+        "width": 220,
+        "height": 60,
+        "prompt_en": "This table is really smooth.",
+        "definition_zh": "（表面）光滑的",
+        "crop_file": "manual-answer-18.png"
+      },
+      {
+        "candidate_index": 19,
+        "column": "right",
+        "detected_text": "rough (adj.)",
+        "suggested_answer": "rough",
+        "match_score": 1,
+        "left": 1215,
+        "top": 2171,
+        "width": 180,
+        "height": 60,
+        "prompt_en": "This chair feels rough.",
+        "definition_zh": "粗糙的",
+        "crop_file": "manual-answer-19.png"
+      }
+    ]
+  },
+  "5-6": {
+    "append_rows": [
+      {
+        "candidate_index": 16,
+        "column": "right",
+        "detected_text": "peel (v.)",
+        "suggested_answer": "peel",
+        "match_score": 1,
+        "left": 1210,
+        "top": 1769,
+        "width": 165,
+        "height": 60,
+        "prompt_en": "Can you peel the apples please?",
+        "definition_zh": "削皮",
+        "crop_file": "manual-answer-16.png"
+      },
+      {
+        "candidate_index": 17,
+        "column": "right",
+        "detected_text": "net (n.)",
+        "suggested_answer": "net",
+        "match_score": 1,
+        "left": 1220,
+        "top": 1989,
+        "width": 145,
+        "height": 60,
+        "prompt_en": "Tim has a fish in his net!",
+        "definition_zh": "網子",
+        "crop_file": "manual-answer-17.png"
+      },
+      {
+        "candidate_index": 18,
+        "column": "right",
+        "detected_text": "pie pan (n.)",
+        "suggested_answer": "pie pan",
+        "match_score": 1,
+        "left": 1195,
+        "top": 2209,
+        "width": 220,
+        "height": 60,
+        "prompt_en": "Please put the pie pan here.",
+        "definition_zh": "派盤",
+        "crop_file": "manual-answer-18.png"
+      }
+    ]
+  },
   "5-7": {
     "patch_rows": [
       {
@@ -58,6 +358,766 @@
           "prompt_en": "There is a sailor on the boat.",
           "definition_zh": "水手"
         }
+      }
+    ]
+  },
+  "6-2": {
+    "append_rows": [
+      {
+        "candidate_index": 10,
+        "column": "right",
+        "detected_text": "island (n.)",
+        "suggested_answer": "island",
+        "match_score": 1,
+        "left": 1205,
+        "top": 292,
+        "width": 190,
+        "height": 60,
+        "prompt_en": "Is Aqua Park on an island?",
+        "definition_zh": "島",
+        "crop_file": "manual-answer-10.png"
+      }
+    ]
+  },
+  "7-1": {
+    "append_rows": [
+      {
+        "candidate_index": 16,
+        "column": "left",
+        "detected_text": "child / children (n.)",
+        "suggested_answer": "children",
+        "match_score": 1,
+        "left": 364,
+        "top": 571,
+        "width": 315,
+        "height": 68,
+        "prompt_en": "Let's take our children to the park.",
+        "definition_zh": "小孩們",
+        "crop_file": "manual-answer-16.png"
+      }
+    ]
+  },
+  "7-2": {
+    "append_rows": [
+      {
+        "candidate_index": 16,
+        "column": "right",
+        "detected_text": "Egypt (n.)",
+        "suggested_answer": "egypt",
+        "match_score": 1,
+        "left": 1220,
+        "top": 1886,
+        "width": 185,
+        "height": 60,
+        "prompt_en": "Meg was in Egypt two weeks ago.",
+        "definition_zh": "埃及",
+        "crop_file": "manual-answer-16.png"
+      },
+      {
+        "candidate_index": 17,
+        "column": "right",
+        "detected_text": "Greece (n.)",
+        "suggested_answer": "greece",
+        "match_score": 1,
+        "left": 1210,
+        "top": 2173,
+        "width": 200,
+        "height": 60,
+        "prompt_en": "My best friend is from Greece.",
+        "definition_zh": "希臘",
+        "crop_file": "manual-answer-17.png"
+      }
+    ]
+  },
+  "7-4": {
+    "append_rows": [
+      {
+        "candidate_index": 17,
+        "column": "right",
+        "detected_text": "tonight (adv.)",
+        "suggested_answer": "tonight",
+        "match_score": 1,
+        "left": 1215,
+        "top": 1994,
+        "width": 220,
+        "height": 60,
+        "prompt_en": "Mark is wearing a suit tonight.",
+        "definition_zh": "今晚",
+        "crop_file": "manual-answer-17.png"
+      }
+    ]
+  },
+  "7-5": {
+    "append_rows": [
+      {
+        "candidate_index": 17,
+        "column": "right",
+        "detected_text": "everyone",
+        "suggested_answer": "everyone",
+        "match_score": 1,
+        "left": 1160,
+        "top": 2037,
+        "width": 270,
+        "height": 60,
+        "prompt_en": "Everyone is ready for the science test.",
+        "definition_zh": "每一個人",
+        "crop_file": "manual-answer-17.png"
+      },
+      {
+        "candidate_index": 18,
+        "column": "right",
+        "detected_text": "do your best!",
+        "suggested_answer": "do your best!",
+        "match_score": 1,
+        "left": 1145,
+        "top": 2322,
+        "width": 360,
+        "height": 60,
+        "prompt_en": "Here's the test. Do your best!",
+        "definition_zh": "盡力去做",
+        "crop_file": "manual-answer-18.png"
+      }
+    ]
+  },
+  "6-1": {
+    "append_rows": [
+      {
+        "candidate_index": 16,
+        "column": "right",
+        "detected_text": "everyone",
+        "suggested_answer": "everyone",
+        "match_score": 1,
+        "left": 1180,
+        "top": 1475,
+        "width": 260,
+        "height": 60,
+        "prompt_en": "Everyone is studying at the library for the final exam.",
+        "definition_zh": "每人；人人",
+        "crop_file": "manual-answer-16.png"
+      },
+      {
+        "candidate_index": 17,
+        "column": "right",
+        "detected_text": "field trip (n.)",
+        "suggested_answer": "field trip",
+        "match_score": 1,
+        "left": 1170,
+        "top": 1701,
+        "width": 300,
+        "height": 60,
+        "prompt_en": "The field trip is on Tuesday.",
+        "definition_zh": "戶外教學",
+        "crop_file": "manual-answer-17.png"
+      },
+      {
+        "candidate_index": 18,
+        "column": "right",
+        "detected_text": "wonderful (adj.)",
+        "suggested_answer": "wonderful",
+        "match_score": 1,
+        "left": 1170,
+        "top": 1927,
+        "width": 290,
+        "height": 60,
+        "prompt_en": "This soccer game is wonderful.",
+        "definition_zh": "精彩的",
+        "crop_file": "manual-answer-18.png"
+      },
+      {
+        "candidate_index": 19,
+        "column": "right",
+        "detected_text": "ferris wheel (n.)",
+        "suggested_answer": "ferris wheel",
+        "match_score": 1,
+        "left": 1160,
+        "top": 2153,
+        "width": 320,
+        "height": 60,
+        "prompt_en": "There is a huge Ferris wheel at the new amusement park.",
+        "definition_zh": "摩天輪",
+        "crop_file": "manual-answer-19.png"
+      },
+      {
+        "candidate_index": 20,
+        "column": "right",
+        "detected_text": "roller coaster (n.)",
+        "suggested_answer": "roller coaster",
+        "match_score": 1,
+        "left": 1150,
+        "top": 2379,
+        "width": 380,
+        "height": 60,
+        "prompt_en": "My sister doesn't like to go on the roller coaster.",
+        "definition_zh": "雲霄飛車",
+        "crop_file": "manual-answer-20.png"
+      }
+    ]
+  },
+  "6-3": {
+    "append_rows": [
+      {
+        "candidate_index": 14,
+        "column": "right",
+        "detected_text": "popcorn (n.)",
+        "suggested_answer": "popcorn",
+        "match_score": 1,
+        "left": 1210,
+        "top": 1220,
+        "width": 220,
+        "height": 60,
+        "prompt_en": "I like to eat popcorn with Coke.",
+        "definition_zh": "爆米花",
+        "crop_file": "manual-answer-14.png"
+      },
+      {
+        "candidate_index": 15,
+        "column": "right",
+        "detected_text": "toast (n.)",
+        "suggested_answer": "toast",
+        "match_score": 1,
+        "left": 1230,
+        "top": 1450,
+        "width": 160,
+        "height": 60,
+        "prompt_en": "We often eat toast with jam.",
+        "definition_zh": "吐司",
+        "crop_file": "manual-answer-15.png"
+      },
+      {
+        "candidate_index": 16,
+        "column": "right",
+        "detected_text": "milkshake (n.)",
+        "suggested_answer": "milkshake",
+        "match_score": 1,
+        "left": 1205,
+        "top": 1680,
+        "width": 270,
+        "height": 60,
+        "prompt_en": "My favorite drink is a milkshake.",
+        "definition_zh": "奶昔",
+        "crop_file": "manual-answer-16.png"
+      },
+      {
+        "candidate_index": 17,
+        "column": "right",
+        "detected_text": "soda (n.)",
+        "suggested_answer": "soda",
+        "match_score": 1,
+        "left": 1230,
+        "top": 1910,
+        "width": 150,
+        "height": 60,
+        "prompt_en": "Soda is not good for our teeth.",
+        "definition_zh": "汽水",
+        "crop_file": "manual-answer-17.png"
+      },
+      {
+        "candidate_index": 18,
+        "column": "right",
+        "detected_text": "candy (n.)",
+        "suggested_answer": "candy",
+        "match_score": 1,
+        "left": 1225,
+        "top": 2140,
+        "width": 185,
+        "height": 60,
+        "prompt_en": "The candy is sweet and sour.",
+        "definition_zh": "糖果",
+        "crop_file": "manual-answer-18.png"
+      }
+    ]
+  },
+  "6-4": {
+    "append_rows": [
+      {
+        "candidate_index": 16,
+        "column": "right",
+        "detected_text": "throw up (phr.)",
+        "suggested_answer": "throw up",
+        "match_score": 1,
+        "left": 1180,
+        "top": 1641,
+        "width": 230,
+        "height": 60,
+        "prompt_en": "Ben is going to throw up because he is feeling sick.",
+        "definition_zh": "嘔吐",
+        "crop_file": "manual-answer-16.png"
+      },
+      {
+        "candidate_index": 17,
+        "column": "right",
+        "detected_text": "kid (n.)",
+        "suggested_answer": "kid",
+        "match_score": 1,
+        "left": 1235,
+        "top": 1866,
+        "width": 125,
+        "height": 60,
+        "prompt_en": "These kids can dance well.",
+        "definition_zh": "小孩",
+        "crop_file": "manual-answer-17.png"
+      },
+      {
+        "candidate_index": 18,
+        "column": "right",
+        "detected_text": "seagull (n.)",
+        "suggested_answer": "seagull",
+        "match_score": 1,
+        "left": 1205,
+        "top": 2091,
+        "width": 230,
+        "height": 60,
+        "prompt_en": "Seagulls are flying in the sky.",
+        "definition_zh": "海鷗",
+        "crop_file": "manual-answer-18.png"
+      },
+      {
+        "candidate_index": 19,
+        "column": "right",
+        "detected_text": "shore (n.)",
+        "suggested_answer": "shore",
+        "match_score": 1,
+        "left": 1220,
+        "top": 2316,
+        "width": 175,
+        "height": 60,
+        "prompt_en": "We're swimming back to shore.",
+        "definition_zh": "岸邊",
+        "crop_file": "manual-answer-19.png"
+      }
+    ]
+  },
+  "6-5": {
+    "append_rows": [
+      {
+        "candidate_index": 16,
+        "column": "right",
+        "detected_text": "petting area (n.)",
+        "suggested_answer": "petting area",
+        "match_score": 1,
+        "left": 1165,
+        "top": 1500,
+        "width": 340,
+        "height": 60,
+        "prompt_en": "There are sheep and rabbits in the petting area.",
+        "definition_zh": "撫摸區",
+        "crop_file": "manual-answer-16.png"
+      },
+      {
+        "candidate_index": 17,
+        "column": "right",
+        "detected_text": "pet (n.)",
+        "suggested_answer": "pet",
+        "match_score": 1,
+        "left": 1250,
+        "top": 1731,
+        "width": 120,
+        "height": 60,
+        "prompt_en": "This tiny dog is Arron's pet.",
+        "definition_zh": "寵物",
+        "crop_file": "manual-answer-17.png"
+      },
+      {
+        "candidate_index": 18,
+        "column": "right",
+        "detected_text": "tail (n.)",
+        "suggested_answer": "tail",
+        "match_score": 1,
+        "left": 1245,
+        "top": 1962,
+        "width": 150,
+        "height": 60,
+        "prompt_en": "A ray has a long tail.",
+        "definition_zh": "尾巴",
+        "crop_file": "manual-answer-18.png"
+      },
+      {
+        "candidate_index": 19,
+        "column": "right",
+        "detected_text": "look like (phr.)",
+        "suggested_answer": "look like",
+        "match_score": 1,
+        "left": 1200,
+        "top": 2193,
+        "width": 235,
+        "height": 60,
+        "prompt_en": "Andy and his dad look like each other.",
+        "definition_zh": "看起來像...",
+        "crop_file": "manual-answer-19.png"
+      },
+      {
+        "candidate_index": 20,
+        "column": "right",
+        "detected_text": "probably (adv.)",
+        "suggested_answer": "probably",
+        "match_score": 1,
+        "left": 1210,
+        "top": 2424,
+        "width": 225,
+        "height": 60,
+        "prompt_en": "It will probably rain tomorrow.",
+        "definition_zh": "大概",
+        "crop_file": "manual-answer-20.png"
+      }
+    ]
+  },
+  "6-7": {
+    "append_rows": [
+      {
+        "candidate_index": 16,
+        "column": "right",
+        "detected_text": "flower (n.)",
+        "suggested_answer": "flower",
+        "match_score": 1,
+        "left": 1240,
+        "top": 1438,
+        "width": 180,
+        "height": 60,
+        "prompt_en": "These flowers smell good.",
+        "definition_zh": "花",
+        "crop_file": "manual-answer-16.png"
+      },
+      {
+        "candidate_index": 17,
+        "column": "right",
+        "detected_text": "card (n.)",
+        "suggested_answer": "card",
+        "match_score": 1,
+        "left": 1250,
+        "top": 1668,
+        "width": 135,
+        "height": 60,
+        "prompt_en": "Let's make a card for Mom.",
+        "definition_zh": "卡片",
+        "crop_file": "manual-answer-17.png"
+      },
+      {
+        "candidate_index": 18,
+        "column": "right",
+        "detected_text": "belt (n.)",
+        "suggested_answer": "belt",
+        "match_score": 1,
+        "left": 1250,
+        "top": 1898,
+        "width": 135,
+        "height": 60,
+        "prompt_en": "There is a belt on the table.",
+        "definition_zh": "皮帶",
+        "crop_file": "manual-answer-18.png"
+      },
+      {
+        "candidate_index": 19,
+        "column": "right",
+        "detected_text": "something",
+        "suggested_answer": "something",
+        "match_score": 1,
+        "left": 1200,
+        "top": 2128,
+        "width": 265,
+        "height": 60,
+        "prompt_en": "I have something for you.",
+        "definition_zh": "某事或某物",
+        "crop_file": "manual-answer-19.png"
+      },
+      {
+        "candidate_index": 20,
+        "column": "right",
+        "detected_text": "nothing",
+        "suggested_answer": "nothing",
+        "match_score": 1,
+        "left": 1220,
+        "top": 2358,
+        "width": 210,
+        "height": 60,
+        "prompt_en": "There is nothing in the box.",
+        "definition_zh": "沒有東西",
+        "crop_file": "manual-answer-20.png"
+      }
+    ]
+  },
+  "6-8": {
+    "append_rows": [
+      {
+        "candidate_index": 12,
+        "column": "right",
+        "detected_text": "princess (n.)",
+        "suggested_answer": "princess",
+        "match_score": 1,
+        "left": 1185,
+        "top": 598,
+        "width": 280,
+        "height": 60,
+        "prompt_en": "The princess is pretty and kind.",
+        "definition_zh": "公主",
+        "crop_file": "manual-answer-12.png"
+      },
+      {
+        "candidate_index": 16,
+        "column": "right",
+        "detected_text": "kiss (v.)",
+        "suggested_answer": "kiss",
+        "match_score": 1,
+        "left": 1220,
+        "top": 1734,
+        "width": 150,
+        "height": 60,
+        "prompt_en": "She doesn't want to kiss a frog.",
+        "definition_zh": "吻；接吻",
+        "crop_file": "manual-answer-16.png"
+      },
+      {
+        "candidate_index": 17,
+        "column": "right",
+        "detected_text": "wait (v.)",
+        "suggested_answer": "wait",
+        "match_score": 1,
+        "left": 1220,
+        "top": 1963,
+        "width": 160,
+        "height": 60,
+        "prompt_en": "Please wait here. I will call him.",
+        "definition_zh": "等待",
+        "crop_file": "manual-answer-17.png"
+      },
+      {
+        "candidate_index": 18,
+        "column": "right",
+        "detected_text": "maybe (adv.)",
+        "suggested_answer": "maybe",
+        "match_score": 1,
+        "left": 1210,
+        "top": 2192,
+        "width": 185,
+        "height": 60,
+        "prompt_en": "Maybe it will rain tomorrow.",
+        "definition_zh": "或許；可能",
+        "crop_file": "manual-answer-18.png"
+      },
+      {
+        "candidate_index": 19,
+        "column": "right",
+        "detected_text": "end (n.)",
+        "suggested_answer": "end",
+        "match_score": 1,
+        "left": 1230,
+        "top": 2421,
+        "width": 130,
+        "height": 60,
+        "prompt_en": "The end of the show was exciting.",
+        "definition_zh": "結束；結局",
+        "crop_file": "manual-answer-19.png"
+      }
+    ]
+  },
+  "7-3": {
+    "append_rows": [
+      {
+        "candidate_index": 16,
+        "column": "right",
+        "detected_text": "cocoon (n.)",
+        "suggested_answer": "cocoon",
+        "match_score": 1,
+        "left": 1240,
+        "top": 1648,
+        "width": 205,
+        "height": 60,
+        "prompt_en": "This butterfly was a cocoon yesterday.",
+        "definition_zh": "蛹；繭",
+        "crop_file": "manual-answer-16.png"
+      },
+      {
+        "candidate_index": 17,
+        "column": "right",
+        "detected_text": "caterpillar (n.)",
+        "suggested_answer": "caterpillar",
+        "match_score": 1,
+        "left": 1195,
+        "top": 1870,
+        "width": 320,
+        "height": 60,
+        "prompt_en": "Look! Here is a caterpillar.",
+        "definition_zh": "毛毛蟲",
+        "crop_file": "manual-answer-17.png"
+      },
+      {
+        "candidate_index": 18,
+        "column": "right",
+        "detected_text": "tadpole (n.)",
+        "suggested_answer": "tadpole",
+        "match_score": 1,
+        "left": 1225,
+        "top": 2092,
+        "width": 240,
+        "height": 60,
+        "prompt_en": "This frog was a tadpole before.",
+        "definition_zh": "蝌蚪",
+        "crop_file": "manual-answer-18.png"
+      }
+    ]
+  },
+  "7-6": {
+    "append_rows": [
+      {
+        "candidate_index": 16,
+        "column": "right",
+        "detected_text": "desk (n.)",
+        "suggested_answer": "desk",
+        "match_score": 1,
+        "left": 1260,
+        "top": 1940,
+        "width": 140,
+        "height": 60,
+        "prompt_en": "My book is on my desk.",
+        "definition_zh": "書桌",
+        "crop_file": "manual-answer-16.png"
+      },
+      {
+        "candidate_index": 17,
+        "column": "right",
+        "detected_text": "birthday (n.)",
+        "suggested_answer": "birthday",
+        "match_score": 1,
+        "left": 1210,
+        "top": 2175,
+        "width": 225,
+        "height": 60,
+        "prompt_en": "It's Sam's birthday today.",
+        "definition_zh": "生日",
+        "crop_file": "manual-answer-17.png"
+      },
+      {
+        "candidate_index": 18,
+        "column": "right",
+        "detected_text": "put (v.)",
+        "suggested_answer": "put",
+        "match_score": 1,
+        "left": 1270,
+        "top": 2410,
+        "width": 110,
+        "height": 60,
+        "prompt_en": "Please put the fork on the table.",
+        "definition_zh": "放",
+        "crop_file": "manual-answer-18.png"
+      }
+    ]
+  },
+  "7-7": {
+    "append_rows": [
+      {
+        "candidate_index": 16,
+        "column": "right",
+        "detected_text": "man / men",
+        "suggested_answer": "man / men",
+        "match_score": 1,
+        "left": 1225,
+        "top": 1556,
+        "width": 210,
+        "height": 60,
+        "prompt_en": "That tall man is my father.",
+        "definition_zh": "男人",
+        "crop_file": "manual-answer-16.png"
+      },
+      {
+        "candidate_index": 17,
+        "column": "right",
+        "detected_text": "woman / women",
+        "suggested_answer": "woman / women",
+        "match_score": 1,
+        "left": 1200,
+        "top": 1778,
+        "width": 260,
+        "height": 60,
+        "prompt_en": "Those two women are my mother and my grandma.",
+        "definition_zh": "女人",
+        "crop_file": "manual-answer-17.png"
+      },
+      {
+        "candidate_index": 18,
+        "column": "right",
+        "detected_text": "cheerleader (n.)",
+        "suggested_answer": "cheerleader",
+        "match_score": 1,
+        "left": 1185,
+        "top": 2000,
+        "width": 300,
+        "height": 60,
+        "prompt_en": "The cheerleaders cheered for our team.",
+        "definition_zh": "啦啦隊員",
+        "crop_file": "manual-answer-18.png"
+      },
+      {
+        "candidate_index": 19,
+        "column": "right",
+        "detected_text": "fence (n.)",
+        "suggested_answer": "fence",
+        "match_score": 1,
+        "left": 1235,
+        "top": 2222,
+        "width": 165,
+        "height": 60,
+        "prompt_en": "Tommy hit the baseball over the fence.",
+        "definition_zh": "圍牆",
+        "crop_file": "manual-answer-19.png"
+      }
+    ]
+  },
+  "1-7": {
+    "append_rows": [
+      {
+        "candidate_index": 12,
+        "column": "left",
+        "detected_text": "bicycle (bike) (n.)",
+        "suggested_answer": "bicycle (bike)",
+        "match_score": 1,
+        "left": 332,
+        "top": 890,
+        "width": 335,
+        "height": 60,
+        "prompt_en": "I ride my bicycle to school.",
+        "definition_zh": "腳踏車",
+        "crop_file": "manual-answer-12.png"
+      },
+      {
+        "candidate_index": 13,
+        "column": "left",
+        "detected_text": "pink (adj.)",
+        "suggested_answer": "pink",
+        "match_score": 1,
+        "left": 390,
+        "top": 1801,
+        "width": 150,
+        "height": 60,
+        "prompt_en": "She likes the pink flowers.",
+        "definition_zh": "粉紅",
+        "crop_file": "manual-answer-13.png"
+      },
+      {
+        "candidate_index": 14,
+        "column": "left",
+        "detected_text": "green (adj.)",
+        "suggested_answer": "green",
+        "match_score": 1,
+        "left": 385,
+        "top": 2383,
+        "width": 180,
+        "height": 60,
+        "prompt_en": "The grass is green in spring.",
+        "definition_zh": "綠",
+        "crop_file": "manual-answer-14.png"
+      },
+      {
+        "candidate_index": 15,
+        "column": "left",
+        "detected_text": "white (adj.)",
+        "suggested_answer": "white",
+        "match_score": 1,
+        "left": 390,
+        "top": 2670,
+        "width": 170,
+        "height": 60,
+        "prompt_en": "Snow is pure white.",
+        "definition_zh": "白",
+        "crop_file": "manual-answer-15.png"
       }
     ]
   }

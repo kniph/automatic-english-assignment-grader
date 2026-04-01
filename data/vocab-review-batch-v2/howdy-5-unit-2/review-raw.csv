@@ -1,0 +1,20 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+5,2,1,left,"""pilot (",pilot,1,325,328,151,68,My father is a pilot.,飛行員,answer-01.png
+5,2,2,left,Y farmer (n,farmer,0.9,308,559,228,55,Howard's grandpa is a farmer.,農夫,answer-02.png
+5,2,3,left,chef (,chef,1,325,789,145,54,Matt is a chef. He cooks well.,廚師,answer-03.png
+5,2,4,left,monster (n.,monster,0.9,299,1022,278,51,There's a monster behind us!,怪物,answer-04.png
+5,2,5,left,clothes (n,clothes,0.9,305,1249,244,53,These are Milly's new clothes.,衣服,answer-05.png
+5,2,6,left,uniform (n.,uniform,0.9,303,1477,261,55,I'm wearing the school uniform.,制服,answer-06.png
+5,2,7,left,_ jeans (1,jeans,0.9,319,1774,181,54,Look at my new jeans.,牛仔褲,answer-07.png
+5,2,8,left,~ dress (,dress,1,319,1994,181,54,Mina's dress is very expensive.,洋裝,answer-08.png
+5,2,9,left,~ mask (!,mask,1,319,2223,184,53,Look! Lynn is wearing a mask.,面具,answer-09.png
+5,2,10,left,hold (,hold,1,326,2451,145,54,Tim is holding a mug.,握著,answer-10.png
+5,2,11,right,fisherman (n.),fisherman,1,1143,330,341,55,Is your grandpa a fisherman?,漁夫,answer-11.png
+5,2,12,right,driver (r,driver,0.9,1172,561,199,54,My father is a taxi driver.,司機,answer-12.png
+5,2,13,right,- drive (,drive,1,1179,790,170,54,My mom drives me to school every day.,開車,answer-13.png
+5,2,14,right,cook (,cook,1,1179,1077,166,54,My grandma cooks great food.,烹飪,answer-14.png
+5,2,15,right,~ catch (\,catch,1,1175,1307,185,53,I can catch the bug.,抓住；接住,answer-15.png
+5,2,16,right,magician (n.),magician,1,1160,1537,255,60,There is a magician at the party.,魔術師,manual-answer-16.png
+5,2,17,right,trick (n.),trick,1,1180,1767,175,60,My dog knows a few tricks.,戲法；特技,manual-answer-17.png
+5,2,18,right,apron (n.),apron,1,1180,1997,175,60,Ann washes her apron every day.,圍裙,manual-answer-18.png
+5,2,19,right,happy (adj.),happy,1,1180,2227,175,60,We are very happy today.,高興的,manual-answer-19.png

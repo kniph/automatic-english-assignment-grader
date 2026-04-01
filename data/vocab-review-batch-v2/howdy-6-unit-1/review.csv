@@ -1,0 +1,21 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+6,1,1,left,\ comic book (n.),comic book,1,315,297,392,54,Ed likes to read comic books.,漫畫書,answer-01.png
+6,1,2,left,4 amusement park (n.) i,amusement park,0.9,278,524,578,68,My family is going to an amusement park tomorrow.,遊樂園,answer-02.png
+6,1,3,left,weekend (n.,weekend,0.9,334,814,311,53,Emily is going camping with friends this weekend.,週末,answer-03.png
+6,1,4,left,meet (,meet,1,364,1104,169,50,Let's meet at the zoo tomorrow.,遇見；會面,answer-04.png
+6,1,5,left,borrow (v,borrow,0.9,349,1330,244,54,Can I borrow these books?,借,answer-05.png
+6,1,6,left,exercise (v.,exercise,0.9,341,1568,283,45,We love to exercise.,運動；練習,answer-06.png
+6,1,7,left,~ come (\,come,1,361,1797,184,45,Please come with me.,來,answer-07.png
+6,1,8,left,tell |,tell,1,379,2017,103,54,Please tell your dad to call me.,告訴；說,answer-08.png
+6,1,9,left,"7g, tomorrow (ac",tomorrow,0.9,332,2250,335,51,Goodbye. See you tomorrow.,明天,answer-09.png
+6,1,10,left,‘later (,later,1,385,2478,136,51,See you later.,較晚地；以後,answer-10.png
+6,1,11,right,museum (n.,museum,0.9,1197,305,287,44,They are going to the museum by train.,博物館,answer-11.png
+6,1,12,right,sea (,sea,1,1232,585,117,45,Sailing on the sea is exciting.,海,answer-12.png
+6,1,13,right,dinosaur (n.,dinosaur,0.9,1195,800,296,54,I want to learn about dinosaurs.,恐龍,answer-13.png
+6,1,14,right,— dolphin (n,dolphin,0.9,1206,1023,249,67,Dolphins are smart animals.,海豚,answer-14.png
+6,1,15,right,killer whale (n.),killer whale,1,1174,1249,403,54,The killer whale show was cool.,殺人鯨,answer-15.png
+6,1,16,right,everyone,everyone,1,1180,1475,260,60,Everyone is studying at the library for the final exam.,每人；人人,manual-answer-16.png
+6,1,17,right,field trip (n.),field trip,1,1170,1701,300,60,The field trip is on Tuesday.,戶外教學,manual-answer-17.png
+6,1,18,right,wonderful (adj.),wonderful,1,1170,1927,290,60,This soccer game is wonderful.,精彩的,manual-answer-18.png
+6,1,19,right,ferris wheel (n.),ferris wheel,1,1160,2153,320,60,There is a huge Ferris wheel at the new amusement park.,摩天輪,manual-answer-19.png
+6,1,20,right,roller coaster (n.),roller coaster,1,1150,2379,380,60,My sister doesn't like to go on the roller coaster.,雲霄飛車,manual-answer-20.png

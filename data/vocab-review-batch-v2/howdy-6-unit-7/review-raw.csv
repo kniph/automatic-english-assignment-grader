@@ -1,0 +1,22 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+6,7,1,left,~ show (r,show,0.9,382,287,181,54,Let's take a picture of the show.,表演,answer-01.png
+6,7,2,left,camera (n.,camera,0.9,365,526,256,45,I'm going to buy a red camera.,照相機,answer-02.png
+6,7,3,left,_ picture (n,picture,0.9,368,749,238,62,Dad loves taking pictures.,照片,answer-03.png
+6,7,4,left,earring (n,earring,0.9,365,985,243,55,The dolphin earrings are cute.,耳環；耳飾,answer-04.png
+6,7,5,left,necklace (n.,necklace,0.9,352,1205,305,54,Ed gave me a pretty necklace.,項鍊,answer-05.png
+6,7,6,left,postcard(s) (n.),postcard(s),1,333,1433,392,66,These postcards are from Pitt.,明信片,answer-06.png
+6,7,7,left,— letter (1,letter,0.9,376,1663,179,54,Please send this letter for me.,信,answer-07.png
+6,7,8,left,give (,give,1,382,1901,142,54,I'll give Ann a birthday gift.,給；給與,answer-08.png
+6,7,9,left,- send (,send,1,377,2121,160,54,He wants to send a letter to his cousin in Japan.,發送；寄,answer-09.png
+6,7,10,left,take,take a picture,0.9,386,2406,111,54,Roy is going to take a picture of the dolphins.,照相；拍照,answer-10.png
+6,7,11,left,_ take a picture (phr.,picture,0.9,331,2409,451,62,Dad loves taking pictures.,照片,answer-11.png
+6,7,12,right,gift (,gift,1,1279,289,113,71,He is going to get Dora a gift.,禮物,answer-12.png
+6,7,13,right,tie |,tie,1,1282,525,87,51,The tie is red and yellow.,領帶,answer-13.png
+6,7,14,right,ring (,ring,1,1273,760,130,56,Emma's ring is beautiful.,戒指,answer-14.png
+6,7,15,right,_ scary (,scary,1,1260,990,189,55,That gray dog is very scary.,可怕的；嚇人的,answer-15.png
+6,7,16,right,_ sharp (,sharp,1,1258,1208,190,68,The knife is sharp.,鋒利的；尖的,answer-16.png
+6,7,16,right,flower (n.),flower,1,1240,1438,180,60,These flowers smell good.,花,manual-answer-16.png
+6,7,17,right,card (n.),card,1,1250,1668,135,60,Let's make a card for Mom.,卡片,manual-answer-17.png
+6,7,18,right,belt (n.),belt,1,1250,1898,135,60,There is a belt on the table.,皮帶,manual-answer-18.png
+6,7,19,right,something,something,1,1200,2128,265,60,I have something for you.,某事或某物,manual-answer-19.png
+6,7,20,right,nothing,nothing,1,1220,2358,210,60,There is nothing in the box.,沒有東西,manual-answer-20.png

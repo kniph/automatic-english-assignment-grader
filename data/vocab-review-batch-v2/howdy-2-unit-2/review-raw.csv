@@ -1,0 +1,13 @@
+howdy_level,unit,candidate_index,column,detected_text,suggested_answer,match_score,left,top,width,height,prompt_en,definition_zh,crop_file
+2,2,1,left,- first (,first,1,344,253,147,57,Jane sits in the first row.,第一,answer-01.png
+2,2,2,left,second (a,second,0.9,325,547,257,60,Tom's second; he can run fast.,第二,answer-02.png
+2,2,3,left,— third (,third,1,346,962,169,57,Adam is the third boy in his class.,第三,answer-03.png
+2,2,4,left,~ fourth (c,fourth,0.9,339,1376,222,56,Amy is the fourth girl in her family.,第四,answer-04.png
+2,2,5,left,_ fifth (,fifth,1,358,1789,150,57,Today is the fifth day of the week.,第五,answer-05.png
+2,2,6,left,~ sixth («,sixth,1,357,2143,180,57,Today is the sixth day of the week.,第六,answer-06.png
+2,2,7,right,. seventh (a,seventh,0.9,1207,251,288,57,Today is the seventh day of the week.,第七,answer-07.png
+2,2,8,right,— eighth (c,eighth,0.9,1222,543,224,74,Are you eighth?,第八,answer-08.png
+2,2,9,right,~ ninth (,ninth,1,1234,860,184,57,Look! David is ninth.,第九,answer-09.png
+2,2,10,right,— tenth (,tenth,1,1235,1173,189,57,Oh no! I'm tenth.,第十,answer-10.png
+2,2,11,right,next (,next,1,1246,1491,161,53,Who is next in line?,下一個,answer-11.png
+2,2,12,right,last (,test,0.5,1255,1872,135,57,Ruby wants to do well on the test.,測驗,answer-12.png

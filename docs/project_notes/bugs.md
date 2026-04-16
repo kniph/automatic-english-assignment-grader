@@ -400,3 +400,39 @@ The current connected-component pass in `scripts/extract-vocab-review.js` is goo
 When a vocab unit repeatedly stalls with a perfect-looking answer bank and the misses cluster near the page tail, do not keep tuning OCR first. Treat it as a review-box coverage problem and patch the missing regions explicitly in `manual-review-overrides.json`.
 
 ---
+
+## 2026-04-16 - BUG-025: Wrong-Answer Retest Crops Drift Off-Center
+
+**Issue**: The vocab wrong-answer retest cards often showed an awkward crop where the actual prompt area was not centered, making the review experience feel sloppy and sometimes cutting off too much context.
+
+**Root Cause**:
+The retest payload was built from `answer_box` plus fixed left/right/top padding. That box is designed for OCRing the handwriting region, not for presenting the whole prompt to a student. Because the preview crop had no true prompt bounding box, the UI was effectively guessing how much context to show.
+
+**Solution**:
+- keep `answer_box` as the OCR region
+- build wrong-question preview images from a larger search area around that box
+- detect nearby printed content on the blank page
+- merge detected content bounds with the handwriting box
+- place the result into a fixed centered preview frame before sending it to the browser
+
+**Prevention**:
+Do not reuse OCR answer boxes as student-facing prompt previews without an additional framing step. OCR boxes optimize recognition; review cards need centered composition and nearby prompt context.
+
+---
+
+## 2026-04-16 - BUG-026: Vocab Result / Review Could Show a Stale Wrong Answer Text
+
+**Issue**: The review flow could look successful overall, but a result page or review card could still show the wrong canonical answer text for a Howdy vocab item. One observed example was `Howdy 2 Unit 2` item 12, where the product should use `last`, but some views still showed `test`.
+
+**Root Cause**:
+- the source CSV for that item was wrong
+- published exams / stored submissions can preserve older `answer_text` values
+- review/retest/result rendering previously trusted those stored values too directly instead of re-resolving against the canonical answer bank
+
+**Solution**:
+- correct the source CSV row
+- rebuild the normalized answer bank outputs
+- resolve Howdy question answers through the canonical answer bank at runtime for grading, review/retest payloads, and submission result reads
+
+**Prevention**:
+When Howdy vocab content has a known source correction, do not fix only the display layer. Update the source record, rebuild the normalized bank, and prefer canonical answer-bank resolution when reading or grading persisted exam data.

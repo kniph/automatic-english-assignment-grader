@@ -1422,9 +1422,9 @@
     "source_file": "howdy_2_all_units.csv",
     "howdy_level": 2,
     "unit": 2,
-    "answer_text": "test",
-    "definition_zh": "測驗",
-    "prompt_en": "Ruby wants to do well on the test.",
+    "answer_text": "last",
+    "definition_zh": "最後的",
+    "prompt_en": "Ruby wants the last pizza.",
     "level_label": "Howdy 2 Unit 2",
     "sequence_in_source": 22,
     "unit_item_order": 12

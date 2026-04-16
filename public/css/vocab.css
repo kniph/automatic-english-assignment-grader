@@ -821,11 +821,70 @@ body.vocab-student-page .vocab-shell {
   background: #ffffff;
 }
 
+.vocab-question-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+}
+
+.vocab-question-heading strong {
+  font-size: 1.02rem;
+  color: var(--vocab-ink);
+}
+
+.vocab-question-heading span {
+  font-size: 0.84rem;
+  color: var(--vocab-muted);
+}
+
 .vocab-question-card img {
   width: 100%;
   border-radius: 14px;
   border: 1px solid var(--vocab-line);
   margin-bottom: 0.8rem;
+  background: #ffffff;
+  object-fit: contain;
+}
+
+.vocab-review-answer {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin: 0 0 0.9rem;
+  padding: 0.9rem 1rem;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #eef8f0, #f8fcf7);
+  border: 1px solid rgba(28, 138, 91, 0.18);
+}
+
+.vocab-review-answer-label {
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #1c8a5b;
+}
+
+.vocab-review-answer strong {
+  font-size: 1.05rem;
+  color: var(--vocab-ink);
+  word-break: break-word;
+}
+
+.vocab-status-info {
+  color: var(--vocab-muted);
+}
+
+.vocab-status-warning {
+  color: #a46b00;
+}
+
+.vocab-status-error {
+  color: #b42318;
 }
 
 .vocab-note {
@@ -847,7 +906,9 @@ body.vocab-student-page .vocab-shell {
 .vocab-student-page #workspaceSection .vocab-card,
 .vocab-student-page #workspaceSection .vocab-page-card,
 .vocab-result-page .vocab-card,
+.vocab-review-page .vocab-card,
 .vocab-retest-page .vocab-card,
+.vocab-review-page .vocab-question-card,
 .vocab-retest-page .vocab-question-card {
   width: min(100%, 1180px);
   margin-left: auto;
@@ -863,6 +924,7 @@ body.vocab-student-page .vocab-shell {
   font-weight: 700;
 }
 
+.vocab-review-page .vocab-question-cards,
 .vocab-retest-page .vocab-question-cards {
   width: min(100%, 1180px);
   margin: 0 auto;

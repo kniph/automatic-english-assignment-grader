@@ -2,6 +2,19 @@
   {
     "action": "replace",
     "match": {
+      "howdy_level": 2,
+      "unit": 2,
+      "sequence_in_source": 22
+    },
+    "set": {
+      "answer_text": "last",
+      "definition_zh": "最後的",
+      "prompt_en": "Ruby wants the last pizza."
+    }
+  },
+  {
+    "action": "replace",
+    "match": {
       "howdy_level": 3,
       "unit": 7,
       "sequence_in_source": 82

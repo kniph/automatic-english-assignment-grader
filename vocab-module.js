@@ -1,8 +1,23 @@
 const sharp = require('sharp');
+const howdyAnswerBank = require('./data/vocab-prompts/howdy-1-8-answer-bank.json');
 
 const VOCAB_SOURCE_TYPES = new Set(['howdy', 'custom']);
 const VOCAB_EXAM_STATUSES = new Set(['draft', 'published']);
-const VOCAB_ATTEMPT_MODES = new Set(['full', 'retest']);
+const VOCAB_ATTEMPT_MODES = new Set(['full', 'retest', 'final']);
+const HOWDY_ANSWER_BANK_MAP = (() => {
+  const map = new Map();
+  for (const row of Array.isArray(howdyAnswerBank) ? howdyAnswerBank : []) {
+    const key = [
+      Number(row.howdy_level) || 0,
+      Number(row.unit) || 0,
+      Number(row.unit_item_order) || 0
+    ].join(':');
+    if (!map.has(key)) {
+      map.set(key, row);
+    }
+  }
+  return map;
+})();
 
 async function initVocabDB(client) {
   await client.query(`
@@ -120,7 +135,7 @@ async function initVocabDB(client) {
     DROP CONSTRAINT IF EXISTS vocab_submissions_attempt_mode_check;
     ALTER TABLE vocab_submissions
     ADD CONSTRAINT vocab_submissions_attempt_mode_check
-    CHECK (attempt_mode IN ('full', 'retest'));
+    CHECK (attempt_mode IN ('full', 'retest', 'final'));
   `).catch(() => {});
 }
 
@@ -142,6 +157,55 @@ function registerVocabRoutes({ app, pool, requireTeacherAuth, hasTeacherAccess, 
 
   function cleanText(value) {
     return String(value || '').trim();
+  }
+
+  function resolveQuestionContent(exam, question) {
+    const fallback = {
+      answer_text: cleanText(question?.answer_text),
+      definition_zh: '',
+      prompt_en: ''
+    };
+
+    if (!exam || exam.source_type !== 'howdy') {
+      return fallback;
+    }
+
+    const key = [
+      Number(exam.howdy_level) || 0,
+      Number(exam.unit) || 0,
+      Number(question?.question_number) || 0
+    ].join(':');
+    const bankRow = HOWDY_ANSWER_BANK_MAP.get(key);
+    if (!bankRow) {
+      return fallback;
+    }
+
+    return {
+      answer_text: cleanText(bankRow.answer_text) || fallback.answer_text,
+      definition_zh: cleanText(bankRow.definition_zh),
+      prompt_en: cleanText(bankRow.prompt_en)
+    };
+  }
+
+  function canonicalizeGradedAnswers(exam, questions, gradedAnswers) {
+    if (!Array.isArray(gradedAnswers) || !gradedAnswers.length) return [];
+
+    const questionMap = new Map((questions || []).map(question => [Number(question.id), question]));
+    return gradedAnswers.map(answer => {
+      const question = questionMap.get(Number(answer.question_id)) || {
+        question_number: answer.question_number,
+        answer_text: answer.correct_answer
+      };
+      const canonical = resolveQuestionContent(exam, question);
+      const detectedText = normalizeAnswerForCompare(answer.detected_text);
+      const correct = detectedText !== '' && detectedText === canonical.answer_text;
+      return {
+        ...answer,
+        correct_answer: canonical.answer_text,
+        correct,
+        score: correct ? Number(answer.points || 0) : 0
+      };
+    });
   }
 
   function normalizeAnswerForCompare(value) {
@@ -506,6 +570,189 @@ function registerVocabRoutes({ app, pool, requireTeacherAuth, hasTeacherAccess, 
     };
   }
 
+  function mergeBoxes(boxA, boxB) {
+    if (!boxA) return boxB || null;
+    if (!boxB) return boxA;
+
+    const left = Math.min(boxA.left, boxB.left);
+    const top = Math.min(boxA.top, boxB.top);
+    const right = Math.max(boxA.left + boxA.width, boxB.left + boxB.width);
+    const bottom = Math.max(boxA.top + boxA.height, boxB.top + boxB.height);
+    return {
+      left,
+      top,
+      width: Math.max(1, right - left),
+      height: Math.max(1, bottom - top)
+    };
+  }
+
+  function centerAxis(start, size, limit) {
+    if (size >= limit) {
+      return { start: 0, size: limit };
+    }
+
+    let nextStart = Math.round(start);
+    if (nextStart < 0) nextStart = 0;
+    if (nextStart + size > limit) nextStart = Math.max(0, limit - size);
+
+    return {
+      start: nextStart,
+      size: Math.max(1, Math.min(size, limit))
+    };
+  }
+
+  function expandBoxToAspect(box, maxWidth, maxHeight, targetAspect = 1.82) {
+    if (!box) {
+      return {
+        left: 0,
+        top: 0,
+        width: Math.max(1, maxWidth),
+        height: Math.max(1, maxHeight)
+      };
+    }
+
+    let width = Math.max(1, Math.round(box.width));
+    let height = Math.max(1, Math.round(box.height));
+    const currentAspect = width / height;
+
+    if (currentAspect < targetAspect) {
+      width = Math.min(maxWidth, Math.round(height * targetAspect));
+    } else {
+      height = Math.min(maxHeight, Math.round(width / targetAspect));
+    }
+
+    const centerX = box.left + (box.width / 2);
+    const centerY = box.top + (box.height / 2);
+    const xAxis = centerAxis(centerX - (width / 2), width, maxWidth);
+    const yAxis = centerAxis(centerY - (height / 2), height, maxHeight);
+
+    return {
+      left: xAxis.start,
+      top: yAxis.start,
+      width: xAxis.size,
+      height: yAxis.size
+    };
+  }
+
+  async function detectPrintedContentBounds(buffer, searchBox) {
+    const extracted = await sharp(buffer)
+      .extract(searchBox)
+      .flatten({ background: '#ffffff' })
+      .greyscale()
+      .raw()
+      .toBuffer({ resolveWithObject: true });
+
+    const { width, height } = extracted.info;
+    const threshold = 244;
+    let minX = width;
+    let minY = height;
+    let maxX = -1;
+    let maxY = -1;
+    let hits = 0;
+
+    for (let y = 0; y < height; y += 1) {
+      const rowOffset = y * width;
+      for (let x = 0; x < width; x += 1) {
+        const value = extracted.data[rowOffset + x];
+        if (value >= threshold) continue;
+        hits += 1;
+        if (x < minX) minX = x;
+        if (y < minY) minY = y;
+        if (x > maxX) maxX = x;
+        if (y > maxY) maxY = y;
+      }
+    }
+
+    if (hits < 120 || maxX < minX || maxY < minY) {
+      return null;
+    }
+
+    return {
+      left: searchBox.left + minX,
+      top: searchBox.top + minY,
+      width: Math.max(1, maxX - minX + 1),
+      height: Math.max(1, maxY - minY + 1)
+    };
+  }
+
+  async function buildPromptPreview(pageBase64, answerBox) {
+    const buffer = Buffer.from(pageBase64, 'base64');
+    const metadata = await sharp(buffer).metadata();
+    const pageWidth = metadata.width || 0;
+    const pageHeight = metadata.height || 0;
+    const answerBounds = clampBox(answerBox, pageWidth, pageHeight, 0);
+    const searchBox = clampBox(
+      {
+        x: Number(answerBox.x) - Math.max(96, Math.round(Number(answerBox.width) * 1.7)),
+        y: Number(answerBox.y) - Math.max(42, Math.round(Number(answerBox.height) * 0.95)),
+        width: Number(answerBox.width) + Math.max(220, Math.round(Number(answerBox.width) * 3.4)),
+        height: Number(answerBox.height) + Math.max(92, Math.round(Number(answerBox.height) * 2.2))
+      },
+      pageWidth,
+      pageHeight,
+      0
+    );
+
+    const contentBounds = await detectPrintedContentBounds(buffer, searchBox);
+    let focusBox = mergeBoxes(contentBounds, answerBounds) || answerBounds;
+    focusBox = clampBox(
+      {
+        x: focusBox.left - Math.max(18, Math.round(answerBounds.width * 0.25)),
+        y: focusBox.top - Math.max(16, Math.round(answerBounds.height * 0.32)),
+        width: focusBox.width + Math.max(36, Math.round(answerBounds.width * 0.5)),
+        height: focusBox.height + Math.max(26, Math.round(answerBounds.height * 0.65))
+      },
+      pageWidth,
+      pageHeight,
+      0
+    );
+    focusBox = expandBoxToAspect(focusBox, pageWidth, pageHeight, 1.82);
+
+    return (await sharp(buffer)
+      .extract(focusBox)
+      .resize({
+        width: 1200,
+        height: 660,
+        fit: 'contain',
+        background: '#ffffff',
+        withoutEnlargement: false
+      })
+      .flatten({ background: '#ffffff' })
+      .jpeg({ quality: 92 })
+      .toBuffer()).toString('base64');
+  }
+
+  async function buildPromptPreviewFallback(pageBase64, answerBox) {
+    const buffer = Buffer.from(pageBase64, 'base64');
+    const metadata = await sharp(buffer).metadata();
+    const pageWidth = metadata.width || 0;
+    const pageHeight = metadata.height || 0;
+    const cropBox = clampBox(
+      {
+        x: Number(answerBox.x) - Math.max(180, Math.round(Number(answerBox.width) * 2.2)),
+        y: Number(answerBox.y) - Math.max(70, Math.round(Number(answerBox.height) * 1.8)),
+        width: Number(answerBox.width) + Math.max(220, Math.round(Number(answerBox.width) * 2.9)),
+        height: Number(answerBox.height) + Math.max(140, Math.round(Number(answerBox.height) * 3.6))
+      },
+      pageWidth,
+      pageHeight,
+      0
+    );
+
+    return (await sharp(buffer)
+      .extract(cropBox)
+      .resize({
+        width: 1200,
+        height: 660,
+        fit: 'contain',
+        background: '#ffffff',
+        withoutEnlargement: false
+      })
+      .flatten({ background: '#ffffff' })
+      .jpeg({ quality: 90 })
+      .toBuffer()).toString('base64');
+  }
+
   async function normalizePageBase64(base64) {
     const buffer = Buffer.from(base64, 'base64');
     return (await sharp(buffer)
@@ -675,16 +922,17 @@ function registerVocabRoutes({ app, pool, requireTeacherAuth, hasTeacherAccess, 
     const gradedAnswers = [];
 
     for (const question of bundle.questions) {
+      const canonical = resolveQuestionContent(bundle.exam, question);
       const pageImage = pageMap.get(question.page_number);
       const blankPageImage = blankPageMap.get(question.page_number);
       const ocrResult = await ocrAnswerRegion(pageImage, blankPageImage, question.answer_box);
-      const scoreResult = scoreVocabAnswer(ocrResult.detected_text, question.answer_text, question.points);
+      const scoreResult = scoreVocabAnswer(ocrResult.detected_text, canonical.answer_text, question.points);
       gradedAnswers.push({
         question_id: question.id,
         page_number: question.page_number,
         question_number: question.question_number,
         prompt_type: question.prompt_type,
-        correct_answer: question.answer_text,
+        correct_answer: canonical.answer_text,
         detected_text: scoreResult.normalized_detected_text,
         correct: scoreResult.correct,
         score: scoreResult.score,
@@ -720,6 +968,7 @@ function registerVocabRoutes({ app, pool, requireTeacherAuth, hasTeacherAccess, 
     const storedImages = [];
 
     for (const question of targetQuestions) {
+      const canonical = resolveQuestionContent(bundle.exam, question);
       const rawImage = attemptMap.get(question.id);
       const normalizedImage = (await sharp(Buffer.from(rawImage, 'base64'))
         .rotate()
@@ -729,13 +978,13 @@ function registerVocabRoutes({ app, pool, requireTeacherAuth, hasTeacherAccess, 
       storedImages.push(normalizedImage);
 
       const ocrResult = await ocrStandaloneAnswerImage(normalizedImage);
-      const scoreResult = scoreVocabAnswer(ocrResult.detected_text, question.answer_text, question.points);
+      const scoreResult = scoreVocabAnswer(ocrResult.detected_text, canonical.answer_text, question.points);
       gradedAnswers.push({
         question_id: question.id,
         page_number: question.page_number,
         question_number: question.question_number,
         prompt_type: question.prompt_type,
-        correct_answer: question.answer_text,
+        correct_answer: canonical.answer_text,
         detected_text: scoreResult.normalized_detected_text,
         correct: scoreResult.correct,
         score: scoreResult.score,
@@ -756,8 +1005,8 @@ function registerVocabRoutes({ app, pool, requireTeacherAuth, hasTeacherAccess, 
     gradedAnswers,
     storedImages
   }) {
-    const totalPossible = gradedAnswers.reduce((sum, answer) => sum + answer.points, 0);
-    const totalScore = gradedAnswers.reduce((sum, answer) => sum + answer.score, 0);
+    const totalPossible = gradedAnswers.reduce((sum, answer) => sum + Number(answer.points || 0), 0);
+    const totalScore = gradedAnswers.reduce((sum, answer) => sum + Number(answer.score || 0), 0);
     const percentage = totalPossible > 0 ? Math.round((totalScore / totalPossible) * 100) : 0;
     const wrongQuestionIds = gradedAnswers.filter(answer => !answer.correct).map(answer => answer.question_id);
     const attemptNo = await getNextAttemptNo(examId, studentName);
@@ -766,7 +1015,10 @@ function registerVocabRoutes({ app, pool, requireTeacherAuth, hasTeacherAccess, 
     if (examResult.rows.length === 0) {
       throw new Error('Exam not found');
     }
-    const passed = percentage >= Number(examResult.rows[0].pass_score || 80);
+    const passScore = Number(examResult.rows[0].pass_score || 80);
+    const passed = attemptMode === 'retest'
+      ? wrongQuestionIds.length === 0
+      : percentage >= passScore;
 
     const insertResult = await pool.query(`
       INSERT INTO vocab_submissions
@@ -820,27 +1072,14 @@ function registerVocabRoutes({ app, pool, requireTeacherAuth, hasTeacherAccess, 
 
     const questions = await Promise.all(targetQuestions.map(async question => {
       const page = pageMap.get(question.page_number);
-      const buffer = Buffer.from(page.blank_image, 'base64');
-      const metadata = await sharp(buffer).metadata();
-      const leftPad = Math.max(180, Math.round(question.answer_box.width * 2.2));
-      const rightPad = Math.max(40, Math.round(question.answer_box.width * 0.7));
-      const verticalPad = Math.max(70, Math.round(question.answer_box.height * 1.8));
-      const cropBox = clampBox(
-        {
-          x: question.answer_box.x - leftPad,
-          y: question.answer_box.y - verticalPad,
-          width: question.answer_box.width + leftPad + rightPad,
-          height: question.answer_box.height + verticalPad * 2
-        },
-        metadata.width || 0,
-        metadata.height || 0,
-        0
-      );
-
-      const promptImage = await sharp(buffer)
-        .extract(cropBox)
-        .jpeg({ quality: 90 })
-        .toBuffer();
+      const canonical = resolveQuestionContent(bundle.exam, question);
+      let promptImage = '';
+      try {
+        promptImage = await buildPromptPreview(page.blank_image, question.answer_box);
+      } catch (error) {
+        console.warn(`Prompt preview heuristic failed for question ${question.id}, using fallback crop:`, error.message || error);
+        promptImage = await buildPromptPreviewFallback(page.blank_image, question.answer_box);
+      }
 
       return {
         question_id: question.id,
@@ -848,7 +1087,10 @@ function registerVocabRoutes({ app, pool, requireTeacherAuth, hasTeacherAccess, 
         question_number: question.question_number,
         prompt_type: question.prompt_type,
         points: question.points,
-        prompt_image: promptImage.toString('base64'),
+        correct_answer: canonical.answer_text,
+        definition_zh: canonical.definition_zh,
+        prompt_en: canonical.prompt_en,
+        prompt_image: promptImage,
         answer_canvas_width: Math.max(420, question.answer_box.width * 2),
         answer_canvas_height: Math.max(140, question.answer_box.height * 2)
       };
@@ -1029,6 +1271,14 @@ function registerVocabRoutes({ app, pool, requireTeacherAuth, hasTeacherAccess, 
       const { submission, examBundle } = bundle;
       const exam = examBundle.exam;
       const teacherView = hasTeacherAccess(req);
+      const gradedAnswers = canonicalizeGradedAnswers(exam, examBundle.questions, submission.graded_answers || []);
+      const totalPossible = gradedAnswers.reduce((sum, answer) => sum + Number(answer.points || 0), 0);
+      const totalScore = gradedAnswers.reduce((sum, answer) => sum + Number(answer.score || 0), 0);
+      const percentage = totalPossible > 0 ? Math.round((totalScore / totalPossible) * 100) : 0;
+      const wrongQuestionIds = gradedAnswers.filter(answer => !answer.correct).map(answer => answer.question_id);
+      const passed = submission.attempt_mode === 'retest'
+        ? wrongQuestionIds.length === 0
+        : percentage >= Number(exam.pass_score || 80);
 
       res.json({
         id: submission.id,
@@ -1043,12 +1293,12 @@ function registerVocabRoutes({ app, pool, requireTeacherAuth, hasTeacherAccess, 
         attempt_no: submission.attempt_no,
         attempt_mode: submission.attempt_mode,
         source_submission_id: submission.source_submission_id,
-        total_score: submission.total_score,
-        total_possible: submission.total_possible,
-        percentage: submission.percentage,
-        passed: submission.passed,
-        wrong_question_ids: submission.wrong_question_ids || [],
-        graded_answers: submission.graded_answers || [],
+        total_score: totalScore,
+        total_possible: totalPossible,
+        percentage,
+        passed,
+        wrong_question_ids: wrongQuestionIds,
+        graded_answers: gradedAnswers,
         created_at: submission.created_at,
         submission_images: teacherView ? submission.submission_images : undefined
       });
@@ -1077,17 +1327,18 @@ function registerVocabRoutes({ app, pool, requireTeacherAuth, hasTeacherAccess, 
 
       res.json({
         exam_id: examBundle.exam.id,
+        exam_title: examBundle.exam.title,
         source_submission_id: submission.id,
         student_name: submission.student_name,
         original_attempt_no: submission.attempt_no,
         next_attempt_no: nextAttemptNo,
-        title: `${examBundle.exam.title} - Retest`,
+        title: `${examBundle.exam.title} - 錯題再考`,
         pass_score: examBundle.exam.pass_score,
         questions
       });
     } catch (err) {
       console.error('Build vocab retest error:', err);
-      res.status(500).json({ error: 'Failed to build retest' });
+      res.status(500).json({ error: err.message || 'Failed to build retest' });
     }
   });
 }

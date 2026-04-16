@@ -1008,6 +1008,62 @@ Reviewed all pages of NH1 WB A (U1–U8 + Review 1) and NH1 WB B (U1–U8, first
 
 ---
 
+## 2026-04-16 - Vocab Wrong-Answer Flow Upgraded to Review -> Retest -> Final Check
+
+**Work Done**:
+- Added a new student-facing wrong-answer review page: `public/vocab-review.html` + `public/js/vocab-review.js`
+- Changed the vocab result flow so failed attempts no longer jump straight into retest:
+  - full attempt failed -> review wrong answers first
+  - retest still has wrong answers -> loop back to review
+  - retest clears all wrong answers -> launch full-exam final check
+  - final check failed -> send only the newly wrong items back into review
+- Added `final` as a first-class vocab submission mode in `vocab-module.js`
+- Kept guided review as a non-persistent practice step so DB records stay limited to real graded attempts
+- Updated `public/js/vocab-result.js` so the result page now shows stage-aware next steps instead of a single generic retest button
+- Updated `public/js/vocab-exam.js` so the full exam page can reopen in final-check mode with different labels / submit copy
+
+**Prompt / Crop Improvements**:
+- Reworked wrong-question preview generation in `vocab-module.js`
+- Replaced the old fixed-padding retest crop with a two-step heuristic:
+  - search for printed content near the answer box
+  - fit the detected content into a fixed centered preview frame
+- Goal: make wrong-question cards feel visually centered and more stable across units without requiring a new teacher annotation field yet
+
+**Files Modified**:
+- `vocab-module.js`
+- `public/vocab-result.html`
+- `public/vocab-review.html`
+- `public/js/vocab-result.js`
+- `public/js/vocab-review.js`
+- `public/js/vocab-retest.js`
+- `public/js/vocab-exam.js`
+- `public/css/vocab.css`
+
+---
+
+## 2026-04-16 - Vocab Review Polish and Canonical Answer Fixes
+
+**Work Done**:
+- tightened review / retest prompt crops again so nearby questions are less likely to bleed into the card preview
+- changed review / retest card headings to prefer the Chinese meaning instead of showing only `第 N 題`
+- added a fallback crop path so one bad preview no longer blanks the entire review page
+- canonicalized Howdy vocab answers against the normalized answer bank when:
+  - building review / retest payloads
+  - grading full attempts
+  - grading retests
+  - returning saved submission results
+- corrected the source vocab record for `Howdy 2 Unit 2` item 12 from `test` to `last`
+- rebuilt:
+  - `data/vocab-prompts/howdy-1-8-answer-bank.json`
+  - `data/vocab-prompts/howdy-1-8-answer-bank.csv`
+
+**Purpose**:
+- keep review/retest/result pages aligned on the same canonical answer text
+- avoid student confusion when the crop does not show enough surrounding context
+- stop old stored exam definitions from leaking incorrect `correct_answer` strings into result pages
+
+---
+
 ## Pending / Future Work
 
 - [ ] Supplemental notes preview/edit when reopening an existing assignment from the teacher list

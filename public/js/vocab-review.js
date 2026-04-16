@@ -3,7 +3,7 @@
   const sourceSubmissionId = Number(params.get('submission') || 0);
 
   const state = {
-    retest: null,
+    review: null,
     surfaces: [],
     activeSurface: null,
     tool: 'pen',
@@ -15,6 +15,20 @@
     const div = document.createElement('div');
     div.textContent = String(value || '');
     return div.innerHTML;
+  }
+
+  function setStatus(message, type = 'info') {
+    const card = document.getElementById('reviewStatusCard');
+    const text = document.getElementById('reviewStatusText');
+    if (!card || !text) return;
+    card.classList.remove('vocab-hidden');
+    text.textContent = message;
+    text.className = `vocab-empty vocab-status-${type}`;
+  }
+
+  function hideStatus() {
+    const card = document.getElementById('reviewStatusCard');
+    if (card) card.classList.add('vocab-hidden');
   }
 
   function getQuestionHeading(question) {
@@ -62,34 +76,41 @@
       });
     });
 
-    document.getElementById('undoRetestBtn').addEventListener('click', () => {
+    document.getElementById('undoReviewBtn').addEventListener('click', () => {
       if (state.activeSurface) {
         state.activeSurface.undo();
       }
     });
 
-    document.getElementById('clearRetestBtn').addEventListener('click', () => {
-      if (!window.confirm('確定清空這次重考作答？')) return;
+    document.getElementById('clearReviewBtn').addEventListener('click', () => {
+      if (!window.confirm('確定清空這次複習練習？')) return;
       state.surfaces.forEach(surface => surface.clear());
     });
 
-    document.getElementById('submitRetestBtn').addEventListener('click', submitRetest);
+    document.getElementById('startRetestBtn').addEventListener('click', () => {
+      window.location.href = `vocab-retest.html?submission=${sourceSubmissionId}`;
+    });
   }
 
-  async function renderRetest(retest) {
-    state.retest = retest;
-    document.getElementById('retestTitle').textContent = retest.title;
-    document.getElementById('retestMeta').innerHTML = [
-      retest.student_name,
-      `原始第 ${retest.original_attempt_no} 次`,
-      `這次會記為第 ${retest.next_attempt_no} 次`,
-      '這一輪不顯示答案',
-      '把剛才複習過的字再寫一次'
+  async function renderReview(review) {
+    state.review = review;
+    document.getElementById('reviewTitle').textContent = `${review.exam_title || review.title || '錯題複習'} - 錯題複習`;
+    document.getElementById('reviewMeta').innerHTML = [
+      review.student_name,
+      `原始第 ${review.original_attempt_no} 次`,
+      `待複習 ${review.questions.length} 題`,
+      '看答案練習一次'
     ].map(text => `<span>${escHtml(text)}</span>`).join('');
-    document.getElementById('backToResultLink').href = `vocab-result.html?id=${sourceSubmissionId}`;
+    document.getElementById('backToReviewResultLink').href = `vocab-result.html?id=${sourceSubmissionId}`;
 
-    const wrap = document.getElementById('retestQuestionCards');
-    wrap.innerHTML = retest.questions.map(question => {
+    const wrap = document.getElementById('reviewQuestionCards');
+    if (!Array.isArray(review.questions) || !review.questions.length) {
+      wrap.innerHTML = '';
+      setStatus('這一份沒有可複習的錯題。請回上一頁重新確認結果。', 'warning');
+      return;
+    }
+
+    wrap.innerHTML = review.questions.map(question => {
       const heading = getQuestionHeading(question);
       return `
       <div class="vocab-question-card">
@@ -98,15 +119,20 @@
           <span>${escHtml(heading.secondary)}</span>
         </div>
         <img src="data:image/jpeg;base64,${question.prompt_image}" alt="Question ${question.question_number}">
-        <div id="answerMount-${question.question_id}"></div>
+        <div class="vocab-review-answer">
+          <span class="vocab-review-answer-label">參考答案</span>
+          <strong>${escHtml(question.correct_answer || '')}</strong>
+        </div>
+        <div id="reviewMount-${question.question_id}"></div>
       </div>
     `;
     }).join('');
+    hideStatus();
 
     state.surfaces = [];
-    for (const question of retest.questions) {
+    for (const question of review.questions) {
       const surface = new VocabCanvasSurface({
-        mount: document.getElementById(`answerMount-${question.question_id}`),
+        mount: document.getElementById(`reviewMount-${question.question_id}`),
         width: question.answer_canvas_width,
         height: question.answer_canvas_height,
         maxDisplayWidth: 760,
@@ -116,59 +142,29 @@
       });
       await surface.init();
       applyBrush(surface);
-      state.surfaces.push({ question_id: question.question_id, surface });
+      state.surfaces.push(surface);
     }
-    state.activeSurface = state.surfaces[0]?.surface || null;
-  }
-
-  async function submitRetest() {
-    if (!state.retest) return;
-
-    const button = document.getElementById('submitRetestBtn');
-    const originalText = button.textContent;
-    button.disabled = true;
-    button.textContent = '批改中…';
-
-    try {
-      const questionAttempts = state.surfaces.map(item => ({
-        question_id: item.question_id,
-        image: item.surface.exportMergedBase64()
-      }));
-
-      const response = await apiCall('/api/vocab/submissions', {
-        method: 'POST',
-        body: {
-          exam_id: state.retest.exam_id,
-          student_name: state.retest.student_name,
-          attempt_mode: 'retest',
-          source_submission_id: state.retest.source_submission_id,
-          question_attempts: questionAttempts
-        }
-      });
-      window.location.href = `vocab-result.html?id=${response.id}`;
-    } catch (error) {
-      showToast(error.message, 'error');
-    } finally {
-      button.disabled = false;
-      button.textContent = originalText;
-    }
+    state.activeSurface = state.surfaces[0] || null;
   }
 
   async function init() {
     if (!sourceSubmissionId) {
+      setStatus('缺少 submission id，無法建立錯題複習。', 'error');
       showToast('缺少 submission id', 'error');
       return;
     }
 
     bindToolbar();
+    setStatus('正在建立錯題複習內容，若題數較多可能需要幾秒鐘…', 'info');
 
     try {
-      const retest = await apiCall(`/api/vocab/submissions/${sourceSubmissionId}/retest`, {
+      const review = await apiCall(`/api/vocab/submissions/${sourceSubmissionId}/retest`, {
         method: 'POST',
         body: {}
       });
-      await renderRetest(retest);
+      await renderReview(review);
     } catch (error) {
+      setStatus(`錯題複習建立失敗：${error.message}`, 'error');
       showToast(error.message, 'error');
     }
   }

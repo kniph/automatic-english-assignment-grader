@@ -1,6 +1,8 @@
 (function () {
   const params = new URLSearchParams(window.location.search);
   const preselectedExamId = Number(params.get('id') || 0);
+  const launchMode = String(params.get('mode') || 'full').trim().toLowerCase() === 'final' ? 'final' : 'full';
+  const sourceSubmissionId = Number(params.get('source') || 0);
 
   const state = {
     exams: [],
@@ -36,6 +38,10 @@
     const div = document.createElement('div');
     div.textContent = String(value || '');
     return div.innerHTML;
+  }
+
+  function isFinalMode() {
+    return launchMode === 'final';
   }
 
   function getStudentName() {
@@ -101,6 +107,22 @@
     if (state.selectedHowdy) text += `　📘 Howdy ${state.selectedHowdy}`;
     if (state.selectedUnit) text += `　${UNIT_LABELS[state.selectedUnit] || `Unit ${state.selectedUnit}`}`;
     bar.textContent = text;
+  }
+
+  function applyLaunchModeChrome() {
+    if (!isFinalMode()) return;
+
+    const pageHeader = document.querySelector('.vocab-header h1');
+    const appTitle = document.querySelector('.vocab-app-title');
+    const appSubtitle = document.querySelector('.vocab-app-subtitle');
+    const submitBtn = document.getElementById('submitBtn');
+    const note = document.querySelector('#workspaceSection .vocab-guide-note');
+
+    if (pageHeader) pageHeader.textContent = '最後驗收';
+    if (appTitle) appTitle.textContent = '🏁 Vocabulary Final Check';
+    if (appSubtitle) appSubtitle.textContent = '整張考卷再考一次，達標才算通過';
+    if (submitBtn) submitBtn.textContent = '送出最後驗收';
+    if (note) note.textContent = '最後驗收不顯示答案，請獨立完成整份考卷。';
   }
 
   function showSelectionStep(stepId, options = {}) {
@@ -457,12 +479,15 @@
     state.surfaces = [];
     state.activeSurface = null;
 
-    document.getElementById('workspaceTitle').textContent = exam.title;
+    document.getElementById('workspaceTitle').textContent = isFinalMode()
+      ? `${exam.title} - 最後驗收`
+      : exam.title;
     document.getElementById('workspaceMeta').innerHTML = [
       getExamMetaLabel(annotateExam(exam)),
       `${exam.page_count} 頁`,
       `${exam.question_count} 題`,
-      `通過 ${exam.pass_score}%`
+      `通過 ${exam.pass_score}%`,
+      isFinalMode() ? '整卷重考' : '首次作答'
     ].map(text => `<span>${escHtml(text)}</span>`).join('');
 
     const stack = document.getElementById('pageSurfaceStack');
@@ -639,6 +664,8 @@
         body: {
           exam_id: state.exam.id,
           student_name: studentName,
+          attempt_mode: isFinalMode() ? 'final' : 'full',
+          source_submission_id: sourceSubmissionId || undefined,
           submission_images: submissionImages
         }
       });
@@ -662,6 +689,7 @@
     document.addEventListener('selectionchange', clearWorkspaceSelection);
     bindToolbar();
     bindDiagnosticsPanel();
+    applyLaunchModeChrome();
     updateZoomLabel();
     await loadExamList();
 

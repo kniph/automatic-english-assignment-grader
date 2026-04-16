@@ -58,9 +58,32 @@ app.use(express.static(path.join(__dirname, 'public'), {
 }));
 
 // --- Database ---
+function getDatabaseSslConfig(connectionString) {
+  const raw = String(connectionString || '').trim();
+  if (!raw) return false;
+
+  try {
+    const url = new URL(raw);
+    const host = String(url.hostname || '').toLowerCase();
+    const isLocalhost = host === 'localhost' || host === '127.0.0.1';
+    const isRailwayHost = host.endsWith('.railway.internal') || host.endsWith('.rlwy.net');
+
+    if (isLocalhost) return false;
+    if (isRailwayHost || process.env.NODE_ENV === 'production') {
+      return { rejectUnauthorized: false };
+    }
+  } catch (_) {
+    if (process.env.NODE_ENV === 'production') {
+      return { rejectUnauthorized: false };
+    }
+  }
+
+  return false;
+}
+
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
+  ssl: getDatabaseSslConfig(process.env.DATABASE_URL)
 });
 
 // --- Database Initialization ---

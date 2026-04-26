@@ -133,6 +133,7 @@ Essential project configuration, constants, and quick reference information.
 - `GET  /api/vocab/exams?scope=teacher` — full vocab exam list for teacher builder
 - `POST /api/vocab/exams` — create vocab exam draft (teacher only)
 - `GET  /api/vocab/exams/:id` — public exam data when published; full template when teacher-authenticated
+- `GET  /api/vocab/exams/:id/practice` — published exam practice payload with answers, syllables, and tracing aids
 - `PATCH /api/vocab/exams/:id` — update exam/pages/questions (teacher only)
 - `POST /api/vocab/exams/:id/publish` — validate and publish exam (teacher only)
 - `POST /api/vocab/submissions` — submit full exam or retest answers for grading
@@ -162,6 +163,10 @@ Essential project configuration, constants, and quick reference information.
   - `data/vocab-review-batch-v2/summary.json`
   - per-unit folders under `data/vocab-review-batch-v2/howdy-<level>-unit-<unit>/`
   - each folder includes `review.csv`, `review-raw.csv`, crop PNGs, and `review.json`
+- Local source assets and generated review outputs are intentionally not tracked in Git:
+  - `VOCs/` and `WBs/` are large local textbook / workbook source folders
+  - `data/vocab-review*/`, `tmp-*`, and `data/supplemental_notes_manifest.*.json` are generated probe or batch outputs
+  - `data/vocab-prompts/nh9-vocab-prompts.*` remains local because NH9 is outside the published Howdy 1-8 rollout
 - Current batch quality for the 64 matched exams:
   - 64 units perfect
   - 0 units near-complete
@@ -171,6 +176,12 @@ Essential project configuration, constants, and quick reference information.
   - all 64 single-unit vocab exams for `Howdy 1-8` are published
   - all `Review 1 / Review 2` vocab exams for `Howdy 1-8` are published
   - `NH9` remains intentionally out of scope for this rollout
+- Vocab questions can store optional review supports in `support_config`:
+  - `syllables`: teacher-edited chunks such as `["com","pu","ter"]`
+  - `show_syllables`: controls whether syllable chips appear during wrong-question review
+  - `trace_mode`: `dots` or `none`
+  - `trace_text`: override text for dotted tracing; when blank, review mode uses the primary correct answer
+- Public full-exam payloads do not expose `support_config`; wrong-question review and explicit practice payloads can include it because those screens intentionally show the correct answer.
 
 ---
 
@@ -226,6 +237,7 @@ Essential project configuration, constants, and quick reference information.
 | `prompt_type` | VARCHAR(40) | currently `picture_word` / `phrase` |
 | `answer_text` | TEXT | canonical strict answer |
 | `answer_box` | JSONB | `{x,y,width,height}` in original page coordinates |
+| `support_config` | JSONB | Optional learning aids for review mode, e.g. `{syllables, show_syllables, trace_mode, trace_text}` |
 | `points` | INTEGER | default 5 |
 
 ### `vocab_submissions`

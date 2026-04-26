@@ -140,6 +140,9 @@
     root.querySelectorAll('[data-open]').forEach(button => {
       button.addEventListener('click', () => openExam(Number(button.dataset.open)));
     });
+    root.querySelectorAll('[data-practice]').forEach(button => {
+      button.addEventListener('click', () => openPractice(Number(button.dataset.practice)));
+    });
   }
 
   function renderExamCards(exams, mountId, emptyMessage) {
@@ -162,6 +165,7 @@
         </div>
         <div class="vocab-actions" style="margin-top: 0.9rem;">
           <button class="vocab-btn primary" type="button" data-open="${exam.id}">開始作答</button>
+          <button class="vocab-btn secondary" type="button" data-practice="${exam.id}">先練習</button>
         </div>
       </div>
     `).join('');
@@ -539,6 +543,16 @@
     } catch (error) {
       showToast(error.message, 'error');
     }
+  }
+
+  function openPractice(examId) {
+    const studentName = getStudentName();
+    if (!studentName) {
+      showToast('請先輸入學生姓名', 'error');
+      return;
+    }
+    rememberStudentName();
+    window.location.href = `vocab-review.html?exam=${encodeURIComponent(examId)}&mode=practice`;
   }
 
   function backToSelection() {

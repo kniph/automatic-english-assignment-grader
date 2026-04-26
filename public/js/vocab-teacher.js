@@ -25,6 +25,35 @@
     return div.innerHTML;
   }
 
+  function normalizeSyllables(value) {
+    const source = Array.isArray(value)
+      ? value
+      : String(value || '').split('|');
+    return source
+      .map(part => String(part || '').trim())
+      .filter(Boolean)
+      .slice(0, 8);
+  }
+
+  function normalizeSupportConfig(value) {
+    const raw = value && typeof value === 'object' && !Array.isArray(value) ? value : {};
+    return {
+      syllables: normalizeSyllables(raw.syllables || raw.syllables_text),
+      show_syllables: raw.show_syllables === false ? false : true,
+      trace_mode: String(raw.trace_mode || 'dots').trim().toLowerCase() === 'none' ? 'none' : 'dots',
+      trace_text: String(raw.trace_text || '').trim()
+    };
+  }
+
+  function collectSupportConfigFromForm() {
+    return {
+      syllables: normalizeSyllables(document.getElementById('questionSyllablesInput').value),
+      show_syllables: document.getElementById('questionShowSyllablesInput').value !== 'hide',
+      trace_mode: document.getElementById('questionTraceModeInput').value === 'none' ? 'none' : 'dots',
+      trace_text: document.getElementById('questionTraceTextInput').value.trim()
+    };
+  }
+
   function getCurrentSourceType() {
     return document.querySelector('input[name="sourceType"]:checked')?.value || 'howdy';
   }
@@ -77,6 +106,7 @@
           prompt_type: 'picture_word',
           answer_text: '',
           answer_box: { ...newRegion.region },
+          support_config: normalizeSupportConfig(),
           points: 5
         };
         state.questions.push(question);
@@ -226,6 +256,10 @@
       questionPointsInput: question?.points || 5,
       questionPromptTypeInput: question?.prompt_type || 'picture_word',
       questionAnswerInput: question?.answer_text || '',
+      questionSyllablesInput: normalizeSupportConfig(question?.support_config).syllables.join(' | '),
+      questionShowSyllablesInput: normalizeSupportConfig(question?.support_config).show_syllables ? 'show' : 'hide',
+      questionTraceModeInput: normalizeSupportConfig(question?.support_config).trace_mode,
+      questionTraceTextInput: normalizeSupportConfig(question?.support_config).trace_text,
       boxXInput: question?.answer_box?.x ?? '',
       boxYInput: question?.answer_box?.y ?? '',
       boxWidthInput: question?.answer_box?.width ?? '',
@@ -284,6 +318,7 @@
     question.points = Number(document.getElementById('questionPointsInput').value || question.points || 5);
     question.prompt_type = document.getElementById('questionPromptTypeInput').value || 'picture_word';
     question.answer_text = document.getElementById('questionAnswerInput').value.trim();
+    question.support_config = collectSupportConfigFromForm();
     question.answer_box = {
       x: Number(document.getElementById('boxXInput').value || question.answer_box.x),
       y: Number(document.getElementById('boxYInput').value || question.answer_box.y),
@@ -343,6 +378,7 @@
         prompt_type: question.prompt_type,
         answer_text: question.answer_text,
         answer_box: question.answer_box,
+        support_config: normalizeSupportConfig(question.support_config),
         points: question.points
       }))
     };
@@ -380,6 +416,7 @@
       state.pages = saved.pages || state.pages;
       state.questions = (saved.questions || []).map(question => ({
         ...question,
+        support_config: normalizeSupportConfig(question.support_config),
         client_key: question.client_key || String(question.id || nextQuestionKey())
       }));
       state.blankUploads = state.pages.map(page => page.blank_image);
@@ -499,6 +536,7 @@
       state.pages = exam.pages || [];
       state.questions = (exam.questions || []).map(question => ({
         ...question,
+        support_config: normalizeSupportConfig(question.support_config),
         client_key: String(question.id || nextQuestionKey())
       }));
       state.blankUploads = state.pages.map(page => page.blank_image);
@@ -707,6 +745,10 @@
       'questionPointsInput',
       'questionPromptTypeInput',
       'questionAnswerInput',
+      'questionSyllablesInput',
+      'questionShowSyllablesInput',
+      'questionTraceModeInput',
+      'questionTraceTextInput',
       'boxXInput',
       'boxYInput',
       'boxWidthInput',

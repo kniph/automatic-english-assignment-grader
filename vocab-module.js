@@ -93,10 +93,12 @@ async function initVocabDB(client) {
       prompt_type VARCHAR(40) NOT NULL DEFAULT 'picture_word',
       answer_text TEXT NOT NULL,
       answer_box JSONB NOT NULL,
+      support_config JSONB NOT NULL DEFAULT '{}',
       points INTEGER NOT NULL DEFAULT 5,
       UNIQUE (exam_id, question_number)
     );
   `);
+  await client.query(`ALTER TABLE vocab_questions ADD COLUMN IF NOT EXISTS support_config JSONB NOT NULL DEFAULT '{}'`).catch(() => {});
   await client.query(`
     ALTER TABLE vocab_questions
     DROP CONSTRAINT IF EXISTS vocab_questions_page_number_check;
@@ -157,6 +159,46 @@ function registerVocabRoutes({ app, pool, requireTeacherAuth, hasTeacherAccess, 
 
   function cleanText(value) {
     return String(value || '').trim();
+  }
+
+  function normalizeSyllables(value) {
+    const source = Array.isArray(value)
+      ? value
+      : String(value || '').split('|');
+    return source
+      .map(part => cleanText(part))
+      .filter(Boolean)
+      .slice(0, 8);
+  }
+
+  function pickPrimaryAnswerText(answerText) {
+    return cleanText(answerText)
+      .split('/')
+      .map(part => cleanText(part).replace(/\s*\([^)]*\)\s*/g, ' ').replace(/\s+/g, ' ').trim())
+      .filter(Boolean)[0] || cleanText(answerText);
+  }
+
+  function sanitizeSupportConfig(value) {
+    const raw = value && typeof value === 'object' && !Array.isArray(value) ? value : {};
+    const syllables = normalizeSyllables(raw.syllables || raw.syllables_text);
+    const traceMode = cleanText(raw.trace_mode).toLowerCase() === 'none' ? 'none' : 'dots';
+    const traceText = cleanText(raw.trace_text).slice(0, 120);
+    return {
+      syllables,
+      show_syllables: raw.show_syllables === false ? false : true,
+      trace_mode: traceMode,
+      trace_text: traceText
+    };
+  }
+
+  function buildReviewSupportConfig(question, answerText) {
+    const support = sanitizeSupportConfig(question?.support_config);
+    return {
+      ...support,
+      show_syllables: support.show_syllables && support.syllables.length > 1,
+      trace_mode: support.trace_mode === 'none' ? 'none' : 'dots',
+      trace_text: support.trace_text || pickPrimaryAnswerText(answerText)
+    };
   }
 
   function resolveQuestionContent(exam, question) {
@@ -310,6 +352,7 @@ function registerVocabRoutes({ app, pool, requireTeacherAuth, hasTeacherAccess, 
       const answerText = cleanText(rawQuestion.answer_text);
       const points = parsePositiveInt(rawQuestion.points, 5) || 5;
       const answerBox = rawQuestion.answer_box || {};
+      const supportConfig = sanitizeSupportConfig(rawQuestion.support_config);
       const x = Number(answerBox.x);
       const y = Number(answerBox.y);
       const width = Number(answerBox.width);
@@ -343,6 +386,7 @@ function registerVocabRoutes({ app, pool, requireTeacherAuth, hasTeacherAccess, 
           width: Math.round(width),
           height: Math.round(height)
         },
+        support_config: supportConfig,
         points
       };
     }).sort((a, b) => a.question_number - b.question_number);
@@ -360,7 +404,7 @@ function registerVocabRoutes({ app, pool, requireTeacherAuth, hasTeacherAccess, 
         [examId]
       ),
       pool.query(
-        'SELECT id, exam_id, page_number, question_number, prompt_type, answer_text, answer_box, points FROM vocab_questions WHERE exam_id = $1 ORDER BY question_number',
+        'SELECT id, exam_id, page_number, question_number, prompt_type, answer_text, answer_box, support_config, points FROM vocab_questions WHERE exam_id = $1 ORDER BY question_number',
         [examId]
       ),
       pool.query(
@@ -510,8 +554,8 @@ function registerVocabRoutes({ app, pool, requireTeacherAuth, hasTeacherAccess, 
       for (const question of questions) {
         await client.query(`
           INSERT INTO vocab_questions
-            (exam_id, page_number, question_number, prompt_type, answer_text, answer_box, points)
-          VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+            (exam_id, page_number, question_number, prompt_type, answer_text, answer_box, support_config, points)
+          VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
           [
             examId,
             question.page_number,
@@ -519,6 +563,7 @@ function registerVocabRoutes({ app, pool, requireTeacherAuth, hasTeacherAccess, 
             question.prompt_type,
             question.answer_text,
             JSON.stringify(question.answer_box),
+            JSON.stringify(question.support_config || {}),
             question.points
           ]
         );
@@ -1090,6 +1135,7 @@ function registerVocabRoutes({ app, pool, requireTeacherAuth, hasTeacherAccess, 
         correct_answer: canonical.answer_text,
         definition_zh: canonical.definition_zh,
         prompt_en: canonical.prompt_en,
+        support_config: buildReviewSupportConfig(question, canonical.answer_text),
         prompt_image: promptImage,
         answer_canvas_width: Math.max(420, question.answer_box.width * 2),
         answer_canvas_height: Math.max(140, question.answer_box.height * 2)
@@ -1098,6 +1144,10 @@ function registerVocabRoutes({ app, pool, requireTeacherAuth, hasTeacherAccess, 
 
     questions.sort((a, b) => a.question_number - b.question_number);
     return questions;
+  }
+
+  async function buildPracticeQuestions(bundle) {
+    return buildRetestQuestions(bundle, bundle.questions.map(question => question.id));
   }
 
   app.get('/api/vocab/exams', async (req, res) => {
@@ -1169,6 +1219,35 @@ function registerVocabRoutes({ app, pool, requireTeacherAuth, hasTeacherAccess, 
     } catch (err) {
       console.error('Get vocab exam error:', err);
       res.status(500).json({ error: 'Failed to get vocab exam' });
+    }
+  });
+
+  app.get('/api/vocab/exams/:id/practice', async (req, res) => {
+    try {
+      const bundle = await fetchExamWithDetails(req.params.id);
+      if (!bundle) {
+        return res.status(404).json({ error: 'Exam not found' });
+      }
+      if (bundle.exam.status !== 'published' && !hasTeacherAccess(req)) {
+        return res.status(403).json({ error: 'Exam is not published' });
+      }
+
+      const questions = await buildPracticeQuestions(bundle);
+      res.json({
+        exam_id: bundle.exam.id,
+        exam_title: bundle.exam.title,
+        source_submission_id: null,
+        student_name: cleanText(req.query?.student_name),
+        original_attempt_no: null,
+        next_attempt_no: null,
+        title: `${bundle.exam.title} - 單字練習`,
+        pass_score: bundle.exam.pass_score,
+        practice_mode: true,
+        questions
+      });
+    } catch (err) {
+      console.error('Build vocab practice error:', err);
+      res.status(500).json({ error: err.message || 'Failed to build practice' });
     }
   });
 

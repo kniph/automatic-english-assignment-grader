@@ -7,6 +7,7 @@ class VocabCanvasSurface {
     this.maxDisplayWidth = options.maxDisplayWidth || null;
     this.onInteraction = options.onInteraction || (() => {});
     this.guideBoxes = Array.isArray(options.guideBoxes) ? options.guideBoxes : [];
+    this.traceGuides = Array.isArray(options.traceGuides) ? options.traceGuides : [];
 
     this.backgroundImage = null;
     this.isDrawing = false;
@@ -142,40 +143,89 @@ class VocabCanvasSurface {
   drawGuides() {
     if (!this.guideCtx) return;
     this.guideCtx.clearRect(0, 0, this.width, this.height);
-    if (!this.guideBoxes.length) return;
+
+    if (this.guideBoxes.length) {
+      this.guideCtx.save();
+      this.guideCtx.setLineDash([14, 10]);
+      this.guideCtx.lineWidth = 3;
+      this.guideCtx.strokeStyle = 'rgba(31, 122, 224, 0.9)';
+      this.guideCtx.fillStyle = 'rgba(31, 122, 224, 0.06)';
+
+      for (const guide of this.guideBoxes) {
+        const box = guide.answer_box || guide;
+        const x = Number(box.x) || 0;
+        const y = Number(box.y) || 0;
+        const width = Number(box.width) || 0;
+        const height = Number(box.height) || 0;
+        if (width <= 0 || height <= 0) continue;
+
+        this.guideCtx.fillRect(x, y, width, height);
+        this.guideCtx.strokeRect(x, y, width, height);
+
+        const label = `Q${guide.question_number || ''}`.trim();
+        if (!label || !this.guideCtx.fillText) continue;
+        const labelX = x + 6;
+        const labelY = Math.max(16, y - 8);
+
+        this.guideCtx.save();
+        this.guideCtx.setLineDash([]);
+        this.guideCtx.font = 'bold 16px -apple-system, BlinkMacSystemFont, sans-serif';
+        const metrics = this.guideCtx.measureText(label);
+        const pillWidth = Math.ceil(metrics.width + 12);
+        this.guideCtx.fillStyle = 'rgba(31, 122, 224, 0.95)';
+        this.guideCtx.fillRect(labelX - 4, labelY - 14, pillWidth, 18);
+        this.guideCtx.fillStyle = '#ffffff';
+        this.guideCtx.fillText(label, labelX, labelY);
+        this.guideCtx.restore();
+      }
+
+      this.guideCtx.restore();
+    }
+
+    this.drawTraceGuides();
+  }
+
+  drawTraceGuides() {
+    if (!this.traceGuides.length) return;
 
     this.guideCtx.save();
-    this.guideCtx.setLineDash([14, 10]);
-    this.guideCtx.lineWidth = 3;
-    this.guideCtx.strokeStyle = 'rgba(31, 122, 224, 0.9)';
-    this.guideCtx.fillStyle = 'rgba(31, 122, 224, 0.06)';
+    this.guideCtx.textAlign = 'center';
+    this.guideCtx.textBaseline = 'middle';
+    this.guideCtx.lineCap = 'round';
+    this.guideCtx.lineJoin = 'round';
 
-    for (const guide of this.guideBoxes) {
-      const box = guide.answer_box || guide;
-      const x = Number(box.x) || 0;
-      const y = Number(box.y) || 0;
-      const width = Number(box.width) || 0;
-      const height = Number(box.height) || 0;
+    for (const guide of this.traceGuides) {
+      const text = String(guide.text || '').trim();
+      const mode = String(guide.mode || 'dots').trim().toLowerCase();
+      if (!text || mode === 'none') continue;
+
+      const sourceBox = guide.box || guide.answer_box || {};
+      const x = Number(sourceBox.x) || 0;
+      const y = Number(sourceBox.y) || 0;
+      const width = Number(sourceBox.width) || this.width;
+      const height = Number(sourceBox.height) || this.height;
       if (width <= 0 || height <= 0) continue;
 
-      this.guideCtx.fillRect(x, y, width, height);
-      this.guideCtx.strokeRect(x, y, width, height);
+      const boxPadding = Math.max(12, Math.round(Math.min(width, height) * 0.1));
+      const maxTextWidth = Math.max(40, width - (boxPadding * 2));
+      let fontSize = Math.min(Math.round(height * 0.52), 72);
+      fontSize = Math.max(24, fontSize);
 
-      const label = `Q${guide.question_number || ''}`.trim();
-      if (!label || !this.guideCtx.fillText) continue;
-      const labelX = x + 6;
-      const labelY = Math.max(16, y - 8);
+      while (fontSize > 18) {
+        this.guideCtx.font = `700 ${fontSize}px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif`;
+        if (this.guideCtx.measureText(text).width <= maxTextWidth) break;
+        fontSize -= 2;
+      }
 
-      this.guideCtx.save();
+      this.guideCtx.font = `700 ${fontSize}px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif`;
+      this.guideCtx.lineWidth = Math.max(1.8, fontSize * 0.08);
+      this.guideCtx.setLineDash([0.5, Math.max(5, fontSize * 0.17)]);
+      this.guideCtx.strokeStyle = 'rgba(20, 50, 74, 0.34)';
+      this.guideCtx.strokeText(text, x + width / 2, y + height / 2);
+
       this.guideCtx.setLineDash([]);
-      this.guideCtx.font = 'bold 16px -apple-system, BlinkMacSystemFont, sans-serif';
-      const metrics = this.guideCtx.measureText(label);
-      const pillWidth = Math.ceil(metrics.width + 12);
-      this.guideCtx.fillStyle = 'rgba(31, 122, 224, 0.95)';
-      this.guideCtx.fillRect(labelX - 4, labelY - 14, pillWidth, 18);
-      this.guideCtx.fillStyle = '#ffffff';
-      this.guideCtx.fillText(label, labelX, labelY);
-      this.guideCtx.restore();
+      this.guideCtx.fillStyle = 'rgba(20, 50, 74, 0.055)';
+      this.guideCtx.fillText(text, x + width / 2, y + height / 2);
     }
 
     this.guideCtx.restore();

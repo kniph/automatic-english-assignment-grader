@@ -2,3 +2,18 @@ node_modules/
 .env
 .DS_Store
 *.log
+
+# Local Codex instruction mirror; CLAUDE.md remains the tracked source.
+AGENTS.md
+
+# Local source assets and workbook media are large and reproducible.
+VOCs/
+WBs/
+
+# Generated OCR/template-review outputs and probes.
+tmp-*
+data/vocab-review/
+data/vocab-review-*/
+data/supplemental_notes_manifest.*.json
+data/vocab-prompts/nh9-vocab-prompts.csv
+data/vocab-prompts/nh9-vocab-prompts.json

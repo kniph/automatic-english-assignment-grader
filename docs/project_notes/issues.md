@@ -4,6 +4,47 @@ Chronological record of completed work, features, and significant changes.
 
 ---
 
+## 2026-04-27 - Local File Cleanup Before Vocab Support Publish
+
+**Work Done**:
+1. Classified the current untracked files before publishing the vocab support feature.
+2. Marked large local source assets (`VOCs/`, `WBs/`) as local-only because they are not application source code and are too large for normal Git history.
+3. Marked generated OCR/template-review outputs (`tmp-*`, `data/vocab-review*/`, supplemental manifest exports) as local-only because they can be regenerated.
+4. Kept the publish scope focused on the vocab syllable/tracing feature and its documentation.
+
+**Files Modified**:
+- `.gitignore`
+- `docs/project_notes/key_facts.md`
+- `docs/project_notes/issues.md`
+
+**Result**: Old local assets are retained on disk but no longer appear as untracked publish candidates.
+
+---
+
+## 2026-04-26 - Vocab Review Supports: Syllables and Dotted Tracing
+
+**Work Done**:
+1. Added `vocab_questions.support_config` JSONB for per-question learning aids.
+2. Added teacher Builder fields for syllable chunks, syllable visibility, dotted tracing mode, and tracing text override.
+3. Extended wrong-question review payloads to include review supports while keeping full public exam payloads answer-safe.
+4. Extended `VocabCanvasSurface` with guide-layer dotted tracing text that is not included in submitted OCR images.
+5. Updated `vocab-review.html` flow to show syllable chips and dotted tracing practice before retest.
+6. Added a student-facing "先練習" entry from vocab exam cards for full-exam practice before formal submission.
+
+**Files Modified**:
+- `vocab-module.js`
+- `public/js/vocab-exam.js`
+- `public/vocab-teacher.html`
+- `public/js/vocab-teacher.js`
+- `public/js/vocab-drawing.js`
+- `public/js/vocab-review.js`
+- `public/css/vocab.css`
+- `docs/project_notes/key_facts.md`
+
+**Result**: Teachers can configure syllable and tracing aids per vocab question. Students see these aids in explicit practice / wrong-question review, not in the formal full-exam screen.
+
+---
+
 ## 2026-03-27 - Initial OCR Grading System (v1)
 
 **Work Done**:

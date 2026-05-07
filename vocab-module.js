@@ -141,7 +141,7 @@ async function initVocabDB(client) {
   `).catch(() => {});
 }
 
-function registerVocabRoutes({ app, pool, requireTeacherAuth, hasTeacherAccess, callVisionAPI }) {
+function registerVocabRoutes({ app, pool, requireTeacherAuth, hasTeacherAccess, callVisionAPI, suggestVocabSyllables }) {
   function normalizeStatus(value) {
     const raw = String(value || '').trim().toLowerCase();
     return VOCAB_EXAM_STATUSES.has(raw) ? raw : 'draft';
@@ -199,6 +199,90 @@ function registerVocabRoutes({ app, pool, requireTeacherAuth, hasTeacherAccess, 
       trace_mode: support.trace_mode === 'none' ? 'none' : 'dots',
       trace_text: support.trace_text || pickPrimaryAnswerText(answerText)
     };
+  }
+
+  function normalizeSyllableSuggestionInputs(value) {
+    const source = Array.isArray(value)
+      ? value
+      : Array.isArray(value?.items)
+        ? value.items
+        : [value?.text || value?.answer_text || value];
+    return source
+      .map(item => typeof item === 'string' ? item : item?.text || item?.answer_text || '')
+      .map(text => cleanText(text))
+      .filter(Boolean)
+      .slice(0, 40);
+  }
+
+  function heuristicSyllablesForWord(word) {
+    const clean = cleanText(word).replace(/[^A-Za-z']/g, '');
+    if (!clean) return [];
+    const lower = clean.toLowerCase();
+    const known = {
+      about: ['a', 'bout'],
+      again: ['a', 'gain'],
+      apple: ['ap', 'ple'],
+      banana: ['ba', 'na', 'na'],
+      beautiful: ['beau', 'ti', 'ful'],
+      because: ['be', 'cause'],
+      birthday: ['birth', 'day'],
+      chicken: ['chick', 'en'],
+      classroom: ['class', 'room'],
+      computer: ['com', 'pu', 'ter'],
+      dollar: ['dol', 'lar'],
+      expensive: ['ex', 'pen', 'sive'],
+      family: ['fam', 'i', 'ly'],
+      favorite: ['fa', 'vor', 'ite'],
+      hamburger: ['ham', 'bur', 'ger'],
+      hundred: ['hun', 'dred'],
+      important: ['im', 'por', 'tant'],
+      orange: ['or', 'ange'],
+      pencil: ['pen', 'cil'],
+      sandwich: ['sand', 'wich'],
+      skateboard: ['skate', 'board'],
+      student: ['stu', 'dent'],
+      teacher: ['teach', 'er'],
+      together: ['to', 'geth', 'er'],
+      tomorrow: ['to', 'mor', 'row'],
+      water: ['wa', 'ter'],
+      window: ['win', 'dow'],
+      yesterday: ['yes', 'ter', 'day']
+    };
+    if (known[lower]) return known[lower];
+
+    const vowelGroups = [...lower.matchAll(/[aeiouy]+/g)];
+    if (vowelGroups.length <= 1 || clean.length <= 4) return [clean];
+
+    const chunks = [];
+    let start = 0;
+    for (let index = 0; index < vowelGroups.length - 1; index += 1) {
+      const currentEnd = vowelGroups[index].index + vowelGroups[index][0].length;
+      const nextStart = vowelGroups[index + 1].index;
+      const consonants = lower.slice(currentEnd, nextStart);
+      let splitAt = currentEnd;
+      if (consonants.length > 1) {
+        splitAt = currentEnd + Math.max(1, consonants.length - 1);
+      }
+      if (splitAt - start >= 2) {
+        chunks.push(clean.slice(start, splitAt));
+        start = splitAt;
+      }
+    }
+    chunks.push(clean.slice(start));
+    return chunks.filter(Boolean);
+  }
+
+  function heuristicSyllablesForText(text) {
+    const primary = pickPrimaryAnswerText(text);
+    const words = primary.match(/[A-Za-z]+(?:'[A-Za-z]+)?|\d+/g) || [];
+    if (!words.length) return primary ? [primary] : [];
+    return words.flatMap(word => /^\d+$/.test(word) ? [word] : heuristicSyllablesForWord(word)).slice(0, 8);
+  }
+
+  function normalizeSuggestedSyllableItem(item) {
+    const text = cleanText(item?.text || item?.answer_text);
+    const syllables = normalizeSyllables(item?.syllables || item?.syllables_text);
+    return { text, syllables };
   }
 
   function resolveQuestionContent(exam, question) {
@@ -1149,6 +1233,52 @@ function registerVocabRoutes({ app, pool, requireTeacherAuth, hasTeacherAccess, 
   async function buildPracticeQuestions(bundle) {
     return buildRetestQuestions(bundle, bundle.questions.map(question => question.id));
   }
+
+  app.post('/api/vocab/syllables/suggest', requireTeacherAuth, async (req, res) => {
+    try {
+      const inputs = normalizeSyllableSuggestionInputs(req.body || {});
+      if (!inputs.length) {
+        return res.status(400).json({ error: 'At least one answer text is required' });
+      }
+
+      let aiItems = [];
+      let usedAI = false;
+      if (typeof suggestVocabSyllables === 'function') {
+        try {
+          aiItems = (await suggestVocabSyllables(inputs)).map(normalizeSuggestedSyllableItem);
+          usedAI = aiItems.some(item => item.text && item.syllables.length);
+        } catch (error) {
+          console.warn('Vocab syllable AI suggestion failed, using heuristic fallback:', error.message || error);
+        }
+      }
+
+      const byText = new Map();
+      for (const item of aiItems) {
+        const key = item.text.toLowerCase();
+        if (key && item.syllables.length && !byText.has(key)) {
+          byText.set(key, item.syllables);
+        }
+      }
+
+      const items = inputs.map(text => {
+        const aiSyllables = byText.get(text.toLowerCase()) || [];
+        const syllables = aiSyllables.length ? aiSyllables : heuristicSyllablesForText(text);
+        return {
+          text,
+          syllables,
+          source: aiSyllables.length ? 'ai' : 'heuristic'
+        };
+      });
+
+      res.json({
+        source: usedAI ? 'ai' : 'heuristic',
+        items
+      });
+    } catch (err) {
+      console.error('Suggest vocab syllables error:', err);
+      res.status(500).json({ error: err.message || 'Failed to suggest syllables' });
+    }
+  });
 
   app.get('/api/vocab/exams', async (req, res) => {
     try {

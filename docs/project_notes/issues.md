@@ -4,6 +4,29 @@ Chronological record of completed work, features, and significant changes.
 
 ---
 
+## 2026-05-07 - Trace Lettering Fix and AI Syllable Suggestions
+
+**Work Done**:
+1. Replaced outline-based `strokeText` dotted tracing with a schoolbook-style stroke-path renderer that places dots on the letter centerline.
+2. Added teacher-only `POST /api/vocab/syllables/suggest` for AI syllable suggestions with local heuristic fallback.
+3. Added teacher Builder controls for single-question `AI 拆` and full-exam `AI 補音節`.
+4. Kept generated syllables editable before save/publish so teachers can correct edge cases.
+
+**Files Modified**:
+- `server.js`
+- `vocab-module.js`
+- `public/vocab-teacher.html`
+- `public/js/vocab-teacher.js`
+- `public/js/vocab-drawing.js`
+- `public/css/vocab.css`
+- `docs/project_notes/key_facts.md`
+- `docs/project_notes/issues.md`
+- `docs/project_notes/bugs.md`
+
+**Result**: Practice/review tracing now forms letters from connectable dots instead of glyph outlines, and teachers can generate syllables without manually splitting every answer.
+
+---
+
 ## 2026-04-27 - Local File Cleanup Before Vocab Support Publish
 
 **Work Done**:

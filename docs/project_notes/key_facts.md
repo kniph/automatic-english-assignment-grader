@@ -134,6 +134,7 @@ Essential project configuration, constants, and quick reference information.
 - `POST /api/vocab/exams` — create vocab exam draft (teacher only)
 - `GET  /api/vocab/exams/:id` — public exam data when published; full template when teacher-authenticated
 - `GET  /api/vocab/exams/:id/practice` — published exam practice payload with answers, syllables, and tracing aids
+- `POST /api/vocab/syllables/suggest` — teacher-only AI syllable suggestion endpoint with heuristic fallback
 - `PATCH /api/vocab/exams/:id` — update exam/pages/questions (teacher only)
 - `POST /api/vocab/exams/:id/publish` — validate and publish exam (teacher only)
 - `POST /api/vocab/submissions` — submit full exam or retest answers for grading
@@ -177,10 +178,11 @@ Essential project configuration, constants, and quick reference information.
   - all `Review 1 / Review 2` vocab exams for `Howdy 1-8` are published
   - `NH9` remains intentionally out of scope for this rollout
 - Vocab questions can store optional review supports in `support_config`:
-  - `syllables`: teacher-edited chunks such as `["com","pu","ter"]`
+  - `syllables`: AI-suggested, teacher-editable chunks such as `["com","pu","ter"]`
   - `show_syllables`: controls whether syllable chips appear during wrong-question review
   - `trace_mode`: `dots` or `none`
   - `trace_text`: override text for dotted tracing; when blank, review mode uses the primary correct answer
+- Dotted tracing renders dots along simple letter stroke centerlines, not along the outer glyph outline. The guide layer is excluded from exported submission images.
 - Public full-exam payloads do not expose `support_config`; wrong-question review and explicit practice payloads can include it because those screens intentionally show the correct answer.
 
 ---

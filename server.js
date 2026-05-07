@@ -425,6 +425,51 @@ function getAnthropicClient() {
   return new Anthropic({ apiKey: key });
 }
 
+async function suggestVocabSyllablesWithClaude(texts) {
+  const inputs = (Array.isArray(texts) ? texts : [])
+    .map(text => String(text || '').trim())
+    .filter(Boolean)
+    .slice(0, 40);
+  if (!inputs.length) return [];
+
+  const client = getAnthropicClient();
+  const response = await client.messages.create({
+    model: 'claude-sonnet-4-6',
+    max_tokens: 1200,
+    temperature: 0,
+    messages: [{
+      role: 'user',
+      content: `Split each English vocabulary answer into child-friendly syllable chunks for early elementary ESL tracing practice.
+
+Rules:
+- Preserve the input order.
+- For phrases, return syllables across the phrase, e.g. "one hundred" -> ["one","hun","dred"].
+- Prefer common classroom syllable breaks over phonetic notation.
+- Do not include IPA, stress marks, explanations, punctuation-only chunks, or empty strings.
+- If a word has one syllable, return that word as one chunk.
+- Keep chunks readable for children and close to spelling.
+
+Return ONLY valid JSON:
+{"items":[{"text":"...","syllables":["..."]}]}
+
+Inputs:
+${JSON.stringify(inputs)}`
+    }]
+  });
+
+  const raw = (response.content || [])
+    .map(part => part && part.type === 'text' ? part.text : '')
+    .join('\n')
+    .trim();
+  const jsonMatch = raw.match(/\{[\s\S]*\}/);
+  if (!jsonMatch) {
+    throw new Error('Claude did not return syllable JSON');
+  }
+
+  const parsed = JSON.parse(jsonMatch[0]);
+  return Array.isArray(parsed.items) ? parsed.items : [];
+}
+
 async function gradeWithClaude(answerKeyBase64, studentBase64, assignmentName) {
   const client = getAnthropicClient();
 
@@ -1426,7 +1471,8 @@ registerVocabRoutes({
   pool,
   requireTeacherAuth,
   hasTeacherAccess,
-  callVisionAPI
+  callVisionAPI,
+  suggestVocabSyllables: suggestVocabSyllablesWithClaude
 });
 
 // --- Start Server ---

@@ -393,6 +393,19 @@ body.vocab-student-page .vocab-shell {
   box-shadow: 0 0 0 3px rgba(31, 122, 224, 0.12);
 }
 
+.vocab-field-action-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.5rem;
+  align-items: stretch;
+}
+
+.vocab-field-action-row .vocab-btn {
+  padding-left: 0.9rem;
+  padding-right: 0.9rem;
+  white-space: nowrap;
+}
+
 .vocab-source-row {
   display: flex;
   gap: 0.7rem;

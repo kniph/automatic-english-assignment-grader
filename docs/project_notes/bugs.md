@@ -4,6 +4,21 @@ Record of bugs encountered, root causes, solutions, and prevention strategies.
 
 ---
 
+## 2026-05-07 - BUG-027: Dotted Tracing Drew Letter Outlines Instead of Traceable Letter Strokes
+
+**Issue**: Vocab practice tracing looked like dots around the outside of a bold font, so connecting the dots formed an outline/blob instead of a child-friendly written letter.
+
+**Root Cause**:
+The first implementation used `canvas.strokeText()` with a dashed stroke. Canvas text strokes follow the glyph outline, not the handwriting centerline.
+
+**Solution**:
+Replaced the text-stroke renderer with a lightweight schoolbook-style glyph path renderer. It samples dots along letter stroke centerlines and draws faint writing guide lines behind the dots.
+
+**Prevention**:
+For tracing aids, do not use `strokeText()` unless an outline is explicitly desired. Use stroke-path glyphs, a tracing font, or another centerline-based renderer.
+
+---
+
 ## 2026-03-27 - BUG-001: Canvas Blank (Gray Box) After Image Upload
 
 **Issue**: ROI editor canvas displayed as gray box with no image after uploading template.

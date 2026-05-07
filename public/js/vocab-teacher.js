@@ -271,6 +271,7 @@
       document.getElementById(id).disabled = !question;
     });
     document.getElementById('deleteQuestionBtn').disabled = !question;
+    document.getElementById('suggestQuestionSyllablesBtn').disabled = !question;
   }
 
   function renderQuestionTable() {
@@ -361,6 +362,95 @@
     renderQuestionTable();
     renderQuestionForm();
     showToast('題號已重新排序');
+  }
+
+  function getPrimaryAnswerText(value) {
+    return String(value || '')
+      .split('/')
+      .map(part => part.replace(/\s*\([^)]*\)\s*/g, ' ').replace(/\s+/g, ' ').trim())
+      .filter(Boolean)[0] || String(value || '').trim();
+  }
+
+  async function fetchSyllableSuggestions(texts) {
+    const response = await apiCall('/api/vocab/syllables/suggest', {
+      method: 'POST',
+      body: { items: texts }
+    });
+    return Array.isArray(response.items) ? response.items : [];
+  }
+
+  async function suggestSyllablesForSelectedQuestion() {
+    applyQuestionForm();
+    const question = getSelectedQuestion();
+    if (!question) return;
+
+    const answerText = getPrimaryAnswerText(question.answer_text);
+    if (!answerText) {
+      showToast('請先填入正確答案', 'error');
+      return;
+    }
+
+    const button = document.getElementById('suggestQuestionSyllablesBtn');
+    const originalText = button.textContent;
+    button.disabled = true;
+    button.textContent = '拆分中…';
+
+    try {
+      const [suggestion] = await fetchSyllableSuggestions([answerText]);
+      const syllables = normalizeSyllables(suggestion?.syllables);
+      if (!syllables.length) throw new Error('沒有取得音節建議');
+
+      question.support_config = {
+        ...normalizeSupportConfig(question.support_config),
+        syllables,
+        show_syllables: true
+      };
+      renderQuestionForm();
+      showToast('已產生音節建議');
+    } catch (error) {
+      showToast(error.message, 'error');
+    } finally {
+      button.disabled = false;
+      button.textContent = originalText;
+    }
+  }
+
+  async function suggestSyllablesForAllQuestions() {
+    applyQuestionForm();
+    const targets = state.questions
+      .filter(question => getPrimaryAnswerText(question.answer_text))
+      .sort((a, b) => Number(a.question_number) - Number(b.question_number));
+
+    if (!targets.length) {
+      showToast('沒有可拆分的答案', 'error');
+      return;
+    }
+
+    const button = document.getElementById('suggestAllSyllablesBtn');
+    const originalText = button.textContent;
+    button.disabled = true;
+    button.textContent = 'AI 處理中…';
+
+    try {
+      const suggestions = await fetchSyllableSuggestions(targets.map(question => getPrimaryAnswerText(question.answer_text)));
+      targets.forEach((question, index) => {
+        const syllables = normalizeSyllables(suggestions[index]?.syllables);
+        if (!syllables.length) return;
+        question.support_config = {
+          ...normalizeSupportConfig(question.support_config),
+          syllables,
+          show_syllables: true
+        };
+      });
+      renderQuestionForm();
+      renderQuestionTable();
+      showToast(`已補上 ${suggestions.length} 題音節建議`);
+    } catch (error) {
+      showToast(error.message, 'error');
+    } finally {
+      button.disabled = false;
+      button.textContent = originalText;
+    }
   }
 
   function collectExamPayload() {
@@ -721,9 +811,11 @@
     document.getElementById('saveDraftBtn').addEventListener('click', () => saveExam({ publishAfter: false }));
     document.getElementById('publishBtn').addEventListener('click', () => saveExam({ publishAfter: true }));
     document.getElementById('renumberBtn').addEventListener('click', renumberQuestions);
+    document.getElementById('suggestAllSyllablesBtn').addEventListener('click', suggestSyllablesForAllQuestions);
     document.getElementById('resetBtn').addEventListener('click', resetBuilder);
     document.getElementById('refreshListBtn').addEventListener('click', loadExamList);
     document.getElementById('deleteQuestionBtn').addEventListener('click', deleteSelectedQuestion);
+    document.getElementById('suggestQuestionSyllablesBtn').addEventListener('click', suggestSyllablesForSelectedQuestion);
     document.getElementById('toggleAnswerBtn').addEventListener('click', () => {
       state.showAnswerPreview = !state.showAnswerPreview;
       document.getElementById('toggleAnswerBtn').textContent = state.showAnswerPreview ? '隱藏答案頁' : '顯示答案頁';

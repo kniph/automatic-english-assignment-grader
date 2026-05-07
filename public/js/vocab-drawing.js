@@ -189,10 +189,6 @@ class VocabCanvasSurface {
     if (!this.traceGuides.length) return;
 
     this.guideCtx.save();
-    this.guideCtx.textAlign = 'center';
-    this.guideCtx.textBaseline = 'middle';
-    this.guideCtx.lineCap = 'round';
-    this.guideCtx.lineJoin = 'round';
 
     for (const guide of this.traceGuides) {
       const text = String(guide.text || '').trim();
@@ -208,27 +204,226 @@ class VocabCanvasSurface {
 
       const boxPadding = Math.max(12, Math.round(Math.min(width, height) * 0.1));
       const maxTextWidth = Math.max(40, width - (boxPadding * 2));
-      let fontSize = Math.min(Math.round(height * 0.52), 72);
-      fontSize = Math.max(24, fontSize);
-
-      while (fontSize > 18) {
-        this.guideCtx.font = `700 ${fontSize}px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif`;
-        if (this.guideCtx.measureText(text).width <= maxTextWidth) break;
-        fontSize -= 2;
-      }
-
-      this.guideCtx.font = `700 ${fontSize}px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif`;
-      this.guideCtx.lineWidth = Math.max(1.8, fontSize * 0.08);
-      this.guideCtx.setLineDash([0.5, Math.max(5, fontSize * 0.17)]);
-      this.guideCtx.strokeStyle = 'rgba(20, 50, 74, 0.34)';
-      this.guideCtx.strokeText(text, x + width / 2, y + height / 2);
-
-      this.guideCtx.setLineDash([]);
-      this.guideCtx.fillStyle = 'rgba(20, 50, 74, 0.055)';
-      this.guideCtx.fillText(text, x + width / 2, y + height / 2);
+      const maxTextHeight = Math.max(40, height - (boxPadding * 2));
+      this.drawDottedTraceText(this.guideCtx, text, {
+        x: x + boxPadding,
+        y: y + boxPadding,
+        width: maxTextWidth,
+        height: maxTextHeight
+      });
     }
 
     this.guideCtx.restore();
+  }
+
+  drawDottedTraceText(ctx, text, box) {
+    let fontSize = Math.min(Math.round(box.height * 0.6), 78);
+    fontSize = Math.max(24, fontSize);
+    let layout = null;
+
+    while (fontSize >= 20) {
+      layout = this.layoutTraceText(text, fontSize, box.width, box.height);
+      if (layout.fits) break;
+      fontSize -= 2;
+    }
+
+    if (!layout) return;
+
+    const dotRadius = Math.max(1.9, Math.min(4.6, fontSize * 0.042));
+    const dotSpacing = Math.max(6.2, fontSize * 0.13);
+    const lineHeight = fontSize * 1.2;
+    const totalHeight = layout.lines.length * lineHeight;
+    const startY = box.y + Math.max(0, (box.height - totalHeight) / 2);
+
+    ctx.save();
+    ctx.fillStyle = 'rgba(78, 94, 112, 0.46)';
+
+    layout.lines.forEach((line, lineIndex) => {
+      const lineWidth = this.estimateTraceTextWidth(line, fontSize);
+      const lineX = box.x + Math.max(0, (box.width - lineWidth) / 2);
+      const lineTop = startY + (lineIndex * lineHeight) + ((lineHeight - fontSize) / 2);
+
+      this.drawTraceWritingLines(ctx, box.x, lineTop, box.width, fontSize);
+      this.drawDottedTraceLine(ctx, line, lineX, lineTop, fontSize, dotSpacing, dotRadius);
+    });
+
+    ctx.restore();
+  }
+
+  layoutTraceText(text, fontSize, maxWidth, maxHeight) {
+    const normalized = String(text || '').replace(/\s+/g, ' ').trim();
+    const words = normalized.split(' ').filter(Boolean);
+    const lines = [];
+
+    if (words.length <= 1) {
+      lines.push(normalized);
+    } else {
+      let current = '';
+      for (const word of words) {
+        const candidate = current ? `${current} ${word}` : word;
+        if (current && this.estimateTraceTextWidth(candidate, fontSize) > maxWidth) {
+          lines.push(current);
+          current = word;
+        } else {
+          current = candidate;
+        }
+      }
+      if (current) lines.push(current);
+    }
+
+    const widest = lines.reduce((max, line) => Math.max(max, this.estimateTraceTextWidth(line, fontSize)), 0);
+    const totalHeight = lines.length * fontSize * 1.2;
+    return {
+      lines,
+      fits: widest <= maxWidth && totalHeight <= maxHeight
+    };
+  }
+
+  estimateTraceTextWidth(text, fontSize) {
+    return Array.from(String(text || '')).reduce((total, char) => {
+      return total + (this.getTraceCharWidth(char) * fontSize) + (fontSize * 0.08);
+    }, 0);
+  }
+
+  getTraceCharWidth(char) {
+    if (char === ' ') return 0.48;
+    if (/['.,:;]/.test(char)) return 0.26;
+    if (/[ilIj1!]/.test(char)) return 0.34;
+    if (/[mwMW]/.test(char)) return 1.08;
+    if (/[ftjr]/.test(char)) return 0.54;
+    return 0.78;
+  }
+
+  drawTraceWritingLines(ctx, x, y, width, fontSize) {
+    ctx.save();
+    ctx.strokeStyle = 'rgba(68, 132, 168, 0.15)';
+    ctx.lineWidth = Math.max(1, fontSize * 0.012);
+    ctx.setLineDash([]);
+
+    [0.12, 0.54, 0.92].forEach(ratio => {
+      const lineY = y + (fontSize * ratio);
+      ctx.beginPath();
+      ctx.moveTo(x, lineY);
+      ctx.lineTo(x + width, lineY);
+      ctx.stroke();
+    });
+
+    ctx.restore();
+  }
+
+  drawDottedTraceLine(ctx, text, x, y, fontSize, dotSpacing, dotRadius) {
+    let cursorX = x;
+    Array.from(String(text || '')).forEach(char => {
+      const charWidth = this.getTraceCharWidth(char) * fontSize;
+      if (char === ' ') {
+        cursorX += charWidth + (fontSize * 0.08);
+        return;
+      }
+
+      this.drawDottedTraceGlyph(ctx, char, cursorX, y, charWidth, fontSize, dotSpacing, dotRadius);
+      cursorX += charWidth + (fontSize * 0.08);
+    });
+  }
+
+  drawDottedTraceGlyph(ctx, char, x, y, width, height, dotSpacing, dotRadius) {
+    const glyph = this.getTraceGlyph(char);
+    if (!glyph.length) return;
+
+    glyph.forEach(stroke => {
+      if (stroke.length === 1) {
+        this.drawTraceDot(ctx, x + stroke[0][0] * width, y + stroke[0][1] * height, dotRadius * 1.08);
+        return;
+      }
+
+      const points = stroke.map(point => [x + point[0] * width, y + point[1] * height]);
+      this.drawDotsAlongStroke(ctx, points, dotSpacing, dotRadius);
+    });
+  }
+
+  drawDotsAlongStroke(ctx, points, spacing, radius) {
+    let carry = 0;
+    for (let index = 0; index < points.length - 1; index += 1) {
+      const [x1, y1] = points[index];
+      const [x2, y2] = points[index + 1];
+      const dx = x2 - x1;
+      const dy = y2 - y1;
+      const length = Math.hypot(dx, dy);
+      if (length <= 0) continue;
+
+      let distance = index === 0 ? 0 : spacing - carry;
+      while (distance <= length) {
+        const ratio = distance / length;
+        this.drawTraceDot(ctx, x1 + dx * ratio, y1 + dy * ratio, radius);
+        distance += spacing;
+      }
+      carry = length - (distance - spacing);
+      if (carry < 0 || carry >= spacing) carry = 0;
+    }
+  }
+
+  drawTraceDot(ctx, x, y, radius) {
+    ctx.beginPath();
+    ctx.arc(x, y, radius, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  getTraceGlyph(char) {
+    const lower = String(char || '').toLowerCase();
+    const arc = (cx, cy, rx, ry, start, end, steps = 18) => {
+      const points = [];
+      for (let index = 0; index <= steps; index += 1) {
+        const angle = start + ((end - start) * index / steps);
+        points.push([cx + Math.cos(angle) * rx, cy + Math.sin(angle) * ry]);
+      }
+      return points;
+    };
+    const oval = (cx = 0.5, cy = 0.58, rx = 0.32, ry = 0.32) => arc(cx, cy, rx, ry, 0, Math.PI * 2, 24);
+
+    const glyphs = {
+      a: [oval(0.47, 0.62, 0.3, 0.28), [[0.76, 0.36], [0.76, 0.9]]],
+      b: [[[0.24, 0.12], [0.24, 0.9]], arc(0.51, 0.62, 0.29, 0.28, -Math.PI / 2, Math.PI * 1.5, 22)],
+      c: [arc(0.56, 0.6, 0.34, 0.3, Math.PI * 0.18, Math.PI * 1.82, 22)],
+      d: [[[0.76, 0.12], [0.76, 0.9]], arc(0.49, 0.62, 0.29, 0.28, Math.PI * 1.5, -Math.PI / 2, 22)],
+      e: [arc(0.54, 0.6, 0.34, 0.3, Math.PI * 0.16, Math.PI * 1.86, 22), [[0.22, 0.58], [0.78, 0.58]]],
+      f: [[[0.66, 0.14], [0.5, 0.12], [0.42, 0.28], [0.42, 0.92]], [[0.2, 0.42], [0.68, 0.42]]],
+      g: [oval(0.48, 0.55, 0.3, 0.25), [[0.76, 0.36], [0.76, 0.88], [0.57, 1.0], [0.32, 0.9]]],
+      h: [[[0.24, 0.12], [0.24, 0.9]], [[0.24, 0.56], [0.42, 0.38], [0.73, 0.46], [0.73, 0.9]]],
+      i: [[[0.5, 0.42], [0.5, 0.9]], [[0.5, 0.22]]],
+      j: [[[0.56, 0.42], [0.56, 0.86], [0.42, 0.98], [0.26, 0.9]], [[0.56, 0.22]]],
+      k: [[[0.24, 0.12], [0.24, 0.9]], [[0.73, 0.38], [0.24, 0.64], [0.74, 0.9]]],
+      l: [[[0.5, 0.12], [0.5, 0.9]]],
+      m: [[[0.16, 0.9], [0.16, 0.42], [0.34, 0.34], [0.5, 0.52], [0.5, 0.9]], [[0.5, 0.52], [0.68, 0.34], [0.84, 0.44], [0.84, 0.9]]],
+      n: [[[0.22, 0.9], [0.22, 0.42], [0.43, 0.34], [0.74, 0.46], [0.74, 0.9]]],
+      o: [oval(0.5, 0.62, 0.32, 0.28)],
+      p: [[[0.24, 0.4], [0.24, 1.0]], arc(0.52, 0.55, 0.29, 0.24, -Math.PI / 2, Math.PI * 1.5, 22)],
+      q: [[[0.76, 0.4], [0.76, 1.0]], arc(0.48, 0.55, 0.29, 0.24, Math.PI * 1.5, -Math.PI / 2, 22)],
+      r: [[[0.24, 0.9], [0.24, 0.42], [0.45, 0.34], [0.72, 0.42]]],
+      s: [[[0.76, 0.42], [0.46, 0.34], [0.23, 0.5], [0.55, 0.63], [0.78, 0.78], [0.43, 0.92], [0.2, 0.82]]],
+      t: [[[0.5, 0.18], [0.5, 0.86], [0.62, 0.92]], [[0.24, 0.42], [0.76, 0.42]]],
+      u: [[[0.22, 0.42], [0.22, 0.75], [0.36, 0.9], [0.62, 0.9], [0.76, 0.75], [0.76, 0.42]]],
+      v: [[[0.18, 0.42], [0.5, 0.9], [0.82, 0.42]]],
+      w: [[[0.12, 0.42], [0.32, 0.9], [0.5, 0.58], [0.68, 0.9], [0.88, 0.42]]],
+      x: [[[0.2, 0.42], [0.78, 0.9]], [[0.78, 0.42], [0.2, 0.9]]],
+      y: [[[0.18, 0.42], [0.5, 0.78], [0.82, 0.42]], [[0.5, 0.78], [0.34, 1.0], [0.18, 0.92]]],
+      z: [[[0.18, 0.42], [0.82, 0.42], [0.18, 0.9], [0.82, 0.9]]],
+      0: [oval(0.5, 0.52, 0.33, 0.42)],
+      1: [[[0.5, 0.14], [0.5, 0.9]], [[0.34, 0.28], [0.5, 0.14], [0.66, 0.28]]],
+      2: [[[0.22, 0.34], [0.34, 0.18], [0.64, 0.18], [0.78, 0.36], [0.22, 0.9], [0.82, 0.9]]],
+      3: [[[0.22, 0.22], [0.76, 0.22], [0.5, 0.52], [0.76, 0.78], [0.22, 0.9]]],
+      4: [[[0.72, 0.12], [0.72, 0.9]], [[0.18, 0.62], [0.84, 0.62]], [[0.18, 0.62], [0.72, 0.12]]],
+      5: [[[0.78, 0.18], [0.28, 0.18], [0.22, 0.5], [0.62, 0.5], [0.82, 0.68], [0.64, 0.9], [0.26, 0.86]]],
+      6: [arc(0.54, 0.58, 0.31, 0.33, Math.PI * 0.22, Math.PI * 2.1, 25), [[0.68, 0.18], [0.34, 0.54]]],
+      7: [[[0.2, 0.18], [0.82, 0.18], [0.4, 0.9]]],
+      8: [oval(0.5, 0.34, 0.28, 0.2), oval(0.5, 0.72, 0.31, 0.24)],
+      9: [arc(0.48, 0.42, 0.31, 0.24, 0, Math.PI * 2, 23), [[0.7, 0.48], [0.38, 0.9]]],
+      '-': [[[0.26, 0.62], [0.74, 0.62]]],
+      "'": [[[0.5, 0.12], [0.42, 0.28]]]
+    };
+
+    if (/[A-Z]/.test(char) && glyphs[lower]) {
+      return glyphs[lower].map(stroke => stroke.map(point => [point[0], Math.max(0.1, point[1] - 0.08)]));
+    }
+    return glyphs[lower] || [];
   }
 
   bindEvents() {

@@ -4,6 +4,36 @@ Record of bugs encountered, root causes, solutions, and prevention strategies.
 
 ---
 
+## 2026-05-08 - BUG-028: Vocab Retest Exposed the Correct Answer
+
+**Issue**: The wrong-question retest page showed the answer as the card heading when a question had no Chinese definition. The retest API also returned answer support fields that the retest screen did not need.
+
+**Root Cause**:
+`vocab-retest.js` used `definition_zh || correct_answer` for the heading, and `POST /api/vocab/submissions/:id/retest` returned the same answer-bearing payload for both review and retest flows.
+
+**Solution**:
+Changed the review page to explicitly request answers with `include_answers: true`. The retest API now strips `correct_answer` and trace/syllable support unless answers are requested or the caller is teacher-authenticated. The retest heading now falls back to `prompt_en` or question number instead of `correct_answer`.
+
+**Prevention**:
+Review and test screens should not share answer-bearing payloads by default. When a screen intentionally reveals answers, make that request explicit.
+
+---
+
+## 2026-05-08 - BUG-029: Trace Dots Were Slightly Misaligned With Writing Lines
+
+**Issue**: Dotted tracing text did not sit cleanly on the writing baseline, so traced letters looked vertically off relative to the guide lines.
+
+**Root Cause**:
+The trace renderer drew guide lines as fixed ratios from the glyph box top. The glyph strokes used a separate normalized baseline, so the visible baseline and the dotted glyph baseline could diverge.
+
+**Solution**:
+Changed the renderer to compute a single baseline per line and derive both the writing lines and glyph top from that baseline. The baseline is drawn slightly stronger so students can trace onto the intended line.
+
+**Prevention**:
+For tracing aids, derive guide lines from the same baseline used to position glyph strokes.
+
+---
+
 ## 2026-05-07 - BUG-027: Dotted Tracing Drew Letter Outlines Instead of Traceable Letter Strokes
 
 **Issue**: Vocab practice tracing looked like dots around the outside of a bold font, so connecting the dots formed an outline/blob instead of a child-friendly written letter.

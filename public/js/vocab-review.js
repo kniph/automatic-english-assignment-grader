@@ -227,7 +227,7 @@
         ? await apiCall(`/api/vocab/exams/${practiceExamId}/practice?student_name=${encodeURIComponent(sessionStorage.getItem('vocab_student_name') || '')}`)
         : await apiCall(`/api/vocab/submissions/${sourceSubmissionId}/retest`, {
             method: 'POST',
-            body: {}
+            body: { include_answers: true }
           });
       await renderReview(review);
     } catch (error) {

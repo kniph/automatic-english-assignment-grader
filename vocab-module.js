@@ -1319,6 +1319,20 @@ function registerVocabRoutes({ app, pool, requireTeacherAuth, hasTeacherAccess, 
     return questions;
   }
 
+  function stripRetestAnswers(questions) {
+    return (questions || []).map(question => ({
+      ...question,
+      correct_answer: '',
+      support_config: {
+        ...(question.support_config || {}),
+        syllables: [],
+        show_syllables: false,
+        trace_mode: 'none',
+        trace_text: ''
+      }
+    }));
+  }
+
   async function buildPracticeQuestions(bundle) {
     return buildRetestQuestions(bundle, bundle.questions.map(question => question.id));
   }
@@ -1624,6 +1638,7 @@ function registerVocabRoutes({ app, pool, requireTeacherAuth, hasTeacherAccess, 
       }
 
       const questions = await buildRetestQuestions(examBundle, wrongQuestionIds);
+      const includeAnswers = Boolean(req.body?.include_answers) || hasTeacherAccess(req);
       const nextAttemptNo = await getNextAttemptNo(submission.exam_id, submission.student_name);
 
       res.json({
@@ -1635,7 +1650,7 @@ function registerVocabRoutes({ app, pool, requireTeacherAuth, hasTeacherAccess, 
         next_attempt_no: nextAttemptNo,
         title: `${examBundle.exam.title} - 錯題再考`,
         pass_score: examBundle.exam.pass_score,
-        questions
+        questions: includeAnswers ? questions : stripRetestAnswers(questions)
       });
     } catch (err) {
       console.error('Build vocab retest error:', err);

@@ -19,7 +19,7 @@
 
   function getQuestionHeading(question) {
     const primary = String(question.definition_zh || '').trim()
-      || String(question.correct_answer || '').trim()
+      || String(question.prompt_en || '').trim()
       || `第 ${question.question_number} 題`;
     const secondaryParts = [];
     if (question.question_number) secondaryParts.push(`第 ${question.question_number} 題`);

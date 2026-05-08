@@ -241,9 +241,11 @@ class VocabCanvasSurface {
     layout.lines.forEach((line, lineIndex) => {
       const lineWidth = this.estimateTraceTextWidth(line, fontSize);
       const lineX = box.x + Math.max(0, (box.width - lineWidth) / 2);
-      const lineTop = startY + (lineIndex * lineHeight) + ((lineHeight - fontSize) / 2);
+      const visualTop = startY + (lineIndex * lineHeight) + ((lineHeight - fontSize) / 2);
+      const baselineY = visualTop + (fontSize * 0.9);
+      const lineTop = baselineY - (fontSize * 0.9);
 
-      this.drawTraceWritingLines(ctx, box.x, lineTop, box.width, fontSize);
+      this.drawTraceWritingLines(ctx, box.x, baselineY, box.width, fontSize);
       this.drawDottedTraceLine(ctx, line, lineX, lineTop, fontSize, dotSpacing, dotRadius);
     });
 
@@ -294,17 +296,20 @@ class VocabCanvasSurface {
     return 0.78;
   }
 
-  drawTraceWritingLines(ctx, x, y, width, fontSize) {
+  drawTraceWritingLines(ctx, x, baselineY, width, fontSize) {
     ctx.save();
-    ctx.strokeStyle = 'rgba(68, 132, 168, 0.15)';
     ctx.lineWidth = Math.max(1, fontSize * 0.012);
     ctx.setLineDash([]);
 
-    [0.12, 0.54, 0.92].forEach(ratio => {
-      const lineY = y + (fontSize * ratio);
+    [
+      { y: baselineY - (fontSize * 0.78), alpha: 0.12 },
+      { y: baselineY - (fontSize * 0.38), alpha: 0.15 },
+      { y: baselineY, alpha: 0.28 }
+    ].forEach(line => {
+      ctx.strokeStyle = `rgba(68, 132, 168, ${line.alpha})`;
       ctx.beginPath();
-      ctx.moveTo(x, lineY);
-      ctx.lineTo(x + width, lineY);
+      ctx.moveTo(x, line.y);
+      ctx.lineTo(x + width, line.y);
       ctx.stroke();
     });
 

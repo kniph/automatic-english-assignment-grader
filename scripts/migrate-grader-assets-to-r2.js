@@ -36,22 +36,46 @@ function safeAudioName(file, index) {
 }
 
 async function migrateAssignments(pool, dryRun) {
+  if (dryRun) {
+    const result = await pool.query(`
+      SELECT COUNT(*)::int AS count
+      FROM assignments
+      WHERE
+        (assignment_image_key IS NULL AND COALESCE(assignment_image, '') <> '')
+        OR (answer_key_image_key IS NULL AND COALESCE(answer_key_image, '') <> '')
+        OR EXISTS (
+          SELECT 1
+          FROM jsonb_array_elements(
+            CASE
+              WHEN jsonb_typeof(audio_files) = 'array' THEN audio_files
+              ELSE '[]'::jsonb
+            END
+          ) AS audio(file)
+          WHERE COALESCE(audio.file->>'key', '') = ''
+            AND COALESCE(audio.file->>'data', '') <> ''
+        )
+    `);
+    return result.rows[0].count;
+  }
+
   const result = await pool.query(`
     SELECT id, assignment_image, answer_key_image, assignment_image_key, answer_key_image_key, audio_files
     FROM assignments
     ORDER BY id
   `);
   let migrated = 0;
+  let checked = 0;
 
   for (const row of result.rows) {
+    checked += 1;
     const updates = {};
     if (!row.assignment_image_key && row.assignment_image) {
       updates.assignment_image_key = `assignments/${row.id}/blank.jpg`;
-      if (!dryRun) await r2Storage.putBase64(updates.assignment_image_key, row.assignment_image, 'image/jpeg');
+      await r2Storage.putBase64(updates.assignment_image_key, row.assignment_image, 'image/jpeg');
     }
     if (!row.answer_key_image_key && row.answer_key_image) {
       updates.answer_key_image_key = `assignments/${row.id}/answer-key.jpg`;
-      if (!dryRun) await r2Storage.putBase64(updates.answer_key_image_key, row.answer_key_image, 'image/jpeg');
+      await r2Storage.putBase64(updates.answer_key_image_key, row.answer_key_image, 'image/jpeg');
     }
 
     const audioFiles = Array.isArray(row.audio_files) ? row.audio_files : [];
@@ -70,7 +94,7 @@ async function migrateAssignments(pool, dryRun) {
       audioChanged = true;
       const name = safeAudioName(file, index);
       const key = `assignments/${row.id}/audio/${name}.mp3`;
-      if (!dryRun) await r2Storage.putBase64(key, file.data, audioContentType(name));
+      await r2Storage.putBase64(key, file.data, audioContentType(name));
       storedAudio.push({
         name: file.name || name,
         label: file.label || file.name || name,
@@ -81,22 +105,23 @@ async function migrateAssignments(pool, dryRun) {
 
     if (Object.keys(updates).length || audioChanged) {
       migrated += 1;
-      if (!dryRun) {
-        await pool.query(`
-          UPDATE assignments
-          SET assignment_image = CASE WHEN $1::text IS NULL THEN assignment_image ELSE '' END,
-              answer_key_image = CASE WHEN $2::text IS NULL THEN answer_key_image ELSE '' END,
-              assignment_image_key = COALESCE($1, assignment_image_key),
-              answer_key_image_key = COALESCE($2, answer_key_image_key),
-              audio_files = $3
-          WHERE id = $4`,
-          [
-            updates.assignment_image_key || null,
-            updates.answer_key_image_key || null,
-            JSON.stringify(audioChanged ? storedAudio : audioFiles),
-            row.id
-          ]
-        );
+      await pool.query(`
+        UPDATE assignments
+        SET assignment_image = CASE WHEN $1::text IS NULL THEN assignment_image ELSE '' END,
+            answer_key_image = CASE WHEN $2::text IS NULL THEN answer_key_image ELSE '' END,
+            assignment_image_key = COALESCE($1, assignment_image_key),
+            answer_key_image_key = COALESCE($2, answer_key_image_key),
+            audio_files = $3
+        WHERE id = $4`,
+        [
+          updates.assignment_image_key || null,
+          updates.answer_key_image_key || null,
+          JSON.stringify(audioChanged ? storedAudio : audioFiles),
+          row.id
+        ]
+      );
+      if (migrated % 10 === 0) {
+        console.log(`Migrated ${migrated} assignment asset row(s); checked ${checked}/${result.rows.length}`);
       }
     }
   }
@@ -105,14 +130,27 @@ async function migrateAssignments(pool, dryRun) {
 }
 
 async function migrateVocabPages(pool, dryRun) {
+  if (dryRun) {
+    const result = await pool.query(`
+      SELECT COUNT(*)::int AS count
+      FROM vocab_exam_pages
+      WHERE
+        (blank_image_key IS NULL AND COALESCE(blank_image, '') <> '')
+        OR (answer_key_image_key IS NULL AND COALESCE(answer_key_image, '') <> '')
+    `);
+    return result.rows[0].count;
+  }
+
   const result = await pool.query(`
     SELECT id, exam_id, page_number, blank_image, answer_key_image, blank_image_key, answer_key_image_key
     FROM vocab_exam_pages
     ORDER BY exam_id, page_number
   `);
   let migrated = 0;
+  let checked = 0;
 
   for (const row of result.rows) {
+    checked += 1;
     const blankKey = !row.blank_image_key && row.blank_image
       ? `vocab/exams/${row.exam_id}/pages/${row.page_number}/blank.jpg`
       : null;
@@ -122,18 +160,19 @@ async function migrateVocabPages(pool, dryRun) {
 
     if (!blankKey && !answerKey) continue;
     migrated += 1;
-    if (!dryRun) {
-      if (blankKey) await r2Storage.putBase64(blankKey, row.blank_image, 'image/jpeg');
-      if (answerKey) await r2Storage.putBase64(answerKey, row.answer_key_image, 'image/jpeg');
-      await pool.query(`
-        UPDATE vocab_exam_pages
-        SET blank_image = CASE WHEN $1::text IS NULL THEN blank_image ELSE '' END,
-            answer_key_image = CASE WHEN $2::text IS NULL THEN answer_key_image ELSE '' END,
-            blank_image_key = COALESCE($1, blank_image_key),
-            answer_key_image_key = COALESCE($2, answer_key_image_key)
-        WHERE id = $3`,
-        [blankKey, answerKey, row.id]
-      );
+    if (blankKey) await r2Storage.putBase64(blankKey, row.blank_image, 'image/jpeg');
+    if (answerKey) await r2Storage.putBase64(answerKey, row.answer_key_image, 'image/jpeg');
+    await pool.query(`
+      UPDATE vocab_exam_pages
+      SET blank_image = CASE WHEN $1::text IS NULL THEN blank_image ELSE '' END,
+          answer_key_image = CASE WHEN $2::text IS NULL THEN answer_key_image ELSE '' END,
+          blank_image_key = COALESCE($1, blank_image_key),
+          answer_key_image_key = COALESCE($2, answer_key_image_key)
+      WHERE id = $3`,
+      [blankKey, answerKey, row.id]
+    );
+    if (migrated % 25 === 0) {
+      console.log(`Migrated ${migrated} vocab page row(s); checked ${checked}/${result.rows.length}`);
     }
   }
 

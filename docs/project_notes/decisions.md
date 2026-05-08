@@ -69,6 +69,7 @@ Switch to `claude-sonnet-4-6`.
 ## ADR-003: Base64 Image Storage in PostgreSQL
 
 **Date**: 2026-03-28
+**Status**: Superseded by ADR-010 for new uploads/submissions
 
 **Context**:
 Need to store workbook images (blank page, answer key) and audio files. Railway doesn't provide persistent file storage — files written to disk are lost on redeploy.
@@ -92,6 +93,42 @@ Store all images and audio as Base64 TEXT columns in PostgreSQL.
 - 240 possible assignments (Howdy 1–10 × Unit 1–8 × A/B/C) ≈ ~240–480 MB total
 - Fits within Railway hobby plan (1 GB)
 - Large API responses when fetching assignments with images — acceptable for LAN/WiFi use
+
+---
+
+## ADR-010: Cloudflare R2 for Auto-Grader Binary Assets
+
+**Date**: 2026-05-08
+
+**Context**:
+Railway billing increased after production use because PostgreSQL stored every workbook image, answer key, audio file, and student submission image as Base64 text. The original MVP assumption that total storage would remain small no longer holds.
+
+**Decision**:
+Use Cloudflare R2 bucket `kniph-grader` for new Auto-Grader binary assets:
+- `assignments/{assignment_id}/blank.jpg`
+- `assignments/{assignment_id}/answer-key.jpg`
+- `assignments/{assignment_id}/audio/{filename}.mp3`
+- `vocab/exams/{exam_id}/pages/{page_no}/blank.jpg`
+- `vocab/exams/{exam_id}/pages/{page_no}/answer-key.jpg`
+- `submissions/retain-30/{submission_id}/image.jpg`
+- `submissions/retain-30/vocab-{submission_id}/page-{page_no}.jpg`
+
+PostgreSQL keeps structured metadata, scores, question JSON, and R2 object keys. Existing Base64 rows remain readable for backward compatibility.
+
+**Retention**:
+- Long-lived assignment/vocab assets: no automatic deletion.
+- Student submission images: R2 lifecycle rule deletes prefix `submissions/retain-30/` after 30 days.
+- Score and per-question grading JSON remain in PostgreSQL permanently unless manually deleted.
+
+**Rationale**:
+- Stops per-submission image growth in PostgreSQL.
+- Keeps existing frontend behavior by hydrating R2 objects back to Base64 at API boundaries.
+- Uses prefix-based lifecycle rules instead of per-object rules.
+
+**Consequences**:
+- Railway needs R2 environment variables configured.
+- R2 outages affect loading assignment images and grading new submissions for R2-backed assignments.
+- Old Base64 rows should be cleaned or migrated separately to reclaim historical PostgreSQL storage.
 
 ---
 

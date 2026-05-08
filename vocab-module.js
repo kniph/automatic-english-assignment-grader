@@ -76,6 +76,8 @@ async function initVocabDB(client) {
       UNIQUE (exam_id, page_number)
     );
   `);
+  await client.query(`ALTER TABLE vocab_exam_pages ADD COLUMN IF NOT EXISTS blank_image_key TEXT`).catch(() => {});
+  await client.query(`ALTER TABLE vocab_exam_pages ADD COLUMN IF NOT EXISTS answer_key_image_key TEXT`).catch(() => {});
   await client.query(`
     ALTER TABLE vocab_exam_pages
     DROP CONSTRAINT IF EXISTS vocab_exam_pages_page_number_check;
@@ -132,6 +134,7 @@ async function initVocabDB(client) {
       created_at TIMESTAMP DEFAULT NOW()
     );
   `);
+  await client.query(`ALTER TABLE vocab_submissions ADD COLUMN IF NOT EXISTS submission_image_keys JSONB NOT NULL DEFAULT '[]'`).catch(() => {});
   await client.query(`
     ALTER TABLE vocab_submissions
     DROP CONSTRAINT IF EXISTS vocab_submissions_attempt_mode_check;
@@ -141,7 +144,7 @@ async function initVocabDB(client) {
   `).catch(() => {});
 }
 
-function registerVocabRoutes({ app, pool, requireTeacherAuth, hasTeacherAccess, callVisionAPI, suggestVocabSyllables }) {
+function registerVocabRoutes({ app, pool, requireTeacherAuth, hasTeacherAccess, callVisionAPI, suggestVocabSyllables, storage }) {
   function normalizeStatus(value) {
     const raw = String(value || '').trim().toLowerCase();
     return VOCAB_EXAM_STATUSES.has(raw) ? raw : 'draft';
@@ -159,6 +162,65 @@ function registerVocabRoutes({ app, pool, requireTeacherAuth, hasTeacherAccess, 
 
   function cleanText(value) {
     return String(value || '').trim();
+  }
+
+  function storageEnabled() {
+    return Boolean(storage?.isConfigured?.());
+  }
+
+  async function resolveStoredBase64(inlineBase64, objectKey) {
+    if (objectKey && storageEnabled()) {
+      return storage.getBase64(objectKey);
+    }
+    return inlineBase64 || '';
+  }
+
+  async function hydrateExamPages(pages) {
+    return Promise.all((pages || []).map(async page => ({
+      ...page,
+      blank_image: await resolveStoredBase64(page.blank_image, page.blank_image_key),
+      answer_key_image: await resolveStoredBase64(page.answer_key_image, page.answer_key_image_key)
+    })));
+  }
+
+  async function storeExamPageAssets(examId, pages) {
+    if (!storageEnabled()) {
+      return pages.map(page => ({
+        ...page,
+        blank_image_key: null,
+        answer_key_image_key: null
+      }));
+    }
+
+    const storedPages = [];
+    for (const page of pages) {
+      const blankKey = `vocab/exams/${examId}/pages/${page.page_number}/blank.jpg`;
+      const answerKey = `vocab/exams/${examId}/pages/${page.page_number}/answer-key.jpg`;
+      await Promise.all([
+        storage.putBase64(blankKey, page.blank_image, 'image/jpeg'),
+        storage.putBase64(answerKey, page.answer_key_image, 'image/jpeg')
+      ]);
+      storedPages.push({
+        ...page,
+        blank_image: '',
+        answer_key_image: '',
+        blank_image_key: blankKey,
+        answer_key_image_key: answerKey
+      });
+    }
+    return storedPages;
+  }
+
+  async function storeVocabSubmissionImages(submissionId, images) {
+    if (!storageEnabled()) return [];
+
+    const keys = [];
+    for (let index = 0; index < images.length; index++) {
+      const key = `submissions/retain-30/vocab-${submissionId}/page-${index + 1}.jpg`;
+      await storage.putBase64(key, images[index], 'image/jpeg');
+      keys.push(key);
+    }
+    return keys;
   }
 
   function normalizeSyllables(value) {
@@ -484,7 +546,7 @@ function registerVocabRoutes({ app, pool, requireTeacherAuth, hasTeacherAccess, 
 
     const [pagesResult, questionsResult, statsResult] = await Promise.all([
       pool.query(
-        'SELECT id, exam_id, page_number, blank_image, answer_key_image FROM vocab_exam_pages WHERE exam_id = $1 ORDER BY page_number',
+        'SELECT id, exam_id, page_number, blank_image, answer_key_image, blank_image_key, answer_key_image_key FROM vocab_exam_pages WHERE exam_id = $1 ORDER BY page_number',
         [examId]
       ),
       pool.query(
@@ -499,7 +561,7 @@ function registerVocabRoutes({ app, pool, requireTeacherAuth, hasTeacherAccess, 
 
     return {
       exam: examResult.rows[0],
-      pages: pagesResult.rows,
+      pages: await hydrateExamPages(pagesResult.rows),
       questions: questionsResult.rows,
       submissionCount: statsResult.rows[0]?.submission_count || 0
     };
@@ -591,11 +653,17 @@ function registerVocabRoutes({ app, pool, requireTeacherAuth, hasTeacherAccess, 
     const questions = sanitizeQuestions(payload.questions || [], pages.length, { allowEmpty: status === 'draft' });
 
     const client = await pool.connect();
+    let oldPageKeys = [];
     try {
       await client.query('BEGIN');
 
       let examId = existingId;
       if (existingId) {
+        const oldPageResult = await client.query(
+          'SELECT blank_image_key, answer_key_image_key FROM vocab_exam_pages WHERE exam_id = $1',
+          [existingId]
+        );
+        oldPageKeys = oldPageResult.rows.flatMap(row => [row.blank_image_key, row.answer_key_image_key]).filter(Boolean);
         const updateResult = await client.query(`
           UPDATE vocab_exams
           SET source_type = $1,
@@ -627,11 +695,20 @@ function registerVocabRoutes({ app, pool, requireTeacherAuth, hasTeacherAccess, 
         examId = insertResult.rows[0].id;
       }
 
-      for (const page of pages) {
+      const storedPages = await storeExamPageAssets(examId, pages);
+      for (const page of storedPages) {
         await client.query(`
-          INSERT INTO vocab_exam_pages (exam_id, page_number, blank_image, answer_key_image)
-          VALUES ($1, $2, $3, $4)`,
-          [examId, page.page_number, page.blank_image, page.answer_key_image]
+          INSERT INTO vocab_exam_pages
+            (exam_id, page_number, blank_image, answer_key_image, blank_image_key, answer_key_image_key)
+          VALUES ($1, $2, $3, $4, $5, $6)`,
+          [
+            examId,
+            page.page_number,
+            page.blank_image,
+            page.answer_key_image,
+            page.blank_image_key,
+            page.answer_key_image_key
+          ]
         );
       }
 
@@ -654,6 +731,9 @@ function registerVocabRoutes({ app, pool, requireTeacherAuth, hasTeacherAccess, 
       }
 
       await client.query('COMMIT');
+      if (oldPageKeys.length && storageEnabled()) {
+        await storage.deleteObjects(oldPageKeys);
+      }
       return examId;
     } catch (err) {
       await client.query('ROLLBACK');
@@ -1149,6 +1229,7 @@ function registerVocabRoutes({ app, pool, requireTeacherAuth, hasTeacherAccess, 
       ? wrongQuestionIds.length === 0
       : percentage >= passScore;
 
+    const inlineStoredImages = storageEnabled() ? [] : storedImages;
     const insertResult = await pool.query(`
       INSERT INTO vocab_submissions
         (exam_id, student_name, attempt_no, attempt_mode, source_submission_id, submission_images, graded_answers,
@@ -1161,7 +1242,7 @@ function registerVocabRoutes({ app, pool, requireTeacherAuth, hasTeacherAccess, 
         attemptNo,
         attemptMode,
         sourceSubmissionId || null,
-        JSON.stringify(storedImages),
+        JSON.stringify(inlineStoredImages),
         JSON.stringify(gradedAnswers),
         totalScore,
         totalPossible,
@@ -1170,9 +1251,17 @@ function registerVocabRoutes({ app, pool, requireTeacherAuth, hasTeacherAccess, 
         JSON.stringify(wrongQuestionIds)
       ]
     );
+    const submissionId = insertResult.rows[0].id;
+    const storedImageKeys = await storeVocabSubmissionImages(submissionId, storedImages);
+    if (storedImageKeys.length) {
+      await pool.query(
+        'UPDATE vocab_submissions SET submission_image_keys=$1 WHERE id=$2',
+        [JSON.stringify(storedImageKeys), submissionId]
+      );
+    }
 
     return {
-      id: insertResult.rows[0].id,
+      id: submissionId,
       created_at: insertResult.rows[0].created_at,
       attempt_no: attemptNo,
       total_score: totalScore,
@@ -1488,6 +1577,9 @@ function registerVocabRoutes({ app, pool, requireTeacherAuth, hasTeacherAccess, 
       const passed = submission.attempt_mode === 'retest'
         ? wrongQuestionIds.length === 0
         : percentage >= Number(exam.pass_score || 80);
+      const submissionImages = teacherView && storageEnabled() && Array.isArray(submission.submission_image_keys) && submission.submission_image_keys.length
+        ? await Promise.all(submission.submission_image_keys.map(key => storage.getBase64(key)))
+        : submission.submission_images;
 
       res.json({
         id: submission.id,
@@ -1509,7 +1601,7 @@ function registerVocabRoutes({ app, pool, requireTeacherAuth, hasTeacherAccess, 
         wrong_question_ids: wrongQuestionIds,
         graded_answers: gradedAnswers,
         created_at: submission.created_at,
-        submission_images: teacherView ? submission.submission_images : undefined
+        submission_images: teacherView ? submissionImages : undefined
       });
     } catch (err) {
       console.error('Get vocab submission error:', err);

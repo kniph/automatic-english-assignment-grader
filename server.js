@@ -10,6 +10,7 @@ const path = require('path');
 const mammoth = require('mammoth');
 const Anthropic = require('@anthropic-ai/sdk');
 const { initVocabDB, registerVocabRoutes } = require('./vocab-module');
+const r2Storage = require('./lib/r2-storage');
 const { version: APP_VERSION } = require('./package.json');
 
 const app = express();
@@ -119,6 +120,7 @@ async function initDB() {
         graded_at TIMESTAMP DEFAULT NOW()
       );
     `);
+    await client.query(`ALTER TABLE grading_results ALTER COLUMN original_image DROP NOT NULL`).catch(() => {});
 
     // ---- New tables for student workflow ----
     await client.query(`
@@ -146,6 +148,8 @@ async function initDB() {
     await client.query(`UPDATE assignments SET supplemental_notes = '' WHERE supplemental_notes IS NULL`).catch(() => {});
     await client.query(`ALTER TABLE assignments ADD COLUMN IF NOT EXISTS grading_status VARCHAR(20) DEFAULT 'review_required'`).catch(() => {});
     await client.query(`ALTER TABLE assignments ADD COLUMN IF NOT EXISTS risk_summary TEXT DEFAULT ''`).catch(() => {});
+    await client.query(`ALTER TABLE assignments ADD COLUMN IF NOT EXISTS assignment_image_key TEXT`).catch(() => {});
+    await client.query(`ALTER TABLE assignments ADD COLUMN IF NOT EXISTS answer_key_image_key TEXT`).catch(() => {});
     await client.query(`UPDATE assignments SET risk_summary = '' WHERE risk_summary IS NULL`).catch(() => {});
     await client.query(`
       ALTER TABLE assignments DROP CONSTRAINT IF EXISTS assignments_grading_status_check;
@@ -177,6 +181,8 @@ async function initDB() {
     `);
     await client.query(`ALTER TABLE student_submissions ADD COLUMN IF NOT EXISTS score_status VARCHAR(20) DEFAULT 'official'`).catch(() => {});
     await client.query(`ALTER TABLE student_submissions ADD COLUMN IF NOT EXISTS review_summary TEXT DEFAULT ''`).catch(() => {});
+    await client.query(`ALTER TABLE student_submissions ADD COLUMN IF NOT EXISTS submission_image_key TEXT`).catch(() => {});
+    await client.query(`ALTER TABLE student_submissions ALTER COLUMN submission_image DROP NOT NULL`).catch(() => {});
     await client.query(`UPDATE student_submissions SET review_summary = '' WHERE review_summary IS NULL`).catch(() => {});
     await client.query(`
       ALTER TABLE student_submissions DROP CONSTRAINT IF EXISTS student_submissions_score_status_check;
@@ -640,6 +646,7 @@ app.get('/api/server-info', (req, res) => {
     build_commit_short: BUILD_COMMIT_SHORT || null,
     deployment_id: DEPLOYMENT_ID || null,
     environment: process.env.NODE_ENV || 'development',
+    r2_grader_storage_configured: r2Storage.isConfigured(),
     started_at: SERVER_STARTED_AT
   });
 });
@@ -850,7 +857,7 @@ app.post('/api/grade', requireTeacherAuth, async (req, res) => {
     const saveResult = await pool.query(
       `INSERT INTO grading_results (answer_key_id, student_name, original_image, answers, total_score, total_possible)
        VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
-      [answer_key_id, student_name || null, student_image, JSON.stringify(answers), totalScore, totalPossible]
+      [answer_key_id, student_name || null, null, JSON.stringify(answers), totalScore, totalPossible]
     );
 
     res.json({
@@ -888,7 +895,7 @@ app.post('/api/grade/batch', requireTeacherAuth, async (req, res) => {
         const saveResult = await pool.query(
           `INSERT INTO grading_results (answer_key_id, student_name, original_image, answers, total_score, total_possible)
            VALUES ($1, $2, $3, $4, $5, $6) RETURNING id`,
-          [answer_key_id, student.name || null, student.image, JSON.stringify(answers), totalScore, totalPossible]
+          [answer_key_id, student.name || null, null, JSON.stringify(answers), totalScore, totalPossible]
         );
         results.push({ id: saveResult.rows[0].id, student_name: student.name, answers, total_score: totalScore, total_possible: totalPossible, percentage: Math.round((totalScore / totalPossible) * 100) });
       } catch (err) {
@@ -1055,6 +1062,75 @@ function buildReviewSummary(status, riskSummary = '') {
   return '';
 }
 
+async function resolveStoredBase64(inlineBase64, objectKey) {
+  if (objectKey && r2Storage.isConfigured()) {
+    return r2Storage.getBase64(objectKey);
+  }
+  return inlineBase64 || '';
+}
+
+async function hydrateAssignmentAudioFiles(audioFiles) {
+  const files = Array.isArray(audioFiles) ? audioFiles : [];
+  return Promise.all(files.map(async file => {
+    if (file?.key && r2Storage.isConfigured() && !file.data) {
+      return {
+        ...file,
+        data: await r2Storage.getBase64(file.key)
+      };
+    }
+    return file;
+  }));
+}
+
+function audioContentType(fileName = '') {
+  const lower = String(fileName).toLowerCase();
+  if (lower.endsWith('.wav')) return 'audio/wav';
+  if (lower.endsWith('.m4a')) return 'audio/mp4';
+  return 'audio/mpeg';
+}
+
+async function storeAssignmentAssets({ assignmentId, assignmentImage, answerKeyImage, audioFiles }) {
+  if (!r2Storage.isConfigured()) {
+    return {
+      assignmentImage: assignmentImage || '',
+      answerKeyImage: answerKeyImage || '',
+      assignmentImageKey: null,
+      answerKeyImageKey: null,
+      audioFiles: audioFiles || []
+    };
+  }
+
+  const assignmentImageKey = `assignments/${assignmentId}/blank.jpg`;
+  const answerKeyImageKey = `assignments/${assignmentId}/answer-key.jpg`;
+  await Promise.all([
+    r2Storage.putBase64(assignmentImageKey, assignmentImage, 'image/jpeg'),
+    r2Storage.putBase64(answerKeyImageKey, answerKeyImage, 'image/jpeg')
+  ]);
+
+  const storedAudioFiles = [];
+  for (const file of Array.isArray(audioFiles) ? audioFiles : []) {
+    const rawName = String(file?.name || file?.label || 'audio').replace(/[^a-z0-9._-]/gi, '-').slice(0, 80) || 'audio';
+    const key = `assignments/${assignmentId}/audio/${rawName}.mp3`;
+    if (file?.data) {
+      await r2Storage.putBase64(key, file.data, audioContentType(rawName));
+    }
+    storedAudioFiles.push({
+      name: file?.name || rawName,
+      label: file?.label || file?.name || rawName,
+      key,
+      content_type: audioContentType(rawName)
+    });
+  }
+
+  return {
+    assignmentImage: '',
+    answerKeyImage: '',
+    assignmentImageKey,
+    answerKeyImageKey,
+    audioFiles: storedAudioFiles
+  };
+}
+
 // List available assignments (no images/audio, just metadata)
 app.get('/api/assignments', requireTeacherAssignmentListAuth, async (req, res) => {
   try {
@@ -1104,14 +1180,18 @@ app.get('/api/assignments/:id', async (req, res) => {
     if (row.grading_status === 'blocked') {
       return res.status(403).json({ error: buildReviewSummary('blocked', row.risk_summary) });
     }
+    const [assignmentImage, audioFiles] = await Promise.all([
+      resolveStoredBase64(row.assignment_image, row.assignment_image_key),
+      hydrateAssignmentAudioFiles(row.audio_files)
+    ]);
     // Return assignment_image and audio, but NOT answer_key_image (don't expose to student)
     res.json({
       id: row.id,
       howdy_level: row.howdy_level,
       unit: row.unit,
       book_type: row.book_type,
-      assignment_image: row.assignment_image,
-      audio_files: row.audio_files,
+      assignment_image: assignmentImage,
+      audio_files: audioFiles,
       grading_status: row.grading_status,
       risk_summary: buildReviewSummary(row.grading_status, row.risk_summary),
       created_at: row.created_at
@@ -1157,9 +1237,17 @@ app.post('/api/assignments', requireTeacherAuth, async (req, res) => {
     const normalizedGradingStatus = normalizeAssignmentGradingStatus(grading_status, cleanedSupplementalNotes);
     const cleanedRiskSummary = String(risk_summary || '').trim();
 
+    const oldAssetResult = await pool.query(
+      'SELECT assignment_image_key, answer_key_image_key, audio_files FROM assignments WHERE howdy_level=$1 AND unit=$2 AND book_type=$3',
+      [parseInt(howdy_level), parseInt(unit), book_type.toUpperCase()]
+    );
+    const oldRow = oldAssetResult.rows[0] || null;
+
     const result = await pool.query(`
-      INSERT INTO assignments (howdy_level, unit, book_type, assignment_image, answer_key_image, audio_files, supplemental_notes, grading_status, risk_summary)
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+      INSERT INTO assignments
+        (howdy_level, unit, book_type, assignment_image, answer_key_image, audio_files,
+         supplemental_notes, grading_status, risk_summary, assignment_image_key, answer_key_image_key)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, NULL, NULL)
       ON CONFLICT (howdy_level, unit, book_type) DO UPDATE SET
         assignment_image = EXCLUDED.assignment_image,
         answer_key_image = EXCLUDED.answer_key_image,
@@ -1167,6 +1255,8 @@ app.post('/api/assignments', requireTeacherAuth, async (req, res) => {
         supplemental_notes = EXCLUDED.supplemental_notes,
         grading_status = EXCLUDED.grading_status,
         risk_summary = EXCLUDED.risk_summary,
+        assignment_image_key = NULL,
+        answer_key_image_key = NULL,
         created_at = NOW()
       RETURNING id, howdy_level, unit, book_type, grading_status, risk_summary, created_at`,
       [
@@ -1181,6 +1271,42 @@ app.post('/api/assignments', requireTeacherAuth, async (req, res) => {
         cleanedRiskSummary
       ]
     );
+
+    const assignmentId = result.rows[0].id;
+    const storedAssets = await storeAssignmentAssets({
+      assignmentId,
+      assignmentImage: storedAssign,
+      answerKeyImage: storedAnswer,
+      audioFiles
+    });
+    await pool.query(`
+      UPDATE assignments
+      SET assignment_image=$1,
+          answer_key_image=$2,
+          audio_files=$3,
+          assignment_image_key=$4,
+          answer_key_image_key=$5
+      WHERE id=$6`,
+      [
+        storedAssets.assignmentImage,
+        storedAssets.answerKeyImage,
+        JSON.stringify(storedAssets.audioFiles),
+        storedAssets.assignmentImageKey,
+        storedAssets.answerKeyImageKey,
+        assignmentId
+      ]
+    );
+
+    if (oldRow && r2Storage.isConfigured()) {
+      const oldAudioKeys = Array.isArray(oldRow.audio_files)
+        ? oldRow.audio_files.map(file => file?.key).filter(Boolean)
+        : [];
+      await r2Storage.deleteObjects([
+        oldRow.assignment_image_key,
+        oldRow.answer_key_image_key,
+        ...oldAudioKeys
+      ]);
+    }
     res.status(201).json(result.rows[0]);
   } catch (err) {
     console.error('Create assignment error:', err);
@@ -1190,8 +1316,21 @@ app.post('/api/assignments', requireTeacherAuth, async (req, res) => {
 
 app.delete('/api/assignments/:id', requireTeacherAuth, async (req, res) => {
   try {
+    const existing = await pool.query(
+      'SELECT assignment_image_key, answer_key_image_key, audio_files FROM assignments WHERE id=$1',
+      [req.params.id]
+    );
     const result = await pool.query('DELETE FROM assignments WHERE id=$1 RETURNING id', [req.params.id]);
     if (result.rows.length === 0) return res.status(404).json({ error: 'Assignment not found' });
+    const oldRow = existing.rows[0] || {};
+    const oldAudioKeys = Array.isArray(oldRow.audio_files)
+      ? oldRow.audio_files.map(file => file?.key).filter(Boolean)
+      : [];
+    await r2Storage.deleteObjects([
+      oldRow.assignment_image_key,
+      oldRow.answer_key_image_key,
+      ...oldAudioKeys
+    ]);
     res.json({ deleted: true, id: result.rows[0].id });
   } catch (err) {
     res.status(500).json({ error: 'Failed to delete assignment' });
@@ -1225,8 +1364,9 @@ app.post('/api/submissions', async (req, res) => {
 
     // Grade with Claude
     const assignmentLabel = `Howdy ${asg.howdy_level} Unit ${asg.unit} 習作${asg.book_type}本`;
+    const answerKeyImage = await resolveStoredBase64(asg.answer_key_image, asg.answer_key_image_key);
     const claudeResult = await gradeHandwriting(
-      asg.answer_key_image,
+      answerKeyImage,
       submJpeg,
       assignmentLabel,
       {
@@ -1256,9 +1396,17 @@ app.post('/api/submissions', async (req, res) => {
       INSERT INTO student_submissions
         (assignment_id, student_name, submission_image, answers, total_score, total_possible, percentage, score_status, review_summary)
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id, graded_at`,
-      [assignment_id, student_name || null, submJpeg, JSON.stringify(answers),
+      [assignment_id, student_name || null, null, JSON.stringify(answers),
        totalScore, totalPossible, percentage, scoreStatus, reviewSummary]
     );
+    if (r2Storage.isConfigured()) {
+      const imageKey = `submissions/retain-30/${saveResult.rows[0].id}/image.jpg`;
+      await r2Storage.putBase64(imageKey, submJpeg, 'image/jpeg');
+      await pool.query('UPDATE student_submissions SET submission_image_key=$1 WHERE id=$2', [
+        imageKey,
+        saveResult.rows[0].id
+      ]);
+    }
 
     res.json({
       id: saveResult.rows[0].id,
@@ -1472,7 +1620,8 @@ registerVocabRoutes({
   requireTeacherAuth,
   hasTeacherAccess,
   callVisionAPI,
-  suggestVocabSyllables: suggestVocabSyllablesWithClaude
+  suggestVocabSyllables: suggestVocabSyllablesWithClaude,
+  storage: r2Storage
 });
 
 // --- Start Server ---

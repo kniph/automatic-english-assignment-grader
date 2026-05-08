@@ -4,6 +4,33 @@ Chronological record of completed work, features, and significant changes.
 
 ---
 
+## 2026-05-08 - Move Auto-Grader Binary Assets to Cloudflare R2
+
+**Work Done**:
+1. Added an R2 S3-compatible storage helper using AWS Signature V4 without adding new npm dependencies.
+2. Main assignment uploads now store blank workbook image, answer key, and audio in R2 when configured.
+3. Main student submissions no longer store image Base64 in PostgreSQL; submission images are uploaded under `submissions/retain-30/`.
+4. Vocab exam page assets now store R2 keys for new saves while remaining backward-compatible with old Base64 rows.
+5. Vocab submission images now store R2 keys under `submissions/retain-30/` when configured.
+6. Legacy v1 grading results no longer persist uploaded student images.
+7. Added `npm run migrate:r2` to move existing assignment/vocab assets to R2 and clear historical submission image Base64 from PostgreSQL.
+
+**Required Railway Environment Variables**:
+- `R2_ACCOUNT_ID`
+- `R2_ACCESS_KEY_ID`
+- `R2_SECRET_ACCESS_KEY`
+- `R2_GRADER_BUCKET=kniph-grader`
+
+**Cloudflare R2 Lifecycle Rule**:
+- Bucket: `kniph-grader`
+- Prefix: `submissions/retain-30/`
+- Action: delete objects after 30 days
+
+**Follow-up**:
+After `npm run migrate:r2`, reclaim database storage with an appropriate PostgreSQL maintenance or dump/restore workflow.
+
+---
+
 ## 2026-05-07 - Trace Lettering Fix and AI Syllable Suggestions
 
 **Work Done**:

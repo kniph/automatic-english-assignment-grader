@@ -25,6 +25,10 @@ Essential project configuration, constants, and quick reference information.
 - `NODE_ENV` — `production` on Railway (enables SSL for DB)
 - `GOOGLE_VISION_API_KEY` — Google Vision OCR key. Not used by the main assignment grading path anymore, but still required for `POST /api/parse-document`, `POST /api/ocr/region`, and the entire vocab grading flow under `POST /api/vocab/submissions`
 - `TEACHER_PASSCODE` — optional simple teacher passcode; when set, upload / grading / teacher-result APIs require a teacher auth cookie
+- `R2_ACCOUNT_ID` — Cloudflare account ID for R2 object storage
+- `R2_ACCESS_KEY_ID` — Cloudflare R2 access key ID
+- `R2_SECRET_ACCESS_KEY` — Cloudflare R2 secret access key
+- `R2_GRADER_BUCKET` — R2 bucket for Auto-Grader assets (default: `kniph-grader`)
 
 ---
 
@@ -39,6 +43,8 @@ Essential project configuration, constants, and quick reference information.
 | `book_type` | VARCHAR(1) | 'A', 'B', or 'C' |
 | `assignment_image` | TEXT | Base64 JPEG of blank workbook page (may be multi-page stitched vertically) |
 | `answer_key_image` | TEXT | Base64 JPEG of answer key (never sent to student) |
+| `assignment_image_key` | TEXT | R2 key for blank workbook page when R2 is configured |
+| `answer_key_image_key` | TEXT | R2 key for answer key when R2 is configured |
 | `audio_files` | JSONB | `[{name, label, data (base64 mp3)}]` |
 | `supplemental_notes` | TEXT | Optional teacher-entered grading notes for hard question types (`matching`, `skip`, `written_only`, etc.) |
 | `grading_status` | VARCHAR(20) | `ready`, `review_required`, or `blocked` |
@@ -61,6 +67,7 @@ Essential project configuration, constants, and quick reference information.
 | `assignment_id` | INTEGER FK | → assignments(id) CASCADE DELETE |
 | `student_name` | VARCHAR(100) | |
 | `submission_image` | TEXT | Base64 JPEG (merged background + canvas drawing) |
+| `submission_image_key` | TEXT | R2 key under `submissions/retain-30/` when R2 is configured |
 | `answers` | JSONB | `[{question_number, correct, score, detected_text, correct_answer, match_type}]` |
 | `total_score` | INTEGER | |
 | `total_possible` | INTEGER | |
@@ -228,6 +235,8 @@ Essential project configuration, constants, and quick reference information.
 | `page_number` | INTEGER | 1–4 |
 | `blank_image` | TEXT | base64 JPEG |
 | `answer_key_image` | TEXT | base64 JPEG |
+| `blank_image_key` | TEXT | R2 key when R2 is configured |
+| `answer_key_image_key` | TEXT | R2 key when R2 is configured |
 
 ### `vocab_questions`
 | Column | Type | Notes |
@@ -252,6 +261,7 @@ Essential project configuration, constants, and quick reference information.
 | `attempt_mode` | VARCHAR(20) | `full` or `retest` |
 | `source_submission_id` | INTEGER FK | prior attempt when this is a retest |
 | `submission_images` | JSONB | base64 JPEG array |
+| `submission_image_keys` | JSONB | R2 keys under `submissions/retain-30/` when R2 is configured |
 | `graded_answers` | JSONB | per-question OCR + score payload |
 | `total_score` | INTEGER | |
 | `total_possible` | INTEGER | |
@@ -444,6 +454,8 @@ Dataset rechecked after batch downloading and normalization.
 ### Supplemental Notes Backfill
 
 - `scripts/generate-supplemental-manifest.js` uses Google Vision OCR on stitched blank pages to detect high-risk sections and generate default `supplemental_notes`
+- `npm run migrate:r2 -- --dry-run` reports existing Auto-Grader assets/submission images that still live in PostgreSQL
+- `npm run migrate:r2` uploads existing assignment/vocab assets to R2 and clears historical submitted-image Base64 from PostgreSQL
 - `scripts/import-assignments.js` accepts:
   - `--supplemental-manifest <path>`
   - `--only-manifested`

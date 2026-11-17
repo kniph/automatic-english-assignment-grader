@@ -29,6 +29,7 @@ Essential project configuration, constants, and quick reference information.
 - `R2_ACCESS_KEY_ID` — Cloudflare R2 access key ID
 - `R2_SECRET_ACCESS_KEY` — Cloudflare R2 secret access key
 - `R2_GRADER_BUCKET` — R2 bucket for Auto-Grader assets (default: `kniph-grader`)
+- `HANDOFF_SECRET_<BRANCH>` / `HANDOFF_CALLBACK_<BRANCH>` — school-system handoff (2026-11-17). `<BRANCH>` is the branch key upper-cased (TienMu = `TIENMU`). The secret equals that branch's `LESSON_HANDOFF_SECRET` (≥32 chars); the callback is `https://<branch domain>/api/lesson-tasks/grader-callback`. See "School-System Handoff" below.
 
 ---
 
@@ -193,6 +194,14 @@ Essential project configuration, constants, and quick reference information.
 - Public full-exam payloads do not expose `support_config`; wrong-question review and explicit practice payloads can include it because those screens intentionally show the correct answer.
 
 ---
+
+## School-System Handoff (2026-11-17)
+
+spelling-srs-backend's lesson dispatch (its ADR-076, `docs/architecture/lesson-dispatch.md`) sends students here with `/assignment.html#handoff=<token>`. `lib/handoff.js`:
+- `POST /api/handoff/resolve {token}` verifies the HMAC token with `HANDOFF_SECRET_<b>`, finds the `(howdy_level, unit, book_type)` assignment and returns `{ assignment_id, student_name, return_url }`. The page locks the name.
+- `POST /api/submissions` with `handoff` re-verifies (12 h grace after expiry), requires the token to match the assignment, uses the token's name, and after saving POSTs the score to `HANDOFF_CALLBACK_<b>` signed with HMAC(`ts.token.submission_id.total_score.total_possible.percentage.score_status`), up to 3 tries. The callback URL only comes from env, never from the token.
+- Without a token nothing changes (students still type their name).
+- `assignment.html` declares its own `let history` (undo stack), so browser history must be `window.history`.
 
 ## Pages
 

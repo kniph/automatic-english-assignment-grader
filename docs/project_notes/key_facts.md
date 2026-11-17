@@ -203,6 +203,14 @@ spelling-srs-backend's lesson dispatch (its ADR-076, `docs/architecture/lesson-d
 - Without a token nothing changes (students still type their name).
 - `assignment.html` declares its own `let history` (undo stack), so browser history must be `window.history`.
 
+### Unit-test teacher ticket (2026-11-18 — protocol only, no grading page yet)
+
+Howdy unit tests are paper tests taken in class; the teacher photographs the whole class's papers and grades them in one batch. The school system signs a **teacher ticket** for `/unit-test.html#handoff=<token>`:
+- payload `{ b, k: 'unit_test', iid, by: teacher id, cls: class name, lvl, unit, book: 'A', st: [[student id, name], …], ret, exp }`; `ret` points back to the class progress page. `verifyHandoff` rejects a `unit_test` ticket with no student list; `studentsOf(payload)` returns `[{ id, name }]`.
+- One callback per student: `sendResult` with `result.student_id`; the signing string becomes `ts.token.submission_id.total_score.total_possible.percentage.score_status.student_id`. The school only accepts students on the ticket's list who are still in the class, and also writes the score into that lesson's contact book as 單元測驗 (unless the teacher already entered one there).
+- `/api/handoff/resolve` and `/api/submissions` refuse any ticket with `k` (a teacher ticket can't open a student Workbook).
+- **Not built yet:** `/unit-test.html` and unit-test answer keys. Content will be TiCo rather than AMC, so only the protocol exists. The school side keeps its "整班拍照批改" button hidden until its `LESSON_UNIT_TEST_GRADER=true`. Source papers (Howdy 1–10, A/B/C, test + answer `.doc` + listening mp3) are in spelling-srs-backend's `分校資料/howdy unit test/` (local only).
+
 ## Pages
 
 | File | Role | Audience |

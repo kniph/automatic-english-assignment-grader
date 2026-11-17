@@ -307,8 +307,23 @@
   <script>
     const API = window.location.origin;
     const params = new URLSearchParams(window.location.search);
-    const assignmentId = parseInt(params.get('id'));
-    const studentName = params.get('name') || '學生';
+    let assignmentId = parseInt(params.get('id'));
+    let studentName = params.get('name') || '學生';
+    // 從學校系統「本課作業」打開：#handoff=<交接票>（fragment 不會送到伺服器或進 log）。
+    // 取出後存在這個分頁（重新整理還在），網址清乾淨；名字以學校系統為準、交卷時把成績回傳。
+    let handoffToken = null;
+    let returnUrl = null;
+    try {
+      const m = /[#&]handoff=([^&]+)/.exec(location.hash || '');
+      if (m) {
+        handoffToken = decodeURIComponent(m[1]);
+        try { sessionStorage.setItem('handoff_token', handoffToken); } catch (_) {}
+        // 這頁有自己的 `history`（復原用的陣列），所以要寫 window.history
+        try { window.history.replaceState(null, '', location.pathname + location.search); } catch (_) {}
+      } else if (!params.get('id')) {
+        try { handoffToken = sessionStorage.getItem('handoff_token'); } catch (_) {}
+      }
+    } catch (_) { /* 沒有交接票：照原本的 ?id=&name= 流程 */ }
 
     // Drawing state
     let tool = 'pen';       // 'pen' | 'eraser'
@@ -331,8 +346,18 @@
     // Init
     // ──────────────────────────────────────────────
     async function init() {
-      document.getElementById('topStudent').textContent = '👤 ' + studentName;
       try {
+        if (handoffToken) {
+          const hr = await fetch(`${API}/api/handoff/resolve`, {
+            method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ token: handoffToken })
+          });
+          const hd = await hr.json().catch(() => ({}));
+          if (!hr.ok) throw new Error(hd.error || '連結已失效，請回到學校系統重新開啟作業');
+          assignmentId = hd.assignment_id;
+          studentName = hd.student_name || studentName;
+          returnUrl = hd.return_url || null;
+        }
+        document.getElementById('topStudent').textContent = '👤 ' + studentName;
         const res = await fetch(`${API}/api/assignments/${assignmentId}`);
         if (!res.ok) {
           let msg = '找不到習作 (id=' + assignmentId + ')';
@@ -664,7 +689,8 @@
           body: JSON.stringify({
             assignment_id: assignmentId,
             student_name: studentName,
-            submission_image: jpegBase64
+            submission_image: jpegBase64,
+            ...(handoffToken ? { handoff: handoffToken } : {})
           })
         })).json();
 
@@ -720,7 +746,8 @@
     }
 
     function goBack() {
-      window.location.href = 'index.html';
+      // 從學校系統來的就回學校系統的「本課作業」
+      window.location.href = returnUrl || 'index.html';
     }
 
     function redoAssignment() {

@@ -11,6 +11,7 @@ const mammoth = require('mammoth');
 const Anthropic = require('@anthropic-ai/sdk');
 const { initVocabDB, registerVocabRoutes } = require('./vocab-module');
 const r2Storage = require('./lib/r2-storage');
+const handoff = require('./lib/handoff');
 const { version: APP_VERSION } = require('./package.json');
 
 const app = express();
@@ -1341,9 +1342,29 @@ app.delete('/api/assignments/:id', requireTeacherAuth, async (req, res) => {
 // Student Submissions — submit handwritten work, grade with Claude
 // ============================================================
 
+// 學校系統交接（lib/handoff.js）：驗證交接票，找出對應的習作，回傳名字（之後鎖定不能改）。
+app.post('/api/handoff/resolve', async (req, res) => {
+  try {
+    const v = handoff.verifyHandoff(req.body && req.body.token);
+    if (!v) return res.status(401).json({ error: '連結已失效，請回到學校系統重新開啟作業' });
+    const p = v.payload;
+    const r = await pool.query(
+      'SELECT id, grading_status, risk_summary FROM assignments WHERE howdy_level=$1 AND unit=$2 AND book_type=$3',
+      [p.lvl, p.unit, p.book]
+    );
+    if (!r.rows.length) return res.status(404).json({ error: `找不到 Howdy ${p.lvl} 第 ${p.unit} 單元 ${p.book} 本的習作` });
+    if (r.rows[0].grading_status === 'blocked') return res.status(403).json({ error: buildReviewSummary('blocked', r.rows[0].risk_summary) });
+    res.json({ assignment_id: r.rows[0].id, student_name: String(p.name || '學生').slice(0, 100), return_url: handoff.returnUrl(p, v.config) });
+  } catch (err) {
+    console.error('Handoff resolve error:', err.message);
+    res.status(500).json({ error: '暫時無法開啟作業' });
+  }
+});
+
 app.post('/api/submissions', async (req, res) => {
   try {
-    const { assignment_id, student_name, submission_image } = req.body;
+    const { assignment_id, submission_image } = req.body;
+    let { student_name } = req.body;
     if (!assignment_id || !submission_image) {
       return res.status(400).json({ error: 'Missing assignment_id or submission_image' });
     }
@@ -1354,6 +1375,20 @@ app.post('/api/submissions', async (req, res) => {
     const asg = asgResult.rows[0];
     if (asg.grading_status === 'blocked') {
       return res.status(403).json({ error: buildReviewSummary('blocked', asg.risk_summary) });
+    }
+
+    // 帶交接票：票必須有效且對到這一份習作；名字以票為準（不信任瀏覽器送的）。
+    // 學生可能寫很久，交卷時給票過期後 12 小時寬限。
+    let handoffCtx = null;
+    if (req.body.handoff) {
+      const v = handoff.verifyHandoff(req.body.handoff, { allowExpiredSec: 12 * 3600 });
+      if (!v) return res.status(401).json({ error: '連結已失效，請回到學校系統重新開啟作業' });
+      const p = v.payload;
+      if (p.lvl !== asg.howdy_level || p.unit !== asg.unit || p.book !== asg.book_type) {
+        return res.status(400).json({ error: '這份作業和學校系統派的不一樣，請回到學校系統重新開啟' });
+      }
+      handoffCtx = { token: req.body.handoff, config: v.config };
+      student_name = String(p.name || student_name || '').slice(0, 100);
     }
 
     // Compress submission image (width-only limit to preserve multi-page height)
@@ -1408,6 +1443,17 @@ app.post('/api/submissions', async (req, res) => {
       ]);
     }
 
+    // 回傳成績給學校系統。等它回應（最多重試 3 次），讓學生回到學校頁面時就看得到「已完成」；
+    // 回傳失敗不影響這裡的批改結果，老師也能在學校系統手動登記。
+    let returned = null;
+    if (handoffCtx) {
+      returned = await handoff.sendResult({
+        ...handoffCtx,
+        result: { submission_id: saveResult.rows[0].id, total_score: totalScore, total_possible: totalPossible, percentage, score_status: scoreStatus },
+      });
+      if (!returned.ok) console.error(`Handoff callback failed for submission ${saveResult.rows[0].id}: ${returned.error}`);
+    }
+
     res.json({
       id: saveResult.rows[0].id,
       graded_at: saveResult.rows[0].graded_at,
@@ -1417,7 +1463,8 @@ app.post('/api/submissions', async (req, res) => {
       total_possible: totalPossible,
       percentage,
       score_status: scoreStatus,
-      review_summary: reviewSummary
+      review_summary: reviewSummary,
+      ...(handoffCtx ? { reported_to_school: !!(returned && returned.ok) } : {})
     });
   } catch (err) {
     console.error('Submission error:', err);

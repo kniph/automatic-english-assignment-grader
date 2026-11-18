@@ -1348,6 +1348,8 @@ app.post('/api/handoff/resolve', async (req, res) => {
     const v = handoff.verifyHandoff(req.body && req.body.token);
     if (!v) return res.status(401).json({ error: '連結已失效，請回到學校系統重新開啟作業' });
     const p = v.payload;
+    // 老師的單元考批改票（帶全班名單）不能拿來開學生的 Workbook 作業
+    if (p.k) return res.status(400).json({ error: '這是老師的批改連結，不是學生作業連結' });
     const r = await pool.query(
       'SELECT id, grading_status, risk_summary FROM assignments WHERE howdy_level=$1 AND unit=$2 AND book_type=$3',
       [p.lvl, p.unit, p.book]
@@ -1384,6 +1386,7 @@ app.post('/api/submissions', async (req, res) => {
       const v = handoff.verifyHandoff(req.body.handoff, { allowExpiredSec: 12 * 3600 });
       if (!v) return res.status(401).json({ error: '連結已失效，請回到學校系統重新開啟作業' });
       const p = v.payload;
+      if (p.k) return res.status(400).json({ error: '這是老師的批改連結，不是學生作業連結' });
       if (p.lvl !== asg.howdy_level || p.unit !== asg.unit || p.book !== asg.book_type) {
         return res.status(400).json({ error: '這份作業和學校系統派的不一樣，請回到學校系統重新開啟' });
       }

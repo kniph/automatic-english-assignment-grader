@@ -481,3 +481,25 @@ Do not reuse OCR answer boxes as student-facing prompt previews without an addit
 
 **Prevention**:
 When Howdy vocab content has a known source correction, do not fix only the display layer. Update the source record, rebuild the normalized bank, and prefer canonical answer-bank resolution when reading or grading persisted exam data.
+
+---
+
+## 2026-11-18 - BUG-027: Workbook Page Lags / Gets Stuck When Dragging After Zoom
+
+**Issue**: On `assignment.html` (student workbook page), after a two-finger zoom the page felt laggy when dragging, could not be dragged sideways, and the zoom drifted away from the fingers.
+
+**Root Cause**:
+- every `pointermove` wrote `transform: scale()` / `scrollTop` directly, with no `requestAnimationFrame` throttling and no `will-change`, so Safari could repaint the whole canvas container on each event (same family as the TiCo e-book SVG lag, spelling-srs-backend PR #244)
+- single-finger pan only updated `scrollTop`, so horizontal panning was impossible once zoomed in
+- pinch zoom used `transform-origin: top left` without adjusting scroll, so the content under the fingers moved away
+- pen strokes called `getBoundingClientRect()` on every move
+
+**Solution**:
+- `gestureStart()` adds `will-change: transform` on touch-down, `gestureStop()` removes it when the last finger lifts
+- moves only compute target values; `frame()` applies scale + scroll at most once per animation frame
+- pinch keeps the content point under the finger midpoint fixed (container rect measured once per gesture)
+- single-finger pan scrolls both axes; lifting one finger of a pinch hands off to a pan
+- pen stroke measures the canvas rect once on pen-down
+
+**Prevention**:
+For JS-driven zoom/pan surfaces, never write layout/transform state directly in `pointermove`. Store targets, apply them in rAF, promote the transformed element only during the gesture, and measure geometry once per gesture. Verify on iPad Safari, not only Chromium.
